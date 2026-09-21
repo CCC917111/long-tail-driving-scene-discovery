@@ -1,0 +1,42 @@
+# --- Large data / models / outputs (keep repo small) ---
+models/
+dataset/
+output/
+cosmos_output/
+ground_truth/
+scripts/pipeline_output/
+scripts/cosmos_extract_output/
+nuscenes_annotation_result/
+
+# --- Secrets / API keys (NEVER commit) ---
+.env
+.env.*
+!.env.example
+*.key
+scripts/.env
+
+# --- Logs ---
+*.log
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.cache/
+.ipynb_checkpoints/
+
+# --- Editor / OS ---
+.idea/
+.vscode/
+.DS_Store
+
+# --- Model / training byproducts ---
+*.ckpt
+*.pth
+*.pt
+*.npy
+*.npz
+
