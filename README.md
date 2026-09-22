@@ -18,7 +18,7 @@ This project explores a representation-based alternative: use a large VLM as a f
 
 2. **Annotate at scale with a VLM.** [`scripts/annotate_normal_core.py`](scripts/annotate_normal_core.py) feeds all 6 synchronized camera views of a nuScenes keyframe into a VLM together with the normal-core rubric, and reads off a calibrated label and confidence by inspecting the model's output-token logits for the three possible answers (A/B/C), rather than just parsing free text. The exact prompt text is in [`docs/prompt_templates.md`](docs/prompt_templates.md).
 
-3. **Extract internal representations.** [`scripts/extract.py`](scripts/extract.py) runs Cosmos-Reason1-7B (or Qwen3.5-9B) over each multi-camera clip and pulls out hidden activations from the MLP module of a chosen transformer block — specifically the output of the `down_proj` layer, both mean-pooled over tokens and as the last-token representation — plus a free-form natural-language scene description. Critically, the VLM is *not* asked to classify the scene directly; it is prompted with an open-ended scene-description prompt (also in [`docs/prompt_templates.md`](docs/prompt_templates.md)) so that the extracted hidden state reflects general scene understanding rather than a fixed category list.
+3. **Extract internal representations.** [`scripts/extract.py`](scripts/extract.py) feeds the same 6 synchronized camera views of every keyframe into Cosmos-Reason1-7B and uses forward hooks to capture the output of the MLP block (`down_proj` output) of one or more chosen decoder layers (`--layers`, 1-indexed, so `28` is the last block of the 7B language model), stored both mean-pooled over all tokens and as the last-token representation (optionally together with the generated scene description). Critically, the VLM is *not* asked to classify the scene; it is prompted with an open-ended scene-description prompt (also in [`docs/prompt_templates.md`](docs/prompt_templates.md)) so that the extracted hidden state reflects general scene understanding rather than a fixed category list. The row-aligned `meta.json` keeps the `sample_token` and scene of each row, which is what the SAE scripts use to join labels and to split data by scene.
 
 4. **Learn a sparse, long-tail-sensitive decomposition of that representation.** The extracted hidden feature is fed into a sparse autoencoder that splits the latent code into a normal-feature subspace `z_n` and a long-tail-sensitive subspace `z_t`, using **AbsTopK** sparsity (top-`k` latent dimensions by *absolute* activation are kept, `k = 512`) and a tail-guided training objective:
 
@@ -28,13 +28,15 @@ This project explores a representation-based alternative: use a large VLM as a f
        + beta_tail   * y_i * max(0, tau - ||z_t,i||_2)    # push z_t above margin tau on tail samples
    ```
 
-   At inference time, a sample is flagged long-tail if any dimension of `z_t` activates above a threshold `eta` (i.e. the "tail activation count" `c_tail(x) >= 1`). This repository implements three variants of this idea, compared directly against each other in [Ablation study](#ablation-study) below:
+   In the code the tail term is implemented as a capped reward, `-beta_tail * min(||z_t||, tau)`, which equals the hinge above up to a constant. Labels are only used during training: at inference a sample is scored by `||z_t||_2` and flagged as long-tail above a threshold chosen on the validation split. This repository implements three variants of this idea, which share all data handling, training and evaluation code in [`scripts/sae_common.py`](scripts/sae_common.py) and are compared in [Ablation study](#ablation-study) below:
    - [`scripts/sae_abstopk_tail_reward.py`](scripts/sae_abstopk_tail_reward.py) — **the final method**: AbsTopK sparsity + a reward term on the *achieved* `||z_t||` for tail samples.
-   - [`scripts/ablation_topk_sae.py`](scripts/ablation_topk_sae.py) — ablation: plain (signed) Top-K instead of AbsTopK.
-   - [`scripts/ablation_sae_cosmos_baseline.py`](scripts/ablation_sae_cosmos_baseline.py) — ablation: AbsTopK where the reward is added to the tail-subspace scores *before* Top-K selection, rather than to the resulting activation norm.
-   - [`scripts/pipeline.py`](scripts/pipeline.py) — an earlier, more experimental iteration of this idea (`DeepLongTailSAE`, a deeper encoder/decoder with a pairwise margin loss, mixup and tail-oversampling augmentation) kept for reference; it predates the AbsTopK + tail-reward formulation above and is not the version the results below were produced with.
+   - [`scripts/ablation_topk_sae.py`](scripts/ablation_topk_sae.py) — ablation ("TopK SAE"): plain (signed) Top-K and no tail reward.
+   - [`scripts/ablation_sae_cosmos_baseline.py`](scripts/ablation_sae_cosmos_baseline.py) — ablation ("Train SAE Cosmos"): AbsTopK where a bonus is added to the tail-subspace selection scores *before* Top-K, rather than rewarding the resulting activation norm.
+   - [`scripts/pipeline.py`](scripts/pipeline.py) — an earlier, more experimental iteration of this idea (clip-level features with a continuous VLM tail score, `DeepLongTailSAE` with a deeper encoder, a pairwise margin loss, mixup and tail-oversampling augmentation) kept for reference; it predates the AbsTopK + tail-reward formulation above and is not the version the results below were produced with.
 
 ## Results
+
+The numbers below are the results reported in the project report. The SAE scripts in this repository use a stricter evaluation protocol than the original experiment scripts: unlabelled / `uncertain` samples are excluded instead of being counted as long-tail, features are standardised with training-split statistics only, the data is split by nuScenes *scene* (so near-identical keyframes of one scene cannot appear in both training and evaluation data), and precision/recall/F1 are measured on a held-out test split with the decision threshold fixed on the validation split. Re-running them may therefore give somewhat lower, but more reliable, numbers than the tables below.
 
 ### Main result: long-tail filtering accuracy
 
@@ -73,11 +75,11 @@ Ablating the tail-reward term (at layer 28) shows it is responsible for most of 
 | TopK SAE | L28 | 0.8735 | 0.8846 | 0.8269 | 0.9669 | 0.7222 |
 | Train SAE Cosmos | L28 | 0.8657 | 0.8623 | 0.8071 | 0.8750 | 0.7490 |
 
-(Full per-layer table for all three SAE variants across L15/L18/L21/L24/L27/L28 is reproducible with `scripts/ablation_topk_sae.py` and `scripts/ablation_sae_cosmos_baseline.py`.) Two further analysis experiments (see the project report) show that mean-pooled features slightly outperform last-token features as SAE input, and that this holds consistently across layers — both consistent with deeper, more semantically-aggregated hidden states being more suitable for the SAE to learn long-tail-relevant structure from.
+(Per-layer results for all three SAE variants are obtained by extracting several layers at once, e.g. `extract.py --layers 15 18 21 24 27 28`, and running each SAE script on the corresponding `layer{L}_*.npy` file. Note that the "TopK SAE" variant differs from the final method both in the sparsity rule and in having no tail reward; `ablation_topk_sae.py --reward norm` isolates the effect of the sparsity rule alone.) Two further analysis experiments (see the project report) show that mean-pooled features slightly outperform last-token features as SAE input, and that this holds consistently across layers — both consistent with deeper, more semantically-aggregated hidden states being more suitable for the SAE to learn long-tail-relevant structure from.
 
 ### Neuron-level interpretability
 
-Individual SAE neurons in the tail subspace correspond to specific, human-interpretable long-tail categories rather than firing on arbitrary noise. Thresholding `|z_t|` at 1.0 and looking at which samples activate each neuron:
+Individual SAE neurons in the tail subspace correspond to specific, human-interpretable long-tail categories rather than firing on arbitrary noise. Thresholding `|z_t|` at 1.0 and looking at which samples activate each neuron (each SAE script writes the per-neuron activation counts and purity to `neuron_report.csv`; the category names below come from manual inspection of the top-activating samples):
 
 | Dataset | Long-tail feature | Neuron | Score ratio | Activated-sample purity |
 |---|---|---:|---:|---|
@@ -114,12 +116,12 @@ By contrast, this sample is found by combining two signals from this project's m
 .
 ├── scripts/
 │   ├── annotate_normal_core.py         # VLM-based normal/not-normal/uncertain labeling
-│   ├── extract.py                      # Cosmos-Reason1 representation + caption extraction
-│   ├── pipeline.py                     # Earlier experimental iteration (DeepLongTailSAE, margin loss)
+│   ├── extract.py                      # Per-keyframe, per-layer hidden-state extraction
+│   ├── sae_common.py                   # Shared SAE model, scene-level split, training, evaluation
 │   ├── sae_abstopk_tail_reward.py      # Final method: AbsTopK + tail-activation reward
-│   ├── ablation_topk_sae.py            # Ablation: plain Top-K instead of AbsTopK
+│   ├── ablation_topk_sae.py            # Ablation: signed Top-K, no tail reward
 │   ├── ablation_sae_cosmos_baseline.py # Ablation: reward applied before Top-K selection
-│   └── .env.example                    # API key template (for the optional DSPy prompt-optimization path)
+│   └── pipeline.py                     # Earlier clip-level iteration (DeepLongTailSAE, margin loss)
 ├── docs/
 │   └── prompt_templates.md             # Exact VLM prompts used for the baselines and for feature extraction
 ├── latest_grading_criteria.md          # The "normal core" annotation rubric
@@ -134,32 +136,40 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Requires Python >= 3.10, a CUDA GPU (bf16 inference, >= 24 GB VRAM recommended), and transformers >= 4.49 (for Qwen2_5_VLForConditionalGeneration).
+Requires Python >= 3.10 and transformers >= 4.49 (Qwen2.5-VL support). Annotation and feature extraction need a CUDA GPU (bf16 inference, >= 24 GB VRAM recommended); the SAE scripts also run on CPU.
 
-External data/models (not included in this repo — see each script's --help / configuration constants for exact paths):
+External data/models (not included in this repo — see each script's `--help` for the exact paths):
 
 - Cosmos-Reason1-7B weights from Hugging Face: https://huggingface.co/nvidia/Cosmos-Reason1-7B
-- nuScenes keyframe archives (v1.0-trainval0{1..10}_keyframes.tgz): https://www.nuscenes.org/nuscenes
-- A clip-level annotation file with a normal/long_tail label (and, for the AbsTopK scripts, per-layer extracted hidden-state `.npy` files) per clip, produced upstream by `scripts/extract.py`, or substitute your own.
+- nuScenes metadata (`v1.0-trainval_meta.tgz`) and keyframe images (`v1.0-trainval{01..10}_keyframes.tgz`, extracted so that `samples/CAM_*/` exists): https://www.nuscenes.org/nuscenes
 
 ## Usage
 
 ```bash
-# 1. Label frames as normal_core / not_normal_core / uncertain
-python scripts/annotate_normal_core.py --samples-root <nuscenes_root> --output annotations.json
+# 1. Label keyframes as normal_core / not_normal_core / uncertain
+python scripts/annotate_normal_core.py \
+    --samples-root <nuscenes>/samples --meta-tgz <nuscenes>/v1.0-trainval_meta.tgz \
+    --output output/annotations/labels.json
 
-# 2. Extract VLM representations for a batch of clips
-python scripts/extract.py --parts 4 5 6 --tgz-dir <nuscenes_dir> --output-dir output/cosmos_extract_output
+# 2. Extract VLM hidden states for the labelled keyframes (one or more layers)
+python scripts/extract.py \
+    --samples-root <nuscenes>/samples --meta-tgz <nuscenes>/v1.0-trainval_meta.tgz \
+    --sample-tokens output/annotations/labels.json --layers 28 \
+    --output-dir output/extract
 
-# 3a. Train the final SAE (AbsTopK + tail-activation reward) and score long-tail samples
-python scripts/sae_abstopk_tail_reward.py
+# 3a. Train the final SAE (AbsTopK + tail-activation reward) and evaluate it
+python scripts/sae_abstopk_tail_reward.py \
+    --features output/extract/layer28_mlp_output_last_token.npy \
+    --meta output/extract/meta.json \
+    --labels output/annotations/labels.json \
+    --output-dir output/sae_abstopk_tail_reward
 
-# 3b. (optional) Reproduce the ablation study against plain Top-K / reward-before-selection variants
-python scripts/ablation_topk_sae.py
-python scripts/ablation_sae_cosmos_baseline.py
+# 3b. (optional) Ablations: same arguments, different script
+python scripts/ablation_topk_sae.py            --features ... --meta ... --labels ... --output-dir output/ablation_topk
+python scripts/ablation_sae_cosmos_baseline.py --features ... --meta ... --labels ... --output-dir output/ablation_pre_selection
 ```
 
-The three scripts in step 3 currently read their input paths (extracted-feature `.npy`, metadata, label JSON files) from constants near the top of the file rather than CLI flags — edit those to point at your own `scripts/extract.py` output before running. Each script is otherwise independently runnable; see the top-of-file docstring in each script for more detail, and `scripts/pipeline.py` / `scripts/annotate_normal_core.py` / `scripts/extract.py` for the argparse-based scripts, which support `--resume` for interrupted runs.
+`annotate_normal_core.py` and `extract.py` write their results incrementally and resume interrupted runs by default. Each SAE script writes `metrics.json` (validation and test AUC / AP / precision / recall / F1), `neuron_report.csv`, the learned `z_n` / `z_t` codes, the per-sample scores and split assignment (`rows.json`) and the model checkpoint to `--output-dir`; run any script with `--help` for all hyper-parameters. `--labels` also accepts label files in the `{"samples": [{"sample_token", "labels": {"label"}}]}` format. Labels `normal` / `normal_core` are treated as normal, `uncertain` / `unknown` / empty labels are excluded, and every other label (e.g. `not_normal_core`, `long_tail`) counts as long-tail.
 
 ## Acknowledgments
 
