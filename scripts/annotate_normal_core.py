@@ -7,16 +7,21 @@ Pipeline:
   1. One-time extract v1.0-trainval_meta.tgz to get sample.json / sample_data.json.
   2. Build sample_token -> {6 camera jpg paths} from sample_data.json, keeping
      only keyframe samples whose 6 CAM_* jpgs all exist under --samples-root.
+     The scene_token / scene name of every sample is kept as well, so that
+     downstream experiments can split the data by scene.
   3. Load a VLM (default Cosmos-Reason1-7B, optionally Qwen3.5-9B) in bf16 on
      a single CUDA device. Processor is configured with max_pixels large enough
      that 1600x900 NuScenes frames are not downscaled.
   4. For each sample, feed all 6 cameras (in the canonical order) + a prompt
      that contains the full normal_core / not_normal_core / uncertain rubric
-     (derived from latest_grading_criteria.md). The model is asked to produce
+     (derived from latest_grading_criteria.md; reproduced verbatim in
+     docs/prompt_templates.md). The model is asked to produce
      a short analysis followed by "Final answer: X" where X in {A, B, C}.
   5. generate() is run with output_scores=True. We locate the generated token
      corresponding to the final letter, take its pre-softmax logits, restrict
-     to the three letter token ids, renormalize. That gives per-class
+     to the three letter token ids (in the same tokenization variant, with or
+     without a leading space, as the token that was actually generated) and
+     renormalize. That gives per-class
      probabilities; label = argmax, confidence = max prob.
   6. Results are written incrementally (atomic rewrite every --save-every
      samples) to a single JSON array. --resume skips sample_tokens already
@@ -53,9 +58,10 @@ LETTER_TO_LABEL = {
 }
 LABELS_IN_ORDER = ["normal_core", "not_normal_core", "uncertain"]
 
-# Instruction built from dda4080_huawei_project/latest_grading_criteria.md.
-# Unlike the representation-extraction prompt (Â§Prompt Principle), an annotator
-# *needs* the explicit definition to produce a classification, so we include it.
+# Instruction built from latest_grading_criteria.md. Unlike the
+# representation-extraction prompt (see "Prompt Principle" in that file), an
+# annotator *needs* the explicit definition to produce a classification, so we
+# include it here.
 PROMPT_TEMPLATE = """You are given 6 synchronized camera images from an autonomous vehicle at a single timestamp. The cameras are provided in this order: CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT.
 
 Your task: assign exactly ONE label to this multi-camera frame.
@@ -163,6 +169,12 @@ def build_samples(meta_dir: Path, samples_root: Path) -> list[dict]:
     with s_path.open() as f:
         samples_meta = json.load(f)
     sample_ts = {s["token"]: s.get("timestamp", 0) for s in samples_meta}
+    sample_scene = {s["token"]: s.get("scene_token") for s in samples_meta}
+    scene_names: dict[str, str] = {}
+    scene_path = meta_dir / "scene.json"
+    if scene_path.exists():
+        with scene_path.open() as f:
+            scene_names = {sc["token"]: sc.get("name") for sc in json.load(f)}
 
     # Group by sample_token. filename is like "samples/CAM_FRONT/xxx.jpg".
     by_sample: dict[str, dict[str, Path]] = {}
@@ -191,6 +203,8 @@ def build_samples(meta_dir: Path, samples_root: Path) -> list[dict]:
         eligible.append({
             "sample_token": token,
             "timestamp": sample_ts.get(token, 0),
+            "scene_token": sample_scene.get(token),
+            "scene_name": scene_names.get(sample_scene.get(token)),
             "channels": {cam: channels[cam] for cam in CAMERAS},
         })
 
@@ -226,6 +240,10 @@ def atomic_write_json(output_path: Path, data: list[dict]) -> None:
 #  Model loading and letter-token resolution
 # ---------------------------------------------------------------------------
 
+def _version_tuple(version: str) -> tuple[int, ...]:
+    return tuple(int(x) for x in re.findall(r"\d+", version)[:2])
+
+
 def load_vlm(model_dir: Path, device: str, dtype: str, min_pixels: int, max_pixels: int):
     import transformers
     from transformers import AutoProcessor
@@ -255,8 +273,11 @@ def load_vlm(model_dir: Path, device: str, dtype: str, min_pixels: int, max_pixe
     for name, cls in auto_classes:
         try:
             print(f"[model] trying {name}")
+            # transformers >= 4.56 renamed `torch_dtype` to `dtype`.
+            dtype_kw = ("dtype" if _version_tuple(transformers.__version__) >= (4, 56)
+                        else "torch_dtype")
             model = cls.from_pretrained(
-                str(model_dir), dtype=torch_dtype, device_map=device,
+                str(model_dir), device_map=device, **{dtype_kw: torch_dtype},
             )
             print(f"[model] loaded with {name} ({type(model).__name__})")
             break
@@ -274,22 +295,18 @@ def load_vlm(model_dir: Path, device: str, dtype: str, min_pixels: int, max_pixe
     return processor, model
 
 
-def resolve_letter_token_ids(tokenizer) -> dict[str, int]:
-    """For each of A/B/C pick the token id that is most likely emitted by the
-    model after a space (as in 'Final answer: A'). Fall back to the raw letter
-    encoding if no single-token form exists."""
-    ids: dict[str, int] = {}
+def resolve_letter_token_ids(tokenizer) -> dict[str, dict[str, int]]:
+    """Token ids of A/B/C in two variants: with a leading space (as in
+    'Final answer: A') and without. The variant that matches the token actually
+    generated by the model is used when reading off the class logits, so the
+    three letters are always compared in the same tokenization."""
+    variants: dict[str, dict[str, int]] = {"spaced": {}, "raw": {}}
     for letter in "ABC":
         spaced = tokenizer.encode(f" {letter}", add_special_tokens=False)
         raw = tokenizer.encode(letter, add_special_tokens=False)
-        if len(spaced) == 1:
-            ids[letter] = spaced[0]
-        elif len(raw) == 1:
-            ids[letter] = raw[0]
-        else:
-            # last resort: take the last sub-token
-            ids[letter] = (spaced or raw)[-1]
-    return ids
+        variants["spaced"][letter] = (spaced or raw)[-1]
+        variants["raw"][letter] = (raw or spaced)[-1]
+    return variants
 
 
 # ---------------------------------------------------------------------------
@@ -301,7 +318,7 @@ FINAL_ANSWER_RE = re.compile(r"Final answer:\s*([ABC])", re.IGNORECASE)
 
 @torch.no_grad()
 def annotate_one(model, processor, images: list[Image.Image],
-                 letter_token_ids: dict[str, int],
+                 letter_token_ids: dict[str, dict[str, int]],
                  max_new_tokens: int,
                  enable_thinking: bool = False) -> dict:
     messages = [{
@@ -360,8 +377,12 @@ def annotate_one(model, processor, images: list[Image.Image],
         }
 
     step_logits = scores[chosen_step][0].float()
+    generated_id = gen_ids[chosen_step]
+    ids = (letter_token_ids["spaced"]
+           if generated_id in letter_token_ids["spaced"].values()
+           else letter_token_ids["raw"])
     letter_logits = torch.tensor(
-        [step_logits[letter_token_ids[L]] for L in "ABC"],
+        [step_logits[ids[L]] for L in "ABC"],
         device=step_logits.device,
     )
     letter_probs = torch.softmax(letter_logits, dim=-1).tolist()
@@ -432,14 +453,17 @@ def main() -> None:
                 torch.cuda.empty_cache()
                 print(f"[oom] sample {sample['sample_token']} OOM, skipping. "
                       f"Consider lowering --max-pixels.")
-                for im in images:
-                    im.close()
                 continue
             finally:
                 for im in images:
                     im.close()
 
-            record = {"sample_token": sample["sample_token"], **result}
+            record = {
+                "sample_token": sample["sample_token"],
+                "scene_token": sample.get("scene_token"),
+                "scene_name": sample.get("scene_name"),
+                **result,
+            }
             results.append(record)
 
             if result["parse_ok"]:
