@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-Long-Tail Driving Scene Discovery â End-to-End Pipeline (V2)
+Long-Tail Driving Scene Discovery — End-to-End Pipeline (V2)
+
+NOTE: this is an earlier, clip-level iteration of the project, kept for
+reference. It uses a continuous VLM "tail_score" per clip (normal: score <= 2,
+long-tail: score >= 4) and a deeper SAE. The final keyframe-level method lives
+in extract.py + sae_common.py / sae_abstopk_tail_reward.py.
 
 Optimizations over V1:
-  1. Multi-frame input: configurable frames per camera (default 4, was 1)
-  2. Higher resolution: max_pixels=401408 (~633Ã633, was 316Ã316)
+  1. Multi-frame input: configurable frames per camera (default 16, was 1)
+  2. Higher resolution: max_pixels=1003520 (~1002×1002, was 316×316)
   3. Feature-level augmentation: mixup + noise + tail oversampling
   4. Deeper SAE encoder: 2-layer MLP with GELU + residual
   5. Semantic interpretation: trace top z_t neurons to scene semantics
@@ -52,7 +57,9 @@ CLIPS_JSON = DATASET_DIR / "nuscenes-annotation-platform" / "vlm_annotated_clips
 TGZ_DIR = DATASET_DIR / "nuscenes"
 IMAGE_DIR = DATASET_DIR / "nuscenes" / "nuscenes_extracted" / "samples"
 
-OLD_PATH_PREFIX = "/data2/visitor/czh/nuscenes_keyframes/"
+# Image paths stored in the clip annotation file can be rewritten to the local
+# dataset location with --old-path-prefix (see parse_args).
+OLD_PATH_PREFIX = ""
 NEW_PATH_PREFIX = str(DATASET_DIR / "nuscenes") + "/"
 
 OUTPUT_DIR = SCRIPT_DIR / "pipeline_output"
@@ -72,7 +79,12 @@ def parse_args():
                    help="Which tgz parts to use (e.g. 1 2 3)")
     p.add_argument("--skip-extract", action="store_true",
                    help="Skip feature extraction, use cached features")
-    # [OPT-2] Higher resolution: 1003520 â 1002Ã1002 (was 100352 â 316Ã316)
+    p.add_argument("--old-path-prefix", type=str, default="",
+                   help="Prefix of the image paths stored in the clip annotation file that "
+                        "should be replaced by the local nuScenes directory (empty: no rewrite)")
+    p.add_argument("--val-ratio", type=float, default=0.2,
+                   help="Fraction of scenes held out for validation")
+    # [OPT-2] Higher resolution: 1003520 ≈ 1002×1002 (was 100352 ≈ 316×316)
     p.add_argument("--max-pixels", type=int, default=1003520)
     p.add_argument("--min-pixels", type=int, default=3136)
     # [OPT-1] Multi-frame: 16 frames per camera (was 1)
@@ -108,9 +120,9 @@ def parse_args():
     return p.parse_args()
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Step 1: Build image whitelist from tgz parts
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def build_image_whitelist(parts: list[int]) -> set[str]:
     """Build whitelist from tgz contents, or fall back to scanning extracted dir."""
@@ -148,7 +160,7 @@ def build_image_whitelist(parts: list[int]) -> set[str]:
 
 
 def remap_path(p: str) -> str:
-    if p.startswith(OLD_PATH_PREFIX):
+    if OLD_PATH_PREFIX and p.startswith(OLD_PATH_PREFIX):
         return NEW_PATH_PREFIX + p[len(OLD_PATH_PREFIX):]
     return p
 
@@ -185,9 +197,9 @@ def filter_clips(clips: list[dict], whitelist: set[str]) -> list[dict]:
     return filtered
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-#  Step 2: Feature extraction â Multi-frame + Higher resolution [OPT-1, OPT-2]
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Step 2: Feature extraction — Multi-frame + Higher resolution [OPT-1, OPT-2]
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def load_cosmos_model(args):
     from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
@@ -199,7 +211,7 @@ def load_cosmos_model(args):
 
     dt = torch.bfloat16
     print(f"Loading model (bf16) | max_pixels={args.max_pixels} "
-          f"(~{int(args.max_pixels**0.5)}Ã{int(args.max_pixels**0.5)}) ...")
+          f"(~{int(args.max_pixels**0.5)}×{int(args.max_pixels**0.5)}) ...")
     t0 = time.time()
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         str(MODEL_DIR), torch_dtype=dt, device_map="cuda:0",
@@ -350,12 +362,31 @@ def extract_all_features(clips: list[dict], args) -> list[dict]:
     return results
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Step 3: Pre-SAE Activation Analysis
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
-def pre_sae_analysis(features: np.ndarray, scores: np.ndarray) -> dict:
-    """Analyze raw Cosmos features before SAE. Returns metrics dict."""
+def make_split(results: list[dict], val_ratio: float, seed: int = SEED
+               ) -> tuple[list[int], list[int]]:
+    """Scene-level train/val split: all clips of a scene go to the same side, so
+    overlapping clips of one scene cannot leak from training into validation."""
+    groups = [r.get("scene_token") or r.get("scene_name") or f"clip_{i}"
+              for i, r in enumerate(results)]
+    unique = sorted(set(groups))
+    random.Random(seed).shuffle(unique)
+    n_val = max(1, int(round(len(unique) * val_ratio)))
+    val_groups = set(unique[:n_val])
+    train_idx = [i for i, g in enumerate(groups) if g not in val_groups]
+    val_idx = [i for i, g in enumerate(groups) if g in val_groups]
+    return train_idx, val_idx
+
+
+def pre_sae_analysis(features: np.ndarray, scores: np.ndarray,
+                     train_idx: list[int], val_idx: list[int]) -> dict:
+    """Analyze raw Cosmos features before SAE. Returns metrics dict.
+
+    All baselines are fitted on the training split and scored on the validation
+    split, so they are directly comparable with the post-SAE validation AUC."""
     print("\n" + "=" * 70)
     print("  STEP 3: Pre-SAE Activation Analysis (Raw Cosmos Features)")
     print("=" * 70)
@@ -382,25 +413,32 @@ def pre_sae_analysis(features: np.ndarray, scores: np.ndarray) -> dict:
         print(f"  Non-zero ratio: {nz * 100:.2f}%")
         print(f"  Value range:    [{data.min():.4f}, {data.max():.4f}]")
 
-    l2_norms = np.linalg.norm(features, axis=1)
-    labels = is_tail[labeled].astype(int)
-    auc_l2 = roc_auc_score(labels, l2_norms[labeled])
-    print(f"\nRaw L2 norm AUC (naive): {auc_l2:.4f}")
+    tr = np.zeros(len(features), dtype=bool)
+    tr[train_idx] = True
+    va = np.zeros(len(features), dtype=bool)
+    va[val_idx] = True
+    tr_lab, va_lab = tr & labeled, va & labeled
+    y_tr = is_tail[tr_lab].astype(int)
+    y_va = is_tail[va_lab].astype(int)
 
-    mean_tail = features[is_tail].mean(axis=0) if is_tail.any() else np.zeros(features.shape[1])
-    mean_normal = features[is_normal].mean(axis=0) if is_normal.any() else np.zeros(features.shape[1])
+    l2_norms = np.linalg.norm(features, axis=1)
+    auc_l2 = roc_auc_score(y_va, l2_norms[va_lab])
+    print(f"\nRaw L2 norm AUC (val): {auc_l2:.4f}")
+
+    mean_tail = features[tr & is_tail].mean(axis=0)
+    mean_normal = features[tr & is_normal].mean(axis=0)
     diff_vec = mean_tail - mean_normal
     diff_score = features @ diff_vec
-    auc_diff = roc_auc_score(labels, diff_score[labeled])
-    print(f"Mean-diff projection AUC: {auc_diff:.4f}")
+    auc_diff = roc_auc_score(y_va, diff_score[va_lab])
+    print(f"Mean-diff projection AUC (direction from train, val): {auc_diff:.4f}")
 
-    X_train = features[labeled]
-    y_train = labels
+    mu = features[tr_lab].mean(axis=0)
+    sd = features[tr_lab].std(axis=0) + 1e-6
     lr = LogisticRegression(max_iter=1000, C=1.0, solver="lbfgs")
-    lr.fit(X_train, y_train)
-    proba = lr.predict_proba(X_train)[:, 1]
-    auc_lr = roc_auc_score(y_train, proba)
-    print(f"Logistic Regression AUC (on labeled set): {auc_lr:.4f}")
+    lr.fit((features[tr_lab] - mu) / sd, y_tr)
+    proba = lr.predict_proba((features[va_lab] - mu) / sd)[:, 1]
+    auc_lr = roc_auc_score(y_va, proba)
+    print(f"Logistic Regression AUC (fit on train, val): {auc_lr:.4f}")
 
     importance = np.abs(diff_vec)
     top_dims = np.argsort(-importance)[:10]
@@ -420,9 +458,9 @@ def pre_sae_analysis(features: np.ndarray, scores: np.ndarray) -> dict:
     return metrics
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-#  Step 4: SAE Training â Deeper encoder + GELU + Augmentation [OPT-3, OPT-4]
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Step 4: SAE Training — Deeper encoder + GELU + Augmentation [OPT-3, OPT-4]
+# ═══════════════════════════════════════════════════════════════════════════════
 
 class DeepLongTailSAE(nn.Module):
     """
@@ -533,6 +571,7 @@ def augment_tail_features(features: np.ndarray, scores: np.ndarray, args) -> tup
 
 
 def train_sae(features: np.ndarray, scores: np.ndarray, args,
+              train_idx: list[int], val_idx: list[int],
               clip_info: list[dict] | None = None) -> tuple:
     """Train SAE with augmentation and deeper architecture."""
     print("\n" + "=" * 70)
@@ -546,11 +585,8 @@ def train_sae(features: np.ndarray, scores: np.ndarray, args,
     device = torch.device(args.device)
     N, D = features.shape
 
-    # Scene-level split (on ORIGINAL data, before augmentation)
-    idx = list(range(N))
-    random.shuffle(idx)
-    split = int(N * 0.8)
-    train_idx, val_idx = idx[:split], idx[split:]
+    # The scene-level split is computed once in main() (on the ORIGINAL data,
+    # before augmentation) and shared with the pre-SAE baselines.
 
     n_train_normal = sum(1 for i in train_idx if scores[i] <= NORMAL_MAX)
     n_train_tail = sum(1 for i in train_idx if scores[i] >= TAIL_MIN)
@@ -687,9 +723,9 @@ def train_sae(features: np.ndarray, scores: np.ndarray, args,
     return sae, all_norm, all_score_t, train_idx, val_idx, feat_mean, feat_std
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Step 5: Post-SAE Activation Analysis
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def print_activation_stats(label: str, data: np.ndarray) -> np.ndarray:
     l2 = np.linalg.norm(data, axis=1)
@@ -727,7 +763,7 @@ def post_sae_analysis(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
     labels = is_tail[labeled].astype(int)
 
     auc_all = roc_auc_score(labels, z_t_l2[labeled])
-    print(f"\n*** Full set AUC (||z_t||_2): {auc_all:.4f} ***")
+    print(f"\n*** Full set AUC (||z_t||_2, includes training clips): {auc_all:.4f} ***")
 
     val_mask = np.zeros(len(scores), dtype=bool)
     for i in val_idx:
@@ -751,7 +787,10 @@ def post_sae_analysis(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
     prec_val = precision_score(labels_val, preds)
     rec_val = recall_score(labels_val, preds)
 
-    print(f"\nVal binary classification (threshold={bt:.4f}):")
+    # NOTE: the checkpoint (best val AUC) and this threshold are both selected on
+    # the validation split, so these numbers are optimistic. The final method
+    # (sae_common.py) reports on a separate held-out test split instead.
+    print(f"\nVal binary classification (threshold={bt:.4f}, selected on val -> optimistic):")
     print(f"  Accuracy:  {acc:.4f}")
     print(f"  F1:        {f1:.4f}")
     print(f"  Precision: {prec_val:.4f}")
@@ -794,7 +833,7 @@ def post_sae_analysis(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
 
     print(f"\n{'_' * 50}")
     print("[z_t L2 norm by tail_score]")
-    for s in sorted(set(scores)):
+    for s in sorted(set(scores[~np.isnan(scores)].tolist())):
         mask = scores == s
         if mask.sum() == 0:
             continue
@@ -816,9 +855,9 @@ def post_sae_analysis(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
     }
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Step 6: Semantic Interpretation of z_t Neurons [OPT-5]
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def semantic_interpretation(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
                             score_tensor: torch.Tensor,
@@ -907,9 +946,9 @@ def semantic_interpretation(sae: DeepLongTailSAE, cam_norm: torch.Tensor,
     return interpretation
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Step 7: Comparison Summary
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def print_comparison(pre_metrics: dict, post_metrics: dict, args):
     print("\n" + "=" * 70)
@@ -960,12 +999,14 @@ def print_comparison(pre_metrics: dict, post_metrics: dict, args):
         print(f"\n  !! SAE does not improve over raw features ({improvement:.4f} AUC)")
 
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Main
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def main():
+    global OLD_PATH_PREFIX
     args = parse_args()
+    OLD_PATH_PREFIX = args.old_path_prefix
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     features_path = OUTPUT_DIR / "features.json"
@@ -1005,15 +1046,26 @@ def main():
         print(f"Loaded {len(results)} clips")
 
     features = np.array([r["clip_embedding"] for r in results], dtype=np.float32)
-    scores = np.array([float(r.get("tail_score", -1) or -1) for r in results], dtype=np.float32)
-    print(f"\nFeature matrix: {features.shape}")
+    # Clips without a tail_score become NaN, i.e. neither normal nor long-tail
+    # (previously they were mapped to -1 and silently counted as normal).
+    scores = np.array([np.nan if r.get("tail_score") is None else float(r["tail_score"])
+                       for r in results], dtype=np.float32)
+    print(f"\nFeature matrix: {features.shape} | clips without tail_score: "
+          f"{int(np.isnan(scores).sum())}")
+
+    train_idx, val_idx = make_split(results, args.val_ratio)
+    print(f"Scene-level split: {len(train_idx)} train clips / {len(val_idx)} val clips")
+    for name, idx in (("train", train_idx), ("val", val_idx)):
+        if not ((scores[idx] >= TAIL_MIN).any() and (scores[idx] <= NORMAL_MAX).any()):
+            raise ValueError(f"The {name} split has no normal or no long-tail clips; "
+                             f"change --val-ratio.")
 
     # Step 3: Pre-SAE analysis
-    pre_metrics = pre_sae_analysis(features, scores)
+    pre_metrics = pre_sae_analysis(features, scores, train_idx, val_idx)
 
     # Step 4: SAE training (deeper + augmented)
     sae, cam_norm, score_tensor, train_idx, val_idx, feat_mean, feat_std = \
-        train_sae(features, scores, args, clip_info=results)
+        train_sae(features, scores, args, train_idx, val_idx, clip_info=results)
 
     # Step 5: Post-SAE analysis
     post_metrics = post_sae_analysis(sae, cam_norm, score_tensor, val_idx)
