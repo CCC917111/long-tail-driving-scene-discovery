@@ -73,7 +73,8 @@ search or frequency counts. It contains the full pipeline — the annotation
 rubric and the VLM labeller that applies it, the hidden-state extractor, the
 sparse autoencoder that decomposes those hidden states, the evaluation against
 VLM baselines, and a screening tool that applies a trained model to new,
-unlabelled driving data.
+unlabelled driving data. It was developed by Yike Chen, Zihua Chen and Yusong
+Zhao as a capstone project at the Chinese University of Hong Kong, Shenzhen.
 
 # Abstract
 
