@@ -1,0 +1,6 @@
+neuron,feature,dataset,activation_ratio,purity,n_activated,n_activated_target,notes
+2169,Rain / wet road,nuScenes,0.438,1.000,723,723,Fires on rainy and wet-surface scenes across parts.
+396,Glare on a wet or rainy road,nuScenes,0.056,1.000,92,92,Not any bright light: specifically glare caused by rain or a wet surface.
+3058,Wheelchair user ahead,nuScenes,0.424,0.778,18,14,Also fires on other wheelchair-nearby frames elsewhere in the dataset; see the case study.
+1542,Pedestrian in a construction zone,nuScenes,0.061,0.538,132,71,Compound pattern: fires on pedestrians *and* nearby construction, not on either alone.
+1843,Truck close to the ego vehicle,nuScenes,0.042,0.571,21,12,Large vehicle occluding the road ahead.
