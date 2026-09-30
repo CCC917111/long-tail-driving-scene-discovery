@@ -1,0 +1,7 @@
+[flake8]
+max-line-length = 100
+# The VLM prompts and the explorer's web page are kept verbatim as strings.
+per-file-ignores =
+    scripts/annotate_normal_core.py:E501
+    scripts/extract.py:E501
+    scripts/neuron_explorer.py:E501

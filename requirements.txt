@@ -1,7 +1,14 @@
+# VLM stages (labelling, feature extraction) and the sparse autoencoder
 torch>=2.1
 transformers>=4.49
 accelerate>=0.26
+
+# Arrays, metrics and images
 numpy
-Pillow
 scikit-learn
+Pillow
 matplotlib
+
+# Tests and style checks
+pytest
+flake8

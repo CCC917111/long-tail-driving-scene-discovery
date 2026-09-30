@@ -10,8 +10,9 @@ FEATURES ?= $(EXTRACT)
 RUN ?= $(OUTPUT)/sae_abstopk_tail_reward
 GLOSSARY ?= results/neuron_glossary.csv
 SCREENING ?= $(OUTPUT)/screening
+PORT ?= 8765
 
-.PHONY: install label extract train ablations screen test lint clean
+.PHONY: install label extract train ablations explore screen test lint clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -46,6 +47,13 @@ ablations:
 		--features $(EXTRACT)/layer$(LAYER)_mlp_output_$(POOLING).npy \
 		--meta $(EXTRACT)/meta.json --labels $(LABELS) \
 		--output-dir $(OUTPUT)/ablation_pre_selection
+
+explore:
+	$(PYTHON) scripts/neuron_explorer.py serve \
+		--run $(RUN) \
+		--samples-root $(DATA)/samples \
+		--glossary $(GLOSSARY) \
+		--port $(PORT)
 
 screen:
 	$(PYTHON) scripts/screen.py \

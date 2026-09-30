@@ -4,7 +4,6 @@ dataset/
 output/
 cosmos_output/
 ground_truth/
-scripts/pipeline_output/
 scripts/cosmos_extract_output/
 nuscenes_annotation_result/
 
@@ -39,4 +38,3 @@ env/
 *.pt
 *.npy
 *.npz
-
