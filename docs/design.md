@@ -6,7 +6,7 @@ This page explains why the method is built the way it is, and gives the
 equations behind the sparse decomposition. Numbers in brackets refer to the
 [references on the main page](../README.md#references).
 
-![Pipeline](figures/pipeline.svg)
+![Pipeline](figures/pipeline.webp)
 
 ## The problem the design is solving
 
