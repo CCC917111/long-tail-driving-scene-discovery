@@ -7,9 +7,10 @@ Run from the repository root:
     python tests/test_sae_common.py      # same tests, without pytest
 
 The tests cover the parts that are easy to break silently — the sparsity rule,
-the scene-level split, the label protocol and the threshold logic — on small
-synthetic arrays, so they run on CPU in seconds and need neither the dataset
-nor a VLM.
+the objective, the scene-level split, the label protocol and the metrics of the
+decision rule — on small synthetic arrays, so they run on CPU in seconds and
+need neither the dataset nor a VLM. The decision rule itself is tested in
+tests/test_neuron_explorer.py, which does not need torch.
 """
 
 from __future__ import annotations
@@ -25,11 +26,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
 
 from sae_common import (  # noqa: E402
     LongTailGuidedSAE,
-    best_f1_threshold,
     classification_metrics,
     load_label_map,
     split_indices,
 )
+from tail_activations import predict_long_tail, tail_score  # noqa: E402
 
 
 # --- Sparsity ---------------------------------------------------------------
@@ -63,6 +64,25 @@ def test_abstopk_keeps_large_negative_activations():
     z_signed, _, _ = signed.encode(torch.zeros(1, 4))
     kept_signed = torch.nonzero(z_signed[0]).flatten().tolist()
     assert 0 not in kept_signed, kept_signed
+
+
+def test_quiet_tail_subspace_is_predicted_normal():
+    """If AbsTopK keeps no z_t unit, the frame is normal under the count rule."""
+    model = LongTailGuidedSAE(input_dim=4, hidden_dim=8, k=2, sparsity="abstopk",
+                              tail_ratio=0.5)
+    model.eval()
+    with torch.no_grad():
+        model.encoder.weight.zero_()
+        model.encoder.bias.copy_(torch.tensor([3.0, -2.0, 0.0, 0.0,
+                                               0.5, 0.0, 0.0, 0.0]))
+        _, _, z_t = model.encode(torch.zeros(1, 4))
+    assert predict_long_tail(z_t.numpy(), 0.01).tolist() == [0]
+
+    with torch.no_grad():
+        model.encoder.bias.copy_(torch.tensor([3.0, 0.0, 0.0, 0.0,
+                                               -2.5, 0.0, 0.0, 0.0]))
+        _, _, z_t = model.encode(torch.zeros(1, 4))
+    assert predict_long_tail(z_t.numpy(), 0.01).tolist() == [1]
 
 
 def test_k_larger_than_hidden_dim_is_rejected():
@@ -165,25 +185,26 @@ def test_label_protocol():
     assert mapping["e"] is None
 
 
-# --- Thresholding -----------------------------------------------------------
+# --- Decision and metrics ---------------------------------------------------
 
-def test_threshold_is_chosen_where_f1_peaks():
+def test_metrics_score_the_count_rule():
+    """Precision / recall come from the c_tail >= 1 rule, AUC from ||z_t||."""
+    z_t = np.array([[0.0, 0.0], [0.0, 0.0], [0.0, 0.3], [2.0, 0.0], [0.0, -1.5], [0.0, 0.0]])
     y = np.array([0, 0, 0, 1, 1, 1])
-    score = np.array([0.1, 0.2, 0.3, 0.7, 0.8, 0.9])
-    threshold = best_f1_threshold(y, score)
-    assert 0.3 < threshold <= 0.7, threshold
-
-    metrics = classification_metrics(y, score, threshold)
-    assert metrics["long_tail"]["f1"] == 1.0, metrics
-    assert metrics["auc"] == 1.0
+    pred = predict_long_tail(z_t, 0.01)
+    metrics = classification_metrics(y, pred, tail_score(z_t))
+    assert pred.tolist() == [0, 0, 1, 1, 1, 0]
+    assert abs(metrics["long_tail"]["precision"] - 2 / 3) < 1e-9, metrics
+    assert abs(metrics["long_tail"]["recall"] - 2 / 3) < 1e-9, metrics
     assert metrics["long_tail"]["support"] == 3
 
 
 def test_metrics_report_both_classes():
     y = np.array([0, 1, 0, 1])
+    pred = np.array([0, 1, 1, 0])
     score = np.array([0.1, 0.9, 0.8, 0.2])
-    metrics = classification_metrics(y, score, 0.5)
-    assert set(metrics) == {"auc", "ap", "threshold", "long_tail", "normal"}
+    metrics = classification_metrics(y, pred, score)
+    assert set(metrics) == {"auc", "ap", "long_tail", "normal"}
     assert metrics["normal"]["support"] == 2
 
 
