@@ -153,10 +153,84 @@ The existing ways of finding them each rely on a proxy signal:
 
 This project takes the signal from inside the model instead. A pretrained VLM
 already represents what is unusual about a driving scene; the difficulty is
-that the information is spread across thousands of dense dimensions. Sparse
-autoencoders are the standard tool for pulling such information apart into
-individual, interpretable features [[16]](#ref-16)–[[22]](#ref-22). Trained
-with a tail-guided objective, the decomposition itself becomes the detector.
+that the information is spread across thousands of dense dimensions. The next
+section explains how a sparse autoencoder pulls it apart.
+
+# Why a sparse autoencoder
+
+### What an SAE is
+
+A sparse autoencoder (SAE) is a small network trained on the internal
+activations of another model. It encodes an activation vector *h* into a much
+wider code *z* in which only a few entries are non-zero, and reconstructs *h*
+from that code. In this project both maps are single linear layers, so the
+reconstruction is a sum of a few decoder columns:
+
+$$
+z = \mathrm{sparse}\big(W_{\mathrm{enc}}\,h + b_{\mathrm{enc}}\big),
+\qquad
+\hat{h} = W_{\mathrm{dec}}\,z + b_{\mathrm{dec}}
+= \sum_{j:\,z^{(j)} \neq 0} z^{(j)}\, d_j + b_{\mathrm{dec}} .
+$$
+
+This is sparse dictionary learning. Each decoder column *d<sub>j</sub>* is a
+*feature direction* in the model's hidden space, and each input is explained
+by the handful of directions that are active for it
+[[19]](#ref-19), [[20]](#ref-20). Sparsity is what makes the result readable:
+because only k = 512 of the 7,168 units may be active for any sample,
+information cannot be spread thinly over all of them, and different units are
+pushed to specialise in different factors.
+
+The reason for this detour is that a model's own neurons are a poor basis for
+interpretation. Individual neurons of large networks are typically
+*polysemantic*, responding to several unrelated concepts, because the network
+represents more features than it has dimensions [[20]](#ref-20). The directions
+an SAE learns are far more often *monosemantic*. In language models they line
+up with concepts such as legal text or a particular language, and they are more
+interpretable than directions found by other decomposition methods
+[[19]](#ref-19), [[20]](#ref-20). The approach scales to production-size models
+[[21]](#ref-21) and carries over to vision-language models, where sparse
+features make visual representations markedly more monosemantic
+[[22]](#ref-22). Together these results show that foundation-model hidden
+states contain structured semantic signals beyond what the model says in its
+output — which is exactly the kind of signal long-tail mining needs.
+
+### Why it fits long-tail mining
+
+- **The signal is in the model but not readable as it is.** Asked directly,
+  Cosmos-Reason1-7B recognises almost none of the long-tail frames (F1 0.024,
+  see [Results](#results)); its own hidden state, decomposed by the SAE,
+  separates them with F1 0.847. The model is the same in both cases, so the
+  gain comes from re-organising and amplifying a long-tail signal the model
+  already carries, not from a larger model.
+- **No category list is needed.** Semantic mining can only find what its
+  vocabulary names. The SAE is trained with nothing more than a frame-level
+  normal / long-tail label, yet units for rain, glare on wet roads, wheelchair
+  users and pedestrians inside construction zones emerge on their own
+  ([The interpretable neurons](#the-interpretable-neurons)). This makes it
+  possible to find compound scenes that are hard to describe with hand-written
+  rules.
+- **It targets driving relevance, not rarity.** An anomaly detector ranks what
+  looks unusual; a blurred frame is unusual and useless, while an ordinary-
+  looking street with a wheelchair user is valuable. The tail-guided objective
+  ties the long-tail subspace to the defensive-driving definition, so the
+  detector learns what matters for driving rather than what is visually rare.
+- **Every decision comes with a reason.** A classifier trained on *h* would
+  return a score. The SAE returns the score together with the few long-tail
+  units that produced it, and those units can be named — weather, vulnerable
+  road users, obstacles, low visibility — and reused as search keys.
+
+### What is different from earlier SAE work
+
+Earlier SAE studies use the decomposition to interpret a model or to steer its
+behaviour [[19]](#ref-19)–[[22]](#ref-22). Here it is used as the detector
+itself: the tail-guided objective (Method, step 4) reserves half of the code
+for long-tail factors, and a frame is flagged by whether that half activates.
+The ablations confirm that the SAE design carries the result. The tail term
+adds 0.040 F1. AbsTopK, which keeps large negative activations, beats a signed
+Top-K SAE at every layer tested. Performance rises with depth, with the last
+layer best, consistent with deeper layers holding the higher-level semantics
+an SAE can separate.
 
 # Method
 
