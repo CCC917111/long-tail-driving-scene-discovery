@@ -9,10 +9,11 @@ by hand, so the evaluation labels are human-checked rather than model-generated.
 
 The protocol behind every table: unlabelled and `uncertain` samples are
 excluded rather than counted as long-tail, features are standardised with
-training-split statistics only, the split is taken at the nuScenes *scene*
-level so near-identical keyframes cannot appear on both sides, and the decision
-threshold is chosen on the validation split and applied unchanged to the
-held-out test split.
+training-split statistics only, and the split is taken at the nuScenes *scene*
+level so near-identical keyframes cannot appear on both sides. A frame is
+predicted long-tail when at least one unit of the long-tail subspace is active
+(`|z_t| > 0.01`); the rule fits nothing, so it is applied to every split in the
+same way. AUC and AP are computed from `||z_t||_2`.
 
 ## Main result: long-tail filtering
 
@@ -56,7 +57,7 @@ with the tail reward is the strongest configuration at every depth, with
 performance improving in deeper layers and peaking at layer 28, the model's
 last hidden layer:
 
-| Method | Layer | Val AUC | Val AP | Best F1 | Precision | Recall |
+| Method | Layer | Val AUC | Val AP | F1 | Precision | Recall |
 |---|---|---:|---:|---:|---:|---:|
 | **AbsTopK + Tail Reward** | **L28** | **0.9063** | **0.9082** | **0.8472** | **0.9023** | **0.7984** |
 | AbsTopK + Tail Reward | L27 | 0.9033 | 0.9068 | 0.8386 | 0.9212 | 0.7695 |
@@ -94,17 +95,15 @@ scenario. Names come from reading the top-activating frames:
 | Rain / wet road | 2169 | 43.8% | 100.0% (723/723) |
 | Glare on a wet or rainy road | 396 | 5.6% | 100.0% (92/92) |
 | Wheelchair user ahead | 3058 | 42.4% | 77.8% (14/18) |
-| Pedestrian in a construction zone | 1542 | 6.1% | 53.8% (71/132) |
+| Pedestrians crossing a construction zone | 1542 | 6.1% | 53.8% (71/132) |
 | Truck close to the ego vehicle | 1843 | 4.2% | 57.1% (12/21) |
 
-A single unit captures one sub-pattern; asking how often *at least one* unit of
-a related group fires gives the coverage of a whole scenario family:
+![Frames that activate units 396, 1542 and 3058](../docs/figures/neuron_examples.webp)
 
-| Scenario | Coverage by a related group |
-|---|---:|
-| Snowy | 100.0% |
-| Rainy / foggy | 92.0% |
-| Vulnerable road users | 57.6% |
+A single unit captures one sub-pattern; asking how often *at least one* unit of
+a related group fires gives the coverage of a whole scenario family. For
+vulnerable road users, a group of related units fires on 57.6% of the
+vulnerable-road-user frames.
 
 The machine-readable version is
 [`neuron_glossary.csv`](neuron_glossary.csv), which the screening tool joins
@@ -115,7 +114,7 @@ to rebuild the glossary for another run.
 ## Case study: a sample anomaly detection and confidence filtering both miss
 
 A wheelchair user appears near the ego vehicle's path in a frame from nuScenes
-`part07 / scene-0675`. It is a useful stress test because it is genuinely hard
+`scene-0675`. It is a useful stress test because it is genuinely hard
 for three common mining strategies:
 
 - **Unsupervised anomaly detection (KNN in feature space)** does not prioritise
@@ -146,7 +145,10 @@ make train                            # writes output/sae_abstopk_tail_reward/
 make ablations                        # the two ablation variants
 ```
 
-Each SAE run writes `metrics.json` (validation and test AUC / AP / precision /
-recall / F1), `neuron_report.csv`, the learned `z_n` and `z_t` codes, the
-per-sample scores and split assignment in `rows.json`, the standardiser and the
-model checkpoint. [`docs/user.md`](../docs/user.md) documents every flag.
+Each SAE run writes `metrics.json` (validation and test precision / recall / F1
+of the decision rule, AUC / AP of `||z_t||_2`), `neuron_report.csv`, the
+learned `z_n` and `z_t` codes, `activations.npz` for the neuron explorer, the
+per-sample predictions and split assignment in `rows.json`, the standardiser
+and the model checkpoint. `make explore` then opens the run in the
+[neuron explorer](../docs/neurons.md#browsing-the-units).
+[`docs/user.md`](../docs/user.md) documents every flag.
