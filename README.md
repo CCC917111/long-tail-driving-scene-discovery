@@ -108,7 +108,7 @@ uncertainty-based mining miss.
 
 # Framework
 
-![The six-step pipeline](docs/figures/pipeline.svg)
+![The six-step pipeline](docs/figures/pipeline.webp)
 
 The pipeline has six steps. **(1)** A single-frame, six-camera driving sample
 **(2)** is read by a frozen vision-language model under a scene-description
