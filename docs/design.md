@@ -3,7 +3,8 @@ High-level Design
 Welcome to the long-tail driving data mining project high-level design page!
 
 This page explains why the method is built the way it is, and gives the
-equations behind the sparse decomposition.
+equations behind the sparse decomposition. Numbers in brackets refer to the
+[references on the main page](../README.md#references).
 
 ![Pipeline](figures/pipeline.svg)
 
@@ -58,22 +59,26 @@ h_hat = f_dec(z)
 **Why AbsTopK and not Top-K.** A strongly negative activation carries as much
 information as a strongly positive one — in a linear decoder it points the
 reconstruction in the opposite direction with the same magnitude. Plain signed
-Top-K discards those units and keeps mildly positive ones instead. The ablation
-shows AbsTopK is the better rule at every layer tested.
+Top-K [16], [17] discards those units and keeps mildly positive ones instead;
+AbsTopK [18] selects by magnitude and keeps the sign. The ablation shows
+AbsTopK is the better rule at every layer tested.
 
 **Why a fixed split of the latent code.** `z_t` is not discovered, it is
 *declared*: the second half of the latent code is designated as the long-tail
 subspace and the objective pushes long-tail structure into it. That is what
-makes the score at inference time a simple norm over a known index range
-instead of a learned classifier on top of the code.
+makes the decision at inference time a count over a known index range instead
+of a learned classifier on top of the code.
 
 ## The objective
 
-```
-L_i = (1 + alpha * y_i) * ||h_hat_i - h_i||^2          reconstruction, up-weighted for tail samples
-    + beta_normal * (1 - y_i) * ||z_t,i||^2            suppress z_t on normal samples
-    + beta_tail   * y_i * max(0, tau - ||z_t,i||_2)    push z_t above margin tau on tail samples
-```
+$$
+\mathcal{L}_i = (1+\alpha y_i)\,\lVert \hat{h}_i - h_i\rVert_2^2
+\;+\; \beta_{\mathrm{normal}}\,(1-y_i)\,\lVert z_{t,i}\rVert_2^2
+\;+\; \beta_{\mathrm{tail}}\,y_i\,\max\!\left(0,\;\tau-\lVert z_{t,i}\rVert_2\right)
+$$
+
+reconstruction, up-weighted for long-tail samples; suppression of `z_t` on
+normal samples; and a margin that long-tail samples must reach in `z_t`.
 
 Each term does one job. The reconstruction term keeps the code faithful to the
 hidden state, so the units stay meaningful rather than degenerating into a
@@ -92,18 +97,33 @@ The supervision is weak on purpose: the objective needs only a binary label per
 frame, never a box, a mask or a category. That is the difference between
 labelling a few thousand frames and labelling them exhaustively.
 
-## Scoring and the decision
+## The decision
 
-```
-s(x) = ||z_t||_2          y_hat = 1 if s(x) >= eta
-```
+$$
+c_{\mathrm{tail}}(x) = \sum_{j=1}^{d_t} \mathbb{1}\!\left[\,\lvert z_t^{(j)}\rvert > \eta\,\right],
+\qquad
+\hat{y} = \mathbb{1}\!\left[\,c_{\mathrm{tail}}(x) \ge 1\,\right],
+\qquad \eta = 0.01 .
+$$
 
-`eta` is chosen on the validation split at the point of maximum F1, then
-applied unchanged to the held-out test split. Choosing it on the data it is
-then evaluated on would make every reported number an upper bound rather than
-an estimate, which is also why the labels play no part at inference: the
-screening tool reuses the stored threshold rather than re-tuning on the data
-being screened.
+A frame is long-tail as soon as one long-tail unit fires. This follows directly
+from how the subspace was trained: the suppression term drives `z_t` to exact
+zeros on normal frames — AbsTopK then simply does not select those units — so
+any surviving `z_t` activity is the evidence, and asking for more than one unit
+would only discard long-tail frames that express a single pattern. `eta` is a
+floor against numerical noise, not a tuned threshold.
+
+Because the rule fits nothing, it cannot be tuned on the data it is evaluated
+on, and the screening tool applies it to new data exactly as in training.
+`||z_t||_2` is kept as a continuous score: it orders the flagged frames and
+gives the threshold-free AUC and AP. The rule lives in
+[`scripts/tail_activations.py`](../scripts/tail_activations.py), the only place
+training, screening and the explorer take it from.
+
+A second threshold appears in the interpretability analysis, `|z_t| > 1`: a
+unit counts as *firing* on a frame for the neuron statistics only above that
+level, which filters the small activations that are enough for the decision but
+too weak to say anything about a particular unit.
 
 ## The evaluation protocol
 
@@ -117,7 +137,9 @@ Four decisions keep the numbers honest, and each one costs performance:
   the whole dataset leaks the test distribution into the model input.
 - **`uncertain` frames excluded, not counted.** Treating everything that is not
   confidently normal as long-tail would inflate recall by construction.
-- **Threshold fixed on validation, reported on test.** As above.
+- **Headline numbers on held-out scenes.** Validation is used to select the
+  checkpoint; the reported metrics are computed on test scenes the model never
+  saw, with the same fixed decision rule.
 
 ## Why the variants share one file
 
