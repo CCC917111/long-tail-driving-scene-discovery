@@ -11,7 +11,7 @@ model to your own frames has its own page,
 
 - Python 3.10 or newer, and transformers 4.49 or newer for Qwen2.5-VL support.
 - A CUDA GPU for the two VLM stages — bf16 inference, 24 GB VRAM or more is
-  comfortable. The SAE training and the screening step also run on CPU.
+  comfortable. SAE training, screening and the neuron explorer run on CPU.
 - Cosmos-Reason1-7B weights:
   https://huggingface.co/nvidia/Cosmos-Reason1-7B
 - nuScenes metadata (`v1.0-trainval_meta.tgz`) and keyframe images
@@ -21,7 +21,6 @@ model to your own frames has its own page,
 ```bash
 python -m venv .venv && source .venv/bin/activate
 make install                       # pip install -r requirements.txt
-pip install pytest flake8          # only needed for make test / make lint
 ```
 
 Every `make` target takes overrides, so a different data root or layer is a
@@ -50,7 +49,10 @@ All six synchronised camera views of a keyframe go to the VLM together with the
 normal-core rubric. The label and its confidence are read from the
 output-token logits of the three possible answers rather than parsed out of
 free text, so the confidence is calibrated rather than rhetorical. The run
-writes incrementally and resumes where it stopped.
+writes incrementally and resumes where it stopped. `--model-dir` selects the
+labelling model; for the reported labels a large VLM (Qwen3.5-397B-A17B)
+pre-labelled every keyframe and the pre-labels were verified by hand, and the
+same file format carries hand-corrected labels into training.
 
 Output: `labels.json`, one entry per keyframe with the sample token, the label
 (`normal_core` / `not_normal_core` / `uncertain`) and the confidence.
@@ -84,10 +86,13 @@ Outputs per layer, plus one shared index:
 |---|---|
 | `layer{L}_mlp_output_mean.npy` | `(N, D)` float32, mean-pooled over tokens |
 | `layer{L}_mlp_output_last_token.npy` | `(N, D)` float32, last-token representation |
-| `meta.json` | `N` row-aligned entries with `sample_token` and scene |
+| `meta.json` | `N` row-aligned entries: `sample_token`, scene, timestamp and the path of each camera image |
 
-`meta.json` is what lets the SAE split by scene instead of by sample, so keep
-it with the features.
+`meta.json` is what lets the SAE split by scene instead of by sample and what
+lets the explorer show the frames, so keep it with the features. The method
+uses the mean-pooled file; the last-token file is kept for the pooling
+comparison. Only keyframes with all six views on disk are extracted, one
+timestamp per sample.
 
 ## 3. Training the SAE
 
@@ -120,6 +125,7 @@ The flags worth knowing — run any script with `--help` for the rest:
 | `--reward-max` | 2.0 | Cap of the tail reward, `tau` in the loss |
 | `--val-ratio` / `--test-ratio` | 0.15 | Split sizes, taken at scene level |
 | `--epochs` | 200 | Training epochs; the best validation loss is kept |
+| `--act-threshold` | 0.01 | `eta` of the decision rule: long-tail if any `\|z_t\| > eta` |
 | `--neuron-threshold` | 1.0 | `\|z_t\|` threshold for the interpretability report |
 | `--seed` | 42 | Seed for the split and the initialisation |
 
@@ -130,11 +136,15 @@ excluded, and every other label counts as long-tail.
 
 Written to `--output-dir`:
 
-- `metrics.json` — validation and test AUC / AP / precision / recall / F1, the
-  chosen threshold, and the full configuration of the run.
+- `metrics.json` — validation and test precision / recall / F1 of the decision
+  rule, AUC and AP of `||z_t||_2`, the rule and its `eta`, and the full
+  configuration of the run.
 - `neuron_report.csv` — per-unit activation counts, purity and coverage.
 - `z_n_general.npy`, `z_t_longtail.npy` — the learned sparse codes.
-- `rows.json` — per-sample token, split assignment, label and score.
+- `activations.npz` — the sparse `z_t` of every frame with its token, scene,
+  image paths, label and split; what the neuron explorer reads.
+- `rows.json` — per-sample token, split, label, prediction, number of active
+  long-tail units and `||z_t||_2`.
 - `standardizer.npz`, `best_model.pth` — everything `screen.py` needs.
 - `training_loss_curve.png`.
 
@@ -148,7 +158,29 @@ Runs the two variants against the same features, labels and split, so the
 comparison in [`results/README.md`](../results/README.md) isolates the sparsity
 rule and the reward placement rather than confounding them with data changes.
 
-## 5. Screening new data
+## 5. Exploring the neurons
+
+```bash
+make explore DATA=<nuscenes>
+```
+
+which is
+
+```bash
+python scripts/neuron_explorer.py serve \
+    --run output/sae_abstopk_tail_reward \
+    --samples-root <nuscenes>/samples \
+    --glossary results/neuron_glossary.csv
+```
+
+and serves a local page at http://127.0.0.1:8765: pick a unit to see the frames
+that activate it most, pick a frame to see its six views and every long-tail
+unit it activates. `--port` and `--host` change the address; `unit`, `sample`
+and `units` sub-commands give the same answers in the terminal, and `--save`
+writes them as image sheets. [The Interpretable Neurons](neurons.md) walks
+through it.
+
+## 6. Screening new data
 
 ```bash
 make screen RUN=output/sae_abstopk_tail_reward FEATURES=output/extract_mydata
@@ -181,4 +213,10 @@ long-tail scenes on one side.
 
 **`screen.py` reports a dimension mismatch.** The features being screened come
 from a different layer or pooling than the run was trained on. Extract them
-with the same `--layers` value and the same `_mean` / `_last_token` file.
+with the same `--layers` value and the mean-pooled file.
+
+**The explorer shows frames without images.** `--samples-root` must point at
+the `samples/` directory that holds `CAM_FRONT/` and the other views. For
+features extracted before `meta.json` recorded image paths, add
+`--nuscenes-meta <nuscenes>/v1.0-trainval` so the paths are rebuilt from the
+nuScenes tables.

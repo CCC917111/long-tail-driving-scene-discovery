@@ -52,20 +52,31 @@ After a change, look at `neuron_report.csv` before looking at the F1: if the
 high-purity units have disappeared, the code has become too dense or too tight
 regardless of what the headline metric says.
 
-## Run on a different dataset
+## Run on a different dataset or camera rig
 
-The pipeline assumes multi-view frames with a stable identifier per sample:
+The pipeline assumes single-timestamp, multi-view samples with a stable
+identifier per sample:
 
-1. Adapt the metadata loading in `annotate_normal_core.py` and `extract.py`
-   to your index format. Both need a mapping from `sample_token` to the image
-   paths of its views.
+1. Adapt the metadata loading in `annotate_normal_core.py` (`build_samples`)
+   to your index format. It must return, per `sample_token`, the image path of
+   every view and the scene the sample belongs to; `extract.py` reuses it.
 2. Keep writing `meta.json` with a `scene_token` or `scene_name` per row. That
    field is what makes the split scene-level; without it the code warns and
    falls back to a sample-level split, which leaks near-duplicate frames.
-3. Everything downstream is dataset-agnostic.
+3. For a rig other than the six nuScenes cameras, change `CAMERAS` in
+   `annotate_normal_core.py` and in `tail_activations.py`, and the sentence
+   that names the views in both prompts ([`prompt_templates.md`](prompt_templates.md)).
+   Then label, extract and train again: a model trained on one rig is not
+   applied to features from another.
+4. Everything downstream of the features is dataset-agnostic.
 
-Fewer or more than six views works — the prompt describes the views it is
-given — as long as training and inference use the same configuration.
+## Change the decision rule
+
+The rule is defined once, in `predict_long_tail` in
+[`scripts/tail_activations.py`](../scripts/tail_activations.py), and training,
+screening and the explorer all import it. Change it there, keep `eta` as the
+flag it is (`--act-threshold` in training, `--eta` in screening), and extend
+`tests/test_neuron_explorer.py`, which tests the rule without torch.
 
 ## Use the units as retrieval keys
 
@@ -78,7 +89,7 @@ into a categorical search over an unlabelled corpus.
 ## Re-use a trained run on new data
 
 Nothing needs retraining to screen new frames: `screen.py` reads the model, the
-standardiser and the threshold from the run directory, so the new frames are
+standardiser and `eta` from the run directory, so the new frames are
 mapped into the space the SAE was fitted in rather than re-centred on
 themselves. Extract them with the same layer and pooling, then see
 [Screening Your Own Driving Data](apply.md).

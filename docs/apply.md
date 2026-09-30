@@ -1,6 +1,6 @@
 Screening Your Own Driving Data
 =============
-Welcome to the long-tail mining project application page!
+Welcome to the long-tail driving data mining project application page!
 
 The benchmark answers "how good is this method". This page answers the question
 a team with a drive log actually has: **here are a hundred thousand frames
@@ -14,10 +14,10 @@ frames over and over, and the frames that matter — the ones that would require
 the ego vehicle to slow down, yield or keep a larger margin — are rare by
 definition.
 
-`scripts/screen.py` takes your frames and returns them ranked by how strongly
-they activate the learned long-tail subspace, each with the activated neurons
-and, where those neurons have names, a plain-language reason. You annotate from
-the top of that list.
+`scripts/screen.py` takes your frames, flags every frame on which at least one
+learned long-tail unit fires, and lists the flagged frames first, strongest
+first, each with the units that fired and, where those units have names, a
+plain-language reason. You annotate from the top of that list.
 
 What it is not: a perception model or a safety monitor. It does not detect
 objects, and it makes no claim about a frame beyond "this looks like the kind of
@@ -50,23 +50,23 @@ because they are what it was built for:
 The frames go through `scripts/extract.py`, exactly as in training, so the
 input contract is that script's contract:
 
-| What | Layout |
+| What | Requirement |
 |---|---|
-| Images | Six synchronised camera views per sample, in the nuScenes layout: `samples/CAM_FRONT/<file>.jpg`, `samples/CAM_FRONT_LEFT/...`, `CAM_FRONT_RIGHT`, `CAM_BACK`, `CAM_BACK_LEFT`, `CAM_BACK_RIGHT` |
-| Index | A metadata source that maps a `sample_token` to its six image paths — the nuScenes `v1.0-*_meta.tgz` for nuScenes data |
-| Layer | The same `--layers` value as the training run, e.g. `28` |
-| Pooling | The same pooling as the training run: mean-pooled (`*_mean.npy`) or last-token (`*_last_token.npy`) |
+| Sample | One keyframe: a single timestamp, no temporal context. A drive is screened frame by frame. |
+| Views | Exactly six synchronised cameras per sample, in the nuScenes layout and order: `samples/CAM_FRONT/<file>.jpg`, then `CAM_FRONT_LEFT`, `CAM_FRONT_RIGHT`, `CAM_BACK`, `CAM_BACK_LEFT`, `CAM_BACK_RIGHT`. A keyframe with a missing view is skipped. |
+| Images | Any format Pillow reads; each view is resized to between 3,136 and 1,600,000 pixels. |
+| Index | A metadata source mapping a `sample_token` to its six image paths and its scene — the nuScenes `v1.0-*` tables for nuScenes-format data. |
+| Layer | The same `--layers` value as the training run, `28` for the reported run. |
+| Pooling | Mean over tokens (`*_mean.npy`), as in training. |
 
-Fewer than six views also works — the prompt in
-[`prompt_templates.md`](prompt_templates.md) describes the views it is given —
-but a run trained on six-view features should be applied to six-view features.
-Mixing them changes the feature distribution the SAE was fitted on.
+A run trained on this six-camera rig is applied to data from the same rig; the
+prompt names the six views in this order, so the order is part of the input.
 
 Extraction writes two files that travel together:
 
 ```
-layer28_mlp_output_mean.npy   (N, D) float32, one row per frame
-meta.json                     N entries, row-aligned, with sample_token and scene
+layer28_mlp_output_mean.npy   (N, 3584) float32, one row per frame
+meta.json                     N entries, row-aligned: sample_token, scene, image paths
 ```
 
 `screen.py` checks that `D` matches the run's input dimension and that
@@ -99,29 +99,36 @@ python scripts/screen.py \
 No labels are needed at this point. Labels are only used to *train* the SAE; at
 screening time the method is unsupervised.
 
-The decision threshold is not re-tuned on your data — it is read from
-`metrics.json`, the value the training run chose on its own validation split
-and applied unchanged to its held-out test split. `--threshold` overrides it if
-you would rather trade precision for recall; raising it shortens the shortlist,
-lowering it lengthens it.
+The decision is the rule used in training: a frame is flagged when at least one
+long-tail unit has `|z_t| > eta`, with `eta` read from the run's
+`metrics.json` (0.01). Nothing is re-tuned on your data. `--eta` changes the
+floor if you want to experiment; to shorten the list instead, take the top of
+the ranking or filter on the units you care about.
 
 ## What you get back
 
-`screening.csv`, one row per frame, sorted by score:
+`screening.csv`, one row per frame, flagged frames first:
 
 | Column | Meaning |
 |---|---|
-| `rank` | Position in the ranking, 1 = most long-tail-like |
+| `rank` | Position in the list, 1 = the most strongly flagged frame |
 | `sample_token` | Frame identifier, carried over from `meta.json` |
 | `scene` | Scene name or token, so you can group frames by drive |
-| `tail_score` | `\|\|z_t\|\|_2`, the activation strength of the long-tail subspace |
-| `prediction` | `long_tail` or `normal`, at the threshold in use |
-| `active_neurons` | How many long-tail units the frame activates |
-| `top_neurons` | The strongest activated unit indices |
+| `prediction` | `long_tail` if at least one long-tail unit is active, else `normal` |
+| `active_tail_units` | `c_tail`, the number of long-tail units with `\|z_t\| > eta` |
+| `tail_score` | `\|\|z_t\|\|_2`, how strongly the long-tail subspace responds; orders the list |
+| `strong_units` | How many units fire above the interpretability threshold (`\|z_t\| > 1`) |
+| `top_neurons` | The strongest of those unit indices |
 | `reasons` | Their names, for the units that have one |
 
-and `long_tail_samples.json`, just the flagged tokens, ready to be handed to an
-annotation tool.
+plus `long_tail_samples.json`, just the flagged tokens, ready to be handed to an
+annotation tool, and `activations.npz`, which the
+[neuron explorer](neurons.md#browsing-the-units) opens directly:
+
+```bash
+python scripts/neuron_explorer.py serve --run output/screening \
+    --samples-root <your_data>/samples --glossary results/neuron_glossary.csv
+```
 
 The console prints the flagged share and a tally of the reasons:
 
@@ -131,7 +138,7 @@ screened 12480 frames | flagged 1163 (9.3%) as long-tail
 why they were flagged:
     612  Rain / wet road
      97  Glare on a wet or rainy road
-     41  Pedestrian in a construction zone
+     41  Pedestrians crossing a construction zone
      14  Wheelchair user ahead
 ```
 
@@ -142,7 +149,7 @@ labelled it.
 ## Working with the result
 
 - **Spend the annotation budget top-down.** Take the first N rows of
-  `screening.csv`. With the reported test-split precision of 0.90, most of what
+  `screening.csv`. With the reported long-tail precision of 0.90, most of what
   a human opens is worth opening.
 - **Fill a specific gap.** If your model fails on wet-road glare, filter on the
   unit for it rather than on the score — see
@@ -151,9 +158,10 @@ labelled it.
 - **Compare drives.** Group by `scene` and compare flagged shares to find which
   collection routes actually contribute rare data and which ones repeat what
   you already have.
-- **Look at `active_neurons`, not only `tail_score`.** A frame that activates
-  several unrelated units is often a genuinely compound scene; a frame with one
-  very strong unit is usually a clean example of that one category.
+- **Look at the units, not only the score.** A frame that activates several
+  unrelated units is often a genuinely compound scene; a frame with one very
+  strong unit is usually a clean example of that one category. The explorer's
+  frame view shows this at a glance.
 
 ## Adapting it to your own definition of "rare"
 

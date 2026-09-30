@@ -58,8 +58,21 @@ conventions below applied consistently across the scripts.
 - Anything reported in the README or in `results/` is produced by a script in
   this repository, with the flags given next to it.
 
+## Dependencies per module
+
+- Modules that do not need torch do not import it. The decision rule, the
+  activation store and the neuron explorer (`tail_activations.py`,
+  `neuron_explorer.py`) need only numpy and Pillow, so a trained run can be
+  inspected on any machine.
+- The web interface uses the standard library's HTTP server and a single
+  self-contained page: no front-end build step and no extra package.
+
 ## Checking
 
 ```bash
 make lint          # python -m flake8 scripts tests --max-line-length 100
 ```
+
+The configuration is in [`.flake8`](../.flake8). The VLM prompts and the
+explorer's web page are kept verbatim as strings, so those three files are
+exempt from the line-length rule and nothing else is.

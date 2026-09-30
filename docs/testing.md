@@ -3,23 +3,29 @@ Testing
 Welcome to the long-tail driving data mining project testing page!
 
 The suite runs on CPU in seconds and needs neither the dataset nor the VLM:
-every test builds a small SAE on synthetic arrays. Its job is to pin down the
-properties that are easy to break silently — a sparsity rule that quietly drops
-negative activations, a split that leaks near-duplicate frames, a label
-protocol that counts `uncertain` as long-tail — rather than to check numbers
-that depend on initialisation.
+every test works on small synthetic arrays and images. Its job is to pin down
+the properties that are easy to break silently — a sparsity rule that quietly
+drops negative activations, a split that leaks near-duplicate frames, a label
+protocol that counts `uncertain` as long-tail, a decision rule that ignores a
+negative activation, an image route that can be walked out of its directory —
+rather than to check numbers that depend on initialisation.
 
 ## Overall structure
 
 ```bash
-make test                            # python -m pytest tests -q
-python tests/test_sae_common.py      # the same tests, without pytest
+make test                                # python -m pytest tests -q
+python tests/test_sae_common.py          # the SAE library, without pytest
+python tests/test_neuron_explorer.py     # rule, store and explorer, without pytest
 ```
 
-The file works both under pytest and as a script: running it directly executes
-every `test_*` function in order and prints one line per test. It needs `torch`
-and `scikit-learn`, which `requirements.txt` already installs, plus `pytest`
-for the first form.
+| File | Covers | Needs |
+|---|---|---|
+| `tests/test_sae_common.py` | sparsity, objective, split, labels, metrics | torch, scikit-learn |
+| `tests/test_neuron_explorer.py` | decision rule, activation store, explorer queries, web interface | numpy, Pillow |
+
+Both files work under pytest and as scripts: running one directly executes
+every `test_*` function in order and prints one line per test. Everything they
+need is in `requirements.txt`.
 
 ## Unit tests
 
@@ -59,26 +65,47 @@ for the first form.
   than counted as long-tail. Both accepted label formats are exercised,
   including the nested `{"labels": {"label": ...}}` form.
 
-### Thresholding
+### Decision rule and metrics
 
-- **The threshold lands where F1 peaks,** and the metrics computed at it are
-  the expected perfect scores on a separable toy problem.
-- **Both classes are reported,** with the right support, so a future change to
-  the metric block cannot silently drop the normal class.
+- **One active unit is enough.** `c_tail` counts the units with `|z_t| > eta`
+  and a frame is long-tail when the count is at least one; a frame with no
+  active unit is normal.
+- **Sign does not matter, the threshold is strict.** A negative activation
+  counts as active, and an activation exactly at `eta` does not.
+- **A quiet tail subspace means normal.** With the encoder pinned so that
+  AbsTopK keeps only `z_n` units, the frame is normal; move one strong
+  activation into `z_t` and it becomes long-tail.
+- **The metrics score the rule.** Precision and recall are computed from the
+  count rule's predictions and AUC from `||z_t||_2`, checked on a hand-worked
+  example; both classes are reported with the right support.
+
+### Activation store and explorer
+
+- **The store round-trips exactly.** Writing `z_t` sparsely and reading it back
+  gives the same matrix, the same counts, labels, splits and image paths, also
+  when the last frames have no active unit.
+- **Both lookup directions are ordered by magnitude.** A unit's frames come
+  strongest first regardless of sign; a frame's units likewise, with the
+  firing threshold marked.
+- **Purity is computed per unit** from the labels, as in the report.
+- **Unknown tokens and out-of-range units are errors,** not empty answers.
+- **Image paths cannot leave `--samples-root`,** whatever `meta.json` says.
+- **The web interface answers both directions,** serves the page, the JSON
+  endpoints and JPEG thumbnails, and returns 404 for an unknown frame.
 
 ## What is not covered
 
 The two VLM stages need model weights and a GPU, so they are exercised by
 running them rather than by unit tests; `--max-samples` makes a smoke test
-cheap. `screen.py` is covered indirectly — it is a thin composition of
-`LongTailGuidedSAE.encode` and the stored run configuration — and its failure
-modes are the explicit dimension and row-count checks, which report the problem
-instead of producing a silently wrong ranking.
+cheap. `screen.py` is a thin composition of `LongTailGuidedSAE.encode`, the
+decision rule and the activation store, all of which are tested; its own
+failure modes are the explicit dimension and row-count checks, which report the
+problem instead of producing a silently wrong list.
 
 ## Adding a test
 
-Add a `test_*` function to `tests/test_sae_common.py`, keep it free of dataset
-and VLM access, and prefer a property over a golden value: assert that a
+Add a `test_*` function to the file that matches what it tests, keep it free of
+dataset and VLM access, and prefer a property over a hard-coded number: assert that a
 negative activation survives, that a scene cannot straddle a split, that an
 `uncertain` row is dropped — not that a metric equals a number produced by
 today's random seed.
