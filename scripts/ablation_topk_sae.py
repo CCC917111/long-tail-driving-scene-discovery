@@ -13,7 +13,7 @@ the sparsity rule alone can be isolated with:
 
 Example:
     python scripts/ablation_topk_sae.py \\
-        --features output/extract/layer28_mlp_output_last_token.npy \\
+        --features output/extract/layer28_mlp_output_mean.npy \\
         --meta output/extract/meta.json \\
         --labels output/annotations/labels.json \\
         --output-dir output/ablation_topk_sae

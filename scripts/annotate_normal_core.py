@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Annotate NuScenes keyframes with normal_core / not_normal_core / uncertain.
 
-Standalone script. Does NOT depend on extract.py or pipeline.py.
+Standalone script. Does NOT depend on extract.py.
 
 Pipeline:
   1. One-time extract v1.0-trainval_meta.tgz to get sample.json / sample_data.json.

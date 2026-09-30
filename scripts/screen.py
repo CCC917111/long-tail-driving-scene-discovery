@@ -12,13 +12,25 @@ Inputs
 ------
 --run-dir   A directory written by scripts/sae_abstopk_tail_reward.py (or an
             ablation). It must contain best_model.pth, standardizer.npz and
-            metrics.json; the SAE hyper-parameters and the decision threshold
-            are read from metrics.json, so the screening run is configured
-            exactly like the run that produced the model.
+            metrics.json; the SAE hyper-parameters and eta are read from
+            metrics.json, so the screening run is configured exactly like the
+            run that produced the model.
 --features  An (N, D) .npy matrix written by scripts/extract.py for your own
             frames, using the same VLM, the same layer and the same pooling as
             the training run. D must match the run's input dimension.
 --meta      The row-aligned meta.json written next to it.
+
+Decision
+--------
+The same rule as in training (scripts/tail_activations.py): a frame is flagged
+as long-tail when at least one unit of the long-tail subspace is active,
+|z_t,j| > eta. Flagged frames are listed first, ordered by ||z_t||_2.
+
+Outputs
+-------
+screening.csv            one row per frame, flagged frames first
+long_tail_samples.json   the sample tokens of the flagged frames
+activations.npz          the sparse z_t codes, for scripts/neuron_explorer.py
 
 Example:
     python scripts/screen.py \
@@ -40,6 +52,14 @@ import numpy as np
 import torch
 
 from sae_common import LongTailGuidedSAE
+from tail_activations import (
+    DEFAULT_ETA,
+    load_glossary,
+    predict_long_tail,
+    save_activations,
+    tail_activation_count,
+    tail_score,
+)
 
 MODEL_FILE = "best_model.pth"
 STANDARDIZER_FILE = "standardizer.npz"
@@ -63,11 +83,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--glossary", type=Path, default=None,
                    help="CSV mapping z_t neurons to human-readable features, "
                         "e.g. results/neuron_glossary.csv")
-    p.add_argument("--threshold", type=float, default=None,
-                   help="Decision threshold on ||z_t||. Default: the threshold "
-                        "the training run chose on its validation split.")
+    p.add_argument("--eta", type=float, default=None,
+                   help="|z_t| above which a long-tail unit counts as active in "
+                        "the decision rule. Default: the eta of the training run.")
     p.add_argument("--neuron-threshold", type=float, default=1.0,
-                   help="|z_t| above which a neuron counts as activated")
+                   help="|z_t| above which a unit is reported as a reason for the "
+                        "flag (the interpretability threshold, not eta)")
     p.add_argument("--top-neurons", type=int, default=5,
                    help="How many activated neurons to report per frame")
     p.add_argument("--batch-size", type=int, default=64)
@@ -76,7 +97,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def load_run(run_dir: Path) -> tuple[dict, float]:
-    """Reads the SAE configuration and validation threshold of a training run."""
+    """Reads the SAE configuration and the eta of a training run."""
     metrics_path = run_dir / METRICS_FILE
     if not metrics_path.exists():
         raise SystemExit(f"{metrics_path} not found; --run-dir must point at a "
@@ -84,11 +105,8 @@ def load_run(run_dir: Path) -> tuple[dict, float]:
     with metrics_path.open("r", encoding="utf-8") as f:
         metrics = json.load(f)
     config = metrics.get("config", {})
-    threshold = metrics.get("val", {}).get("threshold")
-    if threshold is None:
-        raise SystemExit(f"{metrics_path} has no validation threshold; pass "
-                         f"--threshold explicitly")
-    return config, float(threshold)
+    eta = metrics.get("decision", {}).get("eta", config.get("act_threshold", DEFAULT_ETA))
+    return config, float(eta)
 
 
 def build_model(config: dict, input_dim: int, device: str) -> LongTailGuidedSAE:
@@ -102,24 +120,6 @@ def build_model(config: dict, input_dim: int, device: str) -> LongTailGuidedSAE:
         sparsity=str(config.get("sparsity", "abstopk")),
         reward=str(config.get("reward", "norm")),
     ).to(device)
-
-
-def load_glossary(path: Path | None) -> dict[int, str]:
-    """Reads a neuron -> feature-name mapping, if one was given."""
-    if path is None:
-        return {}
-    glossary: dict[int, str] = {}
-    with path.open("r", encoding="utf-8", newline="") as f:
-        for row in csv.DictReader(f):
-            try:
-                neuron = int(row["neuron"])
-            except (KeyError, TypeError, ValueError):
-                continue
-            name = (row.get("feature") or "").strip()
-            if name:
-                glossary[neuron] = name
-    print(f"[glossary] {len(glossary)} named neurons from {path}")
-    return glossary
 
 
 @torch.no_grad()
@@ -138,8 +138,8 @@ def main() -> None:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    config, run_threshold = load_run(args.run_dir)
-    threshold = args.threshold if args.threshold is not None else run_threshold
+    config, run_eta = load_run(args.run_dir)
+    eta = args.eta if args.eta is not None else run_eta
 
     features = np.load(args.features).astype(np.float32)
     if features.ndim != 2:
@@ -166,13 +166,17 @@ def main() -> None:
     model.load_state_dict(state)
     model.eval()
     print(f"[model] {args.run_dir / MODEL_FILE} | sparsity={model.sparsity} "
-          f"k={model.k} tail_dim={model.tail_dim} | threshold={threshold:.4f}")
+          f"k={model.k} tail_dim={model.tail_dim} | eta={eta}")
 
     z_t = encode(model, x, args.batch_size, args.device)
-    score = np.linalg.norm(z_t, axis=1)
-    predicted_tail = score >= threshold
+    count = tail_activation_count(z_t, eta)
+    predicted_tail = predict_long_tail(z_t, eta).astype(bool)
+    score = tail_score(z_t)
+    save_activations(args.output_dir / "activations.npz", z_t, meta)
 
     glossary = load_glossary(args.glossary)
+    if glossary:
+        print(f"[glossary] {len(glossary)} named neurons from {args.glossary}")
     magnitude = np.abs(z_t)
     active = magnitude > args.neuron_threshold
 
@@ -186,17 +190,18 @@ def main() -> None:
             "scene": entry.get("scene_name") or entry.get("scene_token") or "",
             "tail_score": float(score[i]),
             "prediction": "long_tail" if predicted_tail[i] else "normal",
-            "active_neurons": int(active[i].sum()),
+            "active_tail_units": int(count[i]),
+            "strong_units": int(active[i].sum()),
             "top_neurons": " ".join(str(j) for j in top),
             "reasons": "; ".join(glossary[j] for j in top if j in glossary),
         })
 
-    rows.sort(key=lambda r: -r["tail_score"])
+    rows.sort(key=lambda r: (r["prediction"] != "long_tail", -r["tail_score"]))
     for rank, row in enumerate(rows, start=1):
         row["rank"] = rank
 
-    fields = ["rank", "sample_token", "scene", "tail_score", "prediction",
-              "active_neurons", "top_neurons", "reasons"]
+    fields = ["rank", "sample_token", "scene", "prediction", "active_tail_units",
+              "tail_score", "strong_units", "top_neurons", "reasons"]
     table = args.output_dir / "screening.csv"
     with table.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -224,6 +229,7 @@ def main() -> None:
                 print(f"  {count:5d}  {name}")
     print(f"\nranked table: {table}")
     print(f"flagged tokens: {args.output_dir / 'long_tail_samples.json'}")
+    print(f"activations for the neuron explorer: {args.output_dir / 'activations.npz'}")
 
 
 if __name__ == "__main__":

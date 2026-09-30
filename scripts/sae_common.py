@@ -23,9 +23,12 @@ Pipeline
    keyframes from the same nuScenes scene never end up on both sides.
 4. Standardise features with statistics computed on the training split only.
 5. Train the SAE; the checkpoint with the lowest validation loss is kept.
-6. Score every sample with ``||z_t||_2``. The decision threshold is chosen on
-   the validation split (max F1) and then applied unchanged to the held-out
-   test split, which is where the headline metrics are reported.
+6. Count the active long-tail units of every sample,
+   ``c_tail = #{j : |z_t,j| > eta}``, and predict long-tail when
+   ``c_tail >= 1`` (``--act-threshold``, eta = 0.01). The rule has no fitted
+   parameter, so validation and test are scored the same way; ``||z_t||_2`` is
+   reported alongside as a continuous score for AUC / AP. The rule itself lives
+   in ``tail_activations.py``.
 """
 
 from __future__ import annotations
@@ -40,11 +43,17 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import (
     average_precision_score,
-    precision_recall_curve,
     precision_recall_fscore_support,
     roc_auc_score,
 )
 from torch.utils.data import DataLoader, TensorDataset
+
+from tail_activations import (
+    predict_long_tail,
+    save_activations,
+    tail_activation_count,
+    tail_score,
+)
 
 NORMAL_LABELS = {"normal", "normal_core"}
 DROP_LABELS = {"", "unknown", "uncertain", "none"}
@@ -62,7 +71,7 @@ def build_parser(description: str, defaults: dict) -> argparse.ArgumentParser:
     # Data
     p.add_argument("--features", type=Path, required=True,
                    help="(N, D) .npy feature matrix from scripts/extract.py, "
-                        "e.g. layer28_mlp_output_last_token.npy")
+                        "e.g. layer28_mlp_output_mean.npy")
     p.add_argument("--meta", type=Path, required=True,
                    help="meta.json written by scripts/extract.py (one entry per feature row)")
     p.add_argument("--labels", type=Path, nargs="+", required=True,
@@ -71,7 +80,8 @@ def build_parser(description: str, defaults: dict) -> argparse.ArgumentParser:
                         "'labels': {'label'}}]}.")
     p.add_argument("--output-dir", type=Path, required=True, help="Where results are written")
     # Split
-    p.add_argument("--val-ratio", type=float, default=0.15, help="Fraction of samples for validation")
+    p.add_argument("--val-ratio", type=float, default=0.15,
+                   help="Fraction of samples for validation")
     p.add_argument("--test-ratio", type=float, default=0.15, help="Fraction of samples for testing")
     p.add_argument("--seed", type=int, default=42, help="Random seed")
     # Model
@@ -104,7 +114,8 @@ def build_parser(description: str, defaults: dict) -> argparse.ArgumentParser:
     p.add_argument("--weight-decay", type=float, default=1e-5, help="Adam weight decay")
     # Evaluation
     p.add_argument("--act-threshold", type=float, default=0.01,
-                   help="|z| above this value counts as an active latent unit")
+                   help="eta of the decision rule: a z_t unit with |z| > eta is active, "
+                        "and a sample with at least one active z_t unit is long-tail")
     p.add_argument("--neuron-threshold", type=float, default=1.0,
                    help="|z_t| threshold used for the per-neuron interpretability report")
     p.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu",
@@ -386,19 +397,12 @@ def encode_all(model: LongTailGuidedSAE, x: np.ndarray, batch_size: int, device:
     return np.concatenate(z_n_all), np.concatenate(z_t_all)
 
 
-def best_f1_threshold(y: np.ndarray, score: np.ndarray) -> float:
-    precision, recall, thresholds = precision_recall_curve(y, score)
-    f1 = 2 * precision * recall / np.clip(precision + recall, 1e-12, None)
-    return float(thresholds[int(np.argmax(f1[:-1]))])
-
-
-def classification_metrics(y: np.ndarray, score: np.ndarray, threshold: float) -> dict:
-    pred = (score >= threshold).astype(int)
+def classification_metrics(y: np.ndarray, pred: np.ndarray, score: np.ndarray) -> dict:
+    """Precision / recall / F1 of the decision ``pred`` and AUC / AP of ``score``."""
     p, r, f, support = precision_recall_fscore_support(y, pred, labels=[1, 0], zero_division=0)
     return {
         "auc": float(roc_auc_score(y, score)),
         "ap": float(average_precision_score(y, score)),
-        "threshold": threshold,
         "long_tail": {"precision": float(p[0]), "recall": float(r[0]), "f1": float(f[0]),
                       "support": int(support[0])},
         "normal": {"precision": float(p[1]), "recall": float(r[1]), "f1": float(f[1]),
@@ -466,7 +470,8 @@ def run(description: str, defaults: dict) -> None:
     splits = split_indices(labels, groups, args.val_ratio, args.test_ratio, args.seed)
     for name, idx in splits.items():
         n_tail = int(labels[idx].sum())
-        print(f"[split] {name}: {len(idx)} samples ({len(idx) - n_tail} normal, {n_tail} long-tail)")
+        print(f"[split] {name}: {len(idx)} samples "
+              f"({len(idx) - n_tail} normal, {n_tail} long-tail)")
         if len(idx) == 0 or n_tail == 0 or n_tail == len(idx):
             raise ValueError(f"Split '{name}' does not contain both classes; "
                              f"adjust --val-ratio/--test-ratio or --seed.")
@@ -488,21 +493,23 @@ def run(description: str, defaults: dict) -> None:
     save_loss_curve(history, args.output_dir / "training_loss_curve.png")
 
     z_n, z_t = encode_all(model, x, args.batch_size, args.device)
-    score = np.linalg.norm(z_t, axis=1)
+    count = tail_activation_count(z_t, args.act_threshold)
+    pred = predict_long_tail(z_t, args.act_threshold)
+    score = tail_score(z_t)
 
     for name in ("train", "val", "test"):
         idx = splits[name]
         activation_stats(name, z_n[idx], z_t[idx], labels[idx], args.act_threshold)
 
-    threshold = best_f1_threshold(labels[va], score[va])
     metrics = {
         "config": vars(args),
+        "decision": {"rule": "c_tail >= 1", "eta": args.act_threshold},
         "score": "||z_t||_2",
-        "val": classification_metrics(labels[va], score[va], threshold),
-        "test": classification_metrics(labels[te], score[te], threshold),
+        "val": classification_metrics(labels[va], pred[va], score[va]),
+        "test": classification_metrics(labels[te], pred[te], score[te]),
     }
-    print(f"\n{'=' * 70}\nLong-tail detection with ||z_t||_2 "
-          f"(threshold {threshold:.4f} chosen on validation)\n{'=' * 70}")
+    print(f"\n{'=' * 70}\nLong-tail detection: long-tail if at least one z_t unit has "
+          f"|z| > {args.act_threshold}\n{'=' * 70}")
     for name in ("val", "test"):
         m = metrics[name]
         print(f"{name:>4}: AUC={m['auc']:.4f} AP={m['ap']:.4f} | long_tail "
@@ -519,9 +526,12 @@ def run(description: str, defaults: dict) -> None:
     np.save(args.output_dir / "z_n_general.npy", z_n)
     np.save(args.output_dir / "z_t_longtail.npy", z_t)
     np.save(args.output_dir / "is_tail.npy", labels)
+    save_activations(args.output_dir / "activations.npz", z_t, meta,
+                     labels=labels.astype(int), splits=list(split_name))
     with (args.output_dir / "rows.json").open("w", encoding="utf-8") as f:
         json.dump([{"sample_token": m.get("sample_token"), "split": s, "label": int(l),
-                    "score": float(sc)} for m, s, l, sc in zip(meta, split_name, labels, score)],
+                    "prediction": int(pr), "active_tail_units": int(c), "score": float(sc)}
+                   for m, s, l, pr, c, sc in zip(meta, split_name, labels, pred, count, score)],
                   f, indent=1)
     np.savez(args.output_dir / "standardizer.npz", mean=mean, std=std)
     with (args.output_dir / "metrics.json").open("w", encoding="utf-8") as f:
