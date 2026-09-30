@@ -15,9 +15,24 @@ Layer numbers are 1-indexed decoder blocks, so for the 28-block language model
 of Cosmos-Reason1-7B ``--layers 28`` is the last block.
 
 ``meta.json`` (row-aligned with the arrays) stores sample_token, scene_token,
-scene_name and timestamp so that the SAE scripts can join labels and split the
-data by scene. Optionally (``--caption``) the generated scene description is
-written to ``captions.jsonl``.
+scene_name, timestamp and the relative path of each camera image, so that the
+SAE scripts can join labels and split the data by scene and the neuron explorer
+can show the frames. Optionally (``--caption``) the generated scene description
+is written to ``captions.jsonl``.
+
+What one sample is
+------------------
+* One keyframe: a single timestamp, no temporal context. nuScenes keyframes are
+  annotated at 2 Hz; the intermediate sweeps are not used.
+* Exactly six synchronized views, always in the order CAM_FRONT,
+  CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT.
+  Keyframes with a missing view are skipped, and the prompt names the views in
+  this order, so the order is part of the input.
+* Each view is resized by the VLM processor to between ``--min-pixels`` and
+  ``--max-pixels`` pixels (3,136 to 1,600,000). A 1600 x 900 nuScenes image
+  (1.44 MP) is used at full resolution.
+* One forward pass per sample with the six images and the scene prompt; the
+  generated text is not needed for the features.
 
 Sample discovery reuses ``ensure_meta`` / ``build_samples`` from
 scripts/annotate_normal_core.py, so both scripts see exactly the same set of
@@ -166,7 +181,7 @@ def main() -> None:
         print(f"[plan] restricted to {len(samples)} samples listed in {args.sample_tokens}")
 
     rows, meta, captions = (load_checkpoint(args.output_dir, args.layers) if args.resume
-                            else ({(l, k): [] for l in args.layers for k in ("mean", "last")},
+                            else ({(layer, k): [] for layer in args.layers for k in ("mean", "last")},
                                   [], []))
     done = {m["sample_token"] for m in meta}
     pending = [s for s in samples if s["sample_token"] not in done]
@@ -248,6 +263,8 @@ def main() -> None:
                 "scene_token": sample.get("scene_token"),
                 "scene_name": sample.get("scene_name"),
                 "timestamp": sample.get("timestamp"),
+                "images": {cam: f"{cam}/{Path(sample['channels'][cam]).name}"
+                           for cam in CAMERAS},
             })
 
             if i == 1 or i % 10 == 0:

@@ -11,7 +11,7 @@ experiment.
 
 Example:
     python scripts/ablation_sae_cosmos_baseline.py \\
-        --features output/extract/layer28_mlp_output_last_token.npy \\
+        --features output/extract/layer28_mlp_output_mean.npy \\
         --meta output/extract/meta.json \\
         --labels output/annotations/labels.json \\
         --output-dir output/ablation_sae_cosmos_baseline

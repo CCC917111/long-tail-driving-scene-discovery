@@ -7,12 +7,13 @@
   capped at --reward-max so the norm cannot grow without bound.
 * Normal samples are penalised for any z_t activity (beta * ||z_t||^2).
 
-At inference no labels are used: a sample is scored by ||z_t||_2 and flagged as
-long-tail above a threshold selected on the validation split.
+At inference no labels are used: a sample is flagged as long-tail when at least
+one unit of z_t is active (|z_t,j| > eta, eta = 0.01), and ||z_t||_2 orders the
+flagged samples.
 
 Example:
     python scripts/sae_abstopk_tail_reward.py \\
-        --features output/extract/layer28_mlp_output_last_token.npy \\
+        --features output/extract/layer28_mlp_output_mean.npy \\
         --meta output/extract/meta.json \\
         --labels output/annotations/labels.json \\
         --output-dir output/sae_abstopk_tail_reward
