@@ -8,6 +8,18 @@ change something.
 
 ## Abstract
 
+This is a deep-learning research project which has been completed by Yike Chen,
+Zihua Chen and Yusong Zhao as a capstone project at the Chinese University of
+Hong Kong, Shenzhen. We developed a long-tail data mining tool for autonomous
+driving: it finds rare, safety-critical driving scenes in large datasets by
+reading the internal representations of a vision-language model, instead of
+relying on hand-written rules, keyword search, anomaly scores or model
+uncertainty. It mainly contains three parts. The mining pipeline labels the
+data, extracts the model's hidden states and decomposes them with a
+tail-guided sparse autoencoder; the neuron explorer shows which units fire on
+which frames, so every flagged frame comes with a reason; and the screening
+tool applies a trained model to new, unlabelled driving data.
+
 The project mines long-tail autonomous-driving data from the hidden
 representations of a frozen vision-language model. A behaviour-oriented rubric
 defines what counts as long-tail, a VLM applies that rubric at scale to produce
