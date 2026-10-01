@@ -294,7 +294,7 @@ class LongTailGuidedSAE(nn.Module):
 
         # Reward z_t activity on tail samples, capped at reward_max. Note that
         # -c * min(||z_t||, tau) = c * max(0, tau - ||z_t||) - c * tau, i.e. this is
-        # the hinge term of the README loss up to a constant.
+        # a hinge penalty up to a constant.
         tail = is_tail == 1
         if self.reward == "norm" and tail.any():
             l_tail = -self.reward_coeff * torch.clamp(z_t[tail].norm(dim=1),
