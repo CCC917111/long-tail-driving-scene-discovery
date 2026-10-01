@@ -122,9 +122,10 @@ driving sample, the method extracts internal hidden features from the frozen
 VLM and trains a tail-guided SAE to decompose them into sparse normal and
 long-tail-sensitive latent features. At inference, a sample is identified as a
 long-tail candidate when the learned long-tail feature subspace is activated.
-On nuScenes [[12]](#ref-12), the method raises long-tail F1 from 0.024 for the
-same VLM prompted directly to 0.847, learns individual neurons that correspond
-to specific risk patterns, and finds safety-critical samples that anomaly- and
+On nuScenes [[12]](#ref-12), the same VLM that finds 1.3% of the long-tail
+frames when prompted directly finds 79.8% of them through the SAE, with a
+precision of 0.90; the method also learns individual neurons that correspond to
+specific risk patterns, and finds safety-critical samples that anomaly- and
 uncertainty-based mining miss.
 
 ## Pipeline
@@ -157,15 +158,27 @@ operational rubric is a strict *normal core*: a frame is normal only if nothing
 visible calls for more than routine driving. Its inclusion and exclusion
 criteria are in [`latest_grading_criteria.md`](latest_grading_criteria.md).
 
-For nuScenes [[12]](#ref-12), every keyframe was pre-labelled against this
-rubric by a large VLM (Qwen3.5-397B-A17B [[13]](#ref-13)) with a binary label,
-a risk category and a short justification, and the pre-labels were then
-verified by hand; evaluation uses the verified labels.
-[`scripts/annotate_normal_core.py`](scripts/annotate_normal_core.py) runs the
-pre-labelling step with any Hugging Face VLM and reads the answer from the
-output-token logits rather than parsing free text; the prompts are in
-[`docs/prompt_templates.md`](docs/prompt_templates.md). Labels are only needed
-for training — screening new data needs none.
+For nuScenes [[12]](#ref-12), the labels were produced in two stages.
+Labelling thousands of six-camera keyframes by hand is slow, so every keyframe
+was first labelled against this rubric by a far larger VLM, Qwen3.5-397B-A17B
+[[13]](#ref-13), which returns a binary label, a risk category and a short
+justification; the labels were then checked by hand. These checked labels are
+the ground truth on which the SAE is trained and tested (see
+[Data and Evaluation](#data-and-evaluation)).
+
+The experiment is built to test the method rather than the model. The VLM inside
+the pipeline is deliberately a small one, Cosmos-Reason1-7B, which finds almost
+none of the long-tail frames when asked directly (recall 0.013, see
+[Results](#results)). If the pipeline still separates them, the credit belongs
+to the sparse decomposition of its hidden state, not to a backbone that could
+already make the judgement on its own. The large model is needed only once, to
+build the labelled set; screening new data with a trained SAE needs neither
+labels nor the large model.
+
+[`scripts/annotate_normal_core.py`](scripts/annotate_normal_core.py) applies the
+rubric with any Hugging Face VLM and reads the answer from the output-token
+logits rather than parsing free text; the prompts are in
+[`docs/prompt_templates.md`](docs/prompt_templates.md).
 
 ### 2. Input: One Multi-View Keyframe
 
@@ -185,9 +198,11 @@ of SearchAD [[11]](#ref-11). A forward hook captures the output of the MLP block
 (`down_proj`) of decoder layer 28, the last one, and the token states are
 averaged:
 
-$$
-h_i = \frac{1}{M}\sum_{m=1}^{M} h_{i,m}, \qquad h_i \in \mathbb{R}^{3584}.
-$$
+```math
+h_i = \frac{1}{M}\sum_{m=1}^{M} h_{i,m}, \qquad h_i \in \mathbb{R}^{3584},
+```
+
+where *M* is the number of tokens and *h<sub>i,m</sub>* the state of token *m*.
 
 ### 4. Sparse Decomposition
 
@@ -198,50 +213,52 @@ selection rule of AbsTopK [[18]](#ref-18): the k = 512 units with the largest
 *negative* activations matters here, because a feature can be expressed by
 either sign. The code is split into two halves,
 *z* = [*z<sub>n</sub>*, *z<sub>t</sub>*], and the decoder reconstructs *h* from
-the whole code. With *y<sub>i</sub>* = 1 for long-tail samples, the training
-loss is
+the whole code. On a mini-batch of *B* samples, with *y<sub>i</sub>* = 1 for a
+long-tail sample and 0 for a normal one, the training loss is
 
-$$
-\mathcal{L}_i = (1+\alpha y_i)\,\lVert \hat{h}_i - h_i\rVert_2^2
-\;+\; \beta_{\mathrm{normal}}\,(1-y_i)\,\lVert z_{t,i}\rVert_2^2
-\;+\; \beta_{\mathrm{tail}}\,y_i\,\max\!\left(0,\;\tau-\lVert z_{t,i}\rVert_2\right).
-$$
+```math
+\mathcal{L} = \frac{1}{BD}\sum_{i=1}^{B} (1+\alpha y_i) \lVert \hat{h}_i - h_i \rVert_2^2
++ \frac{\beta_{\mathrm{normal}}}{|\mathcal{N}|} \sum_{i \in \mathcal{N}} \lVert z_{t,i} \rVert_2^2
+- \frac{\beta_{\mathrm{tail}}}{|\mathcal{T}|} \sum_{i \in \mathcal{T}} \min\left( \lVert z_{t,i} \rVert_2 , \tau \right),
+```
 
-The first term reconstructs the hidden state, weighting the rarer long-tail
-samples more. The second keeps the long-tail subspace silent on normal samples.
-The third requires long-tail samples to activate it with at least strength
-τ. Together they push the sparse code to route whatever makes a scene long-tail
-into *z<sub>t</sub>* — the same mechanism by which SAEs isolate monosemantic
-features in language and vision-language models [[19]](#ref-19)–[[22]](#ref-22),
-here steered toward one task. Defaults: α = 1, β<sub>normal</sub> = 0.1,
-β<sub>tail</sub> = 0.5, τ = 2.
+where *D* = 3,584 is the feature dimension and $`\mathcal{N}`$ and $`\mathcal{T}`$ are the
+normal and the long-tail samples of the batch. The first term reconstructs the hidden state,
+weighting the rarer long-tail samples (1 + α) times more. The second keeps the
+long-tail subspace silent on normal samples. The third rewards long-tail samples
+for activating it, up to the cap τ. Because −min(‖*z<sub>t</sub>*‖, τ) =
+max(0, τ − ‖*z<sub>t</sub>*‖) − τ, this is the hinge penalty
+max(0, τ − ‖*z<sub>t</sub>*‖) of the project report shifted by a constant: it
+has the same gradient and asks long-tail samples for an activation of at least
+τ. Together the three terms push the sparse code to route whatever makes a
+scene long-tail into *z<sub>t</sub>* — the same mechanism by which SAEs isolate
+monosemantic features in language and vision-language models
+[[19]](#ref-19)–[[22]](#ref-22), here steered toward one task. Defaults: α = 1,
+β<sub>normal</sub> = 0.1, β<sub>tail</sub> = 0.5, τ = 2.
 
 ### 5. Decision
 
 At inference no label is used. The long-tail units that are active are counted,
 and a sample is long-tail as soon as one of them fires:
 
-$$
-c_{\mathrm{tail}}(x_i) = \sum_{j=1}^{d_t} \mathbb{1}\!\left[\,\lvert z_{t,i}^{(j)}\rvert > \eta\,\right],
+```math
+c_{\mathrm{tail}}(x_i) = \sum_{j=1}^{d_t} \mathbb{1}\left[ \lvert z_{t,i}^{(j)} \rvert > \eta \right],
 \qquad
-\hat{y}_i = \mathbb{1}\!\left[\,c_{\mathrm{tail}}(x_i) \ge 1\,\right],
-\qquad \eta = 0.01 .
-$$
+\hat{y}_i = \mathbb{1}\left[ c_{\mathrm{tail}}(x_i) \ge 1 \right],
+\qquad \eta = 0.01,
+```
 
-The rule has nothing to fit, so validation, test and new data are all scored
-the same way. ‖*z<sub>t</sub>*‖<sub>2</sub> is reported alongside as a
-continuous score, which orders the flagged samples and gives the AUC.
+where *d<sub>t</sub>* = 3,584 is the number of long-tail units. The rule has
+nothing to fit, so held-out and new data are scored the same way.
+‖*z<sub>t</sub>*‖<sub>2</sub> is reported alongside as a continuous score, which
+orders the flagged samples and is used for the ranking metrics (AUC and AP,
+defined under [Data and Evaluation](#data-and-evaluation)).
 
 ### 6. Output
 
 Each flagged sample comes with the units that fired for it. Because the code
 is sparse, those are a handful of units, and many of them turn out to stand for
 one nameable pattern (see [The interpretable neurons](#the-interpretable-neurons)).
-
-The evaluation protocol is strict: unlabelled and `uncertain` samples are
-dropped rather than counted as long-tail, features are standardised with
-training-split statistics only, and the split is made by nuScenes *scene*, so
-near-identical keyframes of one scene never appear on both sides.
 
 ## Why This Problem
 
@@ -291,12 +308,15 @@ wider code *z* in which only a few entries are non-zero, and reconstructs *h*
 from that code. In this project both maps are single linear layers, so the
 reconstruction is a sum of a few decoder columns:
 
-$$
-z = \mathrm{sparse}\big(W_{\mathrm{enc}}\,h + b_{\mathrm{enc}}\big),
+```math
+z = \mathrm{AbsTopK}_k\left( W_{\mathrm{enc}} h + b_{\mathrm{enc}} \right),
 \qquad
-\hat{h} = W_{\mathrm{dec}}\,z + b_{\mathrm{dec}}
-= \sum_{j:\,z^{(j)} \neq 0} z^{(j)}\, d_j + b_{\mathrm{dec}} .
-$$
+\hat{h} = W_{\mathrm{dec}} z + b_{\mathrm{dec}}
+= \sum_{j : z^{(j)} \neq 0} z^{(j)} d_j + b_{\mathrm{dec}},
+```
+
+where AbsTopK<sub>k</sub> keeps the *k* entries of largest magnitude and sets
+the rest to zero.
 
 This is sparse dictionary learning. Each decoder column *d<sub>j</sub>* is a
 *feature direction* in the model's hidden space, and each input is explained
@@ -323,11 +343,11 @@ output — which is exactly the kind of signal long-tail mining needs.
 ### Why It Fits Long-Tail Mining
 
 - **The signal is in the model but not readable as it is.** Asked directly,
-  Cosmos-Reason1-7B recognises almost none of the long-tail frames (F1 0.024,
-  see [Results](#results)); its own hidden state, decomposed by the SAE,
-  separates them with F1 0.847. The model is the same in both cases, so the
-  gain comes from re-organising and amplifying a long-tail signal the model
-  already carries, not from a larger model.
+  Cosmos-Reason1-7B finds 1.3% of the long-tail frames (see [Results](#results));
+  its own hidden state, decomposed by the SAE, finds 79.8% of them with a
+  precision of 0.90. The model is the same in both cases, so the gain comes from
+  re-organising and amplifying a long-tail signal the model already carries,
+  not from a larger model.
 - **No category list is needed.** Semantic mining can only find what its
   vocabulary names. The SAE is trained with nothing more than a frame-level
   normal / long-tail label, yet units for rain, glare on wet roads, wheelchair
@@ -375,26 +395,76 @@ A different camera rig is supported by changing the camera list in
 extracting and training again; a model trained on one rig is not applied to
 another.
 
+## Data and Evaluation
+
+**Labelled data.** The labelled set is drawn from the nuScenes v1.0-trainval
+split [[12]](#ref-12): eight keyframes from each of 824 scenes, 6,586 keyframes
+in total, of which 2,356 (35.8%) are long-tail and 4,230 normal under the rubric
+of [step 1](#1-what-counts-as-long-tail). One keyframe with its six camera views
+is one sample.
+
+**Training and test sets of the SAE.** The reported SAE was trained on a random
+80% of the labelled keyframes (5,268) and tested on the remaining 20% (1,318
+keyframes: 486 long-tail, 832 normal). The split was drawn over keyframes with a
+fixed seed, and the features were standardised with the mean and standard
+deviation of all 6,586 keyframes. Training ran for 200 epochs with Adam
+[[28]](#ref-28) (learning rate 10<sup>-3</sup>, halved when the held-out loss
+stops improving; weight decay 10<sup>-5</sup>; batch size 64; dropout 0.2 on the
+code before sparsification), and the checkpoint with the lowest held-out loss
+was kept, so the held-out 20% served both to choose the checkpoint and to
+report the numbers.
+
+**Baselines.** The three VLMs were asked directly under the same rubric and
+scored against the same labels, on the first labelled part of the data rather
+than on the SAE's held-out set: Cosmos-Reason1-7B and Qwen3.5-9B on 680
+keyframes from 85 scenes (81 long-tail, 599 normal; the 19 keyframes that
+Cosmos-Reason1-7B answered as `uncertain` are left out of its row), and
+Qwen3-VL-2B-Instruct on 1,826 keyframes from 229 scenes (229 long-tail, 1,597
+normal).
+
+**Metrics.** Each class is scored as the positive class in turn. *Precision* is
+the share of the samples predicted as that class that really belong to it,
+*recall* is the share of the class's samples that are found, and *F1* is their
+harmonic mean, 2 · precision · recall / (precision + recall). For the long-tail
+class, recall says how much of the long tail is mined and precision how much of
+what is mined is worth a human's time. *AUC*, the area under the ROC curve, and
+*AP*, the average precision (the area under the precision-recall curve), score
+the continuous ranking by ‖*z<sub>t</sub>*‖<sub>2</sub> instead of the yes/no
+decision.
+
+**Released code.** The code in this repository applies a stricter protocol by
+default: the split is made by scene (70% training, 15% validation, 15% test),
+so keyframes a few seconds apart in one scene never fall on both sides; the
+features are standardised with training statistics only; the checkpoint is
+chosen on the validation set and the metrics are reported on the separate test
+set; and keyframes labelled `uncertain` are left out. Numbers under this
+protocol are not part of the results below.
+
 ## Results
 
-On the manually verified nuScenes labels, three VLMs asked directly whether a
-frame requires defensive driving are compared with Cosmos-Reason1-7B equipped
-with the SAE:
+Three VLMs asked directly whether a frame requires defensive driving are
+compared with Cosmos-Reason1-7B equipped with the SAE, on the test sets
+described above:
 
-| Model | Long-tail P | Long-tail R | Long-tail F1 | Normal P | Normal R | Normal F1 |
-|---|---:|---:|---:|---:|---:|---:|
-| Cosmos-Reason1-7B [[14]](#ref-14) | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
-| Qwen3.5-9B [[23]](#ref-23) | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
-| Qwen3-VL-2B-Instruct [[24]](#ref-24) | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
-| **Cosmos-Reason1-7B + SAE** | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
+| Model | Test set (long-tail / normal) | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Cosmos-Reason1-7B [[14]](#ref-14) | 77 / 584 | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
+| Qwen3.5-9B [[23]](#ref-23) | 81 / 599 | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
+| Qwen3-VL-2B-Instruct [[24]](#ref-24) | 229 / 1,597 | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
+| **Cosmos-Reason1-7B + SAE** | 486 / 832 | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
 
-Cosmos-Reason1-7B is the weakest of the three when asked directly, and the best
-by a wide margin once its hidden state is decomposed. The gain does not come
-from a larger model; it comes from separating a long-tail signal that the model
+Recall is the column to compare across rows. It does not depend on how common
+the long tail is in a test set, whereas precision and F1 do, and the long-tail
+share is about 12% in the baseline sets and 37% in the SAE's held-out set.
+Cosmos-Reason1-7B finds the fewest long-tail frames of the three VLMs when
+asked directly, 1.3%, and 79.8% once its hidden state is decomposed — more than
+twice the recall of the best baseline, Qwen3.5-9B. The gain does not come from
+a larger model; it comes from separating a long-tail signal that the model
 already carries. The ablations locate it: the tail term of the loss adds 0.040
 F1 at layer 28, AbsTopK with the tail term beats a signed Top-K SAE at every
 layer tested, deeper layers are consistently better with layer 28 the best, and
-mean-pooled features beat last-token features. All tables are in [`results/README.md`](results/README.md).
+mean-pooled features beat last-token features. All tables are in
+[`results/README.md`](results/README.md).
 
 ## Case Study: A Frame the Usual Methods Miss
 
@@ -412,7 +482,10 @@ common mining strategies still pass over this frame:
 - **Asking an MLLM for the category** depends on the model. GPT-4o
   [[25]](#ref-25) and Gemini 3 Pro Preview [[26]](#ref-26) named the wheelchair
   in 5 of 5 runs; Claude Haiku 4.5 [[27]](#ref-27) did not in any of 5, and
-  attributed the scene to traffic cones or strollers.
+  attributed the scene to traffic cones or strollers. The two models that
+  succeed are large proprietary models served through paid APIs, far more
+  capable and far more expensive to run than the 7B open model inside this
+  pipeline, and that cost is paid again for every frame screened.
 
 The method finds it through two signals that agree. Every model judged the
 frame as requiring defensive driving under the project's definition (5 of 5),
@@ -746,6 +819,8 @@ running them on a few samples (`--max-samples`) rather than by unit tests.
     [deepmind.google/models/model-cards/gemini-3-pro](https://deepmind.google/models/model-cards/gemini-3-pro/)
 27. <a id="ref-27"></a>Anthropic. Introducing Claude Haiku 4.5. 2025.
     [anthropic.com/news/claude-haiku-4-5](https://www.anthropic.com/news/claude-haiku-4-5)
+28. <a id="ref-28"></a>D. P. Kingma and J. Ba. Adam: a method for stochastic
+    optimization. *ICLR*, 2015. [arXiv:1412.6980](https://arxiv.org/abs/1412.6980)
 
 ## Acknowledgments
 
