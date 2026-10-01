@@ -71,14 +71,22 @@ of a learned classifier on top of the code.
 
 ## The objective
 
-$$
-\mathcal{L}_i = (1+\alpha y_i)\,\lVert \hat{h}_i - h_i\rVert_2^2
-\;+\; \beta_{\mathrm{normal}}\,(1-y_i)\,\lVert z_{t,i}\rVert_2^2
-\;+\; \beta_{\mathrm{tail}}\,y_i\,\max\!\left(0,\;\tau-\lVert z_{t,i}\rVert_2\right)
-$$
+On a mini-batch of *B* samples, with *y<sub>i</sub>* = 1 for long-tail and 0
+for normal,
 
-reconstruction, up-weighted for long-tail samples; suppression of `z_t` on
-normal samples; and a margin that long-tail samples must reach in `z_t`.
+```math
+\mathcal{L} = \frac{1}{BD}\sum_{i=1}^{B} (1+\alpha y_i) \lVert \hat{h}_i - h_i \rVert_2^2
++ \frac{\beta_{\mathrm{normal}}}{|\mathcal{N}|} \sum_{i \in \mathcal{N}} \lVert z_{t,i} \rVert_2^2
+- \frac{\beta_{\mathrm{tail}}}{|\mathcal{T}|} \sum_{i \in \mathcal{T}} \min\left( \lVert z_{t,i} \rVert_2 , \tau \right)
+```
+
+with *D* the feature dimension and $`\mathcal{N}`$, $`\mathcal{T}`$ the normal
+and long-tail samples of the batch: reconstruction, up-weighted for long-tail
+samples; suppression of `z_t` on normal samples; and a capped reward for `z_t`
+activity on long-tail samples. This is exactly what
+`LongTailGuidedSAE.forward` in [`scripts/sae_common.py`](../scripts/sae_common.py)
+computes, with defaults α = 1, β<sub>normal</sub> = 0.1,
+β<sub>tail</sub> = 0.5 and τ = 2.
 
 Each term does one job. The reconstruction term keeps the code faithful to the
 hidden state, so the units stay meaningful rather than degenerating into a
@@ -89,9 +97,13 @@ more to gain, so the model stops inflating activations and starts spending its
 capacity on *which* unit to activate. That cap is a large part of why the units
 end up specialised.
 
-In code the third term is a capped reward,
-`-beta_tail * min(||z_t||, tau)`, which equals the hinge above up to a
-constant, so the gradients are identical.
+The project report writes the third term per sample as a hinge,
+β<sub>tail</sub> · max(0, τ − ‖*z<sub>t</sub>*‖). Since
+−min(‖*z<sub>t</sub>*‖, τ) = max(0, τ − ‖*z<sub>t</sub>*‖) − τ, the capped reward
+equals the hinge up to a constant and has the same gradient. The report also
+writes the loss as a per-sample sum averaged over the training set; the code
+averages each term over its own samples in the batch, and the reconstruction
+error over the feature dimensions as well.
 
 The supervision is weak on purpose: the objective needs only a binary label per
 frame, never a box, a mask or a category. That is the difference between
@@ -99,12 +111,12 @@ labelling a few thousand frames and labelling them exhaustively.
 
 ## The decision
 
-$$
-c_{\mathrm{tail}}(x) = \sum_{j=1}^{d_t} \mathbb{1}\!\left[\,\lvert z_t^{(j)}\rvert > \eta\,\right],
+```math
+c_{\mathrm{tail}}(x) = \sum_{j=1}^{d_t} \mathbb{1}\left[ \lvert z_t^{(j)} \rvert > \eta \right],
 \qquad
-\hat{y} = \mathbb{1}\!\left[\,c_{\mathrm{tail}}(x) \ge 1\,\right],
-\qquad \eta = 0.01 .
-$$
+\hat{y} = \mathbb{1}\left[ c_{\mathrm{tail}}(x) \ge 1 \right],
+\qquad \eta = 0.01
+```
 
 A frame is long-tail as soon as one long-tail unit fires. This follows directly
 from how the subspace was trained: the suppression term drives `z_t` to exact
@@ -116,7 +128,7 @@ floor against numerical noise, not a tuned threshold.
 Because the rule fits nothing, it cannot be tuned on the data it is evaluated
 on, and the screening tool applies it to new data exactly as in training.
 `||z_t||_2` is kept as a continuous score: it orders the flagged frames and
-gives the threshold-free AUC and AP. The rule lives in
+gives the threshold-free ROC AUC and average precision (AP). The rule lives in
 [`scripts/tail_activations.py`](../scripts/tail_activations.py), the only place
 training, screening and the explorer take it from.
 
@@ -125,21 +137,28 @@ unit counts as *firing* on a frame for the neuron statistics only above that
 level, which filters the small activations that are enough for the decision but
 too weak to say anything about a particular unit.
 
-## The evaluation protocol
+## The evaluation protocol of the released code
 
-Four decisions keep the numbers honest, and each one costs performance:
+Four decisions keep the numbers honest:
 
 - **Scene-level splits.** Consecutive keyframes of one nuScenes scene are
-  near-duplicates. Splitting by sample would put a frame in training and its
-  neighbour in test, and the reported F1 would partly measure memorisation.
+  near-duplicates. Splitting by sample can put a frame in training and its
+  neighbour in test, so an F1 measured that way partly measures memorisation.
 - **Training-split standardisation only.** The mean and standard deviation come
   from the training rows and are applied to all of them; computing them over
   the whole dataset leaks the test distribution into the model input.
 - **`uncertain` frames excluded, not counted.** Treating everything that is not
   confidently normal as long-tail would inflate recall by construction.
-- **Headline numbers on held-out scenes.** Validation is used to select the
-  checkpoint; the reported metrics are computed on test scenes the model never
-  saw, with the same fixed decision rule.
+- **Metrics on held-out scenes.** Validation is used to select the
+  checkpoint; the metrics are computed on test scenes the model never saw,
+  with the same fixed decision rule.
+
+The numbers in the README predate this protocol: they come from a random
+80/20 split over keyframes, with features standardised over all keyframes and
+the checkpoint chosen on the same held-out 20% that is reported
+([Data and Evaluation](../README.md#data-and-evaluation)). Re-running the
+scripts here gives numbers under the stricter protocol, which are not directly
+comparable with those.
 
 ## Why the variants share one file
 
