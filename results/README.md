@@ -1,31 +1,52 @@
 Results
 =============
 
-All numbers are measured on a manually-verified long-tail / normal split of
-nuScenes: samples were pre-labelled with a large VLM under the
+All numbers are measured on nuScenes keyframes labelled under the
 defensive-driving rubric in
-[`latest_grading_criteria.md`](../latest_grading_criteria.md) and then verified
-by hand, so the evaluation labels are human-checked rather than model-generated.
+[`latest_grading_criteria.md`](../latest_grading_criteria.md): each keyframe was
+labelled by a large VLM and the labels were then checked by hand. The labelled
+set holds 6,586 keyframes, eight from each of 824 scenes of nuScenes
+v1.0-trainval, with 2,356 long-tail and 4,230 normal.
 
-The protocol behind every table: unlabelled and `uncertain` samples are
-excluded rather than counted as long-tail, features are standardised with
-training-split statistics only, and the split is taken at the nuScenes *scene*
-level so near-identical keyframes cannot appear on both sides. A frame is
-predicted long-tail when at least one unit of the long-tail subspace is active
-(`|z_t| > 0.01`); the rule fits nothing, so it is applied to every split in the
-same way. AUC and AP are computed from `||z_t||_2`.
+**Data used for each row.** The SAE was trained on a random 80% of the labelled
+keyframes (5,268) and tested on the remaining 20% (1,318: 486 long-tail, 832
+normal). The split was drawn over keyframes with a fixed seed, the features
+were standardised with statistics of all 6,586 keyframes, and the checkpoint
+with the lowest loss on the held-out 20% was kept. The VLM baselines were scored
+on the first labelled part of the data: Cosmos-Reason1-7B and Qwen3.5-9B on 680
+keyframes from 85 scenes (81 long-tail, 599 normal; the 19 keyframes
+Cosmos-Reason1-7B answered as `uncertain` are left out of its row) and
+Qwen3-VL-2B-Instruct on 1,826 keyframes from 229 scenes (229 long-tail, 1,597
+normal).
+
+**Metrics.** Each class is scored as the positive class in turn. *Precision* is
+the share of the samples predicted as that class that really belong to it,
+*recall* the share of the class's samples that are found, and *F1* their
+harmonic mean. A frame is predicted long-tail when at least one unit of the
+long-tail subspace is active (`|z_t| > 0.01`). *AUC* (area under the ROC curve)
+and *AP* (average precision, the area under the precision-recall curve) score
+the continuous ranking by `||z_t||_2`.
+
+The released code uses a stricter protocol by default — a scene-level 70/15/15
+split, standardisation with training statistics only, checkpoint selection on a
+separate validation set, and `uncertain` frames excluded — so re-running it
+gives numbers that are not directly comparable with the tables below.
 
 ## Main result: long-tail filtering
 
 Three VLMs used directly as classifiers, against Cosmos-Reason1-7B equipped
 with the final SAE (`scripts/sae_abstopk_tail_reward.py`, layer 28):
 
-| Model | long_tail P | long_tail R | long_tail F1 | normal P | normal R | normal F1 |
-|---|---:|---:|---:|---:|---:|---:|
-| Cosmos-Reason1-7B (raw) | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
-| Qwen3.5-9B (raw) | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
-| Qwen3-VL-2B-Instruct (raw) | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
-| **Cosmos-Reason1-7B + SAE (ours)** | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
+| Model | Test set (long-tail / normal) | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Cosmos-Reason1-7B (raw) | 77 / 584 | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
+| Qwen3.5-9B (raw) | 81 / 599 | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
+| Qwen3-VL-2B-Instruct (raw) | 229 / 1,597 | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
+| **Cosmos-Reason1-7B + SAE (ours)** | 486 / 832 | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
+
+The long-tail share is about 12% in the baseline test sets and 37% in the SAE's
+held-out set. Recall does not depend on that share and compares the rows
+directly; precision and F1 do depend on it.
 
 All four use the same behaviour-oriented long-tail definition as their decision
 criterion; the baselines are prompted to apply it directly, while the SAE-based
@@ -57,7 +78,7 @@ with the tail reward is the strongest configuration at every depth, with
 performance improving in deeper layers and peaking at layer 28, the model's
 last hidden layer:
 
-| Method | Layer | Val AUC | Val AP | F1 | Precision | Recall |
+| Method | Layer | AUC | AP | Long-tail F1 | Long-tail precision | Long-tail recall |
 |---|---|---:|---:|---:|---:|---:|
 | **AbsTopK + Tail Reward** | **L28** | **0.9063** | **0.9082** | **0.8472** | **0.9023** | **0.7984** |
 | AbsTopK + Tail Reward | L27 | 0.9033 | 0.9068 | 0.8386 | 0.9212 | 0.7695 |
@@ -128,7 +149,9 @@ for three common mining strategies:
 - **Asking an MLLM directly** depends on which model you can afford to run at
   scale. GPT-4o and Gemini 3 Pro Preview both hit "rideable wheelchair" 5/5
   times; Claude Haiku 4.5 does not hit that category in any of 5 trials,
-  attributing the scene to traffic cones or strollers instead.
+  attributing the scene to traffic cones or strollers instead. The two models
+  that succeed are large proprietary models behind paid APIs, far more capable
+  and far more expensive to run than the 7B open model this method reads.
 
 The method finds it by combining two signals. Every VLM judges the scene as
 requiring defensive driving under the behaviour-oriented definition (5/5), and
