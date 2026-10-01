@@ -3,11 +3,33 @@ Long-Tail Driving Scene Discovery
 Welcome to the long-tail driving data mining project main page!
 This page is about how to run this software.
 
+#### Setup
+
+Python 3.10 or newer. `make install` installs everything in
+[`requirements.txt`](requirements.txt): PyTorch and Transformers 4.49 or newer
+for the VLM stages and the SAE, scikit-learn for the metrics, Pillow for images,
+matplotlib for the loss curve and pytest for the tests. Labelling and extraction
+need a CUDA GPU, the VLM weights
+([huggingface.co/nvidia/Cosmos-Reason1-7B](https://huggingface.co/nvidia/Cosmos-Reason1-7B))
+and the nuScenes keyframes ([nuscenes.org](https://www.nuscenes.org/nuscenes));
+training, screening and the neuron explorer run on CPU. Labels, extracted
+features and trained runs are not stored in the repository; the scripts
+reproduce them from the public data.
+
 #### Install
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 make install                      # pip install -r requirements.txt
+```
+
+#### Download the Model and Data
+
+```bash
+# Cosmos-Reason1-7B weights
+huggingface-cli download nvidia/Cosmos-Reason1-7B --local-dir models/Cosmos-Reason1-7B
+# nuScenes: v1.0-trainval_meta.tgz and v1.0-trainval{01..10}_keyframes.tgz from
+# https://www.nuscenes.org/nuscenes, extracted so that samples/CAM_*/ exists
 ```
 
 #### Label
@@ -63,9 +85,8 @@ make lint                         # flake8, 100 columns
 make clean
 ```
 
-Labelling and extraction need a CUDA GPU and a local copy of the VLM weights;
-training, screening and the neuron explorer run on CPU. Every flag and every
-file each command writes is documented in [`docs/user.md`](docs/user.md).
+Every flag and every file each command writes is documented in
+[`docs/user.md`](docs/user.md).
 
 ----------------
 
@@ -73,19 +94,19 @@ User page
 =============
 Welcome to the long-tail driving data mining project user main page!
 
-This project finds rare, safety-critical driving scenes in large
-autonomous-driving datasets by reading the internal representations of a
-vision-language model, instead of relying on hand-written rules, keyword search,
-anomaly scores or model uncertainty. A sparse autoencoder decomposes the model's
-hidden state into a normal and a long-tail-sensitive subspace; a frame is
-flagged when the long-tail subspace activates, and the units that fire say why.
-The repository contains the whole pipeline — the annotation rubric and the
-labeller, the hidden-state extractor, the sparse autoencoder with its
-evaluation, a neuron explorer and a screening tool for new data. It was
-developed by Yike Chen, Zihua Chen and Yusong Zhao as a capstone project at the
-Chinese University of Hong Kong, Shenzhen.
+This is a deep-learning research project which has been completed by Yike Chen,
+Zihua Chen and Yusong Zhao as a capstone project at the Chinese University of
+Hong Kong, Shenzhen. We developed a long-tail data mining tool for autonomous
+driving: it finds rare, safety-critical driving scenes in large datasets by
+reading the internal representations of a vision-language model, instead of
+relying on hand-written rules, keyword search, anomaly scores or model
+uncertainty. It mainly contains three parts. The mining pipeline labels the
+data, extracts the model's hidden states and decomposes them with a
+tail-guided sparse autoencoder; the neuron explorer shows which units fire on
+which frames, so every flagged frame comes with a reason; and the screening
+tool applies a trained model to new, unlabelled driving data.
 
-# Abstract
+# Long-Tail Mining Abstract
 
 Long-tail scenarios are rare but safety-critical in autonomous driving, and
 their insufficient coverage remains a key obstacle to reliable deployment
@@ -106,7 +127,10 @@ same VLM prompted directly to 0.847, learns individual neurons that correspond
 to specific risk patterns, and finds safety-critical samples that anomaly- and
 uncertainty-based mining miss.
 
-# Framework
+## Pipeline
+
+Here is an introduction to the pipeline. The figure gives the overview, and
+each step is described in its own section below it.
 
 ![The six-step pipeline](docs/figures/pipeline.webp)
 
@@ -121,120 +145,7 @@ long-tail units is counted and **(5)** a sample is long-tail as soon as one of
 them fires. **(6)** The output is the list of mined samples, the named units
 that fired for each, and the evaluation metrics.
 
-# Why this problem
-
-Driving data is dominated by lane following and ordinary traffic, while the
-situations that decide whether an automated vehicle is safe are rare: unusual
-pedestrian behaviour, construction zones, adverse weather, complex
-interactions. Liu and Feng call this the *curse of rarity* and argue it is the
-root cause of the safety challenge in autonomous-vehicle development
-[[1]](#ref-1). The scenario space is combinatorial — weather times road layout
-times participants times behaviour — so it cannot be covered by collecting more
-data alone [[1]](#ref-1), [[2]](#ref-2), and many safety-critical events are
-too rare or too dangerous to collect on purpose [[3]](#ref-3). What is needed
-is a way to find the valuable samples inside data that has already been
-recorded.
-
-The existing ways of finding them each rely on a proxy signal:
-
-- **Semantic mining** turns frames into captions, keywords or queryable
-  attributes and selects by rarity or query match [[4]](#ref-4),
-  [[5]](#ref-5). It inherits the vocabulary it is given, and misses risks that
-  are implicit or hard to put into words.
-- **Anomaly and density-based mining** selects samples that are far from the
-  bulk of the data [[6]](#ref-6), [[7]](#ref-7). Distributional rarity is not
-  the same as driving relevance: a blurred frame is an outlier, a wheelchair
-  user in an ordinary street is not.
-- **Active learning** selects samples the current model is uncertain about
-  [[8]](#ref-8), [[9]](#ref-9). Uncertainty also comes from noise, occlusion or
-  model quirks, and a dangerous scene can be recognised with high confidence.
-- **Generative synthesis** creates rare scenarios instead of finding them
-  [[10]](#ref-10), at the price of a realism gap.
-
-This project takes the signal from inside the model instead. A pretrained VLM
-already represents what is unusual about a driving scene; the difficulty is
-that the information is spread across thousands of dense dimensions. The next
-section explains how a sparse autoencoder pulls it apart.
-
-# Why a sparse autoencoder
-
-### What an SAE is
-
-A sparse autoencoder (SAE) is a small network trained on the internal
-activations of another model. It encodes an activation vector *h* into a much
-wider code *z* in which only a few entries are non-zero, and reconstructs *h*
-from that code. In this project both maps are single linear layers, so the
-reconstruction is a sum of a few decoder columns:
-
-$$
-z = \mathrm{sparse}\big(W_{\mathrm{enc}}\,h + b_{\mathrm{enc}}\big),
-\qquad
-\hat{h} = W_{\mathrm{dec}}\,z + b_{\mathrm{dec}}
-= \sum_{j:\,z^{(j)} \neq 0} z^{(j)}\, d_j + b_{\mathrm{dec}} .
-$$
-
-This is sparse dictionary learning. Each decoder column *d<sub>j</sub>* is a
-*feature direction* in the model's hidden space, and each input is explained
-by the handful of directions that are active for it
-[[19]](#ref-19), [[20]](#ref-20). Sparsity is what makes the result readable:
-because only k = 512 of the 7,168 units may be active for any sample,
-information cannot be spread thinly over all of them, and different units are
-pushed to specialise in different factors.
-
-The reason for this detour is that a model's own neurons are a poor basis for
-interpretation. Individual neurons of large networks are typically
-*polysemantic*, responding to several unrelated concepts, because the network
-represents more features than it has dimensions [[20]](#ref-20). The directions
-an SAE learns are far more often *monosemantic*. In language models they line
-up with concepts such as legal text or a particular language, and they are more
-interpretable than directions found by other decomposition methods
-[[19]](#ref-19), [[20]](#ref-20). The approach scales to production-size models
-[[21]](#ref-21) and carries over to vision-language models, where sparse
-features make visual representations markedly more monosemantic
-[[22]](#ref-22). Together these results show that foundation-model hidden
-states contain structured semantic signals beyond what the model says in its
-output — which is exactly the kind of signal long-tail mining needs.
-
-### Why it fits long-tail mining
-
-- **The signal is in the model but not readable as it is.** Asked directly,
-  Cosmos-Reason1-7B recognises almost none of the long-tail frames (F1 0.024,
-  see [Results](#results)); its own hidden state, decomposed by the SAE,
-  separates them with F1 0.847. The model is the same in both cases, so the
-  gain comes from re-organising and amplifying a long-tail signal the model
-  already carries, not from a larger model.
-- **No category list is needed.** Semantic mining can only find what its
-  vocabulary names. The SAE is trained with nothing more than a frame-level
-  normal / long-tail label, yet units for rain, glare on wet roads, wheelchair
-  users and pedestrians inside construction zones emerge on their own
-  ([The interpretable neurons](#the-interpretable-neurons)). This makes it
-  possible to find compound scenes that are hard to describe with hand-written
-  rules.
-- **It targets driving relevance, not rarity.** An anomaly detector ranks what
-  looks unusual; a blurred frame is unusual and useless, while an ordinary-
-  looking street with a wheelchair user is valuable. The tail-guided objective
-  ties the long-tail subspace to the defensive-driving definition, so the
-  detector learns what matters for driving rather than what is visually rare.
-- **Every decision comes with a reason.** A classifier trained on *h* would
-  return a score. The SAE returns the score together with the few long-tail
-  units that produced it, and those units can be named — weather, vulnerable
-  road users, obstacles, low visibility — and reused as search keys.
-
-### What is different from earlier SAE work
-
-Earlier SAE studies use the decomposition to interpret a model or to steer its
-behaviour [[19]](#ref-19)–[[22]](#ref-22). Here it is used as the detector
-itself: the tail-guided objective (Method, step 4) reserves half of the code
-for long-tail factors, and a frame is flagged by whether that half activates.
-The ablations confirm that the SAE design carries the result. The tail term
-adds 0.040 F1. AbsTopK, which keeps large negative activations, beats a signed
-Top-K SAE at every layer tested. Performance rises with depth, with the last
-layer best, consistent with deeper layers holding the higher-level semantics
-an SAE can separate.
-
-# Method
-
-### 1. What counts as long-tail
+### 1. What Counts as Long-Tail
 
 A sample is a long-tail candidate when it is both relatively rare in natural
 driving data and likely to require additional defensive driving from the ego
@@ -256,13 +167,13 @@ output-token logits rather than parsing free text; the prompts are in
 [`docs/prompt_templates.md`](docs/prompt_templates.md). Labels are only needed
 for training — screening new data needs none.
 
-### 2. Input: one multi-view keyframe
+### 2. Input: One Multi-View Keyframe
 
 A sample is one timestamp seen by six synchronised cameras. The code is written
 for this format and checks it; the complete input contract is in
 [Input requirements](#input-requirements) below.
 
-### 3. Hidden-state extraction
+### 3. Hidden-State Extraction
 
 [`scripts/extract.py`](scripts/extract.py) feeds the six views, in a fixed
 order, to Cosmos-Reason1-7B [[14]](#ref-14), a physical-reasoning VLM built on
@@ -278,7 +189,7 @@ $$
 h_i = \frac{1}{M}\sum_{m=1}^{M} h_{i,m}, \qquad h_i \in \mathbb{R}^{3584}.
 $$
 
-### 4. Sparse decomposition
+### 4. Sparse Decomposition
 
 The SAE encoder maps *h* to a 7,168-unit code. Sparsity follows the k-sparse
 autoencoder [[16]](#ref-16) in its Top-K form [[17]](#ref-17) with the absolute
@@ -332,7 +243,121 @@ dropped rather than counted as long-tail, features are standardised with
 training-split statistics only, and the split is made by nuScenes *scene*, so
 near-identical keyframes of one scene never appear on both sides.
 
-# Input requirements
+## Why This Problem
+
+Driving data is dominated by lane following and ordinary traffic, while the
+situations that decide whether an automated vehicle is safe are rare: unusual
+pedestrian behaviour, construction zones, adverse weather, complex
+interactions. Liu and Feng call this the *curse of rarity* and argue it is the
+root cause of the safety challenge in autonomous-vehicle development
+[[1]](#ref-1). The scenario space is combinatorial — weather times road layout
+times participants times behaviour — so it cannot be covered by collecting more
+data alone [[1]](#ref-1), [[2]](#ref-2), and many safety-critical events are
+too rare or too dangerous to collect on purpose [[3]](#ref-3). What is needed
+is a way to find the valuable samples inside data that has already been
+recorded.
+
+The existing ways of finding them each rely on a proxy signal:
+
+- **Semantic mining** turns frames into captions, keywords or queryable
+  attributes and selects by rarity or query match [[4]](#ref-4),
+  [[5]](#ref-5). It inherits the vocabulary it is given, and misses risks that
+  are implicit or hard to put into words.
+- **Anomaly and density-based mining** selects samples that are far from the
+  bulk of the data [[6]](#ref-6), [[7]](#ref-7). Distributional rarity is not
+  the same as driving relevance: a blurred frame is an outlier, a wheelchair
+  user in an ordinary street is not.
+- **Active learning** selects samples the current model is uncertain about
+  [[8]](#ref-8), [[9]](#ref-9). Uncertainty also comes from noise, occlusion or
+  model quirks, and a dangerous scene can be recognised with high confidence.
+- **Generative synthesis** creates rare scenarios instead of finding them
+  [[10]](#ref-10), at the price of a realism gap.
+
+This project takes the signal from inside the model instead. A pretrained VLM
+already represents what is unusual about a driving scene; the difficulty is
+that the information is spread across thousands of dense dimensions. The next
+section explains how a sparse autoencoder pulls it apart.
+
+## Why a Sparse Autoencoder
+
+Here is why the method is built around a sparse autoencoder: what an SAE is,
+why it suits long-tail mining, and how this use of it differs from earlier work.
+
+### What an SAE Is
+
+A sparse autoencoder (SAE) is a small network trained on the internal
+activations of another model. It encodes an activation vector *h* into a much
+wider code *z* in which only a few entries are non-zero, and reconstructs *h*
+from that code. In this project both maps are single linear layers, so the
+reconstruction is a sum of a few decoder columns:
+
+$$
+z = \mathrm{sparse}\big(W_{\mathrm{enc}}\,h + b_{\mathrm{enc}}\big),
+\qquad
+\hat{h} = W_{\mathrm{dec}}\,z + b_{\mathrm{dec}}
+= \sum_{j:\,z^{(j)} \neq 0} z^{(j)}\, d_j + b_{\mathrm{dec}} .
+$$
+
+This is sparse dictionary learning. Each decoder column *d<sub>j</sub>* is a
+*feature direction* in the model's hidden space, and each input is explained
+by the handful of directions that are active for it
+[[19]](#ref-19), [[20]](#ref-20). Sparsity is what makes the result readable:
+because only k = 512 of the 7,168 units may be active for any sample,
+information cannot be spread thinly over all of them, and different units are
+pushed to specialise in different factors.
+
+The reason for this detour is that a model's own neurons are a poor basis for
+interpretation. Individual neurons of large networks are typically
+*polysemantic*, responding to several unrelated concepts, because the network
+represents more features than it has dimensions [[20]](#ref-20). The directions
+an SAE learns are far more often *monosemantic*. In language models they line
+up with concepts such as legal text or a particular language, and they are more
+interpretable than directions found by other decomposition methods
+[[19]](#ref-19), [[20]](#ref-20). The approach scales to production-size models
+[[21]](#ref-21) and carries over to vision-language models, where sparse
+features make visual representations markedly more monosemantic
+[[22]](#ref-22). Together these results show that foundation-model hidden
+states contain structured semantic signals beyond what the model says in its
+output — which is exactly the kind of signal long-tail mining needs.
+
+### Why It Fits Long-Tail Mining
+
+- **The signal is in the model but not readable as it is.** Asked directly,
+  Cosmos-Reason1-7B recognises almost none of the long-tail frames (F1 0.024,
+  see [Results](#results)); its own hidden state, decomposed by the SAE,
+  separates them with F1 0.847. The model is the same in both cases, so the
+  gain comes from re-organising and amplifying a long-tail signal the model
+  already carries, not from a larger model.
+- **No category list is needed.** Semantic mining can only find what its
+  vocabulary names. The SAE is trained with nothing more than a frame-level
+  normal / long-tail label, yet units for rain, glare on wet roads, wheelchair
+  users and pedestrians inside construction zones emerge on their own
+  ([The interpretable neurons](#the-interpretable-neurons)). This makes it
+  possible to find compound scenes that are hard to describe with hand-written
+  rules.
+- **It targets driving relevance, not rarity.** An anomaly detector ranks what
+  looks unusual; a blurred frame is unusual and useless, while an ordinary-
+  looking street with a wheelchair user is valuable. The tail-guided objective
+  ties the long-tail subspace to the defensive-driving definition, so the
+  detector learns what matters for driving rather than what is visually rare.
+- **Every decision comes with a reason.** A classifier trained on *h* would
+  return a score. The SAE returns the score together with the few long-tail
+  units that produced it, and those units can be named — weather, vulnerable
+  road users, obstacles, low visibility — and reused as search keys.
+
+### What Is Different From Earlier SAE Work
+
+Earlier SAE studies use the decomposition to interpret a model or to steer its
+behaviour [[19]](#ref-19)–[[22]](#ref-22). Here it is used as the detector
+itself: the tail-guided objective (Method, step 4) reserves half of the code
+for long-tail factors, and a frame is flagged by whether that half activates.
+The ablations confirm that the SAE design carries the result. The tail term
+adds 0.040 F1. AbsTopK, which keeps large negative activations, beats a signed
+Top-K SAE at every layer tested. Performance rises with depth, with the last
+layer best, consistent with deeper layers holding the higher-level semantics
+an SAE can separate.
+
+## Input Requirements
 
 | | Requirement |
 |---|---|
@@ -350,7 +375,7 @@ A different camera rig is supported by changing the camera list in
 extracting and training again; a model trained on one rig is not applied to
 another.
 
-# Results
+## Results
 
 On the manually verified nuScenes labels, three VLMs asked directly whether a
 frame requires defensive driving are compared with Cosmos-Reason1-7B equipped
@@ -371,7 +396,41 @@ F1 at layer 28, AbsTopK with the tail term beats a signed Top-K SAE at every
 layer tested, deeper layers are consistently better with layer 28 the best, and
 mean-pooled features beat last-token features. All tables are in [`results/README.md`](results/README.md).
 
-# The interpretable neurons
+## Case Study: A Frame the Usual Methods Miss
+
+A wheelchair user appears ahead of the ego vehicle in nuScenes `scene-0675`.
+Wheelchair users are rare in driving data and matter for safety, and three
+common mining strategies still pass over this frame:
+
+- **Anomaly detection** does not prioritise it. By k-nearest-neighbour distance
+  in feature space (excluding its own scene and the 100 neighbouring rows), it
+  is more of an outlier than only 1.4% of samples, and just 2 of its 10 nearest
+  neighbours are long-tail. The street, the traffic and the buildings are
+  ordinary; the one thing that is not is local.
+- **Uncertainty-based selection** does not pick it either: every model is
+  confident, and a low-confidence filter selected it in 0 of 20 trials.
+- **Asking an MLLM for the category** depends on the model. GPT-4o
+  [[25]](#ref-25) and Gemini 3 Pro Preview [[26]](#ref-26) named the wheelchair
+  in 5 of 5 runs; Claude Haiku 4.5 [[27]](#ref-27) did not in any of 5, and
+  attributed the scene to traffic cones or strollers.
+
+The method finds it through two signals that agree. Every model judged the
+frame as requiring defensive driving under the project's definition (5 of 5),
+and unit 3058 fires on it — the same unit that fires on the other wheelchair
+frames in the bottom row of the figure in
+[The Interpretable Neurons](#the-interpretable-neurons). The frame is neither an outlier
+nor uncertain, and it is still worth a human's attention.
+
+# Neuron Explorer Abstract
+
+The neuron explorer makes the sparse code readable. Because only a few
+long-tail units fire for any frame, each unit can be inspected on its own: you
+can ask which frames a unit fires on, and which units a frame fires. We offered
+two modes for you to use it, a graphical mode and a command line mode, and both
+read the `activations.npz` that training writes, so they work without torch or a
+GPU and open a screening run of your own data in exactly the same way.
+
+## The Interpretable Neurons
 
 Because the code is sparse, individual long-tail units can be inspected. A unit
 *activates* on a frame when |z<sub>t</sub>| > 1; its **activation ratio** is
@@ -403,34 +462,9 @@ are listed in [`results/neuron_glossary.csv`](results/neuron_glossary.csv);
 [The Interpretable Neurons](docs/neurons.md) covers how they are scored and how
 to name the units of your own run.
 
-# Case study: a frame the usual methods miss
+## Graphical Mode
 
-A wheelchair user appears ahead of the ego vehicle in nuScenes `scene-0675`.
-Wheelchair users are rare in driving data and matter for safety, and three
-common mining strategies still pass over this frame:
-
-- **Anomaly detection** does not prioritise it. By k-nearest-neighbour distance
-  in feature space (excluding its own scene and the 100 neighbouring rows), it
-  is more of an outlier than only 1.4% of samples, and just 2 of its 10 nearest
-  neighbours are long-tail. The street, the traffic and the buildings are
-  ordinary; the one thing that is not is local.
-- **Uncertainty-based selection** does not pick it either: every model is
-  confident, and a low-confidence filter selected it in 0 of 20 trials.
-- **Asking an MLLM for the category** depends on the model. GPT-4o
-  [[25]](#ref-25) and Gemini 3 Pro Preview [[26]](#ref-26) named the wheelchair
-  in 5 of 5 runs; Claude Haiku 4.5 [[27]](#ref-27) did not in any of 5, and
-  attributed the scene to traffic cones or strollers.
-
-The method finds it through two signals that agree. Every model judged the
-frame as requiring defensive driving under the project's definition (5 of 5),
-and unit 3058 fires on it — the same unit that fires on the other wheelchair
-frames in the bottom row of the figure above. The frame is neither an outlier
-nor uncertain, and it is still worth a human's attention.
-
-# Exploring the neurons yourself
-
-`scripts/neuron_explorer.py` makes both directions of that analysis
-interactive. After training,
+After training, run
 
 ```bash
 make explore DATA=/data/nuscenes
@@ -438,7 +472,7 @@ make explore DATA=/data/nuscenes
 #        --samples-root /data/nuscenes/samples --glossary results/neuron_glossary.csv
 ```
 
-opens a local web page with the long-tail units on the left, named units first,
+It opens a local web page with the long-tail units on the left, named units first,
 each with the number of frames it fires on and the share of them labelled
 long-tail:
 
@@ -449,7 +483,9 @@ long-tail:
   see all six views in their physical layout and every long-tail unit the frame
   activates, as a ranked bar chart. Each unit links back to its own frames.
 
-The same queries work from the command line and can be saved as image sheets:
+## Command Line Mode
+
+The same queries work in your terminal and can be saved as image sheets:
 
 ```bash
 python scripts/neuron_explorer.py unit 3058 --run output/sae_abstopk_tail_reward \
@@ -459,11 +495,11 @@ python scripts/neuron_explorer.py sample <sample_token> --run output/sae_abstopk
 python scripts/neuron_explorer.py units --run output/sae_abstopk_tail_reward --top 30
 ```
 
-The explorer reads the `activations.npz` that training writes, so it works
-without torch or a GPU, and it opens a screening run of your own data in
-exactly the same way.
+# Screening Tool Abstract
 
-# Screening your own driving data
+The screening tool applies a trained model to driving data you recorded
+yourself and returns the frames worth annotating first, each with the reason it
+was flagged.
 
 To use a trained model on data you recorded yourself, extract features from
 your frames with the same VLM and layer, then
@@ -499,6 +535,23 @@ Welcome to the long-tail driving data mining project developer main page!
 ----------------
 ## Abstract
 
+This is a deep-learning research project which has been completed by Yike Chen,
+Zihua Chen and Yusong Zhao as a capstone project at the Chinese University of
+Hong Kong, Shenzhen. We developed a long-tail data mining tool for autonomous
+driving: it finds rare, safety-critical driving scenes in large datasets by
+reading the internal representations of a vision-language model, instead of
+relying on hand-written rules, keyword search, anomaly scores or model
+uncertainty. It mainly contains three parts. The mining pipeline labels the
+data, extracts the model's hidden states and decomposes them with a
+tail-guided sparse autoencoder; the neuron explorer shows which units fire on
+which frames, so every flagged frame comes with a reason; and the screening
+tool applies a trained model to new, unlabelled driving data.
+
+For more information about the software, select the following pages.
+
+----------------
+## [Programming Reference](docs/reference.md)
+
 The repository is a set of command-line scripts around two libraries.
 `scripts/sae_common.py` holds the SAE, the scene-level split, the training loop
 and the evaluation; the three SAE entry points differ only in their default
@@ -509,49 +562,10 @@ and needs only numpy, so the neuron explorer runs without torch.
 applies a trained run to new data, `docs/` holds the pages below and `results/`
 the reported numbers and the neuron glossary.
 
-For more information about the software, select the following pages.
-
-----------------
-## [Screening Your Own Driving Data](docs/apply.md)
-
-What the screening tool is for, the input contract, the output columns and how
-to spend an annotation budget with the ranking.
-
-## [The Interpretable Neurons](docs/neurons.md)
-
-How a unit is scored, which units are named, how to browse them with the
-explorer, and how to name the units of your own run.
-
-## [Developer Overview](docs/developer.md)
-
-The layout of the repository, the path a frame takes through it, and where to
-start for the change you have in mind.
-
-## [Programming Reference](docs/reference.md)
-
-The module-by-module map: public functions and classes, their arguments, the
-files they read and write, and the array shapes they expect.
-
-## [High-level Design](docs/design.md)
-
-The method in detail: the objective, the sparsity rule, the decision rule and
-the evaluation protocol, and why each is the way it is.
-
-## [Coding Style](docs/coding.md)
-
-The style the code follows and how to check it.
-
-## [Common Tasks](docs/tasks.md)
-
-How to extend the project: change the long-tail definition, swap the VLM, add
-an SAE variant, or run on another camera rig.
-
-## [Testing](docs/testing.md)
-
-The testing strategy, what each test covers and how to run the suite.
-
-----------------
-## Repository layout
+The main code of the project is laid out as follows; every public function,
+its arguments, the files it reads and writes and the array shapes it expects
+are on the Programming Reference page, and the path a frame takes through the
+scripts is on the [Developer Overview](docs/developer.md) page.
 
 ```
 .
@@ -573,26 +587,85 @@ The testing strategy, what each test covers and how to run the suite.
 └── Makefile                            # install / label / extract / train / explore / screen / test
 ```
 
-## Setup
+## [High-level Design](docs/design.md)
 
-Python 3.10 or newer. All Python dependencies are listed in
-[`requirements.txt`](requirements.txt) and installed with
-`pip install -r requirements.txt` (or `make install`): PyTorch and
-Transformers 4.49 or newer for the VLM stages and the SAE, scikit-learn for the
-metrics, Pillow for images, matplotlib for the loss curve and pytest for the
-tests.
+In this project, a few design decisions shape the whole code base.
 
-Models and data are downloaded separately:
+1. The long-tail categories are learned as sparse latent units instead of being
+   listed in advance, so nothing in the model or the training code encodes a
+   taxonomy; a different long-tail definition is a data change.
+2. Long-tail is defined by the defensive driving a scene requires, not by how
+   unusual its pixels are, and the method works on the VLM's hidden state
+   rather than on its text answer.
+3. One decision rule, defined once in `scripts/tail_activations.py`, is shared
+   by training, screening and the explorer, and it has nothing to fit, so
+   validation, test and new data are scored the same way.
+4. The split is made by nuScenes scene and features are standardised with
+   training statistics only, so near-identical keyframes never straddle the
+   train/test boundary.
+5. The final method and the ablations share one implementation and differ
+   only in their default hyper-parameters, which keeps the comparison fair.
 
-- Cosmos-Reason1-7B weights:
-  [huggingface.co/nvidia/Cosmos-Reason1-7B](https://huggingface.co/nvidia/Cosmos-Reason1-7B)
-- nuScenes metadata (`v1.0-trainval_meta.tgz`) and keyframe images
-  (`v1.0-trainval{01..10}_keyframes.tgz`, extracted so that `samples/CAM_*/`
-  exists): [nuscenes.org](https://www.nuscenes.org/nuscenes)
+The design page explains each decision and gives the equations behind the
+sparse decomposition.
 
-Labels, extracted features and trained runs are not stored in the repository;
-the scripts reproduce them from the public data.
+## [Coding Style](docs/coding.md)
 
+We followed [PEP 8](https://peps.python.org/pep-0008/) with the conventions below.
+
+- Four-space indentation and 100 columns, checked with `make lint`.
+- Every public function has a docstring that states its intent, its arguments
+  and the array shapes it expects and returns, named consistently (`N` frames,
+  `D` hidden dimension, `P` latent width).
+- Comments explain intent rather than mechanics, and anything a future reader
+  would find surprising gets a comment.
+- Arguments are validated where a wrong value would otherwise fail deep inside
+  a framework call, and randomness comes from a single `--seed` flag.
+- No credentials, absolute paths or machine-specific settings in the source;
+  data roots, model directories and hyper-parameters are flags with defaults.
+- Modules that do not need torch do not import it, so a trained run can be
+  inspected on any machine.
+
+## [Common Tasks](docs/tasks.md)
+
+This page gives you the recipes for the changes people most often want to make.
+
+1. Change what counts as long-tail: edit the rubric and the classification
+   prompt together, then label and train again.
+2. Swap the VLM backbone: point `extract.py` at new weights and a layer, then
+   extract and train again; the SAE only sees an `(N, D)` matrix.
+3. Add an SAE variant: copy an entry point, change its `DEFAULTS`, and pin the
+   new behaviour with a test in `tests/test_sae_common.py`.
+4. Tune the sparsity with `--k`, `--hidden-dim` and `--tail-ratio`, checking the
+   neuron report before the F1.
+5. Run on another dataset or camera rig: adapt the metadata loading and the
+   camera list, keep a scene identifier per sample, then label, extract and
+   train again.
+6. Change the decision rule in one place, `predict_long_tail`, and extend its
+   tests.
+
+## [Testing](docs/testing.md)
+
+The suite runs on CPU in seconds and needs neither the dataset nor the VLM:
+every test works on small synthetic arrays and images.
+
+```bash
+make test                                # python -m pytest tests -q
+```
+
+- `tests/test_sae_common.py` covers the SAE library: AbsTopK keeps exactly `k`
+  units and keeps large negative activations, the tail reward and the normal
+  penalty apply only to their own samples, scenes never straddle a split, and
+  `uncertain` rows are dropped rather than counted as long-tail.
+- `tests/test_neuron_explorer.py` covers the decision rule, the activation store
+  and the explorer: one active unit is enough, the sign does not matter and the
+  threshold is strict, the store round-trips exactly, and image paths cannot
+  leave the samples root.
+
+The two VLM stages need model weights and a GPU, so they are exercised by
+running them on a few samples (`--max-samples`) rather than by unit tests.
+
+----------------
 ## References
 
 1. <a id="ref-1"></a>H. X. Liu and S. Feng. "Curse of rarity" for autonomous
