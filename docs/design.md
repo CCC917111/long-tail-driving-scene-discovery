@@ -97,13 +97,10 @@ more to gain, so the model stops inflating activations and starts spending its
 capacity on *which* unit to activate. That cap is a large part of why the units
 end up specialised.
 
-The project report writes the third term per sample as a hinge,
-β<sub>tail</sub> · max(0, τ − ‖*z<sub>t</sub>*‖). Since
-−min(‖*z<sub>t</sub>*‖, τ) = max(0, τ − ‖*z<sub>t</sub>*‖) − τ, the capped reward
-equals the hinge up to a constant and has the same gradient. The report also
-writes the loss as a per-sample sum averaged over the training set; the code
-averages each term over its own samples in the batch, and the reconstruction
-error over the feature dimensions as well.
+Since −min(‖*z<sub>t</sub>*‖, τ) = max(0, τ − ‖*z<sub>t</sub>*‖) − τ, the capped
+reward equals a hinge penalty β<sub>tail</sub> · max(0, τ − ‖*z<sub>t</sub>*‖) up
+to a constant and has the same gradient: long-tail samples are asked for an
+activation of at least τ.
 
 The supervision is weak on purpose: the objective needs only a binary label per
 frame, never a box, a mask or a category. That is the difference between
@@ -153,12 +150,9 @@ Four decisions keep the numbers honest:
   checkpoint; the metrics are computed on test scenes the model never saw,
   with the same fixed decision rule.
 
-The numbers in the README predate this protocol: they come from a random
-80/20 split over keyframes, with features standardised over all keyframes and
-the checkpoint chosen on the same held-out 20% that is reported
-([Data and Evaluation](../README.md#data-and-evaluation)). Re-running the
-scripts here gives numbers under the stricter protocol, which are not directly
-comparable with those.
+The numbers in the README come from a random 80/20 split over keyframes
+([Data and Evaluation](../README.md#data-and-evaluation)); the scripts here
+default to the scene-level protocol above.
 
 ## Why the variants share one file
 

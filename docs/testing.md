@@ -87,7 +87,7 @@ need is in `requirements.txt`.
 - **Both lookup directions are ordered by magnitude.** A unit's frames come
   strongest first regardless of sign; a frame's units likewise, with the
   firing threshold marked.
-- **Purity is computed per unit** from the labels, as in the report.
+- **Purity is computed per unit** from the labels.
 - **Unknown tokens and out-of-range units are errors,** not empty answers.
 - **Image paths cannot leave `--samples-root`,** whatever `meta.json` says.
 - **The web interface answers both directions,** serves the page, the JSON
