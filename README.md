@@ -226,11 +226,8 @@ where *D* = 3,584 is the feature dimension and $`\mathcal{N}`$ and $`\mathcal{T}
 normal and the long-tail samples of the batch. The first term reconstructs the hidden state,
 weighting the rarer long-tail samples (1 + α) times more. The second keeps the
 long-tail subspace silent on normal samples. The third rewards long-tail samples
-for activating it, up to the cap τ. Because −min(‖*z<sub>t</sub>*‖, τ) =
-max(0, τ − ‖*z<sub>t</sub>*‖) − τ, this is the hinge penalty
-max(0, τ − ‖*z<sub>t</sub>*‖) of the project report shifted by a constant: it
-has the same gradient and asks long-tail samples for an activation of at least
-τ. Together the three terms push the sparse code to route whatever makes a
+for activating it, up to the cap τ, beyond which there is nothing more to
+gain. Together the three terms push the sparse code to route whatever makes a
 scene long-tail into *z<sub>t</sub>* — the same mechanism by which SAEs isolate
 monosemantic features in language and vision-language models
 [[19]](#ref-19)–[[22]](#ref-22), here steered toward one task. Defaults: α = 1,
@@ -403,24 +400,13 @@ in total, of which 2,356 (35.8%) are long-tail and 4,230 normal under the rubric
 of [step 1](#1-what-counts-as-long-tail). One keyframe with its six camera views
 is one sample.
 
-**Training and test sets of the SAE.** The reported SAE was trained on a random
-80% of the labelled keyframes (5,268) and tested on the remaining 20% (1,318
-keyframes: 486 long-tail, 832 normal). The split was drawn over keyframes with a
-fixed seed, and the features were standardised with the mean and standard
-deviation of all 6,586 keyframes. Training ran for 200 epochs with Adam
-[[28]](#ref-28) (learning rate 10<sup>-3</sup>, halved when the held-out loss
-stops improving; weight decay 10<sup>-5</sup>; batch size 64; dropout 0.2 on the
-code before sparsification), and the checkpoint with the lowest held-out loss
-was kept, so the held-out 20% served both to choose the checkpoint and to
-report the numbers.
-
-**Baselines.** The three VLMs were asked directly under the same rubric and
-scored against the same labels, on the first labelled part of the data rather
-than on the SAE's held-out set: Cosmos-Reason1-7B and Qwen3.5-9B on 680
-keyframes from 85 scenes (81 long-tail, 599 normal; the 19 keyframes that
-Cosmos-Reason1-7B answered as `uncertain` are left out of its row), and
-Qwen3-VL-2B-Instruct on 1,826 keyframes from 229 scenes (229 long-tail, 1,597
-normal).
+**Training and test sets.** The SAE was trained on a random 80% of the
+labelled keyframes (5,268) and tested on the remaining 20% (1,318 keyframes:
+486 long-tail, 832 normal), split with a fixed seed. Training ran for 200 epochs
+with Adam [[28]](#ref-28) (learning rate 10<sup>-3</sup>, halved when the
+held-out loss stops improving; weight decay 10<sup>-5</sup>; batch size 64;
+dropout 0.2 on the code before sparsification), and the checkpoint with the
+lowest held-out loss was kept.
 
 **Metrics.** Each class is scored as the positive class in turn. *Precision* is
 the share of the samples predicted as that class that really belong to it,
@@ -437,25 +423,20 @@ default: the split is made by scene (70% training, 15% validation, 15% test),
 so keyframes a few seconds apart in one scene never fall on both sides; the
 features are standardised with training statistics only; the checkpoint is
 chosen on the validation set and the metrics are reported on the separate test
-set; and keyframes labelled `uncertain` are left out. Numbers under this
-protocol are not part of the results below.
+set; and keyframes labelled `uncertain` are left out.
 
 ## Results
 
 Three VLMs asked directly whether a frame requires defensive driving are
-compared with Cosmos-Reason1-7B equipped with the SAE, on the test sets
-described above:
+compared with Cosmos-Reason1-7B equipped with the SAE:
 
-| Model | Test set (long-tail / normal) | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Cosmos-Reason1-7B [[14]](#ref-14) | 77 / 584 | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
-| Qwen3.5-9B [[23]](#ref-23) | 81 / 599 | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
-| Qwen3-VL-2B-Instruct [[24]](#ref-24) | 229 / 1,597 | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
-| **Cosmos-Reason1-7B + SAE** | 486 / 832 | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
+| Model | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Cosmos-Reason1-7B [[14]](#ref-14) | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
+| Qwen3.5-9B [[23]](#ref-23) | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
+| Qwen3-VL-2B-Instruct [[24]](#ref-24) | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
+| **Cosmos-Reason1-7B + SAE** | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
 
-Recall is the column to compare across rows. It does not depend on how common
-the long tail is in a test set, whereas precision and F1 do, and the long-tail
-share is about 12% in the baseline sets and 37% in the SAE's held-out set.
 Cosmos-Reason1-7B finds the fewest long-tail frames of the three VLMs when
 asked directly, 1.3%, and 79.8% once its hidden state is decomposed — more than
 twice the recall of the best baseline, Qwen3.5-9B. The gain does not come from
