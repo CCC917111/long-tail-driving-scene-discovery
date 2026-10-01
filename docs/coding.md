@@ -32,7 +32,7 @@ conventions below applied consistently across the scripts.
 
 - Comments explain intent, not mechanics: why `uncertain` frames are dropped
   rather than counted, why the standardiser uses training statistics only, why
-  the capped reward equals the hinge in the paper up to a constant.
+  the capped reward equals a hinge penalty up to a constant.
 - Anything a future reader would find surprising gets a comment, including
   deliberate deviations and the reason for them.
 
