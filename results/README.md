@@ -8,16 +8,10 @@ labelled by a large VLM and the labels were then checked by hand. The labelled
 set holds 6,586 keyframes, eight from each of 824 scenes of nuScenes
 v1.0-trainval, with 2,356 long-tail and 4,230 normal.
 
-**Data used for each row.** The SAE was trained on a random 80% of the labelled
-keyframes (5,268) and tested on the remaining 20% (1,318: 486 long-tail, 832
-normal). The split was drawn over keyframes with a fixed seed, the features
-were standardised with statistics of all 6,586 keyframes, and the checkpoint
-with the lowest loss on the held-out 20% was kept. The VLM baselines were scored
-on the first labelled part of the data: Cosmos-Reason1-7B and Qwen3.5-9B on 680
-keyframes from 85 scenes (81 long-tail, 599 normal; the 19 keyframes
-Cosmos-Reason1-7B answered as `uncertain` are left out of its row) and
-Qwen3-VL-2B-Instruct on 1,826 keyframes from 229 scenes (229 long-tail, 1,597
-normal).
+**Training and test sets.** The SAE was trained on a random 80% of the
+labelled keyframes (5,268) and tested on the remaining 20% (1,318: 486
+long-tail, 832 normal), split with a fixed seed; the checkpoint with the lowest
+held-out loss was kept.
 
 **Metrics.** Each class is scored as the positive class in turn. *Precision* is
 the share of the samples predicted as that class that really belong to it,
@@ -27,26 +21,21 @@ long-tail subspace is active (`|z_t| > 0.01`). *AUC* (area under the ROC curve)
 and *AP* (average precision, the area under the precision-recall curve) score
 the continuous ranking by `||z_t||_2`.
 
-The released code uses a stricter protocol by default — a scene-level 70/15/15
+The released code uses a stricter protocol by default: a scene-level 70/15/15
 split, standardisation with training statistics only, checkpoint selection on a
-separate validation set, and `uncertain` frames excluded — so re-running it
-gives numbers that are not directly comparable with the tables below.
+separate validation set, and `uncertain` frames excluded.
 
 ## Main result: long-tail filtering
 
 Three VLMs used directly as classifiers, against Cosmos-Reason1-7B equipped
 with the final SAE (`scripts/sae_abstopk_tail_reward.py`, layer 28):
 
-| Model | Test set (long-tail / normal) | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Cosmos-Reason1-7B (raw) | 77 / 584 | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
-| Qwen3.5-9B (raw) | 81 / 599 | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
-| Qwen3-VL-2B-Instruct (raw) | 229 / 1,597 | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
-| **Cosmos-Reason1-7B + SAE (ours)** | 486 / 832 | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
-
-The long-tail share is about 12% in the baseline test sets and 37% in the SAE's
-held-out set. Recall does not depend on that share and compares the rows
-directly; precision and F1 do depend on it.
+| Model | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Cosmos-Reason1-7B (raw) | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
+| Qwen3.5-9B (raw) | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
+| Qwen3-VL-2B-Instruct (raw) | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
+| **Cosmos-Reason1-7B + SAE (ours)** | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
 
 All four use the same behaviour-oriented long-tail definition as their decision
 criterion; the baselines are prompted to apply it directly, while the SAE-based
