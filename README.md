@@ -95,7 +95,7 @@ Zhao. The roles below describe each contributor's technical project work.
 
 | Contributor | Contributions |
 |---|---|
-| **Yike Chen** | Implemented the SAE feature-extraction and training code; led the precision-oriented long-tail evaluation; contributed to ablation experiments and selected feature interpretation. |
+| **Yike Chen** | Implemented the SAE feature-extraction and training code; led the precision-oriented long-tail evaluation; participated in ablation experiments and selected feature interpretation. |
 | **Zihua Chen** | Developed the local annotation platform; performed manual review of model-generated labels; participated in SAE feature extraction. |
 | **Yusong Zhao** | Participated in ablation experiments and SAE feature extraction; led most of the learned-feature interpretation and analysis. |
 
