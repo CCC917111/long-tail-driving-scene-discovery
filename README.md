@@ -88,6 +88,19 @@ make clean
 Every flag and every file each command writes is documented in
 [`docs/user.md`](docs/user.md).
 
+## Context and Contribution
+
+This is a team capstone research project by Yike Chen, Zihua Chen and Yusong
+Zhao. The roles below describe each contributor's technical project work.
+
+| Contributor | Contributions |
+|---|---|
+| **Yike Chen** | Designed the data workflow; implemented the SAE feature-extraction and training code; led the precision-oriented long-tail evaluation; contributed to ablation experiments and selected feature interpretation. |
+| **Zihua Chen** | Developed the local annotation platform; performed manual review of model-generated labels; supported SAE feature extraction. |
+| **Yusong Zhao** | Supported selected ablation experiments and SAE feature extraction; led most of the learned-feature interpretation and analysis. |
+
+The reported results reflect the team's shared experimental work.
+
 ----------------
 
 User page
