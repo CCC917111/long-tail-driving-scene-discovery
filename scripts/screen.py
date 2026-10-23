@@ -15,10 +15,13 @@ Inputs
             metrics.json; the SAE hyper-parameters and eta are read from
             metrics.json, so the screening run is configured exactly like the
             run that produced the model.
---features  An (N, D) .npy matrix written by scripts/extract.py for your own
-            frames, using the same VLM, the same layer and the same pooling as
-            the training run. D must match the run's input dimension.
+--features  An (N, D) .npy matrix for your own frames, using the same encoder,
+            preprocessing and feature representation as the training run.
+            D must match the run's input dimension.
 --meta      The row-aligned meta.json written next to it.
+--feature-config  CPU ResNet18 runs require the new cache's extraction_config.json.
+            By default it is read beside --features. Encoder, weights and
+            preprocessing must match the recorded training feature configuration.
 
 Decision
 --------
@@ -52,6 +55,8 @@ import numpy as np
 import torch
 
 from sae_common import LongTailGuidedSAE
+from data_manifest import validate_tokens
+from evaluate_runs import file_sha256
 from tail_activations import (
     DEFAULT_ETA,
     load_glossary,
@@ -64,6 +69,12 @@ from tail_activations import (
 MODEL_FILE = "best_model.pth"
 STANDARDIZER_FILE = "standardizer.npz"
 METRICS_FILE = "metrics.json"
+CPU_FEATURE_SCHEMA = "cpu-resnet18-six-camera-v1"
+CPU_IDENTITY_FIELDS = (
+    "schema", "encoder", "model_revision", "model_files_sha256", "camera_order", "layers",
+    "hook", "pooling", "storage_aliases", "dtype", "resize_short_side", "crop_size",
+    "interpolation", "normalization_mean", "normalization_std", "view_feature_dim", "feature_dim",
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -78,6 +89,8 @@ def parse_args() -> argparse.Namespace:
                    help="(N, D) .npy features of the frames to screen")
     p.add_argument("--meta", type=Path, required=True,
                    help="meta.json written alongside the features")
+    p.add_argument("--feature-config", type=Path,
+                   help="CPU feature contract; defaults to extraction_config.json beside features")
     p.add_argument("--output-dir", type=Path, required=True,
                    help="Where the screening results are written")
     p.add_argument("--glossary", type=Path, default=None,
@@ -111,15 +124,70 @@ def load_run(run_dir: Path) -> tuple[dict, float]:
 
 def build_model(config: dict, input_dim: int, device: str) -> LongTailGuidedSAE:
     """Rebuilds the SAE exactly as the training run configured it."""
+    required = {"hidden_dim", "tail_ratio", "dropout", "k", "sparsity", "reward"}
+    missing = required - config.keys()
+    if missing:
+        raise ValueError(f"Training configuration is incomplete: {sorted(missing)}")
     return LongTailGuidedSAE(
         input_dim=input_dim,
-        hidden_dim=int(config.get("hidden_dim", 4096)),
-        tail_ratio=float(config.get("tail_ratio", 0.5)),
-        dropout=float(config.get("dropout", 0.2)),
-        k=int(config.get("k", 512)),
-        sparsity=str(config.get("sparsity", "abstopk")),
-        reward=str(config.get("reward", "norm")),
+        hidden_dim=int(config["hidden_dim"]),
+        tail_ratio=float(config["tail_ratio"]),
+        dropout=float(config["dropout"]),
+        k=int(config["k"]),
+        sparsity=str(config["sparsity"]),
+        reward=str(config["reward"]),
     ).to(device)
+
+
+def validate_inputs(features, meta, mean, std):
+    """Reject inputs that would silently corrupt scores or token lookup."""
+    if features.ndim != 2 or not features.size or not np.isfinite(features).all():
+        raise ValueError("Features must be a nonempty finite (N, D) matrix")
+    if not isinstance(meta, list) or len(meta) != len(features):
+        raise ValueError("Metadata must have exactly one entry per feature row")
+    validate_tokens(meta, source="screening metadata")
+    allowed = {(features.shape[1],), (1, features.shape[1])}
+    if mean.shape not in allowed or std.shape != mean.shape:
+        raise ValueError("Standardizer shapes must match the feature dimension")
+    if not np.isfinite(mean).all() or not np.isfinite(std).all() or (std <= 0).any():
+        raise ValueError("Standardizer must be finite, with strictly positive standard deviations")
+
+
+def validate_feature_compatibility(run_dir: Path, features: Path,
+                                   feature_config: Path | None = None) -> dict:
+    """Compare CPU representation identity while allowing new unlabelled samples.
+
+    This checks recorded configuration equality, not the authenticity of arbitrary
+    arrays supplied alongside a configuration. Legacy and VLM screening retain
+    their existing dimensional checks and explicitly unverified feature identity.
+    """
+    metadata_path = Path(run_dir) / "run_metadata.json"
+    provenance = {}
+    if metadata_path.is_file():
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        if not isinstance(metadata, dict) or not isinstance(metadata.get("config", {}), dict):
+            raise ValueError("Training run_metadata.json must contain an object configuration")
+        provenance = metadata.get("config", {}).get("feature_provenance", {})
+    if not isinstance(provenance, dict) or provenance.get("schema") != CPU_FEATURE_SCHEMA:
+        return {"status": "unverified", "scope": "legacy/non-CPU dimensional checks only",
+                "config_sha256": None}
+
+    path = Path(feature_config) if feature_config is not None else (
+        Path(features).parent / "extraction_config.json")
+    if not path.is_file():
+        raise ValueError("CPU-trained screening requires --feature-config or "
+                         "extraction_config.json beside the new features")
+    candidate = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(candidate, dict):
+        raise ValueError("CPU screening feature configuration must be a JSON object")
+    for key in CPU_IDENTITY_FIELDS:
+        if key not in provenance or key not in candidate or candidate[key] != provenance[key]:
+            raise ValueError(f"CPU screening feature protocol mismatch: {key}")
+    return {"status": "matched", "scope": "CPU encoder, weights and preprocessing identity",
+            "feature_schema": CPU_FEATURE_SCHEMA, "encoder": candidate["encoder"],
+            "config_path": str(path.resolve()), "config_sha256": file_sha256(path),
+            "compared_fields": list(CPU_IDENTITY_FIELDS),
+            "sample_identity_compared": False, "input_array_origin_authenticated": False}
 
 
 @torch.no_grad()
@@ -136,39 +204,43 @@ def encode(model: LongTailGuidedSAE, x: np.ndarray, batch_size: int,
 
 def main() -> None:
     args = parse_args()
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
+    if args.batch_size <= 0 or args.top_neurons <= 0:
+        raise ValueError("batch-size and top-neurons must be positive")
+    if any((args.output_dir / filename).exists() for filename in
+           ("activations.npz", "screening.csv")):
+        raise ValueError("Screening output already exists; use a new output directory")
     config, run_eta = load_run(args.run_dir)
+    compatibility = validate_feature_compatibility(
+        args.run_dir, args.features, args.feature_config)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
     eta = args.eta if args.eta is not None else run_eta
+    if (not np.isfinite(eta) or eta < 0 or not np.isfinite(args.neuron_threshold)
+            or args.neuron_threshold < 0):
+        raise ValueError("Activation and neuron thresholds must be finite and nonnegative")
 
     features = np.load(args.features).astype(np.float32)
-    if features.ndim != 2:
-        raise SystemExit(f"expected a 2-D feature matrix, got {features.shape}")
     with args.meta.open("r", encoding="utf-8") as f:
         meta = json.load(f)
-    if len(meta) != len(features):
-        raise SystemExit(f"{args.meta} has {len(meta)} rows but the features "
-                         f"have {len(features)}")
 
-    standardizer = np.load(args.run_dir / STANDARDIZER_FILE)
-    mean, std = standardizer["mean"], standardizer["std"]
-    if mean.shape[-1] != features.shape[1]:
-        raise SystemExit(
-            f"the run was trained on {mean.shape[-1]}-dimensional features but "
-            f"{args.features} is {features.shape[1]}-dimensional; extract your "
-            f"frames with the same VLM layer and pooling as the training run")
+    with np.load(args.run_dir / STANDARDIZER_FILE) as standardizer:
+        mean, std = standardizer["mean"], standardizer["std"]
+    validate_inputs(features, meta, mean, std)
     # The training statistics are reused unchanged: the new frames are mapped
     # into the space the SAE was fitted in, not re-centred on themselves.
     x = ((features - mean) / std).astype(np.float32)
+    if not np.isfinite(x).all():
+        raise ValueError("Standardised screening features contain NaN/Inf")
 
     model = build_model(config, features.shape[1], args.device)
-    state = torch.load(args.run_dir / MODEL_FILE, map_location=args.device)
+    state = torch.load(args.run_dir / MODEL_FILE, map_location=args.device, weights_only=True)
     model.load_state_dict(state)
     model.eval()
     print(f"[model] {args.run_dir / MODEL_FILE} | sparsity={model.sparsity} "
           f"k={model.k} tail_dim={model.tail_dim} | eta={eta}")
 
     z_t = encode(model, x, args.batch_size, args.device)
+    if not np.isfinite(z_t).all():
+        raise ValueError("Model produced NaN/Inf activations")
     count = tail_activation_count(z_t, eta)
     predicted_tail = predict_long_tail(z_t, eta).astype(bool)
     score = tail_score(z_t)
@@ -196,7 +268,7 @@ def main() -> None:
             "reasons": "; ".join(glossary[j] for j in top if j in glossary),
         })
 
-    rows.sort(key=lambda r: (r["prediction"] != "long_tail", -r["tail_score"]))
+    rows.sort(key=lambda r: (r["prediction"] != "long_tail", -r["tail_score"], r["sample_token"]))
     for rank, row in enumerate(rows, start=1):
         row["rank"] = rank
 
@@ -213,6 +285,30 @@ def main() -> None:
                if row["prediction"] == "long_tail"]
     with (args.output_dir / "long_tail_samples.json").open("w", encoding="utf-8") as f:
         json.dump(flagged, f, indent=1)
+
+    metadata = {
+        "kind": "unlabelled-screening", "config": config,
+        "decision": {"rule": "c_tail >= 1", "eta": eta},
+        "neuron_threshold": args.neuron_threshold,
+        "samples": len(rows), "flagged": len(flagged),
+        "checkpoint_sha256": file_sha256(args.run_dir / MODEL_FILE),
+        "standardizer_sha256": file_sha256(args.run_dir / STANDARDIZER_FILE),
+        "features_sha256": file_sha256(args.features), "meta_sha256": file_sha256(args.meta),
+        "feature_protocol_validation": compatibility,
+        "feature_compatibility": (
+            "CPU encoder/weights/preprocessing configuration matched; new samples allowed"
+            if compatibility["status"] == "matched" else
+            "dimensions checked; model/layer/pooling provenance must also match the recovered "
+            "extraction configuration"),
+    }
+    training_metadata_path = args.run_dir / "run_metadata.json"
+    if training_metadata_path.is_file():
+        training_metadata = json.loads(training_metadata_path.read_text(encoding="utf-8"))
+        if training_metadata.get("label_scope") is not None:
+            metadata["label_scope"] = training_metadata["label_scope"]
+            metadata["model_training_label_scope"] = training_metadata["label_scope"]
+    (args.output_dir / "screening_metadata.json").write_text(
+        json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
 
     print(f"\nscreened {len(rows)} frames | flagged {len(flagged)} "
           f"({100 * len(flagged) / max(len(rows), 1):.1f}%) as long-tail")

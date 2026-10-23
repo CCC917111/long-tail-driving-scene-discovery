@@ -1,0 +1,51 @@
+{
+  "scope": "AI-reference disagreements on real images, not human-verified safety errors",
+  "same_rule_for_all_examples": true,
+  "cases": [
+    {
+      "kind_relative_to_ai_reference": "false_positive",
+      "method": "mlp",
+      "rule": "fixed probability >= 0.5",
+      "sample_token": "b4ff30109dd14c89b24789dc5713cf8c",
+      "visual_index": 15,
+      "ai_reference_label": "normal_core",
+      "model_score": 0.8265432119369507,
+      "model_prediction": 1,
+      "visible_evidence_from_ai_annotation": [
+        "The forward bend is clear and bounded by a visible curb and guardrail.",
+        "Vehicles remain in the adjacent parking bays; no person or obstacle occupies the visible curved driving corridor."
+      ],
+      "human_review_status": "pending"
+    },
+    {
+      "kind_relative_to_ai_reference": "false_negative",
+      "method": "mlp",
+      "rule": "fixed probability >= 0.5",
+      "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+      "visual_index": 9,
+      "ai_reference_label": "not_normal_core",
+      "model_score": 0.04458745941519737,
+      "model_prediction": 0,
+      "visible_evidence_from_ai_annotation": [
+        "A person is visibly on the carriageway ahead near the end of the approach, rather than entirely behind the bus-stop curb.",
+        "The adjacent bus-stop platform is occupied by several people; the road terminates/turns beside parking access."
+      ],
+      "human_review_status": "pending"
+    },
+    {
+      "kind_relative_to_ai_reference": "false_negative",
+      "method": "mlp",
+      "rule": "fixed probability >= 0.5",
+      "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+      "visual_index": 0,
+      "ai_reference_label": "not_normal_core",
+      "model_score": 0.10407412052154541,
+      "model_prediction": 0,
+      "visible_evidence_from_ai_annotation": [
+        "A construction boom vehicle, fencing and an orange road barrel occupy the right road edge close to the visible lane.",
+        "The front/right views show an active-looking construction enclosure and a constrained street edge; no motion is inferred."
+      ],
+      "human_review_status": "pending"
+    }
+  ]
+}

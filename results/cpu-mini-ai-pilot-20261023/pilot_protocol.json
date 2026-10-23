@@ -1,0 +1,22 @@
+{
+  "scope": "AI visual silver-label pilot; no human-reviewed ground truth",
+  "label_source": "Codex visual inspection of six original camera views via contact sheets; no scene descriptions, split or predictions provided",
+  "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+  "training_plan_before_annotation": {
+    "seed": 42,
+    "epochs": 10,
+    "hidden_dim": 256,
+    "top_k": 32,
+    "review_k": 4,
+    "feature_protocol": "cpu-resnet18",
+    "methods": [
+      "logistic",
+      "mlp",
+      "sae_abstopk_none",
+      "sae_abstopk_norm"
+    ]
+  },
+  "frozen_scene_split_preserved": true,
+  "uncertain_excluded": true,
+  "human_review_complete": false
+}

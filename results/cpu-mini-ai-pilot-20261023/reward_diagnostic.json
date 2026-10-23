@@ -1,0 +1,121 @@
+{
+  "scope": "Read-only training-input diagnosis of the completed AI-silver-label pilot",
+  "human_ground_truth_accuracy_claimed": false,
+  "optimiser_steps_performed_by_diagnostic": 0,
+  "hyperparameters_changed_or_experiments_rerun": false,
+  "data_used_for_new_forward_diagnosis": "48 frozen train rows only; no validation/test forwards",
+  "normalizer_matches_saved_train_only_statistics": true,
+  "source_matches_recorded_training_source": true,
+  "train_rows": 48,
+  "train_tail_rows": 45,
+  "train_normal_rows": 3,
+  "reward": {
+    "formula": "-reward_coeff * mean(min(||z_t||_2, reward_max)) on tail rows",
+    "coefficient": 0.5,
+    "cap": 2.0,
+    "minimum_loss_at_cap": -1.0
+  },
+  "initial_eval_train_tail_norms": {
+    "n": 45,
+    "minimum": 3.333217144012451,
+    "median": 4.69545841217041,
+    "maximum": 7.199970722198486,
+    "mean": 4.80621583196852,
+    "strictly_above_cap": 45,
+    "at_cap": 0,
+    "below_cap": 0,
+    "capped_fraction": 1.0
+  },
+  "first_actual_rng_training_batch_tail_norms": {
+    "n": 45,
+    "minimum": 3.640615940093994,
+    "median": 5.557966232299805,
+    "maximum": 8.498587608337402,
+    "mean": 5.745769776238335,
+    "strictly_above_cap": 45,
+    "at_cap": 0,
+    "below_cap": 0,
+    "capped_fraction": 1.0
+  },
+  "first_batch_reward_loss": -1.0,
+  "first_batch_reward_parameter_gradient_l2": 0.0,
+  "first_batch_total_parameter_gradients_identical": true,
+  "first_batch_max_absolute_total_gradient_difference": 0.0,
+  "first_batch_norm_loss": 4.242222309112549,
+  "first_batch_none_loss": 5.242222309112549,
+  "first_batch_reconstruction_identical": true,
+  "first_batch_normal_penalty_identical": true,
+  "selected_checkpoint_train_tail_norms": {
+    "n": 45,
+    "minimum": 3.4634478092193604,
+    "median": 4.434418201446533,
+    "maximum": 6.944613933563232,
+    "mean": 4.633894809087118,
+    "strictly_above_cap": 45,
+    "at_cap": 0,
+    "below_cap": 0,
+    "capped_fraction": 1.0
+  },
+  "selected_checkpoints_tensorwise_identical": true,
+  "selected_checkpoint_sha256": {
+    "sae_abstopk_none": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+    "sae_abstopk_norm": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb"
+  },
+  "prediction_file_sha256": {
+    "sae_abstopk_none": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58",
+    "sae_abstopk_norm": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58"
+  },
+  "all_settings_equal_except_reward_method_output": true,
+  "recorded_history_none_minus_norm": {
+    "train": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "val": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "recorded_selected_epoch": {
+    "sae_abstopk_none": 3,
+    "sae_abstopk_norm": 3
+  },
+  "recorded_epoch_log_lines": {
+    "sae_abstopk_none": [
+      "[epoch   1/10] train total=5.2422 recon=2.0920 normal=3.1502 tail_reward=0.0000 | val total=5.6566 (best 5.6566)"
+    ],
+    "sae_abstopk_norm": [
+      "[epoch   1/10] train total=4.2422 recon=2.0920 normal=3.1502 tail_reward=-1.0000 | val total=4.6566 (best 4.6566)"
+    ]
+  },
+  "rng_reason": "Both original runs call numpy/torch seed 42 before identical model initialisation. reward=norm adds no RNG draws; fixed full-batch shuffle and dropout RNG stream therefore match while parameter gradients match.",
+  "scheduler_reason": "ReduceLROnPlateau patience=10; only 10 epochs, so no LR reduction can be triggered. Checkpoint selection uses strict minimum validation total loss; recorded histories differ by a constant approximately 1.",
+  "conclusion": "The default cap is already saturated for every tail sample at initialisation and at the selected checkpoint. The exact first training batch has zero reward gradient and identical total parameter gradients with/without reward. Identical final tensors and constant-offset histories are consistent with an inactive reward throughout this short pilot; this comparison does not demonstrate incremental benefit from the tail reward.",
+  "limits": "Intermediate epoch activations/gradient tensors were not logged, so full-path cap fractions are not directly observed. No cap/objective was changed and no training or test-based tuning was performed.",
+  "evidence_sha256": {
+    "output/real-cpu-mini-20261023/ai-pilot/diagnose_reward.py": "cbf98f2802752bb7141c682cf2546d64f95cd131bbb1d782264dbadedad04580",
+    "scripts/sae_common.py": "4de1d39d0242abde69787ab8a49b13d7bf2694d4c3e158ea63dcfa6f0627a029",
+    "output/real-cpu-mini-20261023/extract/layer1_mlp_output_mean.npy": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+    "output/real-cpu-mini-20261023/ai-pilot/annotations/manifest.json": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+    "output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_none/training_history.json": "34eaa7500a7c6ecee3ef94e18f15993e054f50f012ed4cf7c58a6642083ea0c0",
+    "output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_norm/training_history.json": "e715a931681f0acd3736b3e87937ce36bd3cec7e9ff3e34911cc0ced6ee584d5",
+    "output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_none/run_metadata.json": "a6fc61369d3e15d7b24e7e290b6f3924d15f2d685ef284a618e8ffcfdec9e53d",
+    "output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_norm/run_metadata.json": "da3f586fd2fbf1caafc6f9c602ee12234b44eeeef41b129053844d10ca0fb0f6"
+  }
+}

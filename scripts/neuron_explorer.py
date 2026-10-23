@@ -45,6 +45,7 @@ rebuilt from the nuScenes tables.
 from __future__ import annotations
 
 import argparse
+import csv
 import io
 import json
 import sys
@@ -106,13 +107,17 @@ class Explorer:
     def __init__(self, store: ActivationStore, samples_root: Path | None = None,
                  glossary: dict[int, str] | None = None, eta: float = DEFAULT_ETA,
                  neuron_threshold: float = DEFAULT_NEURON_THRESHOLD,
-                 extra_images: dict[str, dict[str, str]] | None = None):
+                 extra_images: dict[str, dict[str, str]] | None = None,
+                 label_scope: dict | None = None):
+        if not np.isfinite(eta) or eta < 0:
+            raise ValueError("eta must be finite and nonnegative")
         self.store = store
         self.samples_root = Path(samples_root).resolve() if samples_root else None
         self.glossary = glossary or {}
         self.eta = eta
         self.neuron_threshold = neuron_threshold
         self.extra_images = extra_images or {}
+        self.label_scope = label_scope
         self._rows = np.repeat(np.arange(len(store)), np.diff(store.indptr))
         self._counts = store.counts(eta)
 
@@ -201,6 +206,20 @@ class Explorer:
                 if len(hits) >= limit:
                     break
         return hits
+
+    def review_csv(self) -> bytes:
+        """Rank candidates for independent review without exposing reference labels."""
+        rows = [self._frame(i) for i in range(len(self.store))]
+        rows.sort(key=lambda r: (r["prediction"] != "long_tail", -r["tail_score"],
+                                 r["sample_token"]))
+        stream = io.StringIO(newline="")
+        fields = ["rank", "sample_token", "scene", "tail_score", "prediction",
+                  "active_tail_units", "reviewer_label", "review_notes"]
+        writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
+        writer.writeheader()
+        for rank, row in enumerate(rows, 1):
+            writer.writerow(dict(row, rank=rank))
+        return stream.getvalue().encode("utf-8")
 
     # -- helpers ------------------------------------------------------------
 
@@ -355,6 +374,7 @@ th{font-size:12px;color:var(--muted);font-weight:600}td.num{font-variant-numeric
 @media (max-width:820px){.wrap{grid-template-columns:1fr}aside{position:static;max-height:260px}.views{grid-template-columns:repeat(2,1fr)}header form{margin-left:0;width:100%}header input{flex:1}}
 </style></head><body>
 <header><h1>Neuron Explorer</h1><span class="meta" id="meta"></span>
+<a href="export/review.csv" download="review.csv">Export review CSV</a>
 <form id="find"><input id="q" placeholder="unit number, sample token or scene" autocomplete="off"><button>Go</button></form></header>
 <div class="wrap"><aside><h2>Long-tail units</h2><div id="units"></div></aside><main id="main"></main></div>
 <script>
@@ -364,6 +384,11 @@ const api=p=>fetch(p).then(r=>r.ok?r.json():r.json().then(e=>Promise.reject(e.er
 function chip(p){return p?`<span class="chip ${p}">${p.replace('_','-')}</span>`:''}
 function img(tok,cam,w){return `<img loading="lazy" src="img/${encodeURIComponent(tok)}/${cam}?w=${w||420}" onerror="this.outerHTML='<div class=ph>no image</div>'">`}
 async function boot(){S=await api('api/summary');
+ if(S.label_scope&&S.label_scope.human_reviewed===false){
+  const warning=document.createElement('p');warning.textContent='AI visual-label pilot: labels are provisional and have not been verified by a human. Scores, errors and purity refer to AI labels; this is not benchmark accuracy.';
+  warning.style.cssText='margin:0;padding:12px 20px;background:#fff1d6;color:#703d00';
+  document.querySelector('header').after(warning);
+ }
  $('#meta').textContent=`${S.frames.toLocaleString()} frames · ${S.tail_dim} long-tail units · eta ${S.eta} · unit threshold ${S.neuron_threshold}`;
  const us=await api('api/units?top=80');
  $('#units').innerHTML=us.map(u=>`<a class="unit-row" data-u="${u.unit}" href="#/unit/${u.unit}"><b>#${u.unit}</b> ${u.name?`<span class="nm">${esc(u.name)}</span>`:''}<small>${u.frames} frame${u.frames==1?'':'s'}${u.purity!=null?` · ${(100*u.purity).toFixed(0)}% long-tail`:''}</small></a>`).join('')||'<p class="empty" style="padding:16px">No unit fires above the threshold.</p>';
@@ -433,10 +458,12 @@ class _Handler(BaseHTTPRequestHandler):
             if not parts:
                 return self._send(PAGE.encode("utf-8"), "text/html; charset=utf-8")
             if parts == ["api", "summary"]:
-                return self._json({"frames": len(ex.store), "tail_dim": ex.store.tail_dim,
-                                   "eta": ex.eta, "neuron_threshold": ex.neuron_threshold,
-                                   "has_labels": ex.store.labels is not None,
-                                   "cameras": list(CAMERAS)})
+                summary = {"frames": len(ex.store), "tail_dim": ex.store.tail_dim,
+                           "eta": ex.eta, "neuron_threshold": ex.neuron_threshold,
+                           "has_labels": ex.store.labels is not None, "cameras": list(CAMERAS)}
+                if ex.label_scope is not None:
+                    summary["label_scope"] = ex.label_scope
+                return self._json(summary)
             if parts == ["api", "units"]:
                 return self._json(ex.units(top=int(query.get("top", 50))))
             if len(parts) == 3 and parts[:2] == ["api", "unit"]:
@@ -448,6 +475,8 @@ class _Handler(BaseHTTPRequestHandler):
                 return self._json(ex.units_of_frame("/".join(parts[2:])))
             if parts == ["api", "search"]:
                 return self._json(ex.search(query.get("q", "")))
+            if parts == ["export", "review.csv"]:
+                return self._send(ex.review_csv(), "text/csv; charset=utf-8")
             if len(parts) == 3 and parts[0] == "img":
                 return self._image(parts[1], parts[2], int(query.get("w", 420)))
         except (KeyError, IndexError, ValueError) as err:
@@ -493,13 +522,22 @@ def build_explorer(args) -> Explorer:
     glossary = load_glossary(args.glossary) if args.glossary else {}
     eta = args.eta
     if eta is None:
-        metrics = Path(args.run) / "metrics.json"
         eta = DEFAULT_ETA
-        if metrics.exists():
-            with metrics.open("r", encoding="utf-8") as f:
-                eta = json.load(f).get("decision", {}).get("eta", DEFAULT_ETA)
+        for filename in ("screening_metadata.json", "metrics.json"):
+            metrics = Path(args.run) / filename
+            if metrics.exists():
+                with metrics.open("r", encoding="utf-8") as f:
+                    eta = json.load(f).get("decision", {}).get("eta", DEFAULT_ETA)
+                break
+    label_scope = None
+    for filename in ("run_metadata.json", "screening_metadata.json"):
+        metadata_path = Path(args.run) / filename
+        if metadata_path.is_file():
+            label_scope = json.loads(metadata_path.read_text()).get("label_scope")
+            break
     return Explorer(store, args.samples_root, glossary, eta=eta,
-                    neuron_threshold=args.neuron_threshold, extra_images=extra)
+                    neuron_threshold=args.neuron_threshold, extra_images=extra,
+                    label_scope=label_scope)
 
 
 def parse_args(argv=None) -> argparse.Namespace:

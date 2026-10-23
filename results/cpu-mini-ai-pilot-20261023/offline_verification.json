@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "html_sha256": "c02a902d5653921d3c2c6c3c5b1886f8e1bba86fecf1256bb33c97984b28c810",
+  "real_parts": 4,
+  "input_timestamps": 80,
+  "local_camera_blobs": 480,
+  "trained_frames_compared": 73,
+  "model_predictions_compared": 292,
+  "blob_links_checked": 438,
+  "review_export_rows": 73,
+  "reviewer_fields_blank": true,
+  "all_script_syntax_passed": true,
+  "all_scope_human_pending": true,
+  "browser_ui_verified": false
+}
