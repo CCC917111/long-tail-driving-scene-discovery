@@ -14,13 +14,14 @@ This prompt is used in two places:
 - **Labelling.** `annotate_normal_core.py` sends it, together with the 6 camera
   images of a nuScenes keyframe, to a VLM and reads the answer letter's logits to
   obtain a `normal_core` / `not_normal_core` / `uncertain` label with a
-  calibrated confidence. It is a compact, English version of the rubric in
+  model confidence score; calibration against human labels is unverified.
+  It is a compact, English version of the rubric in
   [`latest_grading_criteria.md`](../latest_grading_criteria.md).
-- **VLM baselines.** The raw-VLM baselines in the README results table
-  (Cosmos-Reason1-7B, Qwen3.5-9B, Qwen3-VL-2B-Instruct) use the VLM itself as the
-  classifier with this prompt. They can be reproduced by running the same script
-  with `--model-dir` pointing at the respective model and treating
-  `not_normal_core` as a long-tail prediction.
+- **VLM baselines.** The historical raw-VLM reports describe using this rubric
+  with Cosmos-Reason1-7B, Qwen3.5-9B and Qwen3-VL-2B-Instruct. Their original
+  prediction files and test IDs must be recovered before claiming exact prompt
+  reproduction or a matched comparison. Running the labeller now with a
+  different `--model-dir` would create a new experiment, not verify the old one.
 
 ```
 You are given 6 synchronized camera images from an autonomous vehicle at a single timestamp. The cameras are provided in this order: CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT.

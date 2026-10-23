@@ -1,0 +1,7 @@
+# GPU extraction entry point. These lower bounds follow the upstream Reason1
+# pyproject; this is not a verified GPU lockfile. Freeze versions after a real smoke.
+-r requirements.txt
+torch>=2.7.1
+transformers>=4.51.3
+accelerate>=1.10.1
+huggingface_hub

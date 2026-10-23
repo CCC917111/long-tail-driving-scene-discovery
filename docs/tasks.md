@@ -1,95 +1,89 @@
-Common Tasks
-=============
-Welcome to the long-tail driving data mining project common tasks page!
+# Common tasks
 
-This page gives the recipes for the changes people most often want to make.
+Use the [user guide](user.md) for commands and the
+[evaluation protocol](evaluation.md) for controlled comparisons. Historical
+configuration comparisons are documented separately in
+[results](../results/README.md).
 
-## Change what counts as long-tail
+## Recover and freeze a study
 
-The definition lives in two places that must agree: the rubric in
-[`latest_grading_criteria.md`](../latest_grading_criteria.md) and the
-classification prompt in [`prompt_templates.md`](prompt_templates.md). Edit
-both, re-run the labelling stage, and re-train — nothing in the model or the
-training code encodes the taxonomy, so a different definition is a data change.
+Keep original labels, review records, features, predictions and logs unchanged.
+Recover `sample_token` and `scene_token`, reconcile duplicate/conflicting
+labels, and record exclusions before freezing a manifest. The current loader
+requires a nonempty `scene_token` for every retained example; it never falls
+back to sample-level splitting. `scene_name` is display metadata.
 
-The feature-extraction prompt is deliberately *not* part of this. It asks for a
-scene description, not a judgement, so it stays the same when the definition
-changes; that separation is what lets the same extracted features be reused for
-several label sets.
+Use `--freeze-manifest-only --review-k K` once, inspect actual scene/frame counts
+and distributions, then pass that `--manifest` to every method and seed. Changing
+a model seed must not silently change the split. Record model revision, layer,
+pooling, prompt/rubric versions and input hashes in recovered extraction
+settings; supply `--feature-config` rather than inferring those settings from
+feature dimensions.
 
-## Swap the VLM backbone
+## Change the long-tail definition
 
-`extract.py` loads the model from `--model-dir` and hooks the MLP block output
-of the layers in `--layers`. For another Qwen2.5-VL-family model, point it at
-the new weights and pick a layer — deeper is generally better, and the last
-block is a good first guess. For a different architecture, the hook target is
-the one thing to adjust: it needs the residual-stream-adjacent output of a
-decoder block, which is `down_proj` in this family.
+Keep the [rubric](../latest_grading_criteria.md) and
+[classification prompt](prompt_templates.md) consistent. New labels and a new
+rubric version create a new study; keep the old manifest/results intact.
+The loader accepts only the [label whitelist](user.md#strict-data-contract),
+with unknown/unusable labels excluded and unrecognised strings rejected.
 
-Then re-extract and re-train. The SAE reads an `(N, D)` matrix and does not
-care where it came from, so a new backbone only changes `D`.
+The extraction prompt requests a scene description. Features can be reused
+only if the extraction contract is unchanged; test whether they suit a new
+rubric instead of assuming the original performance carries over.
 
-## Add an SAE variant
+## Compare reward and sparsity
 
-Copy one of the three entry points, change its `DEFAULTS`, and give it a
-docstring — that docstring becomes the `--help` text. If the variant needs
-behaviour that no flag expresses, add it to `LongTailGuidedSAE` behind a new
-choice of `--sparsity` or `--reward` rather than forking the model, so the
-variants keep sharing one training loop and one evaluation protocol.
+The core reward comparison uses `sae_abstopk_tail_reward.py` twice with the
+same architecture, optimiser, seed, features and manifest, changing only
+`--reward none` versus `--reward norm`. Match review K, target precision,
+training budget and checkpoint-selection rule across all compared runs.
 
-Then add a case to `tests/test_sae_common.py` that pins the new behaviour: the
-existing sparsity tests are a good template.
+The legacy `ablation_topk_sae.py` changes both signed/absolute selection and
+reward. `ablation_sae_cosmos_baseline.py` additionally changes width, dropout,
+normal penalty and reward settings. Running `make ablations REVIEW_K=K` does
+not make these single-factor experiments. For a later sparsity-only comparison,
+hold reward and all other settings fixed and retain both exact configs.
 
-## Tune the sparsity
+Changing `--k`, latent width or tail ratio is a validation experiment. Inspect
+reconstruction, dead units, activation coverage and real errors alongside
+ranking/review metrics; semantic interpretation is not established by high
+training-label purity alone.
 
-`--k` is the number of latent units kept per sample and `--hidden-dim` the
-latent width; their ratio is the real knob. A smaller `k` forces more
-specialisation and usually cleaner single units, at the cost of reconstruction
-quality. `--tail-ratio` sets how much of the code is reserved for `z_t`; at
-0.5 the two subspaces are the same size.
+## Swap a backbone or camera rig
 
-After a change, look at `neuron_report.csv` before looking at the F1: if the
-high-purity units have disappeared, the code has become too dense or too tight
-regardless of what the headline metric says.
+For another supported VLM, set `--model-dir`, choose a decoder layer using
+validation only, and capture a documented hook output and pooling. A new
+architecture may need a different hook. Re-extract and train a new run; the
+same feature dimension does not imply compatible representations.
 
-## Run on a different dataset or camera rig
+For another dataset, adapt metadata loading in `annotate_normal_core.py` and
+write a stable sample identifier and scene token per row. Keep a whole temporal
+scene in one split. For a new rig, update camera lists, their fixed order and
+both prompts before new extraction. Do not apply old six-camera weights to
+features from an incompatible rig.
 
-The pipeline assumes single-timestamp, multi-view samples with a stable
-identifier per sample:
+## Name and inspect units
 
-1. Adapt the metadata loading in `annotate_normal_core.py` (`build_samples`)
-   to your index format. It must return, per `sample_token`, the image path of
-   every view and the scene the sample belongs to; `extract.py` reuses it.
-2. Keep writing `meta.json` with a `scene_token` or `scene_name` per row. That
-   field is what makes the split scene-level; without it the code warns and
-   falls back to a sample-level split, which leaks near-duplicate frames.
-3. For a rig other than the six nuScenes cameras, change `CAMERAS` in
-   `annotate_normal_core.py` and in `tail_activations.py`, and the sentence
-   that names the views in both prompts ([`prompt_templates.md`](prompt_templates.md)).
-   Then label, extract and train again: a model trained on one rig is not
-   applied to features from another.
-4. Everything downstream of the features is dataset-agnostic.
+Explore units on train/validation only, recording scenario labels, reviewers,
+thresholds and evidence samples. Freeze names and thresholds before measuring
+test purity/coverage. A new seed, layer or latent width needs a new glossary;
+the historical glossary is not a universal category mapping. See
+[the explorer guide](neurons.md).
 
-## Change the decision rule
+For a demonstration, show a frame's score and active units, compare high-unit
+examples, inspect a real false positive or false negative, then export the
+review queue. Synthetic images and weights must be labelled as synthetic.
 
-The rule is defined once, in `predict_long_tail` in
-[`scripts/tail_activations.py`](../scripts/tail_activations.py), and training,
-screening and the explorer all import it. Change it there, keep `eta` as the
-flag it is (`--act-threshold` in training, `--eta` in screening), and extend
-`tests/test_neuron_explorer.py`, which tests the rule without torch.
+## Change a decision or reuse a run
 
-## Use the units as retrieval keys
+The original count rule lives in
+[`tail_activations.py`](../scripts/tail_activations.py). Changing it requires a
+new protocol/version; do not retune it after looking at test outcomes. The
+validation-selected score operating point is reported separately. The existing
+`screen.py` uses the fixed activation rule; preserve that distinction when
+presenting a screening list.
 
-Name the high-purity units for your run, put them in a CSV in the format of
-[`results/neuron_glossary.csv`](../results/neuron_glossary.csv), and filter
-`screening.csv` on `top_neurons` instead of on `tail_score`. That turns the SAE
-into a categorical search over an unlabelled corpus.
-[The Interpretable Neurons](neurons.md) has the full procedure.
-
-## Re-use a trained run on new data
-
-Nothing needs retraining to screen new frames: `screen.py` reads the model, the
-standardiser and `eta` from the run directory, so the new frames are
-mapped into the space the SAE was fitted in rather than re-centred on
-themselves. Extract them with the same layer and pooling, then see
-[Screening Your Own Driving Data](apply.md).
+For new data, use the trained run's standardiser and matching extraction
+contract. Do not re-centre on the new evaluation corpus. Retain original
+config/weights and verify hashes; [screening](apply.md) describes the inputs.

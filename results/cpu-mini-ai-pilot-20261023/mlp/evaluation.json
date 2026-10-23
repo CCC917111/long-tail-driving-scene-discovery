@@ -1,0 +1,196 @@
+{
+  "protocol_version": "scene-disjoint-evaluation-v1",
+  "seed": 42,
+  "score_direction": "higher means more likely tail",
+  "operating_point": {
+    "selection_split": "val",
+    "target_precision": 0.9,
+    "selection_rule": "max recall, then precision, then threshold",
+    "comparison": "score >= threshold",
+    "status": "target_unreachable",
+    "threshold": null,
+    "validation_precision": 0.0,
+    "validation_recall": 0.0
+  },
+  "fixed_rule": {
+    "rule": "score >= 0.5",
+    "threshold": 0.5
+  },
+  "split_summary": {
+    "train": {
+      "n_frames": 48,
+      "n_scenes": 6,
+      "tail_support": 45,
+      "normal_support": 3
+    },
+    "val": {
+      "n_frames": 11,
+      "n_scenes": 2,
+      "tail_support": 6,
+      "normal_support": 5
+    },
+    "test": {
+      "n_frames": 14,
+      "n_scenes": 2,
+      "tail_support": 9,
+      "normal_support": 5
+    }
+  },
+  "splits": {
+    "val": {
+      "scene_count": 2,
+      "operating": {
+        "n": 11,
+        "tail_support": 6,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 5,
+          "fp": 0,
+          "fn": 6,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.4983164983164983,
+        "auc": 0.3
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 2,
+        "precision_at_k": 0.5,
+        "recall_at_k": 0.3333333333333333,
+        "random_expected_tail_found": 2.1818181818181817,
+        "random_expected_precision_at_k": 0.5454545454545454,
+        "random_expected_recall_at_k": 0.36363636363636365,
+        "selected_tokens": [
+          "269ccf1fe399403c914e1f649d2a8ca2",
+          "feaef544d11646ed806b53d9e1f39cd9",
+          "61d47d1198184bfdaa6777e9448d825d",
+          "17723c0411434e48875a93de4db0ecba"
+        ]
+      },
+      "fixed": {
+        "n": 11,
+        "tail_support": 6,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 0,
+          "fp": 5,
+          "fn": 3,
+          "tp": 3
+        },
+        "precision": 0.375,
+        "recall": 0.5,
+        "f1": 0.42857142857142855,
+        "ap": 0.4983164983164983,
+        "auc": 0.3
+      }
+    },
+    "test": {
+      "scene_count": 2,
+      "operating": {
+        "n": 14,
+        "tail_support": 9,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 5,
+          "fp": 0,
+          "fn": 9,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.540371973705307,
+        "auc": 0.2444444444444444
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 1,
+        "precision_at_k": 0.25,
+        "recall_at_k": 0.1111111111111111,
+        "random_expected_tail_found": 2.5714285714285716,
+        "random_expected_precision_at_k": 0.6428571428571429,
+        "random_expected_recall_at_k": 0.2857142857142857,
+        "selected_tokens": [
+          "b4ff30109dd14c89b24789dc5713cf8c",
+          "0307afa1ec7e48ce90295acabf8cb6dd",
+          "b6c420c3a5bd4a219b1cb82ee5ea0aa7",
+          "9150678870764c1b87a649a25939c61b"
+        ]
+      },
+      "fixed": {
+        "n": 14,
+        "tail_support": 9,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 2,
+          "fp": 3,
+          "fn": 8,
+          "tp": 1
+        },
+        "precision": 0.25,
+        "recall": 0.1111111111111111,
+        "f1": 0.15384615384615383,
+        "ap": 0.540371973705307,
+        "auc": 0.2444444444444444
+      }
+    }
+  },
+  "label_scope": {
+    "label_protocol": "ai-visual-pilot",
+    "human_reviewed": false,
+    "interpretation": "Agreement with provisional AI visual labels; not human-ground-truth accuracy or a benchmark result"
+  },
+  "test_scene_bootstrap": {
+    "unit": "scene",
+    "seed": 42,
+    "requested_samples": 1000,
+    "scene_count": 2,
+    "threshold_refitted": false,
+    "confidence": 0.95,
+    "intervals": {
+      "ap": {
+        "lower": 0.16666666666666666,
+        "upper": 1.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "auc": {
+        "lower": 0.0,
+        "upper": 0.2444444444444444,
+        "valid_samples": 748,
+        "undefined_samples": 252
+      },
+      "precision": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "recall": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "f1": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      }
+    },
+    "status": "computed"
+  },
+  "provenance": {
+    "run_metadata": "run_metadata.json",
+    "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+    "predictions_sha256": "5fe97372b19a86152deb068c90153f6ea1c1ac1e4c97c99b6b7f0625529b2fec"
+  }
+}

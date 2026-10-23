@@ -1,0 +1,134 @@
+{
+  "recorded_at": "2026-10-23T21:15:30.580318+00:00",
+  "comparison_scope": "AI-to-AI agreement only; not accuracy against human ground truth",
+  "blind_overlap": 16,
+  "agreement_count": 15,
+  "disagreement_count": 1,
+  "policy": "Any disagreement becomes uncertain; original per-agent records retained; no labels or scene splits chosen to balance classes.",
+  "rows": [
+    {
+      "index": 3,
+      "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 6,
+      "sample_token": "e3bcde4a06124931a097ef2a211aaaef",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 12,
+      "sample_token": "9150678870764c1b87a649a25939c61b",
+      "first_label": "normal_core",
+      "second_label": "normal_core",
+      "agreement": true
+    },
+    {
+      "index": 17,
+      "sample_token": "7315022fc89147a6afc7f978601f8f38",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 22,
+      "sample_token": "c143943fd6e246448eab88ce1a0aeda9",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 27,
+      "sample_token": "baaa60749cd04db7952fd8f4ef8ac837",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 33,
+      "sample_token": "feaef544d11646ed806b53d9e1f39cd9",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 37,
+      "sample_token": "269ccf1fe399403c914e1f649d2a8ca2",
+      "first_label": "normal_core",
+      "second_label": "normal_core",
+      "agreement": true
+    },
+    {
+      "index": 41,
+      "sample_token": "f1e3d9d08f044c439ce86a2d6fcca57b",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 46,
+      "sample_token": "919e3c4cec934168a3152077a9adcbea",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 51,
+      "sample_token": "7f87e737dad642d9aff78a7fe12ce194",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 57,
+      "sample_token": "fb61d590dd1143ccb12ea56fbe9d9d07",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 60,
+      "sample_token": "6cb024831cce4b6e8acf85afb7cece6e",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 65,
+      "sample_token": "c9e812f2705b4b198f4675dfaa33812d",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 70,
+      "sample_token": "236f1ecb6ee7459d918cd011831674d6",
+      "first_label": "not_normal_core",
+      "second_label": "not_normal_core",
+      "agreement": true
+    },
+    {
+      "index": 77,
+      "sample_token": "cc57c1ea80fe46a7abddfdb15654c872",
+      "first_label": "uncertain",
+      "second_label": "not_normal_core",
+      "agreement": false
+    }
+  ],
+  "final_label_counts": {
+    "not_normal_core": 60,
+    "uncertain": 7,
+    "normal_core": 13
+  },
+  "input_annotation_hashes": {
+    "annotations_group_0.json": "c0d300ac5e7de28acc2d69f517826a6dab512e8bccb1e70c78045570bca98977",
+    "annotations_group_1.json": "80afee404203b4eeda211c4c887acb19071e7c436e37b9db513f0ef8cbabf16c",
+    "annotations_group_2.json": "8f5f021460bc1fb545681aaf75c74068628a8c60853045db423ddea958debb52",
+    "annotations_group_3.json": "4549cb1b31d6950071f387247edb95da1582bbf3d5e91321de37ee717e2a285f",
+    "second_pass_blind.json": "2557cf4bce1dc3ea23d10afad58da5bfbaf51e0d8d271506fedfdee54b86daad"
+  }
+}
