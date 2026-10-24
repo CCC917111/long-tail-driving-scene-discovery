@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "browser_verified": true,
+  "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+  "fixture": {
+    "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+    "source_html_sha256": "c02a902d5653921d3c2c6c3c5b1886f8e1bba86fecf1256bb33c97984b28c810",
+    "fixture_html_sha256": "6c9099e75785d2d34dfbe79b5109029bb67ae1daada916edec6385c8cecc910e",
+    "selected_timestamps": 80,
+    "synthetic_images": 480,
+    "part_count": 4,
+    "cached_reference_frames": 73,
+    "shipped_runtime_scripts_unchanged": true,
+    "parts": [
+      {
+        "name": "synthetic-part-001-of-004.zip",
+        "bytes": 1555095,
+        "sha256": "a9fd0e822e018536721ec4d28d131129d396a6b45871682aab726d34da8eda86"
+      },
+      {
+        "name": "synthetic-part-002-of-004.zip",
+        "bytes": 1563148,
+        "sha256": "cca227a7bdb18256321a276285ea4012e413df8846ff116771cbba57f9065b75"
+      },
+      {
+        "name": "synthetic-part-003-of-004.zip",
+        "bytes": 1562065,
+        "sha256": "891b90ba564f8765c634a5a01a0a3c3cd1fbc8bfbb7bcca1434289d4b0532b69"
+      },
+      {
+        "name": "synthetic-part-004-of-004.zip",
+        "bytes": 1560040,
+        "sha256": "5273502761c32b5d57e751ae84f280c792c4f9c5aad92cb917294ef45adee0f9"
+      }
+    ]
+  },
+  "core": {
+    "status": "passed",
+    "synthetic_images": 480,
+    "cached_frames": 73,
+    "browser_verified": false,
+    "scope": "Synthetic file transport and cached API binding only"
+  },
+  "browser": {
+    "status": "passed",
+    "browser_verified": true,
+    "browser_version": "155.0.8059.39",
+    "executable": "/usr/bin/google-chrome",
+    "six_images_loaded": true,
+    "image_dimensions": [
+      320,
+      180
+    ],
+    "four_model_table_matches_cache": true,
+    "unit_navigation": true,
+    "search_and_sample_navigation": true,
+    "review_csv_downloaded": true,
+    "human_review_fields_blank": true,
+    "page_errors": [],
+    "desktop_viewport": [
+      1440,
+      1000
+    ],
+    "mobile_viewport": [
+      390,
+      844
+    ],
+    "mobile_six_image_elements": true,
+    "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation."
+  },
+  "ci": {
+    "url": "https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157",
+    "run_id": 40039920157,
+    "job_id": 120708324341,
+    "commit": "ba8efddd46b357f492965b941172a8fd1f6dd948"
+  },
+  "real_images_and_model_predictions_verified_separately": true
+}

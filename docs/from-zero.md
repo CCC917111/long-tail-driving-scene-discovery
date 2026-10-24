@@ -262,7 +262,10 @@ python scripts/neuron_explorer.py serve \
 Inspect real FP/FN images and export the review CSV. Keep model/data versions, exclusions, human review
 records and all predictions. The
 [synthetic end-to-end checks](e2e.md) establish the software path only; the first
-real checkpoint, real browser examples and real metrics remain to be produced.
+original-VLM checkpoint and human-validated scene-disjoint results remain to
+be produced. The separate [CPU AI-label pilot](ai-pilot.md) completed real-image
+extraction and four-method training, with provisional-label limits and an
+offline demonstration.
 
 Preparation/import and the review CSV export were exercised with a watermarked,
 80-frame synthetic schema fixture, not real nuScenes or human annotations.

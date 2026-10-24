@@ -1,38 +1,76 @@
 # Testing and verification
 
-CPU checks use synthetic arrays and images. They validate software contracts,
-not nuScenes label quality, original VLM checkpoints or real
-model effectiveness. Real-asset checks require a separate configured run.
+The default CPU suite uses synthetic arrays and images to validate software
+contracts. A separately configured integration test and independent audits also
+ran against the real mini CPU pilot. Its labels remain provisional AI decisions;
+none of these checks establishes human-validated driving accuracy or reproduces
+the original Cosmos experiment.
 
 ## Latest local record
 
 On 2026-10-23, in the verified Python 3.12 CPU environment:
 
 ```bash
-python -m pytest tests -q -k 'not http_interface'
+DRIVING_REAL_ASSET_DIR=/path/to/real_bundle \
+  python -m pytest tests -q -k 'not http_interface'
 python -m flake8 scripts tests --max-line-length 100
 ```
 
-The offline test selection passed **150 tests and 18 subtests**, with **1
-real-asset test skipped** because no input directory is configured and **1
-HTTP test deselected**. The HTTP unit test subsequently passed on its own with
-loopback access during the earlier end-to-end verification. The final combined
-full-suite run is pending; these separate checks are not a recorded combined
-full-suite pass. Lint passed. CPU CI is
-configured but has not run remotely. Resolved CPU dependencies are in
+The final local selection passed **205 tests and 18 subtests**, with **one HTTP
+test deselected** because this sandbox denied loopback binding. The optional
+real-asset test actually ran against the real feature bundle and explicitly
+AI-provisional labels; it was not skipped in this local record. Lint passed.
+This is a non-HTTP local pass, not a claim that the sandbox completed the HTTP
+test. Resolved dependencies are in
 [`requirements-cpu-lock.txt`](../requirements-cpu-lock.txt).
 
-After adding the CPU screening feature-identity guard, its targeted selection
-passed **14 tests**. That later guard change was checked separately from the
-150-test record above. Wrong encoder/weights/preprocessing are rejected before
-model loading, and legacy screening records its unverified feature identity.
+## GitHub Actions
 
-The separate [CPU image-feature route](cpu-route.md) also ran official pretrained
-ResNet18 inference on 20 synthetic six-view samples, verified a one-sample resume,
-trained all four CPU methods and rebuilt their table. Ten further unlabelled
-synthetic samples used a disjoint token set and a matching extraction protocol.
-This verifies execution, not driving accuracy. No real-data or full interactive
-notebook session has completed.
+At commit `ba8efddd46b357f492965b941172a8fd1f6dd948`, both workflows passed:
+
+- [CPU contracts and synthetic demo](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920171):
+  `make test lint` and `make e2e`, including actual temporary HTTP servers.
+- [Offline explorer browser smoke](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157):
+  Chrome 155 at desktop and mobile viewports, six loaded images, sample/unit
+  navigation, exact-token search, cached model values and an actual review CSV
+  download, with no JavaScript errors.
+
+The earlier [CPU run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
+records **205 passed, one real-asset test skipped and 18 subtests passed**.
+CI has no private driving assets, so its real-asset skip is expected and distinct
+from the configured local integration pass.
+
+The browser workflow uses visibly watermarked, generated images and synthetic
+metadata in four ZIPs. It preserves the shipped demo's runtime/UI scripts and
+tests their rendering and interaction. It does not upload private nuScenes
+images, run real-image inference or validate labels. The workflow retains its
+verification JSON and desktop/mobile screenshots as temporary CI artifacts.
+
+## Real mini and independent offline checks
+
+The [CPU image-feature route](cpu-route.md) imported ten real scenes / 80
+timestamps / 480 original JPEGs, checked the images and metadata, and extracted
+finite `(80, 3072)` pretrained ResNet18 features. The subsequent
+[AI-reference pilot](ai-pilot.md) retained 73 labelled timestamps and completed
+four model fits, checkpoint reloads, train-only normalization checks, saved-score
+evaluation and table reconstruction. Seven uncertain timestamps were screened
+separately; their scenes can overlap the labelled scenes.
+
+Independent Node checks used the actual four user-held ZIPs, verified all 480
+image bytes and matched all 292 displayed model values to saved predictions.
+The exported review CSV retains blank human-decision fields. These real-byte
+and numeric checks are separate from the synthetic Chrome interaction check;
+a Chrome session with the user's actual images has not been verified here.
+The [derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md)
+preserves the audits and explicit AI-label scope. It includes no original image
+bytes or trained model weights.
+
+Wrong encoder, weights and preprocessing identities are rejected before
+screening model loading. Legacy screening records unverified feature identity
+explicitly. AI labels require their own importer and an explicit pilot protocol;
+the default manual route rejects an AI bundle.
+
+## Synthetic end-to-end checks
 
 The synthetic end-to-end workflow also passed: four trained models on 60
 scenes / 240 frames, matching checkpoint reloads and train-only standardisers,
@@ -67,11 +105,14 @@ real driving performance.
 | `tests/test_notebook_review.py` | Saved review decisions, partial CSV resume, per-row reviewer identity and actual label import |
 | `tests/test_real_driving_workflow.py` | Complete real-input handoff gates, immutable input evidence and four actual CPU estimators on a fixture |
 | `tests/test_portable_notebook.py`, `tests/test_portable_handoff.py` | Notebook syntax/bootstrap/local preparation and review backup/restore without downloads/GPU |
-| `tests/test_real_assets.py` | Optional integration against a supplied real feature/label/scene bundle; explicit skip when absent |
+| `tests/test_import_mini_parts.py`, `tests/test_local_upload_html.py` | ZIP completeness, checksums, safe paths and local browser handoff contracts |
+| `tests/test_ai_pilot_labels.py`, `tests/test_ai_label_scope.py` | Split-blind AI-label evidence, uncertainty exclusion, explicit protocol opt-in and scope propagation |
+| `tests/test_offline_explorer.py` | Cached result integrity, bound local-image loading and review exports without invented semantic unit names |
+| `tests/test_real_assets.py` | Optional integration against a supplied real feature/label/scene bundle; explicit skip when absent and no label-quality claim |
 
 Run `python -m pytest tests -q` with loopback access to include the HTTP
-route. A passing non-HTTP selection or isolated HTTP check does not establish
-a passing combined full suite. All checks require their installed dependencies; the
+route, as the CPU workflow does. A local non-HTTP pass does not establish a
+local combined full-suite pass. All checks require their installed dependencies; the
 standalone evaluator checks can also run with
 `python tests/test_evaluation.py -q` as described in [evaluation](evaluation.md).
 
@@ -88,21 +129,22 @@ were executed. Review save/reload/import and backup/restore passed fixture tests
 The new runner also completed four actual CPU estimator runs and table rebuilding
 on a tiny synthetic handoff. Notebook GPU/download cells and visual widget behavior
 in Colab remain unverified. The 2026-10-22 live acquisition attempt failed at the
-managed proxy with HTTP 403; no real archive or labels were produced.
+managed proxy with HTTP 403 and produced no real archive or labels in that
+attempt. The later local upload succeeded, as recorded above.
 
-## Real-asset integration checklist
+## Remaining real-asset work
 
-These checks have **not run** in this round because the real assets are absent:
+The current CPU pilot does not complete the following checks:
 
-1. Load a small authorised nuScenes set, resolve all six cameras and scenes,
-   and confirm label provenance, review/exclusion records and sample IDs.
-2. Extract a small VLM batch with recorded model revision, layer, hook, pooling,
-   prompt/rubric versions and image hashes; verify row alignment and finite
-   features. Record runtime and memory before estimating a full extraction.
-3. Load recovered trained weights/standardiser, score the frozen manifest and
-   compare saved per-sample outputs and historical logs without rewriting them.
-4. Open authorised real cached images in the explorer, inspect real FP/FN
-   examples and export a review queue for independent human decisions.
+1. Obtain independent human labels and review/exclusion records, with enough
+   normal and tail scenes to support a meaningful held-out evaluation.
+2. Run original VLM extraction with recorded model revision, layer, hook,
+   pooling and prompt versions. The completed image-only ResNet18 extraction
+   uses a separate feature protocol.
+3. Recover historical weights, features, labels and logs, then compare original
+   predictions without rewriting their provenance.
+4. Inspect the real images in an actual browser session and collect independent
+   human decisions. Current FP/FN examples are disagreements with AI references.
 
 The optional cached-feature integration entry point is:
 
@@ -113,7 +155,8 @@ DRIVING_REAL_ASSET_DIR=/path/to/real_bundle python -m pytest tests/test_real_ass
 The directory must contain `features.npy`, `meta.json`, `labels.json` and
 `manifest.json`. Without `DRIVING_REAL_ASSET_DIR`, the test explicitly skips;
 synthetic substitutes do not count as real-data integration. This cached-data
-check does not run VLM extraction or verify the original trained checkpoint.
+check does not run VLM extraction, verify the original trained checkpoint or
+turn provisional AI labels into human ground truth.
 
 ## New checks
 

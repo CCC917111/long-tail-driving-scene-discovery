@@ -9,28 +9,42 @@ human-validated real-data effectiveness result has been established in this roun
 | Area | Implemented / prepared | Still required |
 |---|---|---|
 | P0 data contracts | Strict scene-token and label validation; frozen manifest interface; input/run provenance | Recover historical assets, review manifest, explain six-frame gap and raw-VLM supports |
-| Fresh real-data setup | Four real mini parts imported; five tables / 480 camera images checked; 80 CPU ResNet18 feature vectors extracted on a frozen 6/2/2-scene split | Human decisions and label-support checks; original VLM/GPU extraction remains separate |
+| Fresh real-data setup | Four real mini parts imported; five tables / 480 camera images checked; 80 CPU ResNet18 feature vectors extracted on a frozen 6/2/2-scene split | Independent human decisions and adequate normal/tail scene support; original VLM/GPU extraction remains separate |
 | Explicit AI-label pilot | 80 six-view AI decisions; 73 retained / seven uncertain; four real-image model fits, reload/result audit and unlabelled screening; [record](ai-pilot.md) | Independent human truth, more normal training scenes and formal multi-seed evidence; no observed reward increment |
 | Portable execution | Embedded-source notebook; staged archive acquisition; saved review/backup; strict four-method CPU driver | Real download/GPU execution and Colab visual verification |
-| P1 comparison software | Shared evaluator; Logistic/MLP and reward/no-reward SAE paths; validation operating point, review exports and table rebuilding | Real-data smoke, four matched runs, core multi-seed results, real FP/FN review |
-| P2 demonstration | Existing neuron explorer; four-model synthetic workflow, reload/screening checks and real HTTP routes validated | Authorised real cached examples, trained real weights, 90-second recording with a mistake and review export |
-| Documentation | Historical results isolated; contribution wording retained; current AI-assisted refactor identified | Original contribution evidence, real result bundle |
+| P1 comparison | Four matched real-image CPU fits against explicit AI references; shared evaluator, saved-output table reconstruction and unchanged scene allocation | Independent human-reference evaluation and formal multi-seed evidence; all validation precision targets unreachable and no observed reward increment |
+| P2 demonstration | Downloadable offline trained-activation explorer; private local ZIP image loading, four-method scores, three AI-reference error examples and blank human-review export; synthetic Chrome UI passed | A recorded 90-second demonstration, independent human error review and verified semantic interpretation |
+| Documentation | Historical results isolated; original contribution wording retained; AI-assisted follow-up identified; [derived pilot bundle](../results/cpu-mini-ai-pilot-20261023/README.md) published | Original contribution evidence and human-validated result claims |
 
 The original README contribution table records Yike's stated capstone work.
-The 2026-10-19–22 changes to validation, provenance, baseline evaluation, fixtures
-and documentation are AI-assisted follow-up work. They must be reviewed and
+The 2026-10-19–23 changes to validation, provenance, baseline evaluation, data
+handoff, the offline explorer, fixtures and documentation are AI-assisted
+follow-up work. They must be reviewed and
 understood by Yike before being presented as current engineering work; they
 must not be retroactively attributed to the original capstone period. No
 unsupported statement about earlier AI use is made.
 
 ## Verification record
 
-The offline CPU selection passed 122 tests and 18 subtests; one real-asset test
-was skipped and one HTTP test deselected. The HTTP unit test passed separately
-with loopback access. The trained synthetic explorer passed desktop/mobile
-Chromium navigation, image loading, search and CSV-download checks; the screened
-explorer's Chromium check remains pending. A combined full-suite pass is not
-claimed. Lint passed. CI configuration has not run remotely.
+The final local CPU selection passed **205 tests and 18 subtests**, with one
+HTTP test deselected because the sandbox denied loopback binding. The optional
+real-asset integration actually ran against the real feature bundle and
+explicitly AI-provisional labels. Lint passed. This is a local non-HTTP pass;
+the HTTP-dependent case was not counted as passed locally.
+
+At `ba8efddd46b357f492965b941172a8fd1f6dd948`, GitHub Actions passed
+[CPU tests/lint and the HTTP end-to-end workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920171)
+and the [offline Chrome browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157).
+The earlier [CPU run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
+records 205 tests and 18 subtests passed, with the private-real-asset test
+explicitly skipped in CI.
+
+Chrome 155 passed desktop/mobile navigation, six-image rendering, cached score
+checks and actual CSV download using generated, watermarked images in synthetic
+ZIPs. Independent Node checks separately verified all 480 actual local image
+bytes and all 292 displayed model values against saved outputs. The browser
+check is UI evidence, not a real-image browser run or label-quality measurement.
+See [testing](testing.md) for the scope of each check.
 
 The synthetic end-to-end run trained all four core models on 60 scenes / 240
 frames, reloaded their checkpoints and train-only standardisers, rebuilt the
@@ -59,9 +73,14 @@ into an `(80, 3072)` cache after a one-frame smoke and verified resume. It creat
 no labels. Raw logs and hashes are retained under
 `output/real-cpu-mini-20261023/`; [CPU route](cpu-route.md) records the scope.
 No VLM inference, original-checkpoint evaluation or human-label audit has run in
-this round. A subsequent explicitly AI-labelled pilot produced supervised scores
-against provisional AI references. It remains separate from human-validated
-effectiveness results; the [pilot record](ai-pilot.md) includes its failures.
+this round. A subsequent explicitly AI-labelled pilot trained and reloaded all
+four methods on 73 retained timestamps and screened seven uncertain timestamps.
+Its complete result bundle, source snapshot, hashes and numeric offline explorer
+are published without original images, raw metadata or weights. The user loads
+their own images locally. Scores remain agreement with provisional AI references:
+two test scenes, only three normal training examples, one seed, identical SAE
+reward/no-reward checkpoints and unreachable validation precision targets limit
+the conclusions. The [pilot record](ai-pilot.md) includes these failures.
 
 ## Historical claims needing recovery
 
@@ -77,7 +96,11 @@ effectiveness results; the [pilot record](ai-pilot.md) includes its failures.
   The annotation platform and most feature interpretation belong to the named
   teammates in the existing contribution table.
 
-## Real-data completion gate
+## Human-validated experiment completion gate
+
+The CPU software pilot has completed the shared-input fits, saved-output
+reconstruction and an inspection tool. The remaining gate concerns research
+claims and independent human evidence:
 
 1. Validate and freeze an authorised manifest with no duplicate tokens,
    conflicting labels or scene overlap, with provenance/exclusion records.
