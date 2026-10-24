@@ -1,0 +1,36 @@
+{
+  "schema": "ai-independent-recheck-plan-v1",
+  "round": "20261024",
+  "allocation_seed": 20261024,
+  "n": 80,
+  "reviewer_count": 4,
+  "human_reviewed": false,
+  "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+  "assignment_frozen_before_review": true,
+  "reviewer_inputs": "rubric, original six-view panels and optional original camera images only; no prior labels, scores, split or scene descriptions",
+  "original_results_immutable": true,
+  "automatic_relabelling_or_retraining": false,
+  "interpretation": "AI-to-AI consistency audit; not human truth or independently measured label accuracy",
+  "packets": [
+    {
+      "file": "blind-packet-0.json",
+      "sha256": "3a8a58a8ce98ac88a84984237dd85b5c10ff010c6373c26289ff00e44e738f19",
+      "n": 20
+    },
+    {
+      "file": "blind-packet-1.json",
+      "sha256": "e6675433f0ef3d175f67ffad1ab6982e361458dd40a0ec96cdc72133f3cc2f5e",
+      "n": 20
+    },
+    {
+      "file": "blind-packet-2.json",
+      "sha256": "13f9eaa62094becdfb76aba88a21c83f83d4600b82374bac819fb32687111ddf",
+      "n": 20
+    },
+    {
+      "file": "blind-packet-3.json",
+      "sha256": "c3e1705687b2cdd1afa453b6af2ed6dfe1310d06abeb5651ee2d199cfad91073",
+      "n": 20
+    }
+  ]
+}

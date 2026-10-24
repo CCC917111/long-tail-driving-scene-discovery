@@ -1,0 +1,542 @@
+[
+  {
+    "index": 47,
+    "sample_token": "ed5fc18c31904f96a8f0dbb99ff069c0",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: orange cones and red/white barriers channel the roadway, with a cone inside the visible lane area.",
+      "CAM_BACK: a large excavator, barriers and cones occupy part of the road.",
+      "CAM_FRONT_LEFT: a white minivan is immediately beside the roadway and several people are on the building-side walkway."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "76a821973bad8613014e96959c78f2123467c0f152e52c311325b71cdfae0297"
+  },
+  {
+    "index": 49,
+    "sample_token": "7220a2aaebf347cda4efedc88dcae96e",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_BACK: nighttime road views show bright streetlights and vehicle lights against a dark scene.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: most of each view is nearly black, with only nearby foliage distinguishable.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: streetlights and vehicle lights create bright glare while background detail is dark."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "17512314ee29110ba1739de64a1aa226614ef0e7713d9f95b1600223bcb29500"
+  },
+  {
+    "index": 55,
+    "sample_token": "ee9b3f38dadd40588f43ba590c4751b9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_BACK: the road is visible only under streetlights in a dark nighttime scene.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: large portions of the roadside view are very dark and poorly resolved.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: nearby vehicles and roadside detail are visibly blurred in low light."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "a47007e962a456e4199d6ac582b6a64767e3abdc3eabdf0f29ac015c24fb00a1"
+  },
+  {
+    "index": 50,
+    "sample_token": "ca6000b81f2b4b598502b1e93e334a1d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_BACK: a nighttime roadway has bright lamps and headlights surrounded by dark areas.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: roadside features are mostly obscured by darkness.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: vehicle lights and streetlights are bright while surrounding detail is dark and some vehicle edges are blurred."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4f3845286c76c4a44d801bf400d61ccfaeb8621fa7229c26f3fca5c21bcbcb94"
+  },
+  {
+    "index": 25,
+    "sample_token": "df7066fa5f0d4b708982747cc3feed14",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: the dry road ahead is clear, with double-yellow center lines and a marked right-side edge; vehicles are parked along the sides rather than blocking the travel lane.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: parked vehicles are within the roadside parking area.",
+      "CAM_BACK: the road behind is open, with a vehicle visible at a substantial image distance.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: cars occupy an off-road parking lot separated from the travel lane by sidewalk and curb."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "7f92d29e2d7b60dac6f565e077e9b759638643078c13706d589d595cfe2845c4"
+  },
+  {
+    "index": 72,
+    "sample_token": "3e8750f331d7499e9b5123e9eb70f2e2",
+    "label": "not_normal_core",
+    "confidence": "medium",
+    "visible_evidence": [
+      "CAM_FRONT: a marked crosswalk lies ahead, with pedestrians immediately beside its left and right curb ends and several vehicles at the junction.",
+      "CAM_FRONT: illuminated amber/yellow signal lamps are visible at the junction.",
+      "CAM_FRONT_LEFT and CAM_BACK_RIGHT: pedestrians occupy the bridge-side sidewalks close to the roadway, separated by a curb or guardrail."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "cb610e503c579da0c83a64968137a602c5f305d601e417b6249fd76906217607"
+  },
+  {
+    "index": 60,
+    "sample_token": "6cb024831cce4b6e8acf85afb7cece6e",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_BACK: bright streetlights and vehicle lamps illuminate a nighttime road with dark surroundings.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: trees and roadside objects are poorly resolved in dark, visibly blurred views.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: illuminated shops and vehicle lamps create large brightness differences against the dark scene."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "aa6b017cbde36d2c59c8c430ad0d2bd17499e78b9741615d9c24a01c77b76ac5"
+  },
+  {
+    "index": 45,
+    "sample_token": "a7acb150914b40bdad9a2dc4e657cbf9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a white minivan occupies the lane ahead and orange cones channel the road along its right side.",
+      "CAM_BACK: a large excavator and concrete/plastic barriers occupy part of the road, with pedestrians visible in the roadway near the junction.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: cones, barriers and trucks line the adjacent roadway."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "93f536b9394090f2a3dc925da13d8424c2888f698cc6fc2f77a42aeea911130a"
+  },
+  {
+    "index": 41,
+    "sample_token": "f1e3d9d08f044c439ce86a2d6fcca57b",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: a continuous line of red and white construction barriers borders the roadway.",
+      "CAM_BACK_LEFT: a large truck is close alongside the vehicle.",
+      "CAM_BACK: a person stands in the roadway immediately beside the large truck, with additional barriers along the opposite edge."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "8e1886a9c0e255b5eeb2412a5d10cc17b0ee63efde58b6c29237271a239a228e"
+  },
+  {
+    "index": 42,
+    "sample_token": "023c4df2d451409881d8e6ea82f14704",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: construction barriers and an excavator are visible at the junction ahead, beside the lane marked for a left turn.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: red/white barriers and orange cones constrain the adjacent roadway.",
+      "CAM_BACK: barriers line one side of the road and a truck occupies the curb-side area."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "f55011698451016b4f4db5c755284afdb5dae148e6ba1ab9d7f9d8c16fd8acc9"
+  },
+  {
+    "index": 0,
+    "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: an orange construction barrel and the projecting end of a temporary chain-link fence stand at the right edge of the road beside construction equipment.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: building work materials and equipment sit behind temporary construction fencing immediately beside the street.",
+      "CAM_BACK: a construction barrel and temporary fence project toward the roadway at its left edge."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "6d1e9264a1978ed7848e31376586d4e61db99ac3c240b588f17b84c722058e69"
+  },
+  {
+    "index": 78,
+    "sample_token": "9fcdc52b791045e99c623c5fc643331f",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: a person on a bicycle is on the roadway immediately beside the left curb and bicycle docks.",
+      "CAM_FRONT: the cyclist is visible at the close left edge of the road; orange cones surround a large service vehicle parked along that side.",
+      "CAM_FRONT_RIGHT: closely parked cars border the roadway and a parking-lot opening."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "6474cabf57216eed68ecb95951ffb13e0b4a88623f87a7fb60fc53c00deb4087"
+  },
+  {
+    "index": 13,
+    "sample_token": "4b894442c95141f9affd731d9da7b43c",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: the parking-access lane is open ahead and follows a clear left bend with a large forward arrow.",
+      "CAM_FRONT_LEFT and CAM_FRONT_RIGHT: a truck and cars occupy designated roadside parking spaces outside the travel lane.",
+      "CAM_BACK: the lane behind is open between orderly rows of parked cars, with no visible pedestrian or obstacle in it.",
+      "CAM_BACK_LEFT and CAM_BACK_RIGHT: parked cars remain beside the curb rather than across the travel lane."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "a2440ed9faaf15385179e41bb6e5a60d41746217f047cab76db1375a6726eea1"
+  },
+  {
+    "index": 14,
+    "sample_token": "e54b784a608644a2804fcf800c7499f7",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_FRONT_LEFT: the clear access road bends left around a curbed planted island; the visible roadway is unobstructed.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: cars occupy parking spaces beside the road.",
+      "CAM_BACK: a directional arrow marks the open access lane, with parked vehicles lining both sides.",
+      "CAM_BACK_LEFT: the truck sits off the lane behind a curb/guardrail boundary."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "5430612952a100b52d48020b3c48c2bfbcfda20f9874d2e2556df8ace0427e83"
+  },
+  {
+    "index": 34,
+    "sample_token": "17723c0411434e48875a93de4db0ecba",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: a construction-site entrance with corrugated fencing, an open metal gate, safety signage and a hard-hat worker stands immediately beside the side-road mouth.",
+      "CAM_FRONT_LEFT: a motorcycle and rider are next to the curb at this entrance, with portable yellow barrier frames nearby.",
+      "CAM_BACK_LEFT: the tall construction fence and open gate border the junction approach."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT_LEFT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "8cef788538079faebc382c7012b938e20a039c8d9afecef68bf6811f1fa8d0af"
+  },
+  {
+    "index": 61,
+    "sample_token": "98fa81992fb04e799c329eca220e7164",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_BACK: the roadway is seen at night under bright streetlights and vehicle headlights, with dark surroundings.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: roadside structures and a person are visibly blurred and poorly resolved in low light.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: much of the background remains dark despite bright illuminated windows and vehicle lights."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b8e9ca616f6c828b72f9ea902ae0d45cb71763a659ca7b7b0cfd8de0f9e33dbc"
+  },
+  {
+    "index": 76,
+    "sample_token": "456ec36cb4a44ca78f36fbd90c0c34fa",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: several adults and a child occupy the marked crosswalk at the immediately adjacent side-road junction.",
+      "CAM_FRONT: a silver car lies diagonally across the left side of the junction, with a lead black vehicle ahead.",
+      "CAM_BACK_LEFT: an adult and child are visible at the near corner beside the crosswalk."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "d8176c885e16d48b1e2d44499050d71e50dd9d898212b03349ece6b1d559431b"
+  },
+  {
+    "index": 38,
+    "sample_token": "fa51f1910942494cbe396640010fea64",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: the dry, straight road ahead is clear, with distinct lane markings, a distant van and a distant dark vehicle.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: a blue car is alongside in the adjacent right lane, with no visible encroachment into the ego lane.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: a hedge and sidewalk border the left curb with no visible person or obstruction.",
+      "CAM_BACK: vehicles are visible behind with an open road gap, and the lane boundaries remain recognizable."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT_RIGHT",
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "67c5fe514fc849a0c1ea8eff002c91c01c5f0409990eff3bed8e63633e273ef8"
+  },
+  {
+    "index": 69,
+    "sample_token": "f2a6d0e38153467ba0d02706024e258d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a nighttime junction has a large blue/green flare around the bright traffic signal, obscuring part of the background.",
+      "CAM_FRONT_RIGHT: a bus and cars face the junction with intense headlight glare.",
+      "CAM_BACK: a nearby van has very bright headlights, while pedestrians and roadside details are in much darker areas.",
+      "CAM_FRONT_LEFT, CAM_BACK_LEFT and CAM_BACK_RIGHT: substantial areas are dark and noisy outside the light pools."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "9f8ce48cb846425e9d19d4b16e0ef2a4bdca863dbb2dfdee32f9a875b445ce67"
+  },
+  {
+    "index": 68,
+    "sample_token": "36aa1c0eeb50457b97911c3bd742a730",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a nighttime junction contains a broad blue/green flare around a bright traffic signal.",
+      "CAM_FRONT_RIGHT: bus and car headlights cause bright glare against the dark background.",
+      "CAM_BACK: the nearby van headlights are very bright and pedestrians stand at the roadside in low light.",
+      "CAM_FRONT_LEFT, CAM_BACK_LEFT and CAM_BACK_RIGHT: dark, noisy areas reduce roadside detail."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_a",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "d233d608fad3cc1424fea14b888de3f5bbab8187e0184727926248fb42be18e4"
+  }
+]

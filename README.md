@@ -11,6 +11,7 @@ comparison, saved predictions and an offline neuron explorer.
 
 [**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) ·
 [**Saved results**](results/cpu-mini-ai-pilot-20261023/README.md) ·
+[**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
 
 > **Current evidence:** the real-image CPU pipeline is complete. The pilot uses
