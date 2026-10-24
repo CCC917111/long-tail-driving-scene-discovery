@@ -1,0 +1,35 @@
+{
+  "schema_version": "ai-visual-pilot-label-import-v1",
+  "label_protocol": "ai-visual-pilot",
+  "label_scope": "AI-silver-label pilot, not human-ground-truth accuracy",
+  "human_review_complete": false,
+  "scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+  "split_recomputed": false,
+  "annotation_inputs_sha256": {
+    "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/ai_visual_labels.json": "64b4f56855ab03ea36fb37727bf756a05ef29a93a59ce39dc01fbaa87e5314d4"
+  },
+  "prepare_metadata_sha256": "de39e03c37feb0affe6a7dd3e3d3bad54e48c1d8794891ad938e645e0b9210a9",
+  "raw_manifest_sha256": "1dba60575bf753e4a3124fb402f1f41dce34b4523650d792efb251a95cc3f525",
+  "rubric_version": "sha256:f19373f55ffc930f",
+  "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+  "image_manifest_sha256": "1b27cc79c931d75aceb6aee74b24ce10cd6cb7ef24ecf6d198e0647ede119f07",
+  "source_annotations": 80,
+  "included_labels": 73,
+  "excluded_rows": 7,
+  "support": {
+    "train": {
+      "normal": 3,
+      "tail": 45
+    },
+    "val": {
+      "normal": 5,
+      "tail": 6
+    },
+    "test": {
+      "normal": 5,
+      "tail": 9
+    }
+  },
+  "ready_for_current_training_contract": true,
+  "provenance_limit": "AI-generated silver labels, not human ground truth; file hashes do not establish judgment correctness."
+}

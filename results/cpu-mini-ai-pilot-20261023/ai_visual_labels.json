@@ -1,0 +1,2529 @@
+[
+  {
+    "index": 0,
+    "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A construction boom vehicle, fencing and an orange road barrel occupy the right road edge close to the visible lane.",
+      "The front/right views show an active-looking construction enclosure and a constrained street edge; no motion is inferred."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "6d1e9264a1978ed7848e31376586d4e61db99ac3c240b588f17b84c722058e69",
+    "annotation_recorded_at": "2026-10-23T21:13:51.306365+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 1,
+    "sample_token": "12e1aa58e9d04068a33f37b896b901a3",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Construction fencing, a boom lift and concrete barriers directly border the approach to the intersection.",
+      "Cross traffic and the corner are visible ahead; the construction edge limits a simple unobstructed driving corridor."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "93eaf221b5f99ea7a9903f96b0d8d302532f04c8b9b146117d078b5443c5bc0c",
+    "annotation_recorded_at": "2026-10-23T21:13:51.306898+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 2,
+    "sample_token": "0307afa1ec7e48ce90295acabf8cb6dd",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Construction equipment and fencing sit immediately beside the right approach/crosswalk.",
+      "A bus and another vehicle occupy the intersecting road, with large vehicles obscuring some cross-street space."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4a08808a34fef3e7b8aeabb066b39e864086ccec58e075462caabf24b3c1a4ac",
+    "annotation_recorded_at": "2026-10-23T21:13:51.307381+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 3,
+    "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Construction fencing and stored materials line the right corner beside the crosswalk.",
+      "The rear view contains a nearby car and large truck, while construction equipment narrows the opposite road edge."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c3440c588fe75428c0db5929ad9b8a808694ee285bdbefa5f43be777fbbcfa42",
+    "annotation_recorded_at": "2026-10-23T21:13:51.307770+00:00",
+    "ai_second_pass": {
+      "index": 3,
+      "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Front views show an intersection with crossing traffic and a construction fence close to the right corner.",
+        "Rear camera shows a close following vehicle and work equipment narrowing the left road edge."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 4,
+    "sample_token": "d68668cb98fe4be5a00f58b5ac8a0a7d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Construction fencing/materials remain immediately beside the right crosswalk and corner.",
+      "A large delivery truck is alongside the left/rear area and a car is close behind, reducing visible lateral/rear space."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "7e9ffbcb241f34cc2c070f9886cd1c47957b6d3c75273ab44a84d1f6d643f3a9",
+    "annotation_recorded_at": "2026-10-23T21:13:51.308124+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 5,
+    "sample_token": "46292fc546f048f29520299220f22798",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A large delivery truck fills most of both left camera views and blocks visibility toward the left side of the intersection.",
+      "Construction barriers/fencing remain beside the right corner and the rear car is close."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "1ec5dbba8de9c8716b740e24e0c549a9e888fc9a87667597764f777f59972a10",
+    "annotation_recorded_at": "2026-10-23T21:13:51.308452+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 6,
+    "sample_token": "e3bcde4a06124931a097ef2a211aaaef",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A large truck severely occludes the left-front and left-rear views of the intersection.",
+      "Construction fencing and materials line the right corner, with several vehicles visible on the intersecting road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "d373971e1ec8d3b25a5626ebccffad05983905263ff01ed4e700a1694da32155",
+    "annotation_recorded_at": "2026-10-23T21:13:51.308792+00:00",
+    "ai_second_pass": {
+      "index": 6,
+      "sample_token": "e3bcde4a06124931a097ef2a211aaaef",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "A large delivery truck fills most of the front-left and back-left views, severely occluding that side.",
+        "Construction fencing and materials are immediately at the right edge; a following car is close behind."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 7,
+    "sample_token": "8fe9664cec514a58b1184c4fcefda6b5",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "The delivery truck still occupies nearly the entire left-front and left-rear views, hiding the left cross-street area.",
+      "Construction fencing/barriers remain at the right corner near the visible crosswalk."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "f676c3dcf7f75b216e58fe7c5aa896f2aaacf1e69a6311c9338fda15e0414db2",
+    "annotation_recorded_at": "2026-10-23T21:13:51.309148+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 8,
+    "sample_token": "b5989651183643369174912bc5641d3b",
+    "label": "uncertain",
+    "confidence": "low",
+    "visible_evidence": [
+      "Two pedestrians are visible on the broad brick pedestrian area bordering the road, one close to its edge.",
+      "A bus stop, bus, parked delivery truck and parking access are visible across the six views."
+    ],
+    "uncertainty_reason": "The pedestrians appear to be on the brick pedestrian area, but the shared edge and intended ego corridor are not sufficiently clear in this static view to decide whether extra defensive driving is required. Presence on a sidewalk alone is not treated as a positive label.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "135b749ceb493a942e835fefda6a8f0d7abc302583352663ca8247062766e8c1",
+    "annotation_recorded_at": "2026-10-23T21:13:51.309492+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 9,
+    "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A person is visibly on the carriageway ahead near the end of the approach, rather than entirely behind the bus-stop curb.",
+      "The adjacent bus-stop platform is occupied by several people; the road terminates/turns beside parking access."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "473d33a9ffa174c8d7f2c685ba5194be934b9910dc5dd3442621af781364335a",
+    "annotation_recorded_at": "2026-10-23T21:13:51.309863+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 10,
+    "sample_token": "858a1ece22cf45d9bc71e42336604b78",
+    "label": "uncertain",
+    "confidence": "low",
+    "visible_evidence": [
+      "A person stands beside the bollards/motorcycle-parking edge close to the front road boundary.",
+      "The bus-stop group is on the adjacent raised pedestrian area; a large bus is visible behind near the junction."
+    ],
+    "uncertainty_reason": "The nearby person may be entirely on the pedestrian/motorcycle-parking edge rather than in the driving corridor. This static view does not establish a clear additional defensive-driving requirement; normal versus not-normal is left unresolved.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "5ba43947c8b4b2a0ea92fcfd26bc43585820d90c222dd329f6f05b5a4d35f91f",
+    "annotation_recorded_at": "2026-10-23T21:13:51.310253+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 11,
+    "sample_token": "b6c420c3a5bd4a219b1cb82ee5ea0aa7",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "The parking access aisle is visibly passable, with parked cars contained in marked bays.",
+      "Daylight views show recognizable road/parking boundaries and no pedestrian occupying the immediate aisle."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "2b4f8bf32199cf4a2b4bc34dfa660d53a37aaae2ea1d935e73b10718c6ee17d5",
+    "annotation_recorded_at": "2026-10-23T21:13:51.310614+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 12,
+    "sample_token": "9150678870764c1b87a649a25939c61b",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "The straight parking aisle is open with a clearly visible directional arrow and unobstructed surface.",
+      "Vehicles are positioned in the parking bays on both sides; no visible roadworks or immediate pedestrian conflict appears."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "696772fd15f50de3891017a23ca141f732313809caae8c911ea83d9b5c2faac4",
+    "annotation_recorded_at": "2026-10-23T21:13:51.311035+00:00",
+    "ai_second_pass": {
+      "index": 12,
+      "sample_token": "9150678870764c1b87a649a25939c61b",
+      "label": "normal_core",
+      "confidence": "medium",
+      "visible_evidence": [
+        "Daylight parking aisle is clearly passable with a visible direction arrow and clear forward space.",
+        "Cars remain in marked angled parking positions on both sides; no visible pedestrian or obstacle occupies the travel aisle."
+      ],
+      "uncertainty_reason": "Single-frame images do not establish whether any parked vehicle will emerge; no such motion is inferred.",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 13,
+    "sample_token": "4b894442c95141f9affd731d9da7b43c",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A dry, clear parking aisle continues ahead into a gentle bend, with an obvious directional arrow.",
+      "Parked vehicles, including a small truck and taxi, sit in bays alongside the aisle rather than blocking it."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "a2440ed9faaf15385179e41bb6e5a60d41746217f047cab76db1375a6726eea1",
+    "annotation_recorded_at": "2026-10-23T21:13:51.311414+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 14,
+    "sample_token": "e54b784a608644a2804fcf800c7499f7",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "The exit bend and curb/guardrail boundaries are clearly visible and the road ahead is unoccupied.",
+      "Parked vehicles are located off the driving corridor; daylight visibility is adequate across the views."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "5430612952a100b52d48020b3c48c2bfbcfda20f9874d2e2556df8ace0427e83",
+    "annotation_recorded_at": "2026-10-23T21:13:51.311811+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 15,
+    "sample_token": "b4ff30109dd14c89b24789dc5713cf8c",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "The forward bend is clear and bounded by a visible curb and guardrail.",
+      "Vehicles remain in the adjacent parking bays; no person or obstacle occupies the visible curved driving corridor."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "eee8c425c4d91ee0bf9a5575c34135a53767d607c017c97830c74d2fab9cbe7f",
+    "annotation_recorded_at": "2026-10-23T21:13:51.312166+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 16,
+    "sample_token": "8687ba92abd3406aa797115b874ebeba",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Strong sun flare washes out part of the front-left view where pedestrians stand beside the crossing.",
+      "A cyclist is near the right crossing corner, and large vehicles behind occupy nearby lanes."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4ddb5876768f418429aba8b1b5b0cb97f1ac193e5f50ffe13617cddc9065fff0",
+    "annotation_recorded_at": "2026-10-23T21:13:51.312473+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 17,
+    "sample_token": "7315022fc89147a6afc7f978601f8f38",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Strong glare reduces visibility in the front-left crossing area occupied by pedestrians.",
+      "A cyclist is visible on the intersecting road and pedestrians are close to the curb/crosswalk."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "eddc5d5d7e54b663eeb0de0188cd805d42048d3af6f52e6c829c1a2c6d1e4351",
+    "annotation_recorded_at": "2026-10-23T21:13:51.312798+00:00",
+    "ai_second_pass": {
+      "index": 17,
+      "sample_token": "7315022fc89147a6afc7f978601f8f38",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Strong sun glare washes the front-left corner and pedestrian area.",
+        "People are immediately beside the crosswalk and a cyclist is visible at the right intersection; a car is close alongside."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 18,
+    "sample_token": "b8766f4291d5449d95bab459ca724ad8",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Several pedestrians are at the crossing/island immediately to the front-left under strong glare.",
+      "A bus and pickup occupy the intersecting road; the large vehicles obscure some cross-street space."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "143410e20d33b31b83992894dc832e06bf6031f5951c7074778adba33774aaa6",
+    "annotation_recorded_at": "2026-10-23T21:13:51.313109+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 19,
+    "sample_token": "a860c02c06e54d9dbe83ce7b694f6c17",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Pedestrians, including a person with a wheeled bag, occupy the near crosswalk directly in front of the vehicle.",
+      "Strong glare remains in the left-front view; cross traffic is visible beyond the occupied crosswalk."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "additional_original_camera_inspections": [],
+    "reviewer": "AI Codex / ai_annotate_0",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "138b53b9192c0443225c3e998917faac470740f88c98cabd7de9d0ee1c7c63e8",
+    "annotation_recorded_at": "2026-10-23T21:13:51.313450+00:00",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 20,
+    "sample_token": "27900b9c3cfb48ed8b49087098d4a15a",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: several pedestrians occupy the crosswalk directly ahead of the ego view.",
+      "CAM_FRONT_LEFT: strong vertical sun glare reduces local contrast near the crossing; a car is adjacent on the left.",
+      "CAM_BACK: a pickup and large truck occupy nearby rear/side space."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/20.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "358580273a78953b20091450fa6292c3f4c48b877f7a72dd693d25efcbcaa533",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 21,
+    "sample_token": "37535cd306954669a2b21578573b93e3",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: several pedestrians remain across the near crosswalk in front of the ego lane.",
+      "CAM_FRONT_RIGHT: another pedestrian is at the crossing/curb immediately to the right.",
+      "CAM_FRONT_LEFT: strong sun streaks reduce visibility in the left forward sector."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/21.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c0e1dde66fc5b60641f271b0fae4b2955c52dd252ea2991265fd45b693731ab4",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 22,
+    "sample_token": "c143943fd6e246448eab88ce1a0aeda9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: pedestrians are still within the marked crosswalk close to the ego path.",
+      "CAM_FRONT_RIGHT: pedestrians and a wheeled cart are on the crossing adjacent to the traffic island.",
+      "CAM_FRONT_LEFT: pronounced glare affects the forward-left sector."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/22.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "fc66164ab3e1522d6dde3ba7fce490277907f6ade29fdd4aad989a3c620973cd",
+    "ai_second_pass": {
+      "index": 22,
+      "sample_token": "c143943fd6e246448eab88ce1a0aeda9",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Several pedestrians occupy the near crosswalk in front and to the right of the ego view.",
+        "Strong front-left glare reduces contrast near the intersection."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 23,
+    "sample_token": "dcbe451d383e450786aaad04ab9d3790",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_RIGHT: a group of pedestrians and a wheeled cart remain on the near crosswalk/traffic-island approach.",
+      "CAM_FRONT: the crosswalk continues directly through the ego approach at a signalized junction.",
+      "CAM_FRONT_LEFT: strong vertical glare obscures part of the forward-left view."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/23.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "ae5316d4534f1603352590a6414a970ebc0a317e8cc5460a831f6df58176b6b7",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 24,
+    "sample_token": "5991fad3280c4f84b331536c32001a04",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: straight, clearly marked lane is open with no nearby blockage or pedestrian in the roadway.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: curbside vehicles remain outside the open travel lane.",
+      "CAM_FRONT_RIGHT and rear views: parked vehicles are in the off-road parking area; daylight visibility is adequate."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/24.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "0e73d275945e9d5ba9f52f027f59bb2d53377a7d0189bd19891bd2585b555a14",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 25,
+    "sample_token": "df7066fa5f0d4b708982747cc3feed14",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: open straight lane with clear center and edge markings and no immediate obstacle.",
+      "Side views show orderly curbside parking and a separated parking lot.",
+      "CAM_BACK: following traffic is visibly separated; the road surface is dry and scene visibility adequate."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/25.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "7f92d29e2d7b60dac6f565e077e9b759638643078c13706d589d595cfe2845c4",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 26,
+    "sample_token": "9768a199e4884a0db50d015703efe969",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: an oncoming sedan is contained in the opposing lane across the double center line.",
+      "The ego lane ahead is open and clearly marked.",
+      "Side/rear views show routine parked vehicles and no person or object encroaching into the ego lane."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/26.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b8a90bd3301abbf098e99a7e65a2f53fb13602a4693cd1f0d6eaf406b7114066",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 27,
+    "sample_token": "baaa60749cd04db7952fd8f4ef8ac837",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a pedestrian is within the roadway at the marked crosswalk ahead.",
+      "The pedestrian/crosswalk location calls for extra readiness to yield from the visible single frame.",
+      "Remaining views are clear, with parked cars and sidewalk pedestrians outside the ego lane."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/27.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "f93c1b288126c1fad6c3442f9fe034aba078cb7eb4e1188c2b9a6f514b7493a0",
+    "ai_second_pass": {
+      "index": 27,
+      "sample_token": "baaa60749cd04db7952fd8f4ef8ac837",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "A pedestrian is visibly within the road at the approaching marked crossing.",
+        "Parked vehicles line both sides near the crossing and partially hide sidewalk approach areas."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 28,
+    "sample_token": "8580e9a249b64b59bead9d80c0e13e8b",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: utility-work vehicles and traffic cones are visible along the road ahead, beside a bus.",
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: a pedestrian is immediately at the crosswalk/curb margin.",
+      "The crosswalk and work-zone approach add visible static difficulty despite adequate daylight."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/28.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b464a1e2737d6b823b88dbd598fcc0c497facb0008e62675353a2b1454c85f63",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 29,
+    "sample_token": "2e024439286d469f8f743fe9266c0e56",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: multiple utility trucks and cones define a roadside work zone; some cones extend into the road corridor.",
+      "A large bus occupies the adjacent right-side space and occludes part of that road edge.",
+      "CAM_FRONT_LEFT: work vehicle equipment and cones are close to the roadway."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/29.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "83e76f4fcaf0bc47924d8877976bf46d47d3ee5cf0e02b2ae9196f27813215c3",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 30,
+    "sample_token": "96d915e8b7e44bacba3c78e76a924e5c",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT and CAM_FRONT_LEFT: traffic cones occupy the roadway next to utility trucks and elevated work equipment.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: a large bus is immediately alongside, substantially occluding the right side.",
+      "The visible work zone and constrained lateral context warrant extra conservative driving."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/30.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "cc4b08bdbdfda1200c04bb867a1ec66bb2898722ce68c9556fd958e52d5b1703",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 31,
+    "sample_token": "35833ae5808e4ef186d1fdebac3d9cf6",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: a traffic cone remains at the lane/road edge near the adjacent vehicle.",
+      "CAM_BACK: a series of cones and utility-work vehicles remain in the road corridor behind the ego view.",
+      "The six-view frame still contains a clear roadside work zone; no motion or cut-in is inferred."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/31.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b9add00ed32ec7a4ab92b26ece279915a3bf494b454505722bd7dc74bc108547",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 32,
+    "sample_token": "c1676a2feac74eee8aa38ca3901787d6",
+    "label": "uncertain",
+    "confidence": "low",
+    "visible_evidence": [
+      "CAM_FRONT: a portable CAUTION sign is beside the road; pedestrians remain on the separated sidewalk.",
+      "Construction hoarding is visible on the left, but the ego lane is open and no active obstruction is visible.",
+      "The original CAM_FRONT image was also inspected to read the sign."
+    ],
+    "uncertainty_reason": "The static frame does not clearly establish whether the roadside caution/hoarding imposes an additional driving constraint; retain uncertain rather than infer an unseen hazard.",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/32.jpg",
+    "additional_original_cameras_inspected": [
+      "CAM_FRONT"
+    ],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "34d0439c1377facd2b8567362ba8c2111154272cd01e632a55c9bc7ef7c1c765",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 33,
+    "sample_token": "feaef544d11646ed806b53d9e1f39cd9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a portable sign explicitly warns CAUTION HEAVY VEHICLES MOVEMENT beside the road.",
+      "Construction hoarding and vegetation obscure the adjacent access area on the left.",
+      "The warning and obscured work access are visible reasons for additional readiness to yield."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/33.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "7722bba30dbdc3966eb15f592608a5a0c92f857518b7543533d1864bc8e76806",
+    "ai_second_pass": {
+      "index": 33,
+      "sample_token": "feaef544d11646ed806b53d9e1f39cd9",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "A roadside construction warning sign explicitly marks caution for heavy vehicle movement.",
+        "Temporary work signs and roadside works are adjacent to the forward lane."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 34,
+    "sample_token": "17723c0411434e48875a93de4db0ecba",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT and CAM_BACK_LEFT: a construction access opening and hoarding are directly beside a narrow side approach.",
+      "The hoarding and access geometry limit visibility around the road edge/entrance.",
+      "CAM_FRONT: patched surface and junction box markings are visible at the work-access vicinity."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/34.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "8cef788538079faebc382c7012b938e20a039c8d9afecef68bf6811f1fa8d0af",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 35,
+    "sample_token": "639a4120779f44bb9cf41be3e8612e36",
+    "label": "uncertain",
+    "confidence": "low",
+    "visible_evidence": [
+      "CAM_FRONT: the forward lane is open and marked, with pedestrians on the sidewalk.",
+      "CAM_BACK_RIGHT: a nearby SUV occupies a channelized junction area; the original image was inspected.",
+      "The static view shows the vehicle and junction island but cannot establish any temporal maneuver."
+    ],
+    "uncertainty_reason": "The SUV is near the junction behind/right, but the single frame does not establish whether it constrains the ego path or is in a routine separated position; do not infer a crossing event.",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/35.jpg",
+    "additional_original_cameras_inspected": [
+      "CAM_BACK_RIGHT"
+    ],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "8790a8d2c6558600bf2fa2f3fbd4012ab7d1a2a216491179db68577572ec3281",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 36,
+    "sample_token": "61d47d1198184bfdaa6777e9448d825d",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: clear through lane, visible green traffic signal, and no immediate pedestrian or obstruction.",
+      "Vehicles in the adjoining lane are separated by clear lane markings.",
+      "Side/rear views show routine roadway and sidewalk boundaries with adequate daylight visibility."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/36.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "f36f37fb57d07a3e69c0d87df7440f2e26e7d048f39edeb981ae1aba303149cc",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 37,
+    "sample_token": "269ccf1fe399403c914e1f649d2a8ca2",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: open straight route through a clearly marked signalized junction.",
+      "Side vehicles occupy visible, marked parts of the junction; no vehicle is visibly blocking the ego lane.",
+      "All six views are legible; no work-zone obstruction or pedestrian in the ego roadway is apparent."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/37.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c6124170c2a215b65eb14d8b73bafcae695fc3557f27a1f6669a1e6d37ca18b1",
+    "ai_second_pass": {
+      "index": 37,
+      "sample_token": "269ccf1fe399403c914e1f649d2a8ca2",
+      "label": "normal_core",
+      "confidence": "medium",
+      "visible_evidence": [
+        "Forward travel lane is open and clearly marked through a routine, visible intersection.",
+        "Nearby vehicles occupy separate lanes or the side road; no visible obstruction or vulnerable road user is in the ego travel corridor."
+      ],
+      "uncertainty_reason": "The single frame does not reveal future vehicle paths; no turning conflict is inferred.",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 38,
+    "sample_token": "fa51f1910942494cbe396640010fea64",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: straight, clearly marked lane with distant traffic and unobstructed sight distance.",
+      "CAM_FRONT_RIGHT and CAM_BACK_RIGHT: a blue sedan is alongside in the adjacent lane; no lane intrusion is evident.",
+      "Median railings separate opposing traffic, and no pedestrian or static obstruction is in the ego lane."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/38.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "67c5fe514fc849a0c1ea8eff002c91c01c5f0409990eff3bed8e63633e273ef8",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 39,
+    "sample_token": "63c24b51feb94f14bec29022dae4975d",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: the blue sedan is in the adjacent right lane while the ego lane remains open.",
+      "Clear lane markings and a continuous median railing make the road structure legible.",
+      "Sidewalk/side views show no nearby crossing pedestrian or abnormal road obstacle."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT",
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_1",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "visual_input": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/39.jpg",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "770094d1a825cc8030b7b8b0f667a3546c9db2b8f21914f309df0ce760c25b29",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 40,
+    "sample_token": "ca9a282c9e77460f8360f564131a8af5",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT/RIGHT: continuous construction barriers occupy the right road margin and a work truck is beside the lane.",
+      "CAM_BACK: pedestrians are visible within the roadway near the right side; ordinary unobstructed separation is not clear."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "6221f824af44d854e3af4dad298be78d511b92544ba1ce6d43d555403d2a9ba9",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 41,
+    "sample_token": "f1e3d9d08f044c439ce86a2d6fcca57b",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_RIGHT/BACK_RIGHT: long orange/white construction barriers narrow and constrain the usable road edge.",
+      "CAM_BACK_LEFT/BACK: a large work truck is immediately alongside the road, with a worker visible near its rear."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "8e1886a9c0e255b5eeb2412a5d10cc17b0ee63efde58b6c29237271a239a228e",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "ai_second_pass": {
+      "index": 41,
+      "sample_token": "f1e3d9d08f044c439ce86a2d6fcca57b",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Temporary plastic barriers alter the road edge beside the driving lanes.",
+        "Large work trucks and a worker are close to the vehicle in the rear and left views."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 42,
+    "sample_token": "023c4df2d451409881d8e6ea82f14704",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: temporary work barriers and an excavator are visible at the upcoming junction.",
+      "CAM_FRONT_RIGHT/BACK: extended roadworks barriers and cones alter the road margins and intersection approach."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "f55011698451016b4f4db5c755284afdb5dae148e6ba1ab9d7f9d8c16fd8acc9",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 43,
+    "sample_token": "88449a5cb1644a199c1c11f6ac034867",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: excavator and construction barriers immediately border the curved junction approach.",
+      "CAM_FRONT_RIGHT: several pedestrians occupy the crosswalk and its roadway approach close to the intersection."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "58a7a5ceb312aca859782628a0ccd3a68bd23794bd2ef18e821101f2518c1087",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 44,
+    "sample_token": "fedfb3a6cb804635a0f47143f9ca8d6f",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a van is ahead within a lane constrained by cones and a large temporary barrier.",
+      "CAM_FRONT_RIGHT/BACK_RIGHT: an excavator and roadworks barriers are close to the carriageway; pedestrians are visible at the nearby crossing."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "05cc831a370054402de78018cd7b79bc25ea5ca0b3440b2f1dd4e56463d56b09",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 45,
+    "sample_token": "a7acb150914b40bdad9a2dc4e657cbf9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a large van occupies the near forward view while cones form a narrow temporary corridor to its right.",
+      "CAM_BACK: construction machinery, barriers and pedestrians are visible around the junction."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "93f536b9394090f2a3dc925da13d8424c2888f698cc6fc2f77a42aeea911130a",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 46,
+    "sample_token": "919e3c4cec934168a3152077a9adcbea",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: the forward lane is constrained by a closely spaced row of cones and a van ahead.",
+      "CAM_BACK: excavator, roadworks barriers and pedestrians appear at the adjacent junction."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "230d1f0a09cbcd76c27992a93630f65182cfadf7452d354b7d16ec6085926d17",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "ai_second_pass": {
+      "index": 46,
+      "sample_token": "919e3c4cec934168a3152077a9adcbea",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Cones form a narrow temporary corridor around a close vehicle ahead.",
+        "An excavator, work barriers and pedestrians/workers are visible around the rear intersection."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 47,
+    "sample_token": "ed5fc18c31904f96a8f0dbb99ff069c0",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT/RIGHT: cones and temporary work-zone signs form a restricted road corridor.",
+      "CAM_BACK: construction equipment and cone-marked temporary road boundaries remain immediately behind."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "76a821973bad8613014e96959c78f2123467c0f152e52c311325b71cdfae0297",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 48,
+    "sample_token": "5998b71b64c146769bde1d5430741381",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "All views: nighttime illumination leaves large side-view regions dark and noisy.",
+      "CAM_FRONT_RIGHT/BACK: headlights and streetlights produce conspicuous glare and road reflections."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "00a22b520e75f95bc90188277ddd2c42362521453876565ead306660c0d51b7a",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 49,
+    "sample_token": "7220a2aaebf347cda4efedc88dcae96e",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: nighttime side views are largely dark with substantial loss of visible environmental detail.",
+      "CAM_FRONT/BACK_RIGHT: streetlights and headlights create bright glare against the dark road scene."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "17512314ee29110ba1739de64a1aa226614ef0e7713d9f95b1600223bcb29500",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 50,
+    "sample_token": "ca6000b81f2b4b598502b1e93e334a1d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: very dark nighttime views obscure road-adjacent details.",
+      "CAM_FRONT/BACK: bright light sources and image noise reduce low-light perception reliability."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "4f3845286c76c4a44d801bf400d61ccfaeb8621fa7229c26f3fca5c21bcbcb94",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 51,
+    "sample_token": "7f87e737dad642d9aff78a7fe12ce194",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "All views: nighttime capture has substantial shadowed regions and sensor noise.",
+      "CAM_FRONT/BACK: overhead lights and vehicle headlights create strong brightness contrasts."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "8a761b35fc8231eb67fb78c1562de7d4eec943493c12125280842a59a4bcff43",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "ai_second_pass": {
+      "index": 51,
+      "sample_token": "7f87e737dad642d9aff78a7fe12ce194",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Nighttime illumination leaves large side regions dark and noisy.",
+        "Headlights and street lights produce glare; road surface has visible reflections."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 52,
+    "sample_token": "d148d50ba9be44bcb2105d8da47425b4",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: almost-black nighttime regions conceal much of the nearby environment.",
+      "CAM_FRONT/BACK: streetlight glare and noisy shadows make perception less reliable."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "97a0e2f4fa6d343d5811ca00cf0a4f4c3168cdc7763ef3dff2991a79750934f3",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 53,
+    "sample_token": "7bf1cef0e253474e847ee4c2eb955901",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: nighttime side views have severely reduced detail in dark surroundings.",
+      "CAM_FRONT_RIGHT/BACK_RIGHT: bright vehicle lights and reflections contrast strongly with low ambient illumination."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "4967e37164da72994395b378f5beb5712641706115f0b367d1531c28b86d7295",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 54,
+    "sample_token": "05e993bd780241aabaa30dd2a0473286",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: nighttime bus-stop lighting is bright while adjacent surroundings are dark.",
+      "CAM_FRONT/BACK: pronounced streetlight glare and noisy shadow regions reduce visibility."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "475b751dc7c47f5b62bc6bfab4888f00e6a20523d2470c3252e6cfbf23bede19",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 55,
+    "sample_token": "ee9b3f38dadd40588f43ba590c4751b9",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT/BACK_LEFT: most side-view environmental structure is dark and difficult to distinguish.",
+      "CAM_FRONT/BACK: nighttime illumination and headlight/streetlight glare create low-visibility conditions."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "a47007e962a456e4199d6ac582b6a64767e3abdc3eabdf0f29ac015c24fb00a1",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 56,
+    "sample_token": "e6b0b282aa174a978272dc2d0a89d560",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: a nearby van has bright illuminated brake lamps at an intersection.",
+      "CAM_FRONT_RIGHT: pedestrians are close to the junction crossing; nighttime lighting and wet-road reflections add visual difficulty."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "4b8ccbf6ae582005db8399f039b1597f358c1e90837e04544a9bb25e682ef956",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 57,
+    "sample_token": "fb61d590dd1143ccb12ea56fbe9d9d07",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT/RIGHT: nighttime junction includes pedestrians close to roadway crossing areas.",
+      "CAM_BACK: headlights produce strong glare and elongated reflections on the visibly reflective road surface."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "0d7643087cb07e21f6c516025c44e3d43f96c49cc29bab0ab089c20ddcda6e3c",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "ai_second_pass": {
+      "index": 57,
+      "sample_token": "fb61d590dd1143ccb12ea56fbe9d9d07",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Nighttime wet reflective road and strong headlight glare reduce visibility.",
+        "Vehicles occupy the nearby intersection and pedestrians stand or occupy areas around the crossing."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 58,
+    "sample_token": "f65ffdc408fb4a0c8ef0d1614b47dce8",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT: an umbrella-holding pedestrian is visibly within the junction roadway/crossing area.",
+      "CAM_BACK/RIGHT: wet-looking reflective road and bright headlights produce strong nighttime glare."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "d855d2596c51a967372cb5eeb640fd001fc9430e996acf25bfd3abcc411c6128",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 59,
+    "sample_token": "07175443e8444b8c8c4802fd004e33c1",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT/BACK: nighttime road surfaces show substantial reflections and vehicle-light glare.",
+      "CAM_BACK_RIGHT: a pedestrian is visible in the junction roadway/crossing area."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "inspection_method": "All six views inspected in the listed contact sheet via view_image; no split, scene description or model prediction used.",
+    "panel_sha256": "26ec138855adb1758c09eae03875bbef936a8918bd135f016866bb94337c3ed9",
+    "reviewer": "AI Codex / ai_annotate_2",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 60,
+    "sample_token": "6cb024831cce4b6e8acf85afb7cece6e",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night scene with very dark left-side and rear-left surroundings.",
+      "Streetlamp halos and headlight brightness reduce visibility away from the lit carriageway."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/60.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "aa6b017cbde36d2c59c8c430ad0d2bd17499e78b9741615d9c24a01c77b76ac5",
+    "ai_second_pass": {
+      "index": 60,
+      "sample_token": "6cb024831cce4b6e8acf85afb7cece6e",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Nighttime views contain dark side regions, image noise and bright lamp glare.",
+        "The road surface reflects lights; side-view objects have visible blur."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 61,
+    "sample_token": "98fa81992fb04e799c329eca220e7164",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night-time road with strong streetlamp flare in front and rear views.",
+      "Left-side surroundings remain dark and visibly blurred, limiting lateral detail."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/61.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b8e9ca616f6c828b72f9ea902ae0d45cb71763a659ca7b7b0cfd8de0f9e33dbc",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 62,
+    "sample_token": "27749aa3de2545219186c61d4d415e1c",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night-time visibility with dark roadside areas in the side views.",
+      "Bright lamp/headlight flare is visible around the road and bus; low-light exclusion applies."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/62.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "a0d9df3b97755be48a3c07095087bc6918e86925f07c0ea14fb6136557790024",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 63,
+    "sample_token": "4e1d1031fe9f45f981a2f598365fc645",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night road and substantially dark side-camera regions.",
+      "Strong streetlight bloom and blurred side details impair a uniformly clear six-view scene."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/63.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "111cda2d97037fc6991610615ec7b83e455b8d8ff950cbb48c2472db47596059",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 64,
+    "sample_token": "a480496a5988410fbe3d8ed6c84da996",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with broad headlight/lamp flare across the front view.",
+      "A nearby vehicle occupies the front-right foreground and a close rear van produces bright headlight glare."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/64.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "445cb53949b2cba581f787fe90359679a8f525c7dc9ac2087058d5fa0604d72f",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 65,
+    "sample_token": "c9e812f2705b4b198f4675dfaa33812d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with dark lateral areas and conspicuous headlight glare.",
+      "A vehicle spans much of the front-left view while bright headlights and flare reduce contrast in front."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/65.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "79aa38ddecb261a27f10e9ab1d13a5ff920d975d9d1c0b5214fbb66f825b33b9",
+    "ai_second_pass": {
+      "index": 65,
+      "sample_token": "c9e812f2705b4b198f4675dfaa33812d",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Nighttime intersection has strong headlight/lamp glare and dark peripheral regions.",
+        "A vehicle occupies the near cross-intersection area while a following van is close in the rear view."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 66,
+    "sample_token": "3ff58ee0fc4748d9895300f02114aa56",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with a bright translucent flare obscuring part of the central front view.",
+      "Nearby rear vehicle headlights and very dark roadside regions add perception difficulty."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/66.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "663b053a2e8df36dde88551357b13c44e016c21ba4b788c602a02c38b82bbcc8",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 67,
+    "sample_token": "25a4a6aa9096458285cba35c950f2717",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection; central front-camera flare obscures road detail.",
+      "Several bright vehicle headlights and dark side regions create difficult lighting across the six views."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/67.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "e00a55b353be0e5400408df15a8fadd02e5cf98a2fe4e1c89aca95d8c7bee96e",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 68,
+    "sample_token": "36aa1c0eeb50457b97911c3bd742a730",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with pronounced front-camera light artifacts.",
+      "Bus/oncoming headlights and a bright nearby rear van create glare against dark surroundings."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/68.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "d233d608fad3cc1424fea14b888de3f5bbab8187e0184727926248fb42be18e4",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 69,
+    "sample_token": "f2a6d0e38153467ba0d02706024e258d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with a large blue-green flare in the front view.",
+      "Headlights from nearby vehicles are bright while roadside detail remains dark."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/69.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "9f8ce48cb846425e9d19d4b16e0ef2a4bdca863dbb2dfdee32f9a875b445ce67",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 70,
+    "sample_token": "236f1ecb6ee7459d918cd011831674d6",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night-time visibility with strong lamp/headlight bloom in front.",
+      "Nearby rear van headlights and dark lateral areas limit clear multi-view perception."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/70.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "e2ace6fca4b16ca4d1808102e4217d9f9af9db7c45720055b2bb64c315926d17",
+    "ai_second_pass": {
+      "index": 70,
+      "sample_token": "236f1ecb6ee7459d918cd011831674d6",
+      "label": "not_normal_core",
+      "confidence": "high",
+      "visible_evidence": [
+        "Nighttime image noise, bright headlight glare and dark peripheral areas limit perception.",
+        "A close rear van and people near the roadside are visible around the intersection."
+      ],
+      "uncertainty_reason": "",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "adjudication": "ai_passes_agree_not_human_truth"
+  },
+  {
+    "index": 71,
+    "sample_token": "abf3d91d3c28407e80e3334fe89c03cb",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Night intersection with large front-camera flare and headlight glare.",
+      "The lateral roadside areas are dark and a nearby rear vehicle contributes bright illumination contrast."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/71.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "cb47b83407e2948718eb8a9245e228f038e4fb0a16f668a7c45bf8f88f1dd88d",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 72,
+    "sample_token": "3e8750f331d7499e9b5123e9eb70f2e2",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "Daylight images show a clear, passable lane with visible lane markings and an ordinary signalized intersection ahead.",
+      "Pedestrians remain on the separated sidewalk; surrounding vehicles have visible separation and no obvious lane blockage appears."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/72.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "cb610e503c579da0c83a64968137a602c5f305d601e417b6249fd76906217607",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 73,
+    "sample_token": "f4f86af4da3b49e79497deda5c5f223a",
+    "label": "uncertain",
+    "confidence": "medium",
+    "visible_evidence": [
+      "A nearby oncoming vehicle fills the left edge of the front/crosswalk view.",
+      "Several pedestrians are gathered very near the front-right crosswalk corner; the central roadway itself remains visible."
+    ],
+    "uncertainty_reason": "The still image does not establish whether the corner pedestrians and nearby vehicle require extra defensive action beyond ordinary intersection handling.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/73.jpg",
+    "full_resolution_cameras_also_inspected": [
+      "CAM_FRONT"
+    ],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "13328a1f7a6046c3b0a9abd44d36fe63919349caafe1419b06b876e61439cb19",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 74,
+    "sample_token": "796b1988dd254f74bf2fb19ba9c5b8c6",
+    "label": "not_normal_core",
+    "confidence": "medium",
+    "visible_evidence": [
+      "A broadside SUV occupies the side-street mouth immediately ahead and extends toward the center line.",
+      "Parked vehicles border both sides of the road and reduce the visible clearance around this lateral vehicle."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/74.jpg",
+    "full_resolution_cameras_also_inspected": [
+      "CAM_FRONT"
+    ],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "6ce377343b3b9026b0760be2d5ea51c40ba44933832ba696704b87971c2ef911",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 75,
+    "sample_token": "0a0d6b8c2e884134a3b48df43d54c36a",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A broadside SUV visibly spans the double-yellow center area and intrudes into the immediate forward travel corridor.",
+      "The forward path has a clear nearby vehicle conflict that warrants extra clearance/yielding caution."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/75.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "2285ca473465b8273fb3bdb93662cdb8c0fadaf22914a2eb298fe250b97fd2d1",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 76,
+    "sample_token": "456ec36cb4a44ca78f36fbd90c0c34fa",
+    "label": "not_normal_core",
+    "confidence": "medium",
+    "visible_evidence": [
+      "Adults and a child are on the adjacent side-street crosswalk close to the front-left of the ego viewpoint.",
+      "A silver car is angled across the nearby intersection mouth, adding a close lateral interaction beside vulnerable road users."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/76.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "d8176c885e16d48b1e2d44499050d71e50dd9d898212b03349ece6b1d559431b",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 77,
+    "sample_token": "cc57c1ea80fe46a7abddfdb15654c872",
+    "label": "uncertain",
+    "confidence": "low",
+    "visible_evidence": [
+      "Pedestrians including a child occupy the crosswalk in the rear-left view near a silver car.",
+      "The front road corridor is clear with ordinary parked vehicles and a distant lead vehicle."
+    ],
+    "uncertainty_reason": "Two AI visual passes differ: primary=uncertain, second=not_normal_core. Excluded conservatively; human adjudication pending.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/77.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "dcd3f534a0e4e1999adecf7ebd25006847af6cb42f0e926f879f710ed3ab924c",
+    "ai_second_pass": {
+      "index": 77,
+      "sample_token": "cc57c1ea80fe46a7abddfdb15654c872",
+      "label": "not_normal_core",
+      "confidence": "medium",
+      "visible_evidence": [
+        "A group of pedestrians occupies the nearby road/crossing area in the back-left view.",
+        "Parked vehicles and a close side vehicle partially occlude the pedestrian approach area."
+      ],
+      "uncertainty_reason": "Their future motion and exact path relative to ego cannot be established from a static frame.",
+      "cameras_inspected": [
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK_LEFT",
+        "CAM_BACK",
+        "CAM_BACK_RIGHT"
+      ],
+      "inspection_method": "Viewed the full six-camera contact sheet via view_image; no scene descriptions, split metadata, predictions, or other annotations consulted.",
+      "reviewer": "AI Codex second pass",
+      "label_origin": "ai_visual_provisional",
+      "human_review_status": "pending"
+    },
+    "primary_label_preserved": "uncertain",
+    "adjudication": "ai_disagreement_excluded"
+  },
+  {
+    "index": 78,
+    "sample_token": "9fcdc52b791045e99c623c5fc643331f",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "A cyclist is close to the front-left road edge beside parked vehicles and a service van.",
+      "The cyclist is in the roadside travel area rather than behind the sidewalk edge, requiring additional lateral safety margin."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/78.jpg",
+    "full_resolution_cameras_also_inspected": [
+      "CAM_FRONT_LEFT"
+    ],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "6474cabf57216eed68ecb95951ffb13e0b4a88623f87a7fb60fc53c00deb4087",
+    "adjudication": "single_ai_pass_human_pending"
+  },
+  {
+    "index": 79,
+    "sample_token": "281b92269fd648d4b52d06ac06ca6d65",
+    "label": "uncertain",
+    "confidence": "medium",
+    "visible_evidence": [
+      "The front and rear lane corridors are clearly visible between ordinary parked vehicles.",
+      "Orange cones stand beside a parked service van in the rear-left view, but no clear obstruction of the ego travel lane is visible."
+    ],
+    "uncertainty_reason": "The rubric lists cones as a difficulty factor, but this static scene does not clearly show whether the localized roadside cones require extra defensive action beyond routine passing.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / ai_annotate_3",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "inspection_panel": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/visual-inputs/79.jpg",
+    "full_resolution_cameras_also_inspected": [],
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4f46556944677d00b6944ce25cbe17e4c0407758e23982fc5bddedf07a8da592",
+    "adjudication": "single_ai_pass_human_pending"
+  }
+]

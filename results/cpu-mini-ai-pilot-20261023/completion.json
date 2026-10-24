@@ -1,0 +1,372 @@
+{
+  "schema": "driving-real-cpu-ai-pilot-completion-v1",
+  "recorded_at": "2026-10-23T21:33:01.014388+00:00",
+  "status": "software_pipeline_complete_ai_reference_pilot_human_verification_pending",
+  "gpu_used": false,
+  "additional_paid_resources_provisioned": false,
+  "data": {
+    "timestamps": 80,
+    "scenes": 10,
+    "camera_images": 480,
+    "features_shape": [
+      80,
+      3072
+    ],
+    "feature_protocol": "cpu-resnet18-six-camera-v1"
+  },
+  "labels": {
+    "origin": "ai_visual_provisional",
+    "human_reviewed": false,
+    "normal": 13,
+    "tail": 60,
+    "uncertain_excluded": 7,
+    "retained": 73
+  },
+  "ai_blind_second_pass": {
+    "n": 16,
+    "agreement": 15,
+    "disagreement": 1,
+    "interpretation": "AI agreement only; not human-truth accuracy"
+  },
+  "trained_methods": [
+    "logistic",
+    "mlp",
+    "sae_abstopk_none",
+    "sae_abstopk_norm"
+  ],
+  "comparison": [
+    {
+      "method": "logistic",
+      "seed": 42,
+      "run_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/logistic",
+      "n": 14,
+      "label_protocol": "ai-visual-pilot",
+      "human_reviewed": false,
+      "feature_protocol": "cpu-resnet18-six-camera-v1",
+      "encoder": "resnet18-imagenet1k-v1",
+      "feature_semantics": "resnet18 avgpool; six-camera concatenation",
+      "feature_config_sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59",
+      "test_scenes": 2,
+      "tail_support": 9,
+      "ap": 0.5856541606541608,
+      "auc": 0.3777777777777777,
+      "fixed_precision": 0.6428571428571429,
+      "fixed_recall": 1.0,
+      "fixed_f1": 0.782608695652174,
+      "operating_precision": 0.0,
+      "operating_recall": 0.0,
+      "operating_f1": 0.0,
+      "validation_threshold": null,
+      "target_status": "target_unreachable",
+      "requested_k": 4,
+      "effective_k": 4,
+      "precision_at_k": 0.5,
+      "tail_found": 2,
+      "random_expected_tail_found": 2.5714285714285716,
+      "commit": "b57eaffa21d54ad67d98d441935cf6b17cdc5294",
+      "dirty": true,
+      "source_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+      "model_config_sha256": "1b4552e452d4e83bfd8c630718209ac2fe807da3294770f2d8eab2156301f55d",
+      "checkpoint_sha256": "333cbed51c2075d4a2db8675e03ff415b44fead4cba8a2b42bdeacd935e8b1cb",
+      "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "features_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+      "meta_sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b"
+    },
+    {
+      "method": "mlp",
+      "seed": 42,
+      "run_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/mlp",
+      "n": 14,
+      "label_protocol": "ai-visual-pilot",
+      "human_reviewed": false,
+      "feature_protocol": "cpu-resnet18-six-camera-v1",
+      "encoder": "resnet18-imagenet1k-v1",
+      "feature_semantics": "resnet18 avgpool; six-camera concatenation",
+      "feature_config_sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59",
+      "test_scenes": 2,
+      "tail_support": 9,
+      "ap": 0.540371973705307,
+      "auc": 0.2444444444444444,
+      "fixed_precision": 0.25,
+      "fixed_recall": 0.1111111111111111,
+      "fixed_f1": 0.15384615384615383,
+      "operating_precision": 0.0,
+      "operating_recall": 0.0,
+      "operating_f1": 0.0,
+      "validation_threshold": null,
+      "target_status": "target_unreachable",
+      "requested_k": 4,
+      "effective_k": 4,
+      "precision_at_k": 0.25,
+      "tail_found": 1,
+      "random_expected_tail_found": 2.5714285714285716,
+      "commit": "b57eaffa21d54ad67d98d441935cf6b17cdc5294",
+      "dirty": true,
+      "source_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+      "model_config_sha256": "bc21506e4e87014764e45889964d2adec10abf4138ec43c4dda5d7cca8151a53",
+      "checkpoint_sha256": "d32577af94e5ff9d2f85c61822d61d5361a80e750a13d42d44fd6624152d01e0",
+      "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "features_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+      "meta_sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b"
+    },
+    {
+      "method": "sae_abstopk_none",
+      "seed": 42,
+      "run_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_none",
+      "n": 14,
+      "label_protocol": "ai-visual-pilot",
+      "human_reviewed": false,
+      "feature_protocol": "cpu-resnet18-six-camera-v1",
+      "encoder": "resnet18-imagenet1k-v1",
+      "feature_semantics": "resnet18 avgpool; six-camera concatenation",
+      "feature_config_sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59",
+      "test_scenes": 2,
+      "tail_support": 9,
+      "ap": 0.9216200466200468,
+      "auc": 0.8222222222222222,
+      "fixed_precision": 0.6428571428571429,
+      "fixed_recall": 1.0,
+      "fixed_f1": 0.782608695652174,
+      "operating_precision": 0.0,
+      "operating_recall": 0.0,
+      "operating_f1": 0.0,
+      "validation_threshold": null,
+      "target_status": "target_unreachable",
+      "requested_k": 4,
+      "effective_k": 4,
+      "precision_at_k": 1.0,
+      "tail_found": 4,
+      "random_expected_tail_found": 2.5714285714285716,
+      "commit": "b57eaffa21d54ad67d98d441935cf6b17cdc5294",
+      "dirty": true,
+      "source_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+      "model_config_sha256": "40b24cc116a049ad7c5be2a078396999e48851cb80b330b1c14108a34b95d79b",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "features_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+      "meta_sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b"
+    },
+    {
+      "method": "sae_abstopk_norm",
+      "seed": 42,
+      "run_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_norm",
+      "n": 14,
+      "label_protocol": "ai-visual-pilot",
+      "human_reviewed": false,
+      "feature_protocol": "cpu-resnet18-six-camera-v1",
+      "encoder": "resnet18-imagenet1k-v1",
+      "feature_semantics": "resnet18 avgpool; six-camera concatenation",
+      "feature_config_sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59",
+      "test_scenes": 2,
+      "tail_support": 9,
+      "ap": 0.9216200466200468,
+      "auc": 0.8222222222222222,
+      "fixed_precision": 0.6428571428571429,
+      "fixed_recall": 1.0,
+      "fixed_f1": 0.782608695652174,
+      "operating_precision": 0.0,
+      "operating_recall": 0.0,
+      "operating_f1": 0.0,
+      "validation_threshold": null,
+      "target_status": "target_unreachable",
+      "requested_k": 4,
+      "effective_k": 4,
+      "precision_at_k": 1.0,
+      "tail_found": 4,
+      "random_expected_tail_found": 2.5714285714285716,
+      "commit": "b57eaffa21d54ad67d98d441935cf6b17cdc5294",
+      "dirty": true,
+      "source_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+      "model_config_sha256": "863d2c33c3ee49a376fce43414abb8949b5d9de151394f2d70305048b1f18fe0",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "features_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+      "meta_sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b"
+    }
+  ],
+  "unlabelled_screening": {
+    "n": 7,
+    "fitting_validation_test_token_overlap": 0,
+    "scene_overlap_possible": true,
+    "not_generalization_metric": true
+  },
+  "limitations": [
+    "Only14testtimestamps/twoscenes; no officialmini-test",
+    "Trainonly3normal vs45tail",
+    "AI references not human truth",
+    "Allval90percentprecision targets unreachable; operatingpredictnone",
+    "Rewardcapfullysaturated; SAErewardnone/norm identical",
+    "ActualbrowserUI unverified; realHTTPbindingdenied bysandbox"
+  ],
+  "evidence": {
+    "pilot_protocol.json": {
+      "sha256": "0db646897c2cc2a496f526ec9224b31674f92891ed7a038a00a58492d91035a9",
+      "bytes": 698
+    },
+    "ai_visual_labels.json": {
+      "sha256": "64b4f56855ab03ea36fb37727bf756a05ef29a93a59ce39dc01fbaa87e5314d4",
+      "bytes": 104914
+    },
+    "ai_agreement.json": {
+      "sha256": "816316be4f03e75fd7cb41b19dbf5f2a68119e307443a7f22021d9b95302680e",
+      "bytes": 4108
+    },
+    "annotations/import_metadata.json": {
+      "sha256": "0a2d3d0e1524f5c4cdc6682256da16e45926b5b56a156540ee860a286d284562",
+      "bytes": 1408
+    },
+    "annotations/manifest.json": {
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "handoff_validation.json": {
+      "sha256": "d479fd66c5872d202271f4cba67f97791c0810b62cb42886cda74da5c87d1666",
+      "bytes": 3251
+    },
+    "reward_diagnostic.json": {
+      "sha256": "ae4046efba74e6ff2709cc48cf0ea2c1cb5a617b3f1e741657277721f106e4d9",
+      "bytes": 5565
+    },
+    "independent_pilot_audit.json": {
+      "sha256": "2dcc9c22765196f689c630499955f0696d174df48889a10b772dc0965b81f634",
+      "bytes": 7815
+    },
+    "failure_cases.json": {
+      "sha256": "00af6a907807c5b64de21abedc4643f03aa12616dafc057f38b3e5562bc07d0f",
+      "bytes": 2157
+    },
+    "uncertain-screening/screening_metadata.json": {
+      "sha256": "09a441666212d97063cefe7bf537eff9442744a05a61b5b5add814bead232c0c",
+      "bytes": 3361
+    },
+    "uncertain-screening/screening.csv": {
+      "sha256": "465cdbc2db6dd4dcd6af9cd04a638e35562555234c7168d470f79e4afc728b80",
+      "bytes": 781
+    },
+    "unlabelled-review-queue.csv": {
+      "sha256": "437f7ae80ba12d122d6727aefdf44552fd48e2d2fa4fb6d3bbdb6a849fd4c478",
+      "bytes": 652
+    },
+    "demo/driving_pilot.html": {
+      "sha256": "c02a902d5653921d3c2c6c3c5b1886f8e1bba86fecf1256bb33c97984b28c810",
+      "bytes": 483687
+    },
+    "demo/independent_verification.json": {
+      "sha256": "5281ddc09a0500aedaf9766c6ed5a823c81375562e30cd0cf382d2172bffeeda",
+      "bytes": 447
+    },
+    "training.log": {
+      "sha256": "d63e180b51c4c3ac350e29591a938e38fbfa2bcdc4a0970e3ab0c0c9b052c5a2",
+      "bytes": 2017
+    },
+    "comparison_runs/logistic/evaluation.json": {
+      "sha256": "ea0a671f8dff8fd1e27d2267fb36edd4b8ec312b0213c86316d4656fc6d1aa95",
+      "bytes": 5074
+    },
+    "comparison_runs/logistic/predictions.json": {
+      "sha256": "d492e302dec97d69cc57bf38a6637d3be0ebdeea3f5a0ae02306621889225698",
+      "bytes": 19748
+    },
+    "comparison_runs/logistic/run_metadata.json": {
+      "sha256": "3c5e98d15abc514ab7460f0f3e630db9b199bd4cc0f3709b2b876c52bb15b975",
+      "bytes": 72924
+    },
+    "comparison_runs/logistic/evaluation_manifest.json": {
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "comparison_runs/logistic/standardizer.npz": {
+      "sha256": "9e6602d674c8b104d7bb40a6efeae313cf26eb24d2c82bf884a60b5a3fd27b47",
+      "bytes": 25076
+    },
+    "comparison_runs/logistic/source_snapshot.zip": {
+      "sha256": "bd424559256a7269de025b52944d6080a8f4ed1b4eb0739f975ae26b475bc0c4",
+      "bytes": 185056
+    },
+    "comparison_runs/mlp/evaluation.json": {
+      "sha256": "dd0fb9baea09a2dd798cb2672fc1c91890ed77dcdcbfec520c33da469d0d33aa",
+      "bytes": 5043
+    },
+    "comparison_runs/mlp/predictions.json": {
+      "sha256": "5fe97372b19a86152deb068c90153f6ea1c1ac1e4c97c99b6b7f0625529b2fec",
+      "bytes": 19767
+    },
+    "comparison_runs/mlp/run_metadata.json": {
+      "sha256": "7ec8f00466428040d790e7ca4ded780b60ed9708d9021d7e83443b91e124ba63",
+      "bytes": 73744
+    },
+    "comparison_runs/mlp/evaluation_manifest.json": {
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "comparison_runs/mlp/standardizer.npz": {
+      "sha256": "9e6602d674c8b104d7bb40a6efeae313cf26eb24d2c82bf884a60b5a3fd27b47",
+      "bytes": 25076
+    },
+    "comparison_runs/mlp/source_snapshot.zip": {
+      "sha256": "bd424559256a7269de025b52944d6080a8f4ed1b4eb0739f975ae26b475bc0c4",
+      "bytes": 185056
+    },
+    "comparison_runs/sae_abstopk_none/evaluation.json": {
+      "sha256": "afe6d3f83e1493005bbcb20f9818d6e100d2dedc104c45ea45e462ba9a7ab5d2",
+      "bytes": 5079
+    },
+    "comparison_runs/sae_abstopk_none/predictions.json": {
+      "sha256": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58",
+      "bytes": 21799
+    },
+    "comparison_runs/sae_abstopk_none/run_metadata.json": {
+      "sha256": "a6fc61369d3e15d7b24e7e290b6f3924d15f2d685ef284a618e8ffcfdec9e53d",
+      "bytes": 72612
+    },
+    "comparison_runs/sae_abstopk_none/evaluation_manifest.json": {
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "comparison_runs/sae_abstopk_none/standardizer.npz": {
+      "sha256": "9e6602d674c8b104d7bb40a6efeae313cf26eb24d2c82bf884a60b5a3fd27b47",
+      "bytes": 25076
+    },
+    "comparison_runs/sae_abstopk_none/source_snapshot.zip": {
+      "sha256": "bd424559256a7269de025b52944d6080a8f4ed1b4eb0739f975ae26b475bc0c4",
+      "bytes": 185056
+    },
+    "comparison_runs/sae_abstopk_norm/evaluation.json": {
+      "sha256": "afe6d3f83e1493005bbcb20f9818d6e100d2dedc104c45ea45e462ba9a7ab5d2",
+      "bytes": 5079
+    },
+    "comparison_runs/sae_abstopk_norm/predictions.json": {
+      "sha256": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58",
+      "bytes": 21799
+    },
+    "comparison_runs/sae_abstopk_norm/run_metadata.json": {
+      "sha256": "da3f586fd2fbf1caafc6f9c602ee12234b44eeeef41b129053844d10ca0fb0f6",
+      "bytes": 72612
+    },
+    "comparison_runs/sae_abstopk_norm/evaluation_manifest.json": {
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "comparison_runs/sae_abstopk_norm/standardizer.npz": {
+      "sha256": "9e6602d674c8b104d7bb40a6efeae313cf26eb24d2c82bf884a60b5a3fd27b47",
+      "bytes": 25076
+    },
+    "comparison_runs/sae_abstopk_norm/source_snapshot.zip": {
+      "sha256": "bd424559256a7269de025b52944d6080a8f4ed1b4eb0739f975ae26b475bc0c4",
+      "bytes": 185056
+    }
+  },
+  "prior_data_verification_sha256": "1b0ee122fe002ac1d421aed360db78e85733a768f183b82b743801e141640628",
+  "final_verification": {
+    "passed": 205,
+    "deselected": 1,
+    "subtests_passed": 18,
+    "elapsed_seconds": 101.66,
+    "http_deselection_reason": "loopback socket bind denied by execution sandbox; failed HTTP attempt retained",
+    "real_asset_integration_executed": true,
+    "real_asset_label_scope": "ai-visual-pilot",
+    "lint_passed": true,
+    "browser_ui_verified": false,
+    "log_sha256": "3ff3b48c3c842f7dee28f2de2c9b3bee5ea854b08e06e1199cbfb89bb5ef83c3"
+  }
+}

@@ -12,8 +12,8 @@ latent width (7,168 by default), `d_t` the width of the long-tail subspace
 Command-line entry point. Labels keyframes `normal_core` / `not_normal_core` /
 `uncertain` by prompting a VLM with the rubric in
 [`latest_grading_criteria.md`](../latest_grading_criteria.md) and reading the
-output-token logits of the three answers, so the confidence is calibrated
-rather than parsed from prose. Writes incrementally and resumes by default.
+output-token logits of the three answers. Confidence is a model score, not
+empirically calibrated human-label accuracy. Writes incrementally and resumes by default.
 
 Key flags: `--samples-root`, `--meta-tgz`, `--output`. Run with `--help` for
 the full list.
@@ -44,11 +44,18 @@ A sample is one keyframe with all six views present, in the order `CAM_FRONT`,
 
 ## `scripts/sae_common.py`
 
-The shared library behind the three SAE entry points.
+The shared library behind the three SAE entry points. Retained examples require
+unique sample tokens and explicit scene tokens; missing scenes and unrecognised
+labels are errors. See [strict inputs](user.md#strict-data-contract).
+
+The common CLI requires `--review-k`; `--freeze-manifest-only` writes a manifest
+without fitting, `--manifest` reuses a frozen split, and `--feature-config` retains
+recovered extraction settings. [Evaluation](evaluation.md) documents provenance,
+validation operating points and exported predictions.
 
 | Name | Signature | Purpose |
 |---|---|---|
-| `NORMAL_LABELS`, `DROP_LABELS` | `set[str]` | The label protocol: what counts as normal, what is dropped |
+| `NORMAL_LABELS`, `TAIL_LABELS`, `DROP_LABELS` | `set[str]` | Explicit whitelist for normal, tail and excluded labels |
 | `build_parser(description, defaults)` | `-> ArgumentParser` | The common CLI, with per-variant defaults |
 | `load_label_map(paths)` | `-> dict[str, int \| None]` | Reads both label formats; `None` means drop the row |
 | `load_dataset(args)` | `-> (features, labels, groups, meta)` | Loads and joins features, labels and metadata |
@@ -77,8 +84,10 @@ reward, alpha, beta, reward_coeff, reward_max)`:
 
 ## The three SAE entry points
 
-They contain only a `DEFAULTS` dictionary and a call to `run(__doc__,
-DEFAULTS)`, so any behavioural difference between them is a hyper-parameter.
+They contain a `DEFAULTS` dictionary and a call to `run(__doc__, DEFAULTS)`.
+The historical defaults change multiple variables, including width/dropout/beta
+in the pre-selection variant; they do not constitute single-factor ablations.
+Use one entry point with otherwise identical settings for reward none/norm.
 
 | Script | Sparsity | Reward |
 |---|---|---|
@@ -154,3 +163,12 @@ The named long-tail units of the layer-28 run. `screen.py` reads `neuron` and
 `feature`; `dataset`, `activation_ratio`, `purity`, `n_activated`,
 `n_activated_target` and `notes` carry the evidence for each name.
 [The Interpretable Neurons](neurons.md) explains how to rebuild it.
+
+## Controlled comparison tools
+
+`data_manifest.py` validates frozen splits; `supervised_baselines.py` trains
+Logistic/MLP on the same contract; `evaluate_runs.py` exports metrics and review
+queues; `summarize_runs.py` checks and rebuilds tables.
+`evaluation_fixture.py` and `synthetic_demo.py` generate synthetic software
+examples. See [evaluation](evaluation.md) and [verification](testing.md) for
+commands, artifacts and what has actually run.

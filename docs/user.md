@@ -1,222 +1,176 @@
-User page
-=============
-Welcome to the long-tail driving data mining project user main page!
+# Running the pipeline
 
-This page is the practical guide to running the pipeline end to end: what you
-need, what each command does, and what it writes where. Applying a trained
-model to your own frames has its own page,
-[Screening Your Own Driving Data](apply.md).
+Start with the [CPU synthetic quickstart](../README.md#cpu-quickstart) to inspect
+the software without nuScenes, VLM weights or a GPU. That demo trains small
+models on generated data. It cannot establish real driving performance.
+The [verification record](feedback-status.md#verification-record) states what
+has actually been checked in this round.
 
-## Requirements
+## Environment and real assets
 
-- Python 3.10 or newer, and transformers 4.49 or newer for Qwen2.5-VL support.
-- A CUDA GPU for the two VLM stages — bf16 inference, 24 GB VRAM or more is
-  comfortable. SAE training, screening and the neuron explorer run on CPU.
-- Cosmos-Reason1-7B weights:
-  https://huggingface.co/nvidia/Cosmos-Reason1-7B
-- nuScenes metadata (`v1.0-trainval_meta.tgz`) and keyframe images
-  (`v1.0-trainval{01..10}_keyframes.tgz`), extracted so that `samples/CAM_*/`
-  exists: https://www.nuscenes.org/nuscenes
+The CPU quickstart was verified with Python 3.12; its pinned package versions
+are in `requirements-cpu-lock.txt`. For VLM
+labelling/extraction, use the full `requirements.txt` in an environment matched
+to your CUDA hardware. Labelling and extraction require the model weights and
+six-camera images; SAE training, cached-feature evaluation and the explorer can
+run on CPU. GPU memory and runtime should be measured on a small batch before
+scheduling extraction. The old 24 GB recommendation is not a measured bound
+for every image resolution or dependency version.
 
-```bash
-python -m venv .venv && source .venv/bin/activate
-make install                       # pip install -r requirements.txt
-```
+Recover these assets before attempting a real experiment:
 
-Every `make` target takes overrides, so a different data root or layer is a
-variable rather than an edit:
+- Authorised nuScenes v1.0-trainval metadata and keyframes, with `samples/CAM_*/`.
+- Original labels and manual review records, with sample and scene tokens.
+- Frozen VLM features and row-aligned `meta.json`, plus model revision, layer,
+  pooling, prompt/rubric versions and input hashes where recoverable.
+- Original checkpoints, standardisers, run configurations, predictions and logs
+  when evaluating historical claims.
 
-```bash
-make extract DATA=/mnt/nuscenes LAYERS="15 18 21 24 27 28"
-```
+Data and trained real weights are absent from the repository. Public source
+access does not establish redistribution permission for a cached example.
 
-## 1. Labelling
+## Labelling and feature extraction
 
-```bash
-make label DATA=<nuscenes>
-```
-
-which is
+These are templates for a configured real-data environment, not a claim that
+VLM inference has run in this round:
 
 ```bash
 python scripts/annotate_normal_core.py \
-    --samples-root <nuscenes>/samples \
-    --meta-tgz <nuscenes>/v1.0-trainval_meta.tgz \
-    --output output/annotations/labels.json
-```
-
-All six synchronised camera views of a keyframe go to the VLM together with the
-normal-core rubric. The label and its confidence are read from the
-output-token logits of the three possible answers rather than parsed out of
-free text, so the confidence is calibrated rather than rhetorical. The run
-writes incrementally and resumes where it stopped. `--model-dir` selects the
-labelling model; for the reported labels a large VLM (Qwen3.5-397B-A17B)
-pre-labelled every keyframe and the pre-labels were verified by hand, and the
-same file format carries hand-corrected labels into training.
-
-Output: `labels.json`, one entry per keyframe with the sample token, the label
-(`normal_core` / `not_normal_core` / `uncertain`) and the confidence.
-
-## 2. Feature extraction
-
-```bash
-make extract DATA=<nuscenes> LAYERS=28
-```
-
-which is
-
-```bash
+  --samples-root /path/to/nuscenes/samples \
+  --meta-tgz /path/to/nuscenes/v1.0-trainval_meta.tgz \
+  --output output/annotations/labels.json
 python scripts/extract.py \
-    --samples-root <nuscenes>/samples \
-    --meta-tgz <nuscenes>/v1.0-trainval_meta.tgz \
-    --sample-tokens output/annotations/labels.json \
-    --layers 28 \
-    --output-dir output/extract
+  --samples-root /path/to/nuscenes/samples \
+  --meta-tgz /path/to/nuscenes/v1.0-trainval_meta.tgz \
+  --sample-tokens output/annotations/labels.json \
+  --layers 28 --output-dir output/extract
 ```
 
-The same six views go through the VLM again, this time with the open-ended
-scene-description prompt, and forward hooks capture the MLP block output
-(`down_proj`) of each requested decoder layer. `--layers` is 1-indexed, so `28`
-is the last block of the 7B language model. Several layers can be extracted in
-one pass, which is how the per-layer sweep in the results was produced.
+Both scripts accept `--model-dir`. The labeller reads answer-token logits;
+its confidence is a model score, not empirically calibrated human accuracy.
+Independent human review is a separate operation. Preserve label sources,
+review decisions and exclusions.
 
-Outputs per layer, plus one shared index:
+Extraction uses one timestamp and exactly six views, in this order:
+`CAM_FRONT`, `CAM_FRONT_LEFT`, `CAM_FRONT_RIGHT`, `CAM_BACK`, `CAM_BACK_LEFT`,
+`CAM_BACK_RIGHT`. A keyframe with missing views is skipped. It stores mean and
+last-token MLP-output features per requested layer, plus row-aligned tokens,
+scene metadata, timestamps and image paths in `meta.json`. Keep the files
+together. A new extraction does not establish the provenance of an old run.
 
-| File | Contents |
+## Strict data contract
+
+The feature matrix must be finite, nonempty `(N, D)` data with `N` metadata
+rows. Tokens must be unique and nonempty. Every retained labelled sample needs
+a nonempty **`scene_token`**; `scene_name` alone is insufficient, and there is
+no sample-level fallback. Recover missing scene metadata before training.
+
+The label loader accepts an array of rows or `{"samples": [...]}`, with a
+`label` field or nested `labels.label`. Labels are trimmed and lowercased:
+
+| Values | Meaning |
 |---|---|
-| `layer{L}_mlp_output_mean.npy` | `(N, D)` float32, mean-pooled over tokens |
-| `layer{L}_mlp_output_last_token.npy` | `(N, D)` float32, last-token representation |
-| `meta.json` | `N` row-aligned entries: `sample_token`, scene, timestamp and the path of each camera image |
+| `normal`, `normal_core` | Normal, 0 |
+| `not_normal_core`, `long_tail`, `long-tail`, `tail` | Tail, 1 |
+| `uncertain`, `unknown`, `none`, empty or missing label | Excluded, not a tail example |
+| Any other value | Error |
 
-`meta.json` is what lets the SAE split by scene instead of by sample and what
-lets the explorer show the frames, so keep it with the features. The method
-uses the mean-pooled file; the last-token file is kept for the pooling
-comparison. Only keyframes with all six views on disk are extracted, one
-timestamp per sample.
+Duplicate label tokens, including repetitions across label files, and
+conflicting labels are errors. Missing/unusable labels are recorded in
+`excluded_rows.json` when a run directory is provided. Inspect the exclusions
+before freezing a protocol; do not silently translate an unfamiliar label to
+positive.
 
-## 3. Training the SAE
+## Freeze one manifest
 
-```bash
-make train
-```
-
-which is
+Choose the review budget before reading test results. Here `100` is an example
+budget to replace with the study's predeclared K. This command validates the
+inputs and freezes a scene-level 70/15/15 assignment without fitting a model:
 
 ```bash
 python scripts/sae_abstopk_tail_reward.py \
-    --features output/extract/layer28_mlp_output_mean.npy \
-    --meta output/extract/meta.json \
-    --labels output/annotations/labels.json \
-    --output-dir output/sae_abstopk_tail_reward
+  --features output/extract/layer28_mlp_output_mean.npy \
+  --meta output/extract/meta.json --labels output/annotations/labels.json \
+  --review-k 100 --freeze-manifest-only --seed 42 \
+  --output-dir output/protocol
 ```
 
-The flags worth knowing — run any script with `--help` for the rest:
+Review `output/protocol/manifest.json`, including actual scene/frame counts,
+class support and exclusions. Reuse this exact manifest for every method and
+model seed. An explicitly supplied `--manifest` is optional for initial
+creation, but required by the comparison workflow once frozen. Do not generate
+a different split when changing training seeds.
 
-| Flag | Default | Effect |
-|---|---|---|
-| `--hidden-dim` | per variant | Number of SAE latent units |
-| `--tail-ratio` | 0.5 | Fraction of units reserved for `z_t` |
-| `--k` | 512 | Units kept per sample by the sparsity rule |
-| `--sparsity` | `abstopk` | `abstopk` keeps the largest `\|z\|`, `topk` the largest signed `z` |
-| `--reward` | per variant | `none`, `norm` (reward the achieved `\|\|z_t\|\|`), `pre_selection` |
-| `--alpha` | 1.0 | Extra reconstruction weight for tail samples |
-| `--beta` | per variant | Weight of the `\|\|z_t\|\|^2` penalty on normal samples |
-| `--reward-coeff` | per variant | Strength of the tail reward |
-| `--reward-max` | 2.0 | Cap of the tail reward, `tau` in the loss |
-| `--val-ratio` / `--test-ratio` | 0.15 | Split sizes, taken at scene level |
-| `--epochs` | 200 | Training epochs; the best validation loss is kept |
-| `--act-threshold` | 0.01 | `eta` of the decision rule: long-tail if any `\|z_t\| > eta` |
-| `--neuron-threshold` | 1.0 | `\|z_t\|` threshold for the interpretability report |
-| `--seed` | 42 | Seed for the split and the initialisation |
+Use `--feature-config /path/to/recovered_extraction_config.json` on evaluated
+runs when a real extraction record is available. Its contents and hash are
+retained; without it the extraction provenance is explicitly unverified. Do
+not invent a config that appears to document missing historical settings.
 
-`--labels` accepts several files and both label formats: the JSON array written
-by the labeller, and `{"samples": [{"sample_token", "labels": {"label"}}]}`.
-`normal` and `normal_core` count as normal, `uncertain` / `unknown` / empty are
-excluded, and every other label counts as long-tail.
+## Train the matched core models
 
-Written to `--output-dir`:
-
-- `metrics.json` — validation and test precision / recall / F1 of the decision
-  rule, AUC and AP of `||z_t||_2`, the rule and its `eta`, and the full
-  configuration of the run.
-- `neuron_report.csv` — per-unit activation counts, purity and coverage.
-- `z_n_general.npy`, `z_t_longtail.npy` — the learned sparse codes.
-- `activations.npz` — the sparse `z_t` of every frame with its token, scene,
-  image paths, label and split; what the neuron explorer reads.
-- `rows.json` — per-sample token, split, label, prediction, number of active
-  long-tail units and `||z_t||_2`.
-- `standardizer.npz`, `best_model.pth` — everything `screen.py` needs.
-- `training_loss_curve.png`.
-
-## 4. Ablations
+The full configuration and evaluator outputs are described in
+[controlled evaluation](evaluation.md). For the two core SAE groups use the
+same entry point and arguments, changing only `--reward` and output directory:
 
 ```bash
-make ablations
+python scripts/sae_abstopk_tail_reward.py \
+  --features output/extract/layer28_mlp_output_mean.npy \
+  --meta output/extract/meta.json --labels output/annotations/labels.json \
+  --manifest output/protocol/manifest.json --review-k 100 --seed 17 \
+  --reward none --output-dir output/sae_none_seed17
+python scripts/sae_abstopk_tail_reward.py \
+  --features output/extract/layer28_mlp_output_mean.npy \
+  --meta output/extract/meta.json --labels output/annotations/labels.json \
+  --manifest output/protocol/manifest.json --review-k 100 --seed 17 \
+  --reward norm --output-dir output/sae_norm_seed17
 ```
 
-Runs the two variants against the same features, labels and split, so the
-comparison in [`results/README.md`](../results/README.md) isolates the sparsity
-rule and the reward placement rather than confounding them with data changes.
+Train-only statistics standardise the features; validation loss selects the
+checkpoint. `--review-k` is required. `--target-precision` defaults to 0.9,
+and `--bootstrap-samples` to 1,000. Target selection uses validation only;
+its test precision is not guaranteed. Use separate output directories for
+new runs. Historical variant entry points also require K but have confounded
+defaults; they are not the controlled reward/no-reward comparison.
 
-## 5. Exploring the neurons
+The Makefile offers `manifest`, `train`, `train-no-reward` and `baselines`
+helpers, each requiring an explicit `REVIEW_K`. Its default manifest path is
+`output/protocol/manifest.json`. Inspect flags before long jobs; the real-data
+commands above have not run here because the assets are unavailable.
 
-```bash
-make explore DATA=<nuscenes>
-```
+SAE runs retain the model/standardiser, sparse activations, per-sample rows,
+manifest and exclusions, metrics and evaluation artifacts. `neuron_report.csv`
+is a training-label inspection report, not independent semantic test purity.
+The [result-bundle contract](evaluation.md#result-bundle) lists provenance,
+FP/FN markers, PR curves, review queues and table-rebuilding requirements.
 
-which is
+## Browse and screen
+
+For a recovered trained run with authorised images:
 
 ```bash
 python scripts/neuron_explorer.py serve \
-    --run output/sae_abstopk_tail_reward \
-    --samples-root <nuscenes>/samples \
-    --glossary results/neuron_glossary.csv
+  --run output/sae_norm_seed17 --samples-root /path/to/nuscenes/samples \
+  --glossary results/neuron_glossary.csv
 ```
 
-and serves a local page at http://127.0.0.1:8765: pick a unit to see the frames
-that activate it most, pick a frame to see its six views and every long-tail
-unit it activates. `--port` and `--host` change the address; `unit`, `sample`
-and `units` sub-commands give the same answers in the terminal, and `--save`
-writes them as image sheets. [The Interpretable Neurons](neurons.md) walks
-through it.
+The page defaults to `http://127.0.0.1:8765`. It links units to high-activation
+frames and frames to active units. `units`, `unit` and `sample` subcommands
+provide terminal queries; see [the explorer guide](neurons.md). Historical unit
+IDs and names are not transferable to newly trained weights: create and
+validate a glossary for each run.
 
-## 6. Screening new data
-
-```bash
-make screen RUN=output/sae_abstopk_tail_reward FEATURES=output/extract_mydata
-```
-
-See [Screening Your Own Driving Data](apply.md) for the input contract and the
-output columns.
-
-## Tests and style
-
-```bash
-make test          # unit tests, CPU only, no dataset or VLM needed
-make lint          # flake8
-make clean         # __pycache__ and .pytest_cache
-```
+`screen.py` applies a trusted SAE checkpoint and its standardiser to new
+features. Extraction model, revision, layer, pooling and preprocessing must
+match; dimension equality alone does not prove compatibility. See
+[screening inputs](apply.md). The evaluator's review queues deliberately omit
+reference labels so reviewers can make independent decisions.
 
 ## Troubleshooting
 
-**The extraction run is slower than expected.** Six images per sample through a
-7B VLM is the cost. `--max-pixels` trades resolution for throughput, and
-`--max-samples` is useful for a smoke test before committing to a full pass.
-
-**Out of memory during extraction.** Lower `--max-pixels` first. Extraction
-holds one sample at a time, so batch size is not the lever here.
-
-**A split does not contain both classes.** The SAE scripts stop rather than
-train on a degenerate split. Raise `--val-ratio` / `--test-ratio`, or change
-`--seed`: with few labelled scenes, a greedy scene-level split can put all the
-long-tail scenes on one side.
-
-**`screen.py` reports a dimension mismatch.** The features being screened come
-from a different layer or pooling than the run was trained on. Extract them
-with the same `--layers` value and the mean-pooled file.
-
-**The explorer shows frames without images.** `--samples-root` must point at
-the `samples/` directory that holds `CAM_FRONT/` and the other views. For
-features extracted before `meta.json` recorded image paths, add
-`--nuscenes-meta <nuscenes>/v1.0-trainval` so the paths are rebuilt from the
-nuScenes tables.
+Missing scenes, duplicated tokens or unknown labels are data errors to fix,
+not reasons to weaken validation. A split lacking either class cannot support
+the current metrics: inspect the eligible scenes and protocol before choosing
+a new split using train/validation considerations. Never choose a seed because
+its test score looks better. Missing explorer images usually mean the wrong
+`samples` root or paths in metadata. A blocked socket in the execution sandbox
+prevents the HTTP test; it does not verify the server route.

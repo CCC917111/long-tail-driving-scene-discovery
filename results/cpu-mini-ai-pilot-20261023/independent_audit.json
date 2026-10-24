@@ -1,0 +1,236 @@
+{
+  "recorded_at": "2026-10-23T21:20:07.956381+00:00",
+  "status": "passed_with_interpretation_limits",
+  "scope": "AI silver-label pilot; not human-ground-truth accuracy",
+  "checks": {
+    "all_80_ai_annotations_have_matching_camera_panel_rubric_and_pending_human_provenance": true,
+    "sixteen_blind_ai_second_passes_match_recorded_15_of_16_agreement_only": true,
+    "explicit_ai_protocol_replay_validates_and_default_manual_protocol_rejects": true,
+    "main_table_and_summary_reconstructed_exactly_from_saved_predictions": true,
+    "all_four_share_exact_source_feature_manifest_and_train_only_standardization": true,
+    "all_input_checkpoint_source_snapshot_and_prediction_hashes_verified": true,
+    "all_checkpoint_scores_and_fixed_predictions_reconstructed": true,
+    "validation_only_operating_points_test_metrics_top_k_and_scene_bootstrap_reconstructed": true,
+    "core_sae_training_configuration_changes_only_reward": true
+  },
+  "annotation_counts": {
+    "total": 80,
+    "active": 73,
+    "uncertain_excluded": 7,
+    "normal": 13,
+    "tail": 60,
+    "human_reviewed": 0
+  },
+  "support": {
+    "train": {
+      "normal": 3,
+      "tail": 45
+    },
+    "val": {
+      "normal": 5,
+      "tail": 6
+    },
+    "test": {
+      "normal": 5,
+      "tail": 9
+    }
+  },
+  "source_tree_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+  "feature_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+  "evaluation_manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+  "core_sae_differing_config_fields": {
+    "method": [
+      "sae_abstopk_none",
+      "sae_abstopk_norm"
+    ],
+    "output_dir": [
+      "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_none",
+      "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/sae_abstopk_norm"
+    ],
+    "reward": [
+      "none",
+      "norm"
+    ]
+  },
+  "sae_reward_saturation_at_saved_checkpoint": {
+    "train": {
+      "tail_samples": 45,
+      "norm_min": 3.4634478092193604,
+      "norm_max": 6.944613933563232,
+      "count_at_or_above_reward_cap_2": 45
+    },
+    "val": {
+      "tail_samples": 6,
+      "norm_min": 4.131794452667236,
+      "norm_max": 5.69339656829834,
+      "count_at_or_above_reward_cap_2": 6
+    },
+    "test": {
+      "tail_samples": 9,
+      "norm_min": 4.726112365722656,
+      "norm_max": 6.49029541015625,
+      "count_at_or_above_reward_cap_2": 9
+    }
+  },
+  "sae_reward_and_no_reward_checkpoint_identical": true,
+  "run_reconstruction": [
+    {
+      "method": "logistic",
+      "checkpoint_sha256": "333cbed51c2075d4a2db8675e03ff415b44fead4cba8a2b42bdeacd935e8b1cb",
+      "predictions_sha256": "d492e302dec97d69cc57bf38a6637d3be0ebdeea3f5a0ae02306621889225698",
+      "checkpoint_score_max_absolute_reconstruction_error": 0.0,
+      "validation_selected_threshold": null,
+      "operating_status": "target_unreachable",
+      "metrics_against_ai_labels": {
+        "val": {
+          "n": 11,
+          "tail_support": 6,
+          "ap": 0.39176887926887927,
+          "auc": 0.033333333333333326,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 6,
+            "tp": 0
+          },
+          "precision_at_4": 0.0,
+          "tail_found_at_4": 0
+        },
+        "test": {
+          "n": 14,
+          "tail_support": 9,
+          "ap": 0.5856541606541608,
+          "auc": 0.3777777777777777,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 9,
+            "tp": 0
+          },
+          "precision_at_4": 0.5,
+          "tail_found_at_4": 2
+        }
+      }
+    },
+    {
+      "method": "mlp",
+      "checkpoint_sha256": "d32577af94e5ff9d2f85c61822d61d5361a80e750a13d42d44fd6624152d01e0",
+      "predictions_sha256": "5fe97372b19a86152deb068c90153f6ea1c1ac1e4c97c99b6b7f0625529b2fec",
+      "checkpoint_score_max_absolute_reconstruction_error": 1.341104507446289e-07,
+      "validation_selected_threshold": null,
+      "operating_status": "target_unreachable",
+      "metrics_against_ai_labels": {
+        "val": {
+          "n": 11,
+          "tail_support": 6,
+          "ap": 0.4983164983164983,
+          "auc": 0.3,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 6,
+            "tp": 0
+          },
+          "precision_at_4": 0.5,
+          "tail_found_at_4": 2
+        },
+        "test": {
+          "n": 14,
+          "tail_support": 9,
+          "ap": 0.540371973705307,
+          "auc": 0.2444444444444444,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 9,
+            "tp": 0
+          },
+          "precision_at_4": 0.25,
+          "tail_found_at_4": 1
+        }
+      }
+    },
+    {
+      "method": "sae_abstopk_none",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "predictions_sha256": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58",
+      "checkpoint_score_max_absolute_reconstruction_error": 0.0,
+      "validation_selected_threshold": null,
+      "operating_status": "target_unreachable",
+      "metrics_against_ai_labels": {
+        "val": {
+          "n": 11,
+          "tail_support": 6,
+          "ap": 0.4958694083694084,
+          "auc": 0.3666666666666667,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 6,
+            "tp": 0
+          },
+          "precision_at_4": 0.25,
+          "tail_found_at_4": 1
+        },
+        "test": {
+          "n": 14,
+          "tail_support": 9,
+          "ap": 0.9216200466200468,
+          "auc": 0.8222222222222222,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 9,
+            "tp": 0
+          },
+          "precision_at_4": 1.0,
+          "tail_found_at_4": 4
+        }
+      }
+    },
+    {
+      "method": "sae_abstopk_norm",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "predictions_sha256": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58",
+      "checkpoint_score_max_absolute_reconstruction_error": 0.0,
+      "validation_selected_threshold": null,
+      "operating_status": "target_unreachable",
+      "metrics_against_ai_labels": {
+        "val": {
+          "n": 11,
+          "tail_support": 6,
+          "ap": 0.4958694083694084,
+          "auc": 0.3666666666666667,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 6,
+            "tp": 0
+          },
+          "precision_at_4": 0.25,
+          "tail_found_at_4": 1
+        },
+        "test": {
+          "n": 14,
+          "tail_support": 9,
+          "ap": 0.9216200466200468,
+          "auc": 0.8222222222222222,
+          "confusion": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 9,
+            "tp": 0
+          },
+          "precision_at_4": 1.0,
+          "tail_found_at_4": 4
+        }
+      }
+    }
+  ],
+  "warnings": [
+    "All tail norms at the saved SAE checkpoint exceed reward cap2; reward/no-reward checkpoints and scores are identical and loss histories differ only by constant1. This pilot provides no reward benefit.",
+    "All four validation90%precision targets are unreachable; selected operating policy predicts none, giving test recall0. AP and topK remain ranking statistics against provisional AI labels.",
+    "Training has3normal vs45tail; only2testscenes and1seed. No reliable generalization or human-ground-truth accuracy claim.",
+    "Code hardening: importer does not currently enforce each raw annotation rubric_sha256 against frozenrubric; actual80 annotations do match. Raw evidencehashes preserve all source records."
+  ]
+}

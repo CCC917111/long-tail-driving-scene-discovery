@@ -1,0 +1,49 @@
+ResNet18 CPU encoder attribution
+
+scripts/cpu_image_encoder.py adapts the standard BasicBlock and ResNet18
+architecture from torchvision v0.20.1:
+https://github.com/pytorch/vision/blob/v0.20.1/torchvision/models/resnet.py
+
+The adaptation supports the standard ResNet18 architecture only, retains the
+1000-class fc parameters to strictly verify the official full state dictionary,
+and returns the 512-dimensional avgpool representation without applying fc.
+Torchvision is not a runtime dependency. ResNet18 is an existing architecture;
+this project's addition is the six-camera CPU extraction and experiment route.
+
+Pretrained weights are the official ImageNet1K V1 checkpoint:
+https://download.pytorch.org/models/resnet18-f37072fd.pth
+SHA256: f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec
+The local implementation uses float32 inference and the documented ImageNet V1
+bilinear resize-short-side 256, center crop 224 and ImageNet normalization.
+
+Torchvision's BSD 3-Clause licence follows verbatim:
+
+BSD 3-Clause License
+
+Copyright (c) Soumith Chintala 2016, 
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
