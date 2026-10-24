@@ -1,0 +1,596 @@
+[
+  {
+    "index": 54,
+    "sample_token": "05e993bd780241aabaa30dd2a0473286",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Night scene; most roadside detail is dark, with bright shelter lights and a saturated illuminated panel.",
+      "CAM_FRONT: Night illumination and visible image noise limit detail beyond the lit road; a car is ahead within the lane.",
+      "CAM_FRONT_RIGHT: Streetlamp glare and strongly reflective road areas are visible against a dark background.",
+      "CAM_BACK_LEFT: The shelter is visible but the surrounding area is deeply dark and the view is blurred.",
+      "CAM_BACK: The road markings are visible under streetlights, with dark roadside regions and bright vehicle lights.",
+      "CAM_BACK_RIGHT: A white car and bright reflections are visible; much of the surrounding scene is underlit."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "475b751dc7c47f5b62bc6bfab4888f00e6a20523d2470c3252e6cfbf23bede19"
+  },
+  {
+    "index": 8,
+    "sample_token": "b5989651183643369174912bc5641d3b",
+    "label": "not_normal_core",
+    "confidence": "medium",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: A person stands on the building-side paved apron near the road; the building entrance is clearly recognizable.",
+      "CAM_FRONT: Two pedestrians are on the paved apron immediately alongside the road, including one near its edge beside the bus shelter; the shelter contains several more people.",
+      "CAM_FRONT_RIGHT: The road bends into a parking area with parked cars and a truck at the right edge; the drivable space is recognizable.",
+      "CAM_BACK_LEFT: A pedestrian is close beside the curb on the building-side pavement.",
+      "CAM_BACK: An orange bus is visible in the roadway behind, with hatched roadside markings.",
+      "CAM_BACK_RIGHT: A box truck and parked cars fill the adjacent parking area, partly screening the spaces beyond."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "135b749ceb493a942e835fefda6a8f0d7abc302583352663ca8247062766e8c1"
+  },
+  {
+    "index": 10,
+    "sample_token": "858a1ece22cf45d9bc71e42336604b78",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Several people stand at the immediate edge of the raised bus-stop pavement beside the roadway.",
+      "CAM_FRONT: A pedestrian stands very close to the left road edge beside bollards and parked motorcycles; the road ahead is an unmarked parking-area turning space.",
+      "CAM_FRONT_RIGHT: Parked cars line the parking area and obscure the spaces between vehicles.",
+      "CAM_BACK_LEFT: A dense group of pedestrians occupies the bus-stop edge immediately beside the road.",
+      "CAM_BACK: A large bus is broadside in the open roadway behind.",
+      "CAM_BACK_RIGHT: Parked cars and a box truck surround the adjacent parking-access road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "5ba43947c8b4b2a0ea92fcfd26bc43585820d90c222dd329f6f05b5a4d35f91f"
+  },
+  {
+    "index": 32,
+    "sample_token": "c1676a2feac74eee8aa38ca3901787d6",
+    "label": "not_normal_core",
+    "confidence": "medium",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Metal site hoarding is visible along the slope above the sidewalk; a pedestrian is on the sidewalk.",
+      "CAM_FRONT: A temporary orange CAUTION board stands beside the left road edge and a long dark resurfaced strip runs along that side; the main lanes remain visible and passable.",
+      "CAM_FRONT_RIGHT: A large bus is across the divided road, behind the central railing.",
+      "CAM_BACK_LEFT: Site hoarding extends beside the sidewalk, where pedestrians are visible.",
+      "CAM_BACK: The lanes behind are recognizable and mostly open, with a few vehicles farther away.",
+      "CAM_BACK_RIGHT: A railing separates the opposing carriageway and a covered pedestrian area is visible beyond it."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "34d0439c1377facd2b8567362ba8c2111154272cd01e632a55c9bc7ef7c1c765"
+  },
+  {
+    "index": 19,
+    "sample_token": "a860c02c06e54d9dbe83ce7b694f6c17",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Strong direct sun glare washes the corner and several pedestrians stand close to the crosswalk; a sedan is immediately alongside.",
+      "CAM_FRONT: Two pedestrians occupy the marked crosswalk directly ahead of the ego vehicle.",
+      "CAM_FRONT_RIGHT: Cross traffic and red traffic signals are visible at the intersection; the corner is recognizable.",
+      "CAM_BACK_LEFT: A sedan occupies the immediate adjacent space beside the vehicle.",
+      "CAM_BACK: A pickup is close behind and a large truck is immediately to its right, limiting nearby clearance and visibility.",
+      "CAM_BACK_RIGHT: A construction-site fence and temporary site buildings line the road beside the intersection."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "138b53b9192c0443225c3e998917faac470740f88c98cabd7de9d0ee1c7c63e8"
+  },
+  {
+    "index": 77,
+    "sample_token": "cc57c1ea80fe46a7abddfdb15654c872",
+    "label": "uncertain",
+    "confidence": "medium",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Cars are parked along the curb and a pedestrian remains on the sidewalk.",
+      "CAM_FRONT: The straight lane ahead is clear with a distant lead car; parked vehicles line both sides.",
+      "CAM_FRONT_RIGHT: People are on the sidewalk beside the parking entrance and the immediate road surface is clear.",
+      "CAM_BACK_LEFT: A group including a child occupies the marked crossing across a side-street mouth; a silver sedan fills the near adjacent foreground.",
+      "CAM_BACK: A silver sedan is in the adjacent part of the road; the lane directly behind the ego vehicle is open.",
+      "CAM_BACK_RIGHT: A pedestrian is at the corner curb ramp beside the side street."
+    ],
+    "uncertainty_reason": "The enlarged rear-left and rear views show pedestrians at a side-street crossing and a nearby sedan, but their proximity to the continuing ego path is not clear enough for a stable judgment about extra defensive action. The forward path looks routine, so neither a confident normal label nor a definite exclusion is supported.",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_BACK_LEFT",
+      "CAM_BACK"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "dcd3f534a0e4e1999adecf7ebd25006847af6cb42f0e926f879f710ed3ab924c"
+  },
+  {
+    "index": 3,
+    "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Scaffolding and construction wrapping cover the corner building beside the intersection.",
+      "CAM_FRONT: The intersection is recognizable, with a car across it and scaffolding immediately beyond the left corner.",
+      "CAM_FRONT_RIGHT: Temporary construction fencing and a plastic barrier stand immediately beside the sidewalk and corner.",
+      "CAM_BACK_LEFT: The building and corner markings are visible without a pedestrian in the immediate crossing.",
+      "CAM_BACK: A lift and construction equipment occupy the left roadside; a car is close behind with a truck beyond it.",
+      "CAM_BACK_RIGHT: Temporary fencing encloses construction materials, an unfinished sidewalk edge, and a traffic delineator."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c3440c588fe75428c0db5929ad9b8a808694ee285bdbefa5f43be777fbbcfa42"
+  },
+  {
+    "index": 26,
+    "sample_token": "9768a199e4884a0db50d015703efe969",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Cars and a work van are within the marked curbside parking area, separated from the travel lane.",
+      "CAM_FRONT: The straight dry road and double center line are clear; an opposing sedan remains across the center line and the ego lane has ample visible open space.",
+      "CAM_FRONT_RIGHT: Cars occupy parking spaces beyond the sidewalk and do not obstruct the road.",
+      "CAM_BACK_LEFT: Cars remain within the curbside parking strip and its boundary is recognizable.",
+      "CAM_BACK: The roadway behind has clear lane boundaries, an open near field, and a distant vehicle.",
+      "CAM_BACK_RIGHT: Parked vehicles remain beyond the curb within the adjacent lot; visibility is adequate."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b8a90bd3301abbf098e99a7e65a2f53fb13602a4693cd1f0d6eaf406b7114066"
+  },
+  {
+    "index": 79,
+    "sample_token": "281b92269fd648d4b52d06ac06ca6d65",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Parked vehicles are along the curb and two pedestrians remain on the sidewalk.",
+      "CAM_FRONT: The straight lane ahead is open with a distant car and clear center markings.",
+      "CAM_FRONT_RIGHT: A parked crossover is beside the curb; a bicycle is on the sidewalk.",
+      "CAM_BACK_LEFT: A utility service vehicle is surrounded by orange cones at the roadside, including a cone projecting into the paved parking or road-edge space.",
+      "CAM_BACK: The near roadway is clear and cars line the sides.",
+      "CAM_BACK_RIGHT: A parked SUV occupies the curbside space with an adjacent parking entrance visible beyond it."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4f46556944677d00b6944ce25cbe17e4c0407758e23982fc5bddedf07a8da592"
+  },
+  {
+    "index": 4,
+    "sample_token": "d68668cb98fe4be5a00f58b5ac8a0a7d",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Scaffolding and building wrap form a construction area beside the intersection.",
+      "CAM_FRONT: A van is across the intersection ahead; the near crossing and stop line are visible.",
+      "CAM_FRONT_RIGHT: Temporary fencing, a plastic barrier, and construction material occupy the corner-side area.",
+      "CAM_BACK_LEFT: The front of a large delivery truck occupies the near adjacent space.",
+      "CAM_BACK: A car is very close behind; a large truck fills the adjacent right side and a lift stands on the left roadside.",
+      "CAM_BACK_RIGHT: Temporary construction fencing encloses materials, an unfinished curbside area, and a delineator."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "7e9ffbcb241f34cc2c070f9886cd1c47957b6d3c75273ab44a84d1f6d643f3a9"
+  },
+  {
+    "index": 18,
+    "sample_token": "b8766f4291d5449d95bab459ca724ad8",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Strong direct sun glare obscures detail around a group of pedestrians at the immediate crosswalk corner; a sedan is alongside.",
+      "CAM_FRONT: A bus and pickup occupy the intersection cross street while the foreground marked crossing is visible.",
+      "CAM_FRONT_RIGHT: A bicycle rider is visible across the intersection and red signals face the approach.",
+      "CAM_BACK_LEFT: A sedan fills the immediate adjacent foreground.",
+      "CAM_BACK: A pickup is close behind with a large truck directly alongside it.",
+      "CAM_BACK_RIGHT: Construction fencing and temporary site buildings border the road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "143410e20d33b31b83992894dc832e06bf6031f5951c7074778adba33774aaa6"
+  },
+  {
+    "index": 21,
+    "sample_token": "37535cd306954669a2b21578573b93e3",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Strong sun glare washes the left intersection corner and an adjacent sedan fills the lower foreground.",
+      "CAM_FRONT: Several pedestrians occupy the marked crossing directly in front of the vehicle, including a person with a wheeled trolley.",
+      "CAM_FRONT_RIGHT: Pedestrians are beside the corner and crossing area within a short distance of the roadway.",
+      "CAM_BACK_LEFT: A sedan occupies the immediate adjacent space.",
+      "CAM_BACK: A pickup is close behind and a large truck fills the neighboring space.",
+      "CAM_BACK_RIGHT: A fenced construction site and temporary buildings stand beside the intersection."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c0e1dde66fc5b60641f271b0fae4b2955c52dd252ea2991265fd45b693731ab4"
+  },
+  {
+    "index": 23,
+    "sample_token": "dcbe451d383e450786aaad04ab9d3790",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Strong sun glare washes out corner detail; a sedan is close alongside.",
+      "CAM_FRONT: The marked crossing ahead is mostly open, with a pedestrian at the right edge near the curb ramp.",
+      "CAM_FRONT_RIGHT: Several pedestrians occupy the immediate corner and curb-ramp area beside the crossing.",
+      "CAM_BACK_LEFT: An adjacent sedan fills the lower foreground.",
+      "CAM_BACK: A pickup remains close behind with a large truck immediately next to it.",
+      "CAM_BACK_RIGHT: Construction fencing and temporary site buildings line the adjacent roadway."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "ae5316d4534f1603352590a6414a970ebc0a317e8cc5460a831f6df58176b6b7"
+  },
+  {
+    "index": 16,
+    "sample_token": "8687ba92abd3406aa797115b874ebeba",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Direct sun produces strong flare across a group of pedestrians near the crossing corner; an adjacent sedan is close.",
+      "CAM_FRONT: A bicycle rider is visible at the near-right portion of the intersection, close to the marked crossing area.",
+      "CAM_FRONT_RIGHT: The cross street and red signals are visible, with the near sidewalk corner recognizable.",
+      "CAM_BACK_LEFT: A sedan fills the immediate adjacent foreground.",
+      "CAM_BACK: A pickup is close behind and a large truck occupies the neighboring road space.",
+      "CAM_BACK_RIGHT: A construction fence and temporary buildings border the road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4ddb5876768f418429aba8b1b5b0cb97f1ac193e5f50ffe13617cddc9065fff0"
+  },
+  {
+    "index": 17,
+    "sample_token": "7315022fc89147a6afc7f978601f8f38",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Strong sun glare crosses a group of pedestrians at the immediate corner and crossing approach.",
+      "CAM_FRONT: The marked crossing ahead is visible and open in the central portion; red traffic signals face the approach.",
+      "CAM_FRONT_RIGHT: A bicycle rider is visible on the cross street near the intersection.",
+      "CAM_BACK_LEFT: A sedan occupies the immediate adjacent space.",
+      "CAM_BACK: A pickup is close behind and a large truck is immediately alongside it.",
+      "CAM_BACK_RIGHT: A fenced construction area and temporary site buildings line the road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "eddc5d5d7e54b663eeb0de0188cd805d42048d3af6f52e6c829c1a2c6d1e4351"
+  },
+  {
+    "index": 53,
+    "sample_token": "7bf1cef0e253474e847ee4c2eb955901",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: The roadside view is extremely dark and blurred, with little recognizable detail away from isolated lights.",
+      "CAM_FRONT: Night conditions, visible noise, headlight glare, and reflective road areas reduce clarity beyond the lit lane.",
+      "CAM_FRONT_RIGHT: Vehicle lights and streetlights create bright glare and reflections against a largely dark background.",
+      "CAM_BACK_LEFT: The view is severely underexposed, leaving most roadside content unrecognizable.",
+      "CAM_BACK: The rear road is visible under streetlamps but surrounded by deep darkness and noisy low-light detail.",
+      "CAM_BACK_RIGHT: Vehicles are recognizable only in the illuminated road area, with blurred detail and bright reflections."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "4967e37164da72994395b378f5beb5712641706115f0b367d1531c28b86d7295"
+  },
+  {
+    "index": 37,
+    "sample_token": "269ccf1fe399403c914e1f649d2a8ca2",
+    "label": "normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: The sidewalk, grass verge, and hedge are clear, with no person or obstacle near the road edge.",
+      "CAM_FRONT: The dry road ahead is open with clear lane markings and a simple marked junction; the few forward vehicles are distant.",
+      "CAM_FRONT_RIGHT: The side-road approach, signals, and pedestrian shelter are recognizable; the visible car is beyond the ego lane at the right side of the junction.",
+      "CAM_BACK_LEFT: The hedge and sidewalk are clear of nearby pedestrians or obstructions.",
+      "CAM_BACK: Cars are visible behind with the near ego lane open and the adjacent blue car within the neighboring lane.",
+      "CAM_BACK_RIGHT: Cars occupy the side-road or adjacent portions of the marked junction; the road structure is clear and no vulnerable road user occupies the road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_RIGHT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "c6124170c2a215b65eb14d8b73bafcae695fc3557f27a1f6669a1e6d37ca18b1"
+  },
+  {
+    "index": 31,
+    "sample_token": "35833ae5808e4ef186d1fdebac3d9cf6",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: A traffic cone stands at the road edge beside a parking entrance and a portable sign trailer.",
+      "CAM_FRONT: The straight road ahead is recognizable; an opposing SUV remains across the double center line.",
+      "CAM_FRONT_RIGHT: The marked pedestrian crossing and parking-access area are clearly visible and unoccupied.",
+      "CAM_BACK_LEFT: Several orange cones line the roadside beside the parking-garage entrance.",
+      "CAM_BACK: A line of cones occupies part of the right-hand roadway around work trucks and an elevated work boom, forming a work area.",
+      "CAM_BACK_RIGHT: A marked crossing and parking-lot entrance are visible beside the road."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "b9add00ed32ec7a4ab92b26ece279915a3bf494b454505722bd7dc74bc108547"
+  },
+  {
+    "index": 57,
+    "sample_token": "fb61d590dd1143ccb12ea56fbe9d9d07",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Night conditions leave the sidewalk dark; street and signal lights create strong localized glare.",
+      "CAM_FRONT: A nearby white vehicle is ahead at an angle within the junction; the road is wet and reflective beneath bright storefronts.",
+      "CAM_FRONT_RIGHT: A nearby black car has bright rear lamps; pedestrians line the far corner and the wet roadway reflects the lights.",
+      "CAM_BACK_LEFT: The roadside wall and vegetation are dark and poorly resolved.",
+      "CAM_BACK: A nearby vehicle has intense headlights reflected strongly in the wet road, obscuring details around it.",
+      "CAM_BACK_RIGHT: Bright storefront lighting and dark surrounding areas create large exposure differences; the road and sidewalk are reflective."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "0d7643087cb07e21f6c516025c44e3d43f96c49cc29bab0ab089c20ddcda6e3c"
+  },
+  {
+    "index": 27,
+    "sample_token": "baaa60749cd04db7952fd8f4ef8ac837",
+    "label": "not_normal_core",
+    "confidence": "high",
+    "visible_evidence": [
+      "CAM_FRONT_LEFT: Cars are in the curbside parking strip beside the building.",
+      "CAM_FRONT: A pedestrian occupies the roadway at the marked crossing ahead; farther along the left curb, a raised work boom and truck are surrounded by traffic cones.",
+      "CAM_FRONT_RIGHT: Parked cars remain beyond the sidewalk in an adjacent lot.",
+      "CAM_BACK_LEFT: Pedestrians are on the building-side sidewalk behind parked cars.",
+      "CAM_BACK: The straight road behind is open with parked vehicles and clear lane markings.",
+      "CAM_BACK_RIGHT: Parked vehicles occupy the lot beyond the curb and an orange cone is visible within the lot."
+    ],
+    "uncertainty_reason": "",
+    "cameras_inspected": [
+      "CAM_FRONT_LEFT",
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_BACK_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_RIGHT"
+    ],
+    "original_cameras_opened": [
+      "CAM_FRONT"
+    ],
+    "reviewer": "AI Codex / blind_recheck_c",
+    "label_origin": "ai_visual_provisional",
+    "human_review_status": "pending",
+    "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+    "panel_sha256": "f93c1b288126c1fad6c3442f9fe034aba078cb7eb4e1188c2b9a6f514b7493a0"
+  }
+]

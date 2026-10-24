@@ -1,0 +1,103 @@
+{
+  "schema": "ai-to-ai-recheck-summary-v1",
+  "round": "20261024",
+  "n": 80,
+  "human_reviewed": false,
+  "human_verified_count": 0,
+  "old_ai_labels_sha256": "64b4f56855ab03ea36fb37727bf756a05ef29a93a59ce39dc01fbaa87e5314d4",
+  "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+  "plan_sha256": "b70e3d5bbe229a9365efe87294a1037078e9a1734cdba8ac3349a9df8dc62944",
+  "raw_submissions": [
+    {
+      "file": "reviewer-0.json",
+      "sha256": "2359511273f856433d2833c4e8c082b0e71804036520854600af46f54cc22d46",
+      "n": 20
+    },
+    {
+      "file": "reviewer-1.json",
+      "sha256": "38d9ebfb84e2f46ade414ab09dc72b73259cf58a23c9e55f55eb8bc550c15bff",
+      "n": 20
+    },
+    {
+      "file": "reviewer-2.json",
+      "sha256": "e4f7a066e8c0b3d2f3ca655153183b35841fc327cbfb44888dd2ec85cc5312ab",
+      "n": 20
+    },
+    {
+      "file": "reviewer-3.json",
+      "sha256": "245b441bccd070e7ed340599efc8f5ba2043707307f048b2fd39e964aa975166",
+      "n": 20
+    }
+  ],
+  "previous_ai_counts": {
+    "not_normal_core": 60,
+    "uncertain": 7,
+    "normal_core": 13
+  },
+  "new_ai_counts": {
+    "not_normal_core": 63,
+    "normal_core": 12,
+    "uncertain": 5
+  },
+  "ai_agree_count": 73,
+  "ai_disagree_count": 7,
+  "original_camera_enlargements": 31,
+  "pair_counts": [
+    {
+      "previous_ai_label": "normal_core",
+      "new_ai_label": "normal_core",
+      "count": 12
+    },
+    {
+      "previous_ai_label": "normal_core",
+      "new_ai_label": "not_normal_core",
+      "count": 1
+    },
+    {
+      "previous_ai_label": "normal_core",
+      "new_ai_label": "uncertain",
+      "count": 0
+    },
+    {
+      "previous_ai_label": "not_normal_core",
+      "new_ai_label": "normal_core",
+      "count": 0
+    },
+    {
+      "previous_ai_label": "not_normal_core",
+      "new_ai_label": "not_normal_core",
+      "count": 58
+    },
+    {
+      "previous_ai_label": "not_normal_core",
+      "new_ai_label": "uncertain",
+      "count": 2
+    },
+    {
+      "previous_ai_label": "uncertain",
+      "new_ai_label": "normal_core",
+      "count": 0
+    },
+    {
+      "previous_ai_label": "uncertain",
+      "new_ai_label": "not_normal_core",
+      "count": 4
+    },
+    {
+      "previous_ai_label": "uncertain",
+      "new_ai_label": "uncertain",
+      "count": 3
+    }
+  ],
+  "checks": {
+    "unique_complete_coverage": true,
+    "frozen_packet_hashes": true,
+    "rubric_and_panel_hashes": true,
+    "valid_three_way_decisions": true,
+    "human_status_pending_all_rows": true
+  },
+  "old_pilot_labels_changed": false,
+  "old_predictions_or_metrics_changed": false,
+  "automatic_retraining": false,
+  "interpretation": "AI-to-AI consistency only, not human-truth accuracy; new sessions may share model biases. One fresh AI decision per timestamp in this round. Old labels/results are unchanged."
+}
