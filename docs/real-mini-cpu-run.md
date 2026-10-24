@@ -1,5 +1,9 @@
 # First real mini CPU extraction
 
+This is the point-in-time extraction record, before annotation and training.
+The subsequent [AI-label pilot](ai-pilot.md) completed four model fits and an
+offline explorer; its labels remain pending independent human verification.
+
 On 2026-10-23, the local upload route successfully moved a real nuScenes mini
 subset into the managed workspace and completed feature extraction without a
 GPU or paid service. This is a data/extraction smoke run, not a model-quality

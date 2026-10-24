@@ -9,6 +9,7 @@ This bundle contains derived annotations, numeric predictions, diagnostics and t
 - `reward_diagnostic.json` records zero reward gradient from cap saturation; the two SAE checkpoints are identical.
 - `failure_cases.json` contains three disagreements under the same MLP fixed rule.
 - `independent_audit.json` and `offline_verification.json` record completed checks and their limits.
+- `browser_ci_verification.json` records the later Chrome desktop/mobile UI check using synthetic, watermarked ZIPs, separate from the original-image Node checks. `completion.json` is the earlier point-in-time record, before that CI run.
 - `training_source_snapshot.zip` preserves the actual dirty source used by all four fits. Its hash is in each run record; current source includes later provenance hardening and the offline exporter.
 
 The model checkpoints and feature cache are retained in the execution workspace, with hashes/sizes in the run metadata. They are not stored in Git. Original driving images and original metadata tables are not included. Obtain input data through authorized nuScenes access; this bundle does not change its terms.

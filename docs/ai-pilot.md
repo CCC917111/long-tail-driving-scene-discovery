@@ -15,7 +15,7 @@ import and independent checks. The original multi-gigabyte archive checksum
 was not independently verified. The [extraction record](real-mini-cpu-run.md)
 describes the 80 timestamps / ten scenes / `(80, 3072)` ResNet18 feature cache.
 
-Four AI annotators actually inspected every six-camera panel, with original
+Four AI annotators collectively inspected all 80 six-camera panels, with original
 camera images enlarged for ambiguous cases. They received the frozen rubric
 and image identities without split assignments, scene descriptions or model
 outputs. An additional AI pass blindly inspected 16 predetermined timestamps:
@@ -99,7 +99,16 @@ The final local suite passed 205 tests and 18 subtests, with the socket-dependen
 HTTP test deselected. The optional real-asset test actually ran against this
 real feature bundle and explicitly AI-provisional labels. Lint passed. Offline
 Node checks matched all 292 displayed model predictions to saved outputs and
-validated all 480 local images; actual browser clicks remain unverified.
+validated all 480 local images. A later
+[GitHub Actions Chrome run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157)
+passed desktop/mobile image rendering, unit/sample navigation, search and CSV
+download using synthetic, watermarked ZIP fixtures. Its three runtime scripts
+are byte-identical to the shipped explorer. This UI verification is separate
+from the real-image byte/score checks; a real-image browser session has not
+been certified. The retained
+[browser CI report](../results/cpu-mini-ai-pilot-20261023/browser_ci_verification.json)
+records that scope. CPU CI also passed tests, lint and the generated-data HTTP
+workflow on the same head; see [testing](testing.md).
 
 Download the [offline demo](../demo/driving_pilot.html), save the HTML and open
 it in desktop Chrome/Edge, then select the same four original ZIPs. The
