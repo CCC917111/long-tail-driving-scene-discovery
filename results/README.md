@@ -1,106 +1,88 @@
-Results
-=============
+# Results and evidence status
 
-All numbers are measured on nuScenes keyframes labelled under the
-defensive-driving rubric in
-[`latest_grading_criteria.md`](../latest_grading_criteria.md): each keyframe was
-labelled by a large VLM and the labels were then checked by hand. The labelled
-set holds 6,586 keyframes, eight from each of 824 scenes of nuScenes
-v1.0-trainval, with 2,356 long-tail and 4,230 normal.
+No new real-data result has been established under the current scene-disjoint
+protocol. The numbers below are historical reports retained from `b57eaffa`.
+They have not been regenerated from original predictions, logs or checkpoints
+in this round. New controlled results must be published in a separate table
+with one identifiable run per row.
 
-**Training and test sets.** The SAE was trained on a random 80% of the
-labelled keyframes (5,268) and tested on the remaining 20% (1,318: 486
-long-tail, 832 normal), split with a fixed seed; the checkpoint with the lowest
-held-out loss was kept.
+## Current protocol: no real-data results yet
 
-**Metrics.** Each class is scored as the positive class in turn. *Precision* is
-the share of the samples predicted as that class that really belong to it,
-*recall* the share of the class's samples that are found, and *F1* their
-harmonic mean. A frame is predicted long-tail when at least one unit of the
-long-tail subspace is active (`|z_t| > 0.01`). *AUC* (area under the ROC curve)
-and *AP* (average precision, the area under the precision-recall curve) score
-the continuous ranking by `||z_t||_2`.
+The planned comparison shares frozen VLM features, one scene-disjoint manifest,
+train-only normalisation and validation-only model/operating-point selection:
+Logistic regression, small MLP, AbsTopK without reward and the same AbsTopK with
+reward. The [evaluation protocol](../docs/evaluation.md) defines metrics,
+predeclared review budget, scene uncertainty and reproducible table artifacts.
+Synthetic outputs demonstrate this software path and are not nuScenes results.
 
-The released code uses a stricter protocol by default: a scene-level 70/15/15
-split, standardisation with training statistics only, checkpoint selection on a
-separate validation set, and `uncertain` frames excluded.
+## Historical protocol and unresolved counts
 
-## Main result: long-tail filtering
+The report describes 6,586 nuScenes v1.0-trainval keyframes: 2,356 long-tail
+and 4,230 normal, selected from 824 scenes. It also describes eight keyframes
+per scene, which would total 6,592. The six-frame difference remains unexplained
+without the historical manifest and exclusion records. Missing-view filtering
+exists in the code but has not been verified as the cause of this difference.
 
-Three VLMs used directly as classifiers, against Cosmos-Reason1-7B equipped
-with the final SAE (`scripts/sae_abstopk_tail_reward.py`, layer 28):
+The reported SAE split was random **by frame**, 80/20: 5,268 training and
+1,318 held out (486 tail / 832 normal). The checkpoint with the lowest held-out
+loss was selected, so this was not an independent validation/test protocol.
+Frames from one scene could straddle the split. These results do not transfer
+to the current scene-disjoint 70/15/15 protocol.
 
-| Model | Long-tail precision | Long-tail recall | Long-tail F1 | Normal precision | Normal recall | Normal F1 |
+The reported labels were VLM pre-labels followed by manual review. The original
+labels and review records are absent from this checkout and need recovery.
+VLM confidence or agreement is not independently measured human-label accuracy.
+
+## Historical SAE configuration
+
+| Method | Tail precision | Tail recall | Tail F1 | Normal precision | Normal recall | Normal F1 | AP | ROC AUC |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Cosmos-Reason1-7B + AbsTopK SAE, L28 | 0.9023 | 0.7984 | 0.8472 | 0.8896 | 0.9495 | 0.9186 | 0.9082 | 0.9063 |
+
+The original decision was at least one tail unit with `|z_t| > 0.01`.
+AP and ROC AUC used `||z_t||_2`. The six class precision/recall/F1 values are
+arithmetically compatible with TP=388, FN=98, FP=42, TN=790 under the stated
+supports. This compatibility does not verify the predictions or recover the
+run. Historical AP/AUC cannot be reconstructed from this confusion matrix.
+
+## Historical raw-VLM reports: comparison not verified
+
+| Raw VLM | Tail precision | Tail recall | Tail F1 | Normal precision | Normal recall | Normal F1 |
 |---|---:|---:|---:|---:|---:|---:|
-| Cosmos-Reason1-7B (raw) | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
-| Qwen3.5-9B (raw) | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
-| Qwen3-VL-2B-Instruct (raw) | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
-| **Cosmos-Reason1-7B + SAE (ours)** | **0.9023** | **0.7984** | **0.8472** | 0.8896 | 0.9495 | 0.9186 |
+| Cosmos-Reason1-7B | 0.1429 | 0.0130 | 0.0238 | 0.8838 | 0.9897 | 0.9338 |
+| Qwen3.5-9B | 0.2900 | 0.3580 | 0.3204 | 0.9103 | 0.8815 | 0.8957 |
+| Qwen3-VL-2B-Instruct | 0.3611 | 0.1135 | 0.1728 | 0.8843 | 0.9712 | 0.9257 |
 
-All four use the same behaviour-oriented long-tail definition as their decision
-criterion; the baselines are prompted to apply it directly, while the SAE-based
-method never asks the VLM for a label at all and reads its hidden state
-instead.
+None of these rows corresponds to an integer binary confusion matrix with
+486 tail and 832 normal supports when rounded to the reported four decimals.
+The evaluation IDs, aggregation method or transcription may differ. Recover
+and rescore the original per-frame predictions before claiming a matched-test
+recall gain, common ground truth or causal benefit from the SAE.
 
-## Annotation agreement
+## Historical configuration and layer comparisons
 
-An earlier smaller-scale pass over 10,120 nuScenes keyframes sanity-checked the
-rubric before the full pipeline: two VLMs independently labelled every frame
-and agreed on 83.9% of them (8,489 / 10,120).
-
-| Annotator | normal_core | not_normal_core | uncertain | Mean confidence |
-|---|---:|---:|---:|---:|
-| Cosmos-Reason1-7B | 96.9% | 1.1% | 2.0% | 0.970 |
-| Qwen3.5-9B | 86.0% | 14.0% | 0.0% | 0.994 |
-
-Most disagreements are Qwen3.5-9B flagging a frame that Cosmos-Reason1-7B calls
-normal, consistent with a stricter reading of the rubric. The disagreement is a
-useful signal in itself: frames both models call normal are strong negatives
-for SAE training, and frames they disagree on are natural candidates for human
-review.
-
-## Ablation: the objective and the sparsity rule
-
-Ablating the tail-reward term at layer 28 accounts for most of the gain.
-Comparing AbsTopK against plain signed Top-K across layers 15-28 shows AbsTopK
-with the tail reward is the strongest configuration at every depth, with
-performance improving in deeper layers and peaking at layer 28, the model's
-last hidden layer:
-
-| Method | Layer | AUC | AP | Long-tail F1 | Long-tail precision | Long-tail recall |
+| Configuration | Layer | ROC AUC | AP | Tail F1 | Tail precision | Tail recall |
 |---|---|---:|---:|---:|---:|---:|
-| **AbsTopK + Tail Reward** | **L28** | **0.9063** | **0.9082** | **0.8472** | **0.9023** | **0.7984** |
-| AbsTopK + Tail Reward | L27 | 0.9033 | 0.9068 | 0.8386 | 0.9212 | 0.7695 |
-| AbsTopK + Tail Reward | L24 | 0.9004 | 0.8999 | 0.8294 | 0.9051 | 0.7654 |
-| AbsTopK + Tail Reward | L21 | 0.8772 | 0.8120 | 0.8043 | 0.8374 | 0.7737 |
-| AbsTopK + Tail Reward | L18 | 0.8733 | 0.8118 | 0.7868 | 0.7876 | 0.7860 |
-| AbsTopK + Tail Reward | L15 | 0.8791 | 0.8829 | 0.8091 | 0.9100 | 0.7284 |
-| TopK SAE | L28 | 0.8735 | 0.8846 | 0.8269 | 0.9669 | 0.7222 |
-| Train SAE Cosmos | L28 | 0.8657 | 0.8623 | 0.8071 | 0.8750 | 0.7490 |
+| AbsTopK + norm reward | L28 | 0.9063 | 0.9082 | 0.8472 | 0.9023 | 0.7984 |
+| AbsTopK + norm reward | L27 | 0.9033 | 0.9068 | 0.8386 | 0.9212 | 0.7695 |
+| AbsTopK + norm reward | L24 | 0.9004 | 0.8999 | 0.8294 | 0.9051 | 0.7654 |
+| AbsTopK + norm reward | L21 | 0.8772 | 0.8120 | 0.8043 | 0.8374 | 0.7737 |
+| AbsTopK + norm reward | L18 | 0.8733 | 0.8118 | 0.7868 | 0.7876 | 0.7860 |
+| AbsTopK + norm reward | L15 | 0.8791 | 0.8829 | 0.8091 | 0.9100 | 0.7284 |
+| Signed TopK, no reward | L28 | 0.8735 | 0.8846 | 0.8269 | 0.9669 | 0.7222 |
+| “Train SAE Cosmos” / pre-selection reward | L28 | 0.8657 | 0.8623 | 0.8071 | 0.8750 | 0.7490 |
 
-Deeper layers carrying more of the signal matches what the decomposition is
-being asked to do: later hidden states hold higher-level, semantically
-aggregated information, which is where behaviour-relevant structure lives.
+These are historical configuration reports, not controlled single-factor
+ablations. The TopK row changes both sparsity and reward. The pre-selection
+variant also changes latent width (3,584 vs 7,168), dropout (0.4 vs 0.2),
+normal penalty (0.01 vs 0.1) and reward settings. Therefore the 0.0401 F1
+difference cannot establish the isolated effect of adding a tail reward.
+Layer results are not monotonic; L28 is the highest reported F1 among these
+rows. Selecting layers requires validation only in new experiments.
 
-Two further analyses: mean-pooled features slightly outperform last-token
-features as SAE input, and that holds consistently across layers — again
-consistent with more aggregated representations suiting the task.
+## Historical interpretation and agreement
 
-The per-layer numbers are produced by extracting several layers in one pass,
-`extract.py --layers 15 18 21 24 27 28`, and running each SAE script on the
-corresponding `layer{L}_*.npy` file. The "TopK SAE" row differs from the final
-method in both the sparsity rule and the absence of a tail reward;
-`ablation_topk_sae.py --reward norm` isolates the effect of the sparsity rule
-alone.
-
-## Interpretable neurons
-
-Thresholding `|z_t|` at 1.0 and inspecting which frames activate each unit.
-*Activation ratio* is the share of that scenario's frames that activate the
-unit; *purity* is the share of activated frames that really belong to the
-scenario. Names come from reading the top-activating frames:
-
-| Long-tail feature | Unit | Activation ratio | Purity |
+| Interpreted feature | Unit | Reported activation ratio | Reported purity |
 |---|---:|---:|---|
 | Rain / wet road | 2169 | 43.8% | 100.0% (723/723) |
 | Glare on a wet or rainy road | 396 | 5.6% | 100.0% (92/92) |
@@ -108,59 +90,23 @@ scenario. Names come from reading the top-activating frames:
 | Pedestrians crossing a construction zone | 1542 | 6.1% | 53.8% (71/132) |
 | Truck close to the ego vehicle | 1843 | 4.2% | 57.1% (12/21) |
 
-![Frames that activate units 396, 1542 and 3058](../docs/figures/neuron_examples.webp)
+These reports use `|z_t| > 1.0`. Their sample memberships, scenario labels and
+exploration/test boundaries are not available here. They are not independent
+test purity/coverage estimates. The [glossary](neuron_glossary.csv) and
+[example figure](../docs/figures/neuron_examples.webp) preserve interpretation
+material; names must be frozen on train/validation before test measurement.
 
-A single unit captures one sub-pattern; asking how often *at least one* unit of
-a related group fires gives the coverage of a whole scenario family. For
-vulnerable road users, a group of related units fires on 57.6% of the
-vulnerable-road-user frames.
+The historical report also lists 8,489 / 10,120 agreement between two VLM
+annotators and a wheelchair case in `scene-0675`. The annotation records,
+KNN outputs and repeated VLM trials are missing. Preserve those as historical
+unverified observations, without claiming accuracy against human truth or a
+systematic advantage over alternative mining methods.
 
-The machine-readable version is
-[`neuron_glossary.csv`](neuron_glossary.csv), which the screening tool joins
-against so a flagged frame carries a reason.
-[`docs/neurons.md`](../docs/neurons.md) covers how the units are scored and how
-to rebuild the glossary for another run.
+## Rebuild new results
 
-## Case study: a sample anomaly detection and confidence filtering both miss
-
-A wheelchair user appears near the ego vehicle's path in a frame from nuScenes
-`scene-0675`. It is a useful stress test because it is genuinely hard
-for three common mining strategies:
-
-- **Unsupervised anomaly detection (KNN in feature space)** does not prioritise
-  it. Its outlier degree ranks above only 1.4% of samples, and only 2 of its 10
-  nearest neighbours are themselves long-tail. The road structure, the vehicle
-  distribution and the overall scene are all close to a normal frame — what
-  makes it long-tail is a small local detail, not global novelty.
-- **Confidence-based filtering** misses it too. Every VLM assigns it a
-  high-confidence prediction, so a low-confidence filter never surfaces it
-  (0/20 trials across the tested VLMs and re-runs).
-- **Asking an MLLM directly** depends on which model you can afford to run at
-  scale. GPT-4o and Gemini 3 Pro Preview both hit "rideable wheelchair" 5/5
-  times; Claude Haiku 4.5 does not hit that category in any of 5 trials,
-  attributing the scene to traffic cones or strollers instead. The two models
-  that succeed are large proprietary models behind paid APIs, far more capable
-  and far more expensive to run than the 7B open model this method reads.
-
-The method finds it by combining two signals. Every VLM judges the scene as
-requiring defensive driving under the behaviour-oriented definition (5/5), and
-SAE unit 3058 fires on it — the same unit that fires on other wheelchair-nearby
-frames elsewhere in the dataset. The frame is neither a feature-space outlier
-nor a low-confidence prediction, and it still carries real safety relevance.
-
-## Reproducing
-
-```bash
-make label DATA=<nuscenes>            # writes output/annotations/labels.json
-make extract DATA=<nuscenes> LAYERS=28
-make train                            # writes output/sae_abstopk_tail_reward/
-make ablations                        # the two ablation variants
-```
-
-Each SAE run writes `metrics.json` (validation and test precision / recall / F1
-of the decision rule, AUC / AP of `||z_t||_2`), `neuron_report.csv`, the
-learned `z_n` and `z_t` codes, `activations.npz` for the neuron explorer, the
-per-sample predictions and split assignment in `rows.json`, the standardiser
-and the model checkpoint. `make explore` then opens the run in the
-[neuron explorer](../docs/neurons.md#browsing-the-units).
-[`docs/user.md`](../docs/user.md) documents every flag.
+Recover authorised features, metadata, labels and extraction settings first.
+Use the [user guide](../docs/user.md) to freeze a manifest, then the
+[evaluation workflow](../docs/evaluation.md) to write per-sample predictions,
+metrics, provenance and reconstructable main tables. Keep original artifacts
+unchanged and new runs in distinct directories. A current-code rerun is a new
+experiment, not a reconstruction of missing historical provenance.

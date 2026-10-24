@@ -1,0 +1,196 @@
+{
+  "protocol_version": "scene-disjoint-evaluation-v1",
+  "seed": 42,
+  "score_direction": "higher means more likely tail",
+  "operating_point": {
+    "selection_split": "val",
+    "target_precision": 0.9,
+    "selection_rule": "max recall, then precision, then threshold",
+    "comparison": "score >= threshold",
+    "status": "target_unreachable",
+    "threshold": null,
+    "validation_precision": 0.0,
+    "validation_recall": 0.0
+  },
+  "fixed_rule": {
+    "rule": "c_tail >= 1",
+    "eta": 0.01
+  },
+  "split_summary": {
+    "train": {
+      "n_frames": 48,
+      "n_scenes": 6,
+      "tail_support": 45,
+      "normal_support": 3
+    },
+    "val": {
+      "n_frames": 11,
+      "n_scenes": 2,
+      "tail_support": 6,
+      "normal_support": 5
+    },
+    "test": {
+      "n_frames": 14,
+      "n_scenes": 2,
+      "tail_support": 9,
+      "normal_support": 5
+    }
+  },
+  "splits": {
+    "val": {
+      "scene_count": 2,
+      "operating": {
+        "n": 11,
+        "tail_support": 6,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 5,
+          "fp": 0,
+          "fn": 6,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.4958694083694084,
+        "auc": 0.3666666666666667
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 1,
+        "precision_at_k": 0.25,
+        "recall_at_k": 0.16666666666666666,
+        "random_expected_tail_found": 2.1818181818181817,
+        "random_expected_precision_at_k": 0.5454545454545454,
+        "random_expected_recall_at_k": 0.36363636363636365,
+        "selected_tokens": [
+          "3e8750f331d7499e9b5123e9eb70f2e2",
+          "269ccf1fe399403c914e1f649d2a8ca2",
+          "17723c0411434e48875a93de4db0ecba",
+          "fa51f1910942494cbe396640010fea64"
+        ]
+      },
+      "fixed": {
+        "n": 11,
+        "tail_support": 6,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 0,
+          "fp": 5,
+          "fn": 0,
+          "tp": 6
+        },
+        "precision": 0.5454545454545454,
+        "recall": 1.0,
+        "f1": 0.7058823529411764,
+        "ap": 0.4958694083694084,
+        "auc": 0.3666666666666667
+      }
+    },
+    "test": {
+      "scene_count": 2,
+      "operating": {
+        "n": 14,
+        "tail_support": 9,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 5,
+          "fp": 0,
+          "fn": 9,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.9216200466200468,
+        "auc": 0.8222222222222222
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 4,
+        "precision_at_k": 1.0,
+        "recall_at_k": 0.4444444444444444,
+        "random_expected_tail_found": 2.5714285714285716,
+        "random_expected_precision_at_k": 0.6428571428571429,
+        "random_expected_recall_at_k": 0.2857142857142857,
+        "selected_tokens": [
+          "a9def8f915cf4bfe9c74b864384ec6c7",
+          "12e1aa58e9d04068a33f37b896b901a3",
+          "e3bcde4a06124931a097ef2a211aaaef",
+          "8fe9664cec514a58b1184c4fcefda6b5"
+        ]
+      },
+      "fixed": {
+        "n": 14,
+        "tail_support": 9,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 0,
+          "fp": 5,
+          "fn": 0,
+          "tp": 9
+        },
+        "precision": 0.6428571428571429,
+        "recall": 1.0,
+        "f1": 0.782608695652174,
+        "ap": 0.9216200466200468,
+        "auc": 0.8222222222222222
+      }
+    }
+  },
+  "label_scope": {
+    "label_protocol": "ai-visual-pilot",
+    "human_reviewed": false,
+    "interpretation": "Agreement with provisional AI visual labels; not human-ground-truth accuracy or a benchmark result"
+  },
+  "test_scene_bootstrap": {
+    "unit": "scene",
+    "seed": 42,
+    "requested_samples": 1000,
+    "scene_count": 2,
+    "threshold_refitted": false,
+    "confidence": 0.95,
+    "intervals": {
+      "ap": {
+        "lower": 0.2,
+        "upper": 1.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "auc": {
+        "lower": 0.19999999999999996,
+        "upper": 0.8222222222222222,
+        "valid_samples": 748,
+        "undefined_samples": 252
+      },
+      "precision": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "recall": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "f1": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      }
+    },
+    "status": "computed"
+  },
+  "provenance": {
+    "run_metadata": "run_metadata.json",
+    "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+    "predictions_sha256": "f154b1a1390075da9a41967c14a9cbfcc36c4c1b26bf6ab6860ab7d278553a58"
+  }
+}

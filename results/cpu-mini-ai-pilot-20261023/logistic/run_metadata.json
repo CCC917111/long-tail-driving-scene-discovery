@@ -1,0 +1,1170 @@
+{
+  "protocol_version": "scene-disjoint-evaluation-v1",
+  "created_utc": "2026-10-23T21:16:52.266975+00:00",
+  "config": {
+    "method": "logistic",
+    "features": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/layer1_mlp_output_mean.npy",
+    "meta": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/meta.json",
+    "labels": [
+      "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/annotations/labels.json"
+    ],
+    "feature_config": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/extraction_config.json",
+    "manifest": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/annotations/manifest.json",
+    "output_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/logistic",
+    "seed": 42,
+    "c": 1.0,
+    "max_iter": 1000,
+    "hidden_dim": 256,
+    "epochs": 10,
+    "batch_size": 64,
+    "lr": 0.001,
+    "l2": 0.0001,
+    "review_k": 4,
+    "target_precision": 0.9,
+    "bootstrap_samples": 1000,
+    "allow_sample_split": false,
+    "estimator_params": {
+      "C": 1.0,
+      "class_weight": null,
+      "dual": false,
+      "fit_intercept": true,
+      "intercept_scaling": 1,
+      "l1_ratio": 0.0,
+      "max_iter": 1000,
+      "n_jobs": null,
+      "penalty": "deprecated",
+      "random_state": 42,
+      "solver": "lbfgs",
+      "tol": 0.0001,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "score": "P(long_tail | frozen features)",
+    "training_history": {
+      "selection": "single fixed-C fit; no checkpoint search",
+      "best_epoch": null,
+      "iterations": 39,
+      "val_log_loss": [
+        3.1655478477478027
+      ]
+    },
+    "feature_provenance": {
+      "schema": "cpu-resnet18-six-camera-v1",
+      "source_version": "v1.0-mini",
+      "encoder": "resnet18-imagenet1k-v1",
+      "model_revision": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+      "revision_status": "pinned official ImageNet checkpoint SHA256; not a Hub commit",
+      "model_files_sha256": {
+        "resnet18-f37072fd.pth": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec"
+      },
+      "metadata_sha256": {
+        "scene.json": "cc4dfeac83ac4f5d3e7fc899f90156891a21fa08bc0f8a1ac0e0a27cc1a0bfa6",
+        "sample.json": "3c47794e2e6c09af4be7907b83f50750351180008d059899f42a9d405ed68586",
+        "sample_data.json": "db18a189bd73648013d3e77ce6f5236d7c5997c0bdbf71166ddd8a6cb5c2c288",
+        "calibrated_sensor.json": "13d35eeb08bfbc4d0c9eaede7824ff65efe16f8bf345aa7ba9fd75f9866a8d0f",
+        "sensor.json": "4d5c96570e2d8b09b88ce4c605e40ee43c4909f97bea5741185f18f92eb491ae"
+      },
+      "samples": [
+        {
+          "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "0f8328530f9e7858706295a301642873987addf0dcdf6774249de0c6f0f04f1a",
+            "CAM_FRONT_LEFT": "b83a84a88b11cd1072f9d3a0aba245f628f58605eadc773ef33a5b135fa14c9c",
+            "CAM_FRONT_RIGHT": "42ad030819df988be8b8d2e62642950f7adc7223469be0c8c93a2b63c596c5bc",
+            "CAM_BACK": "ed06d9ac4a7b65ee87e41af5ac6a12609200be041030c24e3dcd842e861f5683",
+            "CAM_BACK_LEFT": "eb06ec13acb81534ef0fe21d7d444e57f8472936ce8814af9f6ba8a905e1564d",
+            "CAM_BACK_RIGHT": "2ec02e4318e6b7745996c63ac4de6b449396b995740b85b6715fe3e57b2432a6"
+          }
+        },
+        {
+          "sample_token": "12e1aa58e9d04068a33f37b896b901a3",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "70b6491ba73be1ff5ed352b1bbf1646e6def6e4b6100061d4e863ad65d6bd5cc",
+            "CAM_FRONT_LEFT": "70a1c9b971ce4fc051ee52b437ce15da375ba66000cc64fd690fe913c4f81441",
+            "CAM_FRONT_RIGHT": "b90b03005f65a017e54aad39ebf69e9d5f545d5a7ef9ef9742c238123d21403c",
+            "CAM_BACK": "e25925ee9a4e6ecf441fb04a9358fa93103b58922fb38744e33077b2a2b50df5",
+            "CAM_BACK_LEFT": "2a34cf936fd01e2b011e077f2120e75b7e7baad50d3f405632a6fe4ea1faa623",
+            "CAM_BACK_RIGHT": "736d4099d2b759c1869026285e09f266d7d59802ba52cd68f1c373a1e2a2bd82"
+          }
+        },
+        {
+          "sample_token": "0307afa1ec7e48ce90295acabf8cb6dd",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "f4ea59f6432e31cc99773566d9acab29a3b1f4b2f5395e76d6d728a3d09e5b72",
+            "CAM_FRONT_LEFT": "3549df8745228b9ad3f3b26c41ff1512fcc31460b5083a7494c44f1c69d071e8",
+            "CAM_FRONT_RIGHT": "11508321da30912ddc6e5bf7f0c016a36f7fae455612651b966a207d5fa28afc",
+            "CAM_BACK": "c19cef3d3a1764e8152cbe71186495c39ae370361af9689d6c5cea94457b5c81",
+            "CAM_BACK_LEFT": "2e5419a576c8c660c892161b254039b668d167e0e11c158895c5f79be425300b",
+            "CAM_BACK_RIGHT": "a490282a9b57c3562ba802d966447c91931ce22bfd4fb0eeda67da19f5a26af6"
+          }
+        },
+        {
+          "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "0764379a278f6a78bc31937db75c7e419997a4318053b4179cb322e3a9d6e266",
+            "CAM_FRONT_LEFT": "e9d94a11d468b155cc2e93ee81ce7f1aea5ca100f5a23b824aab3ebe7fd6abb2",
+            "CAM_FRONT_RIGHT": "abff0fccefc5b46bfcd7acb3d6aa2ead805c434f47194cf6c54c02e7f99dd72f",
+            "CAM_BACK": "7d8c4c4383ffa19b8ae7d17d70f56109def81cace8911110da6716eb54a60fe8",
+            "CAM_BACK_LEFT": "2d664bc2e6b59ec65ef6d16f098c49a638706fd005003fdbf95d0b1b48cf9902",
+            "CAM_BACK_RIGHT": "d2990d2acc933d484694046f135de04310276ffd81b5d4a78b9524cef9886d86"
+          }
+        },
+        {
+          "sample_token": "d68668cb98fe4be5a00f58b5ac8a0a7d",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "c9790d468671b45b8dd57f18d4eccb26c736155a46efc70917589b53a8f622a6",
+            "CAM_FRONT_LEFT": "62c38c1548873f929e4fcdbee7c26638756a949d37edcdd1179ed103c6ebb435",
+            "CAM_FRONT_RIGHT": "80e51388231a0d1e912843d6dba4c836cfd0c62d8d1be76b16d533f051d8e3c2",
+            "CAM_BACK": "c00533b38ddf0520e7d41ed64fb677983def5c8240c52a05ed701b83d2c204bf",
+            "CAM_BACK_LEFT": "8ec0bb5a60d56ceaddd6dab2c2ebb107a896322ba76569180f5a37b6f5a502ae",
+            "CAM_BACK_RIGHT": "59e20c2054e94e639b370ef0aff1621ff032fc840f183cc225cc7e58e7b086df"
+          }
+        },
+        {
+          "sample_token": "46292fc546f048f29520299220f22798",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "23856cf6eb56ec724d8bfd75203de74e18a564f902d2063bd5d5aa9ce8b9892e",
+            "CAM_FRONT_LEFT": "2c8e33469093fd4ebec9e88a5e90ee2221fc64f1804805e6f46d5ea58ebd2568",
+            "CAM_FRONT_RIGHT": "d47b77582de8cab72e2bd92bd9b9c65244fffbf28b9f4f96545548e750a776fb",
+            "CAM_BACK": "877dbcd1771d3650f52430d4b871c8b39c3c0712d0e11c48e319726537c153ce",
+            "CAM_BACK_LEFT": "d811bf3486df55d000e2eb11f320a40b00a7add447fde25d8140ba2e72356fd7",
+            "CAM_BACK_RIGHT": "88dfdef67566d5703c3a80122387ca9252afc6dc59f1821c269ca24555eac638"
+          }
+        },
+        {
+          "sample_token": "e3bcde4a06124931a097ef2a211aaaef",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "13300ad6f5e8259774d658383688eba8d631122890b9917de303012cd28e313d",
+            "CAM_FRONT_LEFT": "8624f3cc017259c5e3a4cb96162ee54a722174834135cb41652dc4cc08eb43a2",
+            "CAM_FRONT_RIGHT": "9c5af309f289790dfc1f9a624e82f4491dc5ecaae744ec72f4266ab73267ba8d",
+            "CAM_BACK": "7cf4ac250716469e6ccdd6cd8e63dd754dc7fc519e5afdbea326fd9793bf55f6",
+            "CAM_BACK_LEFT": "708803de96a5ebbc14b31dee3c3f307b1981540c1609033f51804f46a3b6cfde",
+            "CAM_BACK_RIGHT": "fbee152374ca622fdc165652dd0aeca56b4de778ce93a192905dd4528ad88b8d"
+          }
+        },
+        {
+          "sample_token": "8fe9664cec514a58b1184c4fcefda6b5",
+          "scene_token": "2fc3753772e241f2ab2cd16a784cc680",
+          "image_sha256": {
+            "CAM_FRONT": "50cbbb94711b8464fadfd279f7cd0d4903d566862f5134a8df512da14e1cd55e",
+            "CAM_FRONT_LEFT": "056e323f357fcb7b2197225684d5e39d0ce7d8cc8fc4e93eb0b3225ca3859385",
+            "CAM_FRONT_RIGHT": "820136ba7763a711bb17332e4d81a98e864b126e601ff42ec67ab4a89772ea11",
+            "CAM_BACK": "a806bbd2dfdcca3d9b3b8ca458949dcb28a5c2142ece38f123fb2dd1143e6819",
+            "CAM_BACK_LEFT": "d45c677f880d520fb083f108d9cf03b11c57ce60305e0333024b6f18005faad7",
+            "CAM_BACK_RIGHT": "350b292543f424e561c3fcd566e424b0c1662776b0b5078f525ae2c122550829"
+          }
+        },
+        {
+          "sample_token": "b5989651183643369174912bc5641d3b",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "eb299dff2240c756d2d4725c6247247655be92531a1d79717ed1da461ce2e130",
+            "CAM_FRONT_LEFT": "475c1dacfd3c4f5375ff9c1598c082ec65c4f3bfa0a720107522eba6cada5efe",
+            "CAM_FRONT_RIGHT": "6ea9d5981baa64e78b937a2a1a1cf67717a8a974043872d2db75e07fa1bfc35e",
+            "CAM_BACK": "a2b3399c6d1afc905a43442c82531bcf61bbfde289f5da51bc73d3956a2c8fd0",
+            "CAM_BACK_LEFT": "e48128afe5ae8fd7e06cdde2a5bab4da1f4f02d1e4b14112dc1f734b68297f8f",
+            "CAM_BACK_RIGHT": "74ac683901d10e618323b5ebaf895ddf6bb17bb2c8532bf35eaa70a71d06b5cb"
+          }
+        },
+        {
+          "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "ac42ed945a3136ceeeb2d03a40de1f2bf904cb7f9614b056bad2b2314cb71293",
+            "CAM_FRONT_LEFT": "477caba17b09edfccbff8612fa4c941bd009f297d8727588bc02e222bd0ee25c",
+            "CAM_FRONT_RIGHT": "cc627b5c654f5b7eb560a6c61a210775c34827fcce0990d550d0f5b6fa9131f3",
+            "CAM_BACK": "831e0d86d6f00c4e63b1f7e5df7782a4af04c74012b231fe8c33f4dd4711bbaf",
+            "CAM_BACK_LEFT": "21ef03305e389c97c207419b248004d69e4007d683ce0586ea083848f68146d8",
+            "CAM_BACK_RIGHT": "367a6a492ca8919905db1e14f1e21bfffd634e0e62ef208ac68c7ee01a3dd723"
+          }
+        },
+        {
+          "sample_token": "858a1ece22cf45d9bc71e42336604b78",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "e7a733f16d562d4ccaa922e4bccc9a02fb607c946881d5f91e23226736bd9d72",
+            "CAM_FRONT_LEFT": "cdfe4ffdf623382f66f0b281d84a230323103bbfa1d3fbd3bfa58742a011badc",
+            "CAM_FRONT_RIGHT": "844c7e9db8039f19286c2c5af8269a604c9df031293ad5add0d0b1b9e52dd87e",
+            "CAM_BACK": "30dbf5d5c721008cb2ead4c4078e44f92623a673d89b3cce6b8c21467e579a8d",
+            "CAM_BACK_LEFT": "dc612cab8088a1ed7c4fff66d037d68e76d7acd8ca7317e25e800d79295469fc",
+            "CAM_BACK_RIGHT": "ac7a309d1bf2a4f96f2be017bfa93bc0e858f7472ec6cc64d8676a44b941bc01"
+          }
+        },
+        {
+          "sample_token": "b6c420c3a5bd4a219b1cb82ee5ea0aa7",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "f267c3dbada1bb4ca82a918ff3c569a471ce58c00e54299f43906ffedd1ebaae",
+            "CAM_FRONT_LEFT": "fdf3d17650ad73a74ddc94acf802b2ddcc7becd9d1b95598f1a247de80cb5902",
+            "CAM_FRONT_RIGHT": "1ebb3010d81ce91a5a99e598528393c19f3cbd71722d9a8bb689d833bd6bde11",
+            "CAM_BACK": "1e634fff56f06061f2952755d662693e7b1699938776de2c16d52bf7e60d94ea",
+            "CAM_BACK_LEFT": "d0e958403d04f54e4ffa045144911fdad1e3cdfb088a8764b9033ff704651a83",
+            "CAM_BACK_RIGHT": "3bacd23beada87f481b09925db624b31e8c960f59bba847561e56aca0cf2595a"
+          }
+        },
+        {
+          "sample_token": "9150678870764c1b87a649a25939c61b",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "6e6a79c9aaf049420e0b9f9d56ca7f8a7288d94a95fce53f65ce9461637ac6c9",
+            "CAM_FRONT_LEFT": "63336e0d7b1ba881036acfbf1d42661f01cf0573ab28256eb74293e61f7d6e11",
+            "CAM_FRONT_RIGHT": "36bdf7e6793454062d734e305fa8e517b690ad23b06361b1709e4c516cc4a93e",
+            "CAM_BACK": "fd4b87f7ea437be3c503b4bec214613a8823abd67f84d6c909c27b92b1a92136",
+            "CAM_BACK_LEFT": "5b46829212d66ef6cd475876dba4c7ae74812dee3842a9fc9a483706a1d27851",
+            "CAM_BACK_RIGHT": "d88e0caa4d9550ebb6fdc598b32cad4d2a6b1d29ff1aaf5246bd36f8f8ff07f5"
+          }
+        },
+        {
+          "sample_token": "4b894442c95141f9affd731d9da7b43c",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "fae44d1bf3d896b4b1be66fc7e03b5357c4ffd32f3f09a8d71c1d3b335aecaa5",
+            "CAM_FRONT_LEFT": "79defd0fb9d3eebdcf7a8f6b0a3d6dde21915a7c39f2938445a5ee494122e126",
+            "CAM_FRONT_RIGHT": "1fe77ef9a259f426a5db972c74870ef8f37da7ff0d285c8077d6f1d3c9236845",
+            "CAM_BACK": "1d6a934430409ca6290d7170b1d3c0dd013324fae0a9c24729547475375b1e5b",
+            "CAM_BACK_LEFT": "c83224fb2bf0d77f87275b83694020f32cd87f6de6ede6ed880739c971bad155",
+            "CAM_BACK_RIGHT": "7dacacffc8034eb61bce12e7bc0c3aa6bffe2c1382b129a60b565e4431831153"
+          }
+        },
+        {
+          "sample_token": "e54b784a608644a2804fcf800c7499f7",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "d24c2270b8aaabdf266f71e287e293335262c4ea3a4dd1e11f93b4f94221a515",
+            "CAM_FRONT_LEFT": "cbbcbf0e5ed6280ae8cc2d90d7f7d9c5117067585aba562f95b67dedeb6efdfb",
+            "CAM_FRONT_RIGHT": "9dc5dfa193a27efb371dfb9e9271f54cd17351c6500a0bc30784350dafd46317",
+            "CAM_BACK": "88af1894aad0238134f0463168914f0f2c7d08c272c4b8d081f879dd3ed1ba23",
+            "CAM_BACK_LEFT": "9e6f360b3a8b230fc0c846904ffc6c99613e7599776b3c37f9e126ccb247c504",
+            "CAM_BACK_RIGHT": "8456d73f152985ad4636ae1ae2bd6609e91ab1b9747cef8269a5c223a2d92f89"
+          }
+        },
+        {
+          "sample_token": "b4ff30109dd14c89b24789dc5713cf8c",
+          "scene_token": "325cef682f064c55a255f2625c533b75",
+          "image_sha256": {
+            "CAM_FRONT": "4a57ae1764293cacca049b878086c5ebc65454b4767fa61d7f7591eb25a328a3",
+            "CAM_FRONT_LEFT": "1171cb57f0b9474119167d28f04b939cec9a667ab02e8f191ec83866e531f732",
+            "CAM_FRONT_RIGHT": "1b904e839349b7b52c05925de53546123445e0e15149c44c3d5b35fb5a0a8ea7",
+            "CAM_BACK": "2808ab9ac99b457b7c4e84c02055bab2ccef9555fcd3e53d2933feae6ea4b1d8",
+            "CAM_BACK_LEFT": "b305015a20ff815cd14ce514f5ad81b2d631ab2586bdf618af4057ffaa95f572",
+            "CAM_BACK_RIGHT": "e3a79d995b0bd26ee37273957880a40f7825f6e4d704105cca1998314b82a2cb"
+          }
+        },
+        {
+          "sample_token": "8687ba92abd3406aa797115b874ebeba",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "c31e94179964a3131fd5f3dab14d0489401c7adbbc6b932f3e40733753e462a1",
+            "CAM_FRONT_LEFT": "3b3d6ed0db68726933d4b94cb00d39a2722a66989e6257c03067050605ead583",
+            "CAM_FRONT_RIGHT": "ac0d9c82eb129d5120fd40526c6d1d7eb92e6e31735eceab6db149cdb75acb3d",
+            "CAM_BACK": "964df9d020ca5357cfdc86e2cf22f4b6df19a997898e23dd547c0d1b84778139",
+            "CAM_BACK_LEFT": "9aceb53ec0905714beff4a11e2199d505582bfcbd2a84d11b313c62321fd6632",
+            "CAM_BACK_RIGHT": "3e2708bfada0de47c94a09596f8c076c28ff130217f497027e950d2e7d0e90b0"
+          }
+        },
+        {
+          "sample_token": "7315022fc89147a6afc7f978601f8f38",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "f6760ccbbd13ea17a19af7ff8b186b24e154c4fb1be5551d53e102e378a540a6",
+            "CAM_FRONT_LEFT": "be74bc9dad7f0f146a67dccd019f5c680af56c3bd33a986a662e75101747f5e0",
+            "CAM_FRONT_RIGHT": "ee9389319429444d228ee7ade11d72c26786948caff0a35be26cac7bd6c9ced3",
+            "CAM_BACK": "fe9a7ca6450a52882ad1446bd806553cad77c21275bbc56a3e8ad9a46e8d236c",
+            "CAM_BACK_LEFT": "d75ee54e8f2bc352636d8d1610ecda1e44f68953aad089f896a6cda63b4718ad",
+            "CAM_BACK_RIGHT": "388304c2d4552b77d519d0590d9fa3b0b540ed6b1493cdbfb80988f01b3ac9c0"
+          }
+        },
+        {
+          "sample_token": "b8766f4291d5449d95bab459ca724ad8",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "d927e640d866f211185bff3530d85810648cb104ed67d7b1bd4174158d48e20e",
+            "CAM_FRONT_LEFT": "629544c915c9833ff0e709f8f890a11ddfa26ce5986127090cb0187dada70996",
+            "CAM_FRONT_RIGHT": "b220a5e97e0cc1608882580cfcf3860b145a783aff9ab1ec79ad8e4d0bf6c98d",
+            "CAM_BACK": "4223283330861ebd07a140ddbe33ebd616f4388c44d379822aeeeb8ef1a255f5",
+            "CAM_BACK_LEFT": "1cc6780288fd9c2fa818e1f3e986be2c395900033d437b2efeeb502a43915452",
+            "CAM_BACK_RIGHT": "85ebcb0b23c48356b71b35b7e7e2e51c389f700bfd16ef06c525b41092c6af41"
+          }
+        },
+        {
+          "sample_token": "a860c02c06e54d9dbe83ce7b694f6c17",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "a28feee634a24a682bdfeee4f60c92968de209254b9b78e54ec833ab0a7d25be",
+            "CAM_FRONT_LEFT": "fa299018fe5f9eeb36d78b1ff389556756284978b8c8d2af1ac5af03d366acff",
+            "CAM_FRONT_RIGHT": "46fe7a59c6945cfbb53a00a17f1ea54c1be1996bb9dd6ee1af244373c2e7fd7a",
+            "CAM_BACK": "0d6065b5f8900f6a9f4c2625a7584697017398c1f5724ea09a4319699a52def6",
+            "CAM_BACK_LEFT": "a59aeae658fac789a8aa4af12a8bc31631b2ca8030c4e985b6578427810d471f",
+            "CAM_BACK_RIGHT": "efb242baf75f77691265a2409dbf786f37f090b262c7302546c78ec84dafefba"
+          }
+        },
+        {
+          "sample_token": "27900b9c3cfb48ed8b49087098d4a15a",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "66146f5641fed29c53ac72b19d800a5b4a1bcdbbe518b5fcbd2e20fbd546fd2a",
+            "CAM_FRONT_LEFT": "7dd532ef02d11ce9dc2cc5cf055970d80f397312990a7016b3d1b8de750a5cf2",
+            "CAM_FRONT_RIGHT": "753456e1dfeafe6530b1cc1881e6d0b73db86ccef127c9b82d341334456e9e08",
+            "CAM_BACK": "a4e1c69f1eead7c518ba19d1ee69ab5bcd3dfe09fad7808c94f956c954e67655",
+            "CAM_BACK_LEFT": "4e727e1566d8eb14104540f1bffe119667292db26825c9ba31e0492e2f9799e3",
+            "CAM_BACK_RIGHT": "feb85811bb26260206cc2c3f0d83b1eb4372fa9950ea4e5714d9221dd5571860"
+          }
+        },
+        {
+          "sample_token": "37535cd306954669a2b21578573b93e3",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "701876f8248f6a3d5eb9d7e6be03df665930dba47315a18239b8273d44840075",
+            "CAM_FRONT_LEFT": "fd979bf3020c07a5b2813510cb3664ceceaa437bb56a3e366e6ec8d63a810f7d",
+            "CAM_FRONT_RIGHT": "f490ee22c0202fb7c62e1f777fcc663ac2218b0643ae0230dac3d44ccc9be6f6",
+            "CAM_BACK": "6aeaf60461f4acbcca16aab01c03cebb3b89da475a2e28189f4ce0204f95c7be",
+            "CAM_BACK_LEFT": "a0815533d168e3fa4ba36102ef6407640ab51c67a592efd092e3520792954194",
+            "CAM_BACK_RIGHT": "d963ad4b99ad78414133fe18cfc9a96ff9ff74abc1210421099c8d746781adef"
+          }
+        },
+        {
+          "sample_token": "c143943fd6e246448eab88ce1a0aeda9",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "f83c316a55187785ab7c89c286e18a138745eabd571d5b55f8038e268395e49f",
+            "CAM_FRONT_LEFT": "982bdf95e43fa2f48420aa87d1f74070f6633844742100a361302922a2fb4992",
+            "CAM_FRONT_RIGHT": "1707c3c0e8e2c1ea2f014bfb8496e6b3a404e5add54209b5ff3d584e379c800a",
+            "CAM_BACK": "2ba8869d18ff2b0401a5166d2f30150f36b9c7950f408ab8ceafb6fbd2c06184",
+            "CAM_BACK_LEFT": "ba3e1c470e805d6fc7704911faf149eac7c0360b234748aa3ae4da1bc4af8d95",
+            "CAM_BACK_RIGHT": "154af4c1d4850e8f8a8f10d0787d2532ceb6935979d4e3ce73906fbea0f554f5"
+          }
+        },
+        {
+          "sample_token": "dcbe451d383e450786aaad04ab9d3790",
+          "scene_token": "6f83169d067343658251f72e1dd17dbc",
+          "image_sha256": {
+            "CAM_FRONT": "07894fdefa07d40c2d0b5c04cdf9f63136ec0b445332eacba20676f402e0b205",
+            "CAM_FRONT_LEFT": "9c52e1cefdae80686c4f02010f91f292a25308fb987abdc59c4871e7f13a134d",
+            "CAM_FRONT_RIGHT": "c2f55f0217ad913e1b8b21c601f0b5dcc21be4917d861aa200370a907f5d13d1",
+            "CAM_BACK": "fdad238a4074740e9561ffdb158ab7bbf8d946d526dd145bf827d80d7461f467",
+            "CAM_BACK_LEFT": "c4e6ee542eb3ba2d3265f3a42cef4c6b93cc870c8a02d6a5094b18615c62e3f2",
+            "CAM_BACK_RIGHT": "fa59c4755255794982fdda00e2b1039f39bb461a456cc10508a5a91cf88cc9c3"
+          }
+        },
+        {
+          "sample_token": "5991fad3280c4f84b331536c32001a04",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "e6a84c1a340b80035c7cce6b5fab8cf173c74e808f6c8a9969a4e963c2a245cf",
+            "CAM_FRONT_LEFT": "48bb7a40ed07ad476262b8023c8d873b4fc9b965dddd8dc5b70e6de8fb955f41",
+            "CAM_FRONT_RIGHT": "fb9d7b0f938e53a1f65d59b21563a24e16a97db8e9c54028db57122d7a99f519",
+            "CAM_BACK": "d3f6b7ed96829fbfad31b8e5ae38d5f481f6c8cf8a841e4e324451818fcddc1e",
+            "CAM_BACK_LEFT": "7b13de4c974d429c7704b54b8358d2eaf41300c59ec966494da734f3386e5219",
+            "CAM_BACK_RIGHT": "47ce1589de949071a098830b5f8f977f2a030dca78d28a82818c7887e64c176c"
+          }
+        },
+        {
+          "sample_token": "df7066fa5f0d4b708982747cc3feed14",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "c5a7e09b64ab0d6869df4945719c53fb9ab286b1c0e6021f26772f5c0ffd24f0",
+            "CAM_FRONT_LEFT": "4965a48d05e171dfce974048a5f19bdeed0618649be6ba47812e7ea05a145fbd",
+            "CAM_FRONT_RIGHT": "1a69252c70a1e9a1f7ab1ff30e422b15dda4d8f91eaa187f128fdeaeabb7c4eb",
+            "CAM_BACK": "23784fac6a9d4e7444784aa2d5fe98f789e02a18e3881f419a8d683daa5913a2",
+            "CAM_BACK_LEFT": "34cee3dbfed80ae52984c228c7b2f787254673f5da0bc4c15d9aff5abc7b7118",
+            "CAM_BACK_RIGHT": "32a494ad4e671a6b5e3fab4c3c7458086b57c765c167339e6d0dc5b7c1805372"
+          }
+        },
+        {
+          "sample_token": "9768a199e4884a0db50d015703efe969",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "ee2d23eaf72b8921607d586c3657042f07e84023fb74a4b9e5a042f3755c8447",
+            "CAM_FRONT_LEFT": "c5ca1ccbc5d43246b29973c5322e037f01171cafb1e5327bc14322efadac3c6a",
+            "CAM_FRONT_RIGHT": "d2a5fbb2d4f2c5851ddf6bf0050355acc328cfbf70ea2cb468bb35aa6e0e90c9",
+            "CAM_BACK": "c0875f513ba76320b84556fa0e1e6756781d39c49896152144b76c1b9304e1c7",
+            "CAM_BACK_LEFT": "cbf9fa675459ac0671d1de74af8dade377e897f8b10fd38548f8ec57c565a9c1",
+            "CAM_BACK_RIGHT": "ae292de8da4396b245af7a25f54df33a782f09976fc13a720745056862805c7c"
+          }
+        },
+        {
+          "sample_token": "baaa60749cd04db7952fd8f4ef8ac837",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "f2e01d3670abc0b2df3947aa3eb91a1dc239cc8ee50efe7bc05112d02f3dd1df",
+            "CAM_FRONT_LEFT": "925dbb3eeae9ffcef56b693ab95a3f4225b20eb1357fd59c7c3309760d1d3379",
+            "CAM_FRONT_RIGHT": "aabd56b4c4c8d5bf3c741c397c70a8e7d5fec17a6a7cf900782aeac3c8f2895f",
+            "CAM_BACK": "f63b8eadfc35dcf1c93b1ebfb5a7c2b1d9be5c9c8ecf44858578274edca7a536",
+            "CAM_BACK_LEFT": "fb14578b5a9835381d37899d9ad440a37d6fb06034fa0a2cd6dd5269cda9df29",
+            "CAM_BACK_RIGHT": "6b93add5e9ea536ebad6a9264ae764a6760045863e7f00ed972f6c5bdf3f99a8"
+          }
+        },
+        {
+          "sample_token": "8580e9a249b64b59bead9d80c0e13e8b",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "6923a6905571d1955ff8bcc096bf22f7391ada69cd1317ef7e58a00ca9021222",
+            "CAM_FRONT_LEFT": "9051f2670543f2707349abdf3c5d5816ca821475369c809c788c53e4499c1ffe",
+            "CAM_FRONT_RIGHT": "73808361647f57436e1f40a5f02e0baff6a51731e488fd2cd51926f525c31343",
+            "CAM_BACK": "2f0fb943ac63a9d60d3dbdf33a13c0c13745eedd47732e1cfaba0b92fe84172e",
+            "CAM_BACK_LEFT": "270a541b94fb6295980c2b91169526f3a1fb5e7e5db25e94fe16f66ff5bf3732",
+            "CAM_BACK_RIGHT": "a6515e53ad1719e5eebd6c69274ec1c197300528cf17eff974d39cdbe72f6e04"
+          }
+        },
+        {
+          "sample_token": "2e024439286d469f8f743fe9266c0e56",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "ab87258a23b3035477d1bb415e3a6dc89b376d4ec69ddd14bc3e47a982512021",
+            "CAM_FRONT_LEFT": "fbc92668c1b1525d114144bb6a432428305bc7e339c539b4d8bb33f580e46a92",
+            "CAM_FRONT_RIGHT": "e241b644105ac906c08952cf9dccef6ab55b999bdece25bcefef466054005e6b",
+            "CAM_BACK": "fa97ae6b8815cd45ba5611f8624ec8fe994c31425ec181efd0b71bcdf7d197d8",
+            "CAM_BACK_LEFT": "054b4b2ae01ac78c0ccb2f3566d20f863e9b971a211c120c283c1fdabcafc5d3",
+            "CAM_BACK_RIGHT": "f80b25282c5e0fe26868f6595f6f9902e2b1ee51a5f9b54d4a95bc3fea36632c"
+          }
+        },
+        {
+          "sample_token": "96d915e8b7e44bacba3c78e76a924e5c",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "5b24b5117fb12a7e18576aeea40b8cb8daaf3942ea26461851ecaf3aec1f1417",
+            "CAM_FRONT_LEFT": "5f609dc724cd6915e7ab9d5aa0043d4a30125de6933c8933a8328d6018945f3a",
+            "CAM_FRONT_RIGHT": "cad3b7152e94c2941c176eccdef55e0c420478d4b422a12855f88c159ec904c2",
+            "CAM_BACK": "4d1130a4facad1a7b14959f02c166343c42ae88ac9d18104400a803ca8aebb22",
+            "CAM_BACK_LEFT": "994385bda9ddda89d7d23e3a256d38d9493b5647b5e865835141d7b275c3f6fa",
+            "CAM_BACK_RIGHT": "c7fea72d93a74bef2c274d988ec6de1f6584fdac3c7095b669121f189d3e4e81"
+          }
+        },
+        {
+          "sample_token": "35833ae5808e4ef186d1fdebac3d9cf6",
+          "scene_token": "bebf5f5b2a674631ab5c88fd1aa9e87a",
+          "image_sha256": {
+            "CAM_FRONT": "491b4985627e5aee9c0244115e420893b5b7f0a90b1227917ce35bcee3362b6c",
+            "CAM_FRONT_LEFT": "063f4893c1f3417cc4e7771083f5a83c19a376e896bb4a1cf49f2bafe9b96cab",
+            "CAM_FRONT_RIGHT": "72076b3c899b886f32b6e37f110b7878f19dcdd8e59b7470accf786755c34def",
+            "CAM_BACK": "6504f219db02513e1bfba85d303aadc03288fa7766d1c4b01586ce2d28efc502",
+            "CAM_BACK_LEFT": "01aaf08bc3ab5e18d82b6b4613ebb3feaca0324bce309ffd88e24cf1fd8f2f45",
+            "CAM_BACK_RIGHT": "d797238c9a3def8c2be67954b2f596eefa035be763e6fe2b0a52873a478cacac"
+          }
+        },
+        {
+          "sample_token": "c1676a2feac74eee8aa38ca3901787d6",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "6df7dfded632a151846b6a3dd5a15acb242a670ef626770b40d12017b1464fee",
+            "CAM_FRONT_LEFT": "721bcbb27f04fff24396bc333e30aa4c8f94f308a2db0cf4eb5e7b5fb82be740",
+            "CAM_FRONT_RIGHT": "d5e1acc8826725fd8901fd69d21b2bfd4c2a1df28ec46424adb776e0bf7283dc",
+            "CAM_BACK": "7ffa9e0a75dacb86f596c8b22758163043fb0ea433e35365e08de4f3c468fa45",
+            "CAM_BACK_LEFT": "1b29321919d7d614b21f72187a4747e7a41e940f56edc99f03a0d6c1e89a2ae7",
+            "CAM_BACK_RIGHT": "3a01ebd2be6a383b82758dd7d50e36b1cf612503550d7f33407a3b535fb95716"
+          }
+        },
+        {
+          "sample_token": "feaef544d11646ed806b53d9e1f39cd9",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "9648bd922b19d5ab9f6ef5af51549830fdd16f74546bc109b80342d4f21dbf0f",
+            "CAM_FRONT_LEFT": "8e97155af9bcf537d90f9d48f18f6669967b347d50805eedaf82d2486b4d1c58",
+            "CAM_FRONT_RIGHT": "5397e2c66862f13740b60944402041754d08f22cad5acc108056bac5241d0b6e",
+            "CAM_BACK": "eacc775fdb3c2582aa4adc5f965613cf62479ed808c28825bb1f8a946f6729b3",
+            "CAM_BACK_LEFT": "f5c115e7198dd7f14c50926a11f0b8591fa42a7277489cf9ca71d8d17a39ac73",
+            "CAM_BACK_RIGHT": "2ccf6cf6c41f0768c80ff894c87ed14bbea65de3c70ad1a3bac0f966d03e57f6"
+          }
+        },
+        {
+          "sample_token": "17723c0411434e48875a93de4db0ecba",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "2b301d7ea415518e4c23078b4bd0fbc1943ad8013f0f030ec8046980500a3fcc",
+            "CAM_FRONT_LEFT": "88e492d403921c4d736d3793ba93ef5b686f3b0615a5964e6b2d5d4917c39ada",
+            "CAM_FRONT_RIGHT": "640451e3e8be27004bb55c9bbb9d3c637a90e293642d13920d04f414aa0b68ac",
+            "CAM_BACK": "eb241eaa713ce4b20b0aba4f97517f1efb5fa6fc401259b84f0c2a86fd069b2a",
+            "CAM_BACK_LEFT": "5928cf4080f5d3a30d49d06aa8e79b53d9e817caa2e1c08c07b2f2e372c37da1",
+            "CAM_BACK_RIGHT": "c60864f58a1772f06822f4de6b37043b41192c5b949effad0ff108cc4230e8c9"
+          }
+        },
+        {
+          "sample_token": "639a4120779f44bb9cf41be3e8612e36",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "f2697349c52f782783cc47e5e5462a7f2a0fd6de1c97c79690f9a261eaab8173",
+            "CAM_FRONT_LEFT": "a2335eef6a609f59a8f9d714cef36749ae714442347b826db1e5496c2ff8d78b",
+            "CAM_FRONT_RIGHT": "cc02aa219c758031244aa54d4528f55916ddfe84973a98aae8014d6ecf5c4c4e",
+            "CAM_BACK": "208308f36b51fa2742fbad6264b2375f10d00db14f5bd06f09e54c29338bbe95",
+            "CAM_BACK_LEFT": "390a2543ee5ea77ae6392507831966e6f631067f419d89d50f6de19cb844e32d",
+            "CAM_BACK_RIGHT": "b5d36c410cb351900cc3bdf9a799197caa3e143bac29b648a0299b9576c13104"
+          }
+        },
+        {
+          "sample_token": "61d47d1198184bfdaa6777e9448d825d",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "639afa767a9facf9bc27745bf3db3f50ae192e3774b3c14cecadfabe6d5ca6bd",
+            "CAM_FRONT_LEFT": "ee9c73130dd7a96547aef0caa534c38e2dcf9f0fe59dda5a48f1344829c42a8f",
+            "CAM_FRONT_RIGHT": "c18a05442249fd9692f2d25755a7078b59c83dead5c6f7427491720a91f2f025",
+            "CAM_BACK": "598a8dc3103861346568dedcf89e53fd71aaed8e0c6f71829655f65fb5cf44c6",
+            "CAM_BACK_LEFT": "b21173403368091c5e313f55b244e5333b6b5422c0992f844d0d7fa2c2a7f864",
+            "CAM_BACK_RIGHT": "9aab98ef29dbb238bb000c5440f8ef599249854aaf7027712c17399e0e006370"
+          }
+        },
+        {
+          "sample_token": "269ccf1fe399403c914e1f649d2a8ca2",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "e612464068aabbfcbc4cccb6f555fb1e10cf4c3dc707cec60904251d2e1d176d",
+            "CAM_FRONT_LEFT": "b2f1f14fa867fa3ca6e2d7821a047a8a8a4874b039ce2d918948db2f3f810355",
+            "CAM_FRONT_RIGHT": "1c3753802e8ab1ca44f1d496629c9bc67da567131f537de6e91becfc965edadf",
+            "CAM_BACK": "04c30fb9331fbb613e4aa04f38712e33664a43dae87e75ce834eddfa8746d7af",
+            "CAM_BACK_LEFT": "12fa72554305d167463f69b7f309c3e215ee5b5039fe4edb4f60a59a575f64a8",
+            "CAM_BACK_RIGHT": "1bf97ad1b9735e62db0ae719ec96793e6da556ffe60726118ea71008542d26d9"
+          }
+        },
+        {
+          "sample_token": "fa51f1910942494cbe396640010fea64",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "8fe70e00a8d98133adc32043cc3532285f7dd6e594b95c691b1d985f4ec16a2e",
+            "CAM_FRONT_LEFT": "5e2b1289224b9ff77efd76982d0eb6fc905a7e3cecb0440802efba4f1cd21cf6",
+            "CAM_FRONT_RIGHT": "a125ad8dafce7b2fe3d3ed00a0bb7ad788b01f64737c9690d46fb6716132042e",
+            "CAM_BACK": "9e779a2e487a58d829d5027262651b1ebcb43e244d10ea3be5bb3fbeee47bfb4",
+            "CAM_BACK_LEFT": "d3f277912691362339a70f1551d4b52148727f03fd53571d95f120d2a2e1131b",
+            "CAM_BACK_RIGHT": "b75d6f2064a6ab62e8394ca2034c73ffa31c47de06e6076bf68d754dc7e6e455"
+          }
+        },
+        {
+          "sample_token": "63c24b51feb94f14bec29022dae4975d",
+          "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+          "image_sha256": {
+            "CAM_FRONT": "2f725bdc21eafae1a0388abbb60f3c58260561a3a6f048ec0cb7e459aac83c44",
+            "CAM_FRONT_LEFT": "054fbf1215bffa1737fc008a356007cace941901c7aa0347e4038594953aee61",
+            "CAM_FRONT_RIGHT": "c438a619f1fa6efb3662c5e7cf0d1a416ee48ad4a0e4d4851a481352afcfa049",
+            "CAM_BACK": "6ac9effacc3c5d2ccd17d2afb23175705fec84556829919abdf70e291f31d03a",
+            "CAM_BACK_LEFT": "cae0b7e388276066a0e3ca9c983f7a203c65c69315a22470829646cb18f67d67",
+            "CAM_BACK_RIGHT": "baf1adc1bc0e4459c9c556ab29711bc75bdb82adf234632792b93c321340bd8a"
+          }
+        },
+        {
+          "sample_token": "ca9a282c9e77460f8360f564131a8af5",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "b7b7d466207462cf46742297a36afdd65315c05ae33126d5d36412aae70a0b62",
+            "CAM_FRONT_LEFT": "2c8c49149411fa88cd36f9076d19e064be963deaf4e7c0dde4a7c691e83e1e5a",
+            "CAM_FRONT_RIGHT": "005ce4aff67c8df56233457218363687132fe7f40de758cf030aace578f55497",
+            "CAM_BACK": "51fe14c13dc4f2ab0f7f59b6634b98925b767939b3417a9db617bd3c178c9bb4",
+            "CAM_BACK_LEFT": "3ffae8abed7fc7e703cad8f10f92535c5f55314433660f11b1ed6ef02ebd41bf",
+            "CAM_BACK_RIGHT": "ab220a717b467d4fbed66b1a8a923dc522cc3aaaafa041613bcbfca3dd34ad9b"
+          }
+        },
+        {
+          "sample_token": "f1e3d9d08f044c439ce86a2d6fcca57b",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "6437c4c6b54a9d69aee4a4e9742ed4ae7528da2fcea06f374bf3b0b7e9225f2b",
+            "CAM_FRONT_LEFT": "90923f55b8ef3b80dba7bb65c1d160c02a0b9d4fe8e3bb86a27118cedd68b825",
+            "CAM_FRONT_RIGHT": "04cb320789ef6afc28c15c7145768a24a227234e85b8b5f3a1bfb6c9dc40fd96",
+            "CAM_BACK": "f601634acf75663ad970003e656afdfe197ed9e25b092f63586f8f2cd30b0b4d",
+            "CAM_BACK_LEFT": "e631bca38d43134f3d1059df17249e3d900c704980e1da5546c9e5454e06e883",
+            "CAM_BACK_RIGHT": "0a6e5d0a13462aeae9796957a6f7855eca71a3fbc2f8737591abac4496a5c884"
+          }
+        },
+        {
+          "sample_token": "023c4df2d451409881d8e6ea82f14704",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "47741bfaadbbb3bfab9c5722830979029d22a9d35f918b271f4cb98dde4f7384",
+            "CAM_FRONT_LEFT": "876bc8a2abce9a03510be3aff6e02ce2a2631473d4e1138c34ffec40337ab35a",
+            "CAM_FRONT_RIGHT": "15d630b2f26fd035aa470189cda570defa5303d630eb485f31752169204e41c8",
+            "CAM_BACK": "b03652f076263967242ddaa99f25dcdbfde553724de04db5df270b492eda867c",
+            "CAM_BACK_LEFT": "26290d7a1de03627fbddde2024fc2a16878d1b4f3ebe44020a2890742f0a22b5",
+            "CAM_BACK_RIGHT": "01cbe4663bce3a87b020187bed6733512b06b0099fd1cde67139ba00973e5377"
+          }
+        },
+        {
+          "sample_token": "88449a5cb1644a199c1c11f6ac034867",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "10e75c9a10dfaa74c2faf6be73e836c1cdf6d9df5e8b56fb219fe9322fe8ccb6",
+            "CAM_FRONT_LEFT": "4f7d6fa4a39815cdaf81ea3f09faa8dac1f58ff353cf911f91fdb7e4f4a2c07c",
+            "CAM_FRONT_RIGHT": "2e89f95adf6d8e592542dfc56962df93fe58d9061ecc65a69689b3d807e131b1",
+            "CAM_BACK": "39cc99bea37e242393ce06169dc99fa4bb407ce63d7d1bdaeead3e4108b51281",
+            "CAM_BACK_LEFT": "9f08a8abde21157451e3dd7432f37f36526b49d8faa6ebe1e76e03d5bcee4427",
+            "CAM_BACK_RIGHT": "aad8cbb7eb43814f94aad7c7fdf2b0e5b37cf7a408fb62b5ca606af4367befe3"
+          }
+        },
+        {
+          "sample_token": "fedfb3a6cb804635a0f47143f9ca8d6f",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "94508d026f46e3483a485822140b9fe8876ada1971577ca8cb916692937b37e6",
+            "CAM_FRONT_LEFT": "95cefde1841864586489602367dda203fd39249e3a4d879cd458c7b8bb08f13e",
+            "CAM_FRONT_RIGHT": "6f9fc879b9da3137c861ac0ec3310c8f6a8f929a9b1d46b15fd73ca34b5ac670",
+            "CAM_BACK": "ca09a8bd554b9441d7d26c2c14a0c430c0a4a9c57c0607e70fbffc8c840fba60",
+            "CAM_BACK_LEFT": "ae6661c04c6d9afd629708114ccb24be9da4d32dd3d8332c07634ba4126765fd",
+            "CAM_BACK_RIGHT": "292cc3d724c3251a72337f8e12e6c556a5c2bf711e3cc4a220dcd80048a02c6d"
+          }
+        },
+        {
+          "sample_token": "a7acb150914b40bdad9a2dc4e657cbf9",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "527d3c9e8ba6a94b9bdd937b43271db4eaef829bd06f1ae5efd3af5d59500133",
+            "CAM_FRONT_LEFT": "48525073647a3f2024c4424a8607ace55fe9cdad5fcf173a687ac788373974f2",
+            "CAM_FRONT_RIGHT": "2a2652af56434057e620ce107f8b520c025466d2901d7820f04d10c047e4dbb3",
+            "CAM_BACK": "45d32525841df9c94a54409f1b5952df8defb5dd424a7259b9013bb496efea06",
+            "CAM_BACK_LEFT": "c8c51c3d4039f1b1fd433dd3e75807dfe97da1afbd1407c6e9315f7461329598",
+            "CAM_BACK_RIGHT": "564b1091101458e4577b852f94cddf646c70cd051b60d03559750487beb9d360"
+          }
+        },
+        {
+          "sample_token": "919e3c4cec934168a3152077a9adcbea",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "7e9bf2c7a6f2618c68ab364c6a56f8a5f912d1ae82320dc6263d1842c8f657db",
+            "CAM_FRONT_LEFT": "84b342bfd55318b6a1fcf573b9f73d93afaa365332af6204c561228746bb5b0f",
+            "CAM_FRONT_RIGHT": "0b9bcd950ed8e9ab86c47a143ccc0d6f7b8402a92359ff10d429e9a63292f218",
+            "CAM_BACK": "df429ccee4882984fc1f4e10fd08f3d2635ef44baa566c4e140a68d76853fe3c",
+            "CAM_BACK_LEFT": "688953cfef0463d9deb45b4b3abf9505b6d3a63040a332ff1dec55ef1277ef5f",
+            "CAM_BACK_RIGHT": "8f378886cb5738014822304e8eb3c70c526edd9aa189be2fb543c55fad69b462"
+          }
+        },
+        {
+          "sample_token": "ed5fc18c31904f96a8f0dbb99ff069c0",
+          "scene_token": "cc8c0bf57f984915a77078b10eb33198",
+          "image_sha256": {
+            "CAM_FRONT": "e0f069af01c29cef3d1f4908c9901c251bc01b62c63677ccb79deab874d305ef",
+            "CAM_FRONT_LEFT": "fbf0c1b26e6a74d3693ab6df559db8527aa94afa51a99db2f79254c76499b750",
+            "CAM_FRONT_RIGHT": "ac1db1b53823c9e4c3140b94137f2dc8afc3977e2672f1daf1879bc0ad9b3c03",
+            "CAM_BACK": "25222aab0151ef6e4a1717c3ba7dda45fce58d63dcf555a3bf394607526eccf0",
+            "CAM_BACK_LEFT": "24df16f35433a9400a4910d7288254e2227ab6eeb11e07935a78fdde1720ce5a",
+            "CAM_BACK_RIGHT": "8cdf861dba93e4217b302f58d097e7e3d2c9ff5772d0b33031cf38002b62fc7c"
+          }
+        },
+        {
+          "sample_token": "5998b71b64c146769bde1d5430741381",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "bc1a2fa8e1fa246aa88672ca6fd60a954f1217e4004651ff568df1596840ace6",
+            "CAM_FRONT_LEFT": "2d3f717de52191950acd5100c84f90d32b42bdee8631b540c7072d82f64d29e8",
+            "CAM_FRONT_RIGHT": "3efebbad71696f1684e09f77ad3fc929ba2999c255ae05ebeed0d9018da15601",
+            "CAM_BACK": "ba1865916f37a867061b4e6f59401c065326048820e49f7d39b9318c999ce738",
+            "CAM_BACK_LEFT": "a08c612632b9b4b9177611bef97d0aadefbbdefdb8f8d09809c5bed8f8f7a0fe",
+            "CAM_BACK_RIGHT": "8f74219f7011c5c60f566ed0c5e2eaf9f95fd241937613dc15ac121093566356"
+          }
+        },
+        {
+          "sample_token": "7220a2aaebf347cda4efedc88dcae96e",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "58de712b26118ab908bd3521c4db8233451f2bed6df3c881c9c050e0470321d2",
+            "CAM_FRONT_LEFT": "9d4f69fee1539244ad14b3ec670cfa946d0b9225116181cc6efa00f6a04ae789",
+            "CAM_FRONT_RIGHT": "ee63f46298c1d866d7c0092583ca5c1c8c04d12ae5716b80c26b833517dcaa82",
+            "CAM_BACK": "34be5dd7ce8d6f21baf87967d1b24c441bdbdfc3092b8177573408213619a250",
+            "CAM_BACK_LEFT": "8d78e0c90ab4071a1748db42cb888d24114e6b49a3376a4d82f2f7809f8abd1a",
+            "CAM_BACK_RIGHT": "95eef70f73c745f84d8d4614a5a641a20f69540be81df84559b29cd57c88baaf"
+          }
+        },
+        {
+          "sample_token": "ca6000b81f2b4b598502b1e93e334a1d",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "60e35eb8259c085d95d82e2235b6ab1f4b4af974baad69f63b23aa793295f3aa",
+            "CAM_FRONT_LEFT": "7c77b12032f646efb41244acb5d9dd6d67f079f7bd26b55fd69875232dc8042c",
+            "CAM_FRONT_RIGHT": "9c505371c40e850493ec254b7458b5b3677790c7005f179dd68d288802915be7",
+            "CAM_BACK": "c0b0b2ae3334fe67301391929b73e7f26bd3fd3504ee28cb94c0245401b321a2",
+            "CAM_BACK_LEFT": "e4865a91d784bf058707be80fd6c301047ec6c5b1742c9415637da8be25b0993",
+            "CAM_BACK_RIGHT": "48dbebf6dd881c15b72baf425d180a5a30404645f0209a8d3b2a50a835dc41e9"
+          }
+        },
+        {
+          "sample_token": "7f87e737dad642d9aff78a7fe12ce194",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "f9333474573543659ed504ffeb6a630cc8ec59c3a78aa25b0f0da595d18b8a42",
+            "CAM_FRONT_LEFT": "ad88325ca82ffa64d8253a68e766e982f41d6168dcbfc3b60c64f4bdef625fe5",
+            "CAM_FRONT_RIGHT": "f38fd99d45d69f7862624c46d69e9417ef53b7ad0bec3f3ae1ad8efca50656f5",
+            "CAM_BACK": "a640ec4796a415af2d82ec9e0e2e582ec56a59a6cb3e518824c19bf402b84d1a",
+            "CAM_BACK_LEFT": "9c8c491f478aa766ee3f6d1f4d7bc2d8cb618c914c7d97fdf1dd7fb00c71b0b7",
+            "CAM_BACK_RIGHT": "95d3e240428b12a664a4b171192392cdb16d953e130394e051537932f006696f"
+          }
+        },
+        {
+          "sample_token": "d148d50ba9be44bcb2105d8da47425b4",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "cf2ffe04df99ee6c9b6f2735d119c80d5aebd187b093aa82beede6efb11c2f0d",
+            "CAM_FRONT_LEFT": "0c22b7990c2aa4e33e20b7c7f6edb98ab8353d6b6ad6bb04223498a4f757821d",
+            "CAM_FRONT_RIGHT": "043f1ddf8d9e6c2c74af5f2177e95f7124dfa2def0ce2ced7bfeb419ad73b0e6",
+            "CAM_BACK": "28800026fccf2d38c39da703eda3e0efe12e41d891ad22835113cc2aa00a4392",
+            "CAM_BACK_LEFT": "5c19665ee9cbdae489150cae918f0f2fbaa87528bab159294aaa6809d2bd79bf",
+            "CAM_BACK_RIGHT": "3d3733a1591177841de03c10ecb5d3293170a5bc31ce545ae6c5eda107617797"
+          }
+        },
+        {
+          "sample_token": "7bf1cef0e253474e847ee4c2eb955901",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "44e6f99aa7664d59e16567fff91ca7674f178aa877753b411834ded90c13c286",
+            "CAM_FRONT_LEFT": "db617ce90b7074aa88c58e5b6acebdbfc2a3d1a84619aa286298ae33707b9476",
+            "CAM_FRONT_RIGHT": "e978d66b5522c004f91fb487f3ed8f90b763a847cc6dd2ab307f5221e6994b45",
+            "CAM_BACK": "743ef8aec3aea925da17b15eb7251ef1c3c8ae22d478c267624b4356e123a80e",
+            "CAM_BACK_LEFT": "be70dc7aef29e3332b987bd707b1fc9810fc8c67b60ae3646590f49fc1cf8dd9",
+            "CAM_BACK_RIGHT": "4b8a2a9084d511850e79fdcdd5f9109fe67be994c0cc5c4762062020fc3bd88a"
+          }
+        },
+        {
+          "sample_token": "05e993bd780241aabaa30dd2a0473286",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "b9406f28b5e448534683b405fcb1ea4745d9f331e57659e7e2497be4e9ca0281",
+            "CAM_FRONT_LEFT": "0e97301979eda1b37511c125966ab6f9b1761cc6d215efdce6d8ab74b1469c79",
+            "CAM_FRONT_RIGHT": "0dba06971bf440e58734dd68e52e211a488623b63fc52b849d59d5df87077283",
+            "CAM_BACK": "a950cb8e5478d1b79a7b604eead5e6379cd6736b4e24d7054d3580b715b32e57",
+            "CAM_BACK_LEFT": "92bbd3b7c1fe5da1a5839da42bb81f945e9d8adae5a6a9bae8cd1fb1d4957a26",
+            "CAM_BACK_RIGHT": "f4edc0fac4de900d80f60f2e7cb616d36d2162fb9df28030ff6c9ae0623f55b4"
+          }
+        },
+        {
+          "sample_token": "ee9b3f38dadd40588f43ba590c4751b9",
+          "scene_token": "d25718445d89453381c659b9c8734939",
+          "image_sha256": {
+            "CAM_FRONT": "c53e9879ca79a4a6f37f830fd84a41d1765cae1228bd97980edb0defde705aed",
+            "CAM_FRONT_LEFT": "7876f323081eb2de6b7ac3da2bd67d149db24a532d9a11f2a7491b8c6cde5fb2",
+            "CAM_FRONT_RIGHT": "095c55092c3856a257380b0cd956d0f9023467850c4f6bb04680f4f2cd635580",
+            "CAM_BACK": "d602ea11607af16d62c7637f083c30c2aa4cfd21be742ec91ebf9092e820df5d",
+            "CAM_BACK_LEFT": "f4c8d8caf80748768a4b9a51f84ccf455a8a0f94fa4a9436139c84d9e44c91ff",
+            "CAM_BACK_RIGHT": "40dc0563545dc8dbdc77af2c32b780ce45ba4b43769fbaa3931c235815174326"
+          }
+        },
+        {
+          "sample_token": "e6b0b282aa174a978272dc2d0a89d560",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "7f068fbd9a3467066713ad5b89897a390e7caff7855be02d829ee7baf205120c",
+            "CAM_FRONT_LEFT": "aded38d875305fe13bd4d7276ee0a10f93831f6f6e9311273d347f772c89398f",
+            "CAM_FRONT_RIGHT": "f4c2086896deedf7e590497d70e405c26b4196343edf77c8d9a72c27c83a8fcd",
+            "CAM_BACK": "08832dfefd03b04860cf5a171239a50104fbfbe0ef6c41d9de56d6c56ae47c5d",
+            "CAM_BACK_LEFT": "34318be2cb984557b1c1d133982a81ffdaafa91b0321b5c243404f11c1713ff0",
+            "CAM_BACK_RIGHT": "67edd13df06ec81c968d4f186066a633e81300e681b321c026887522fc0925c7"
+          }
+        },
+        {
+          "sample_token": "fb61d590dd1143ccb12ea56fbe9d9d07",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "aa36abb6c6ff4e737b3151faf0285c37b257a1f4f83a5fb2df6e52ec71c2bcfb",
+            "CAM_FRONT_LEFT": "640a29f836bd565cf0a47bf652acbf53b3e89b592d0889cdf9dfeeaa489c417e",
+            "CAM_FRONT_RIGHT": "179727bb87e13a990cd314b5fd81b08b9108a418fd6c1b6f31f9ff853d819339",
+            "CAM_BACK": "d7b6fa52f6b9c3bee432bd4f0b3ea277a2a2a6b837cfd659d0ba33fe059fd2b9",
+            "CAM_BACK_LEFT": "894ca249c32586d84b63dcd10327cf6d99c60abd7f6dc1527ae2f57e92dd7fe7",
+            "CAM_BACK_RIGHT": "8ab5e56c64b5a4859275fe8946ac6947e05d3ff1d345e539934f6d2c928e8961"
+          }
+        },
+        {
+          "sample_token": "f65ffdc408fb4a0c8ef0d1614b47dce8",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "ca2bfb502adad07951c4e6979851416d69117d3a386affdeaf7856fead9733b3",
+            "CAM_FRONT_LEFT": "8dac03b8173a7d818b3dd0d7cf638d4213ef3a1268faef7b03bcfaa471de1abb",
+            "CAM_FRONT_RIGHT": "52261c07b8c5c1d9d1fd57c5ce8a0b8d01ce8948c3d1a83423da017428a4c77c",
+            "CAM_BACK": "7f7a2ea586df727588cac5c274ecb9457382e9bffd0d7b7803fe3c9a377c05a3",
+            "CAM_BACK_LEFT": "637531e5086e00939248adf26eff0595f7ae227fefd4519565fffc916240774c",
+            "CAM_BACK_RIGHT": "d86ec7abc2a53969a09cc58e6af5bbf337f1fa7279500d54b35e3a45e2268146"
+          }
+        },
+        {
+          "sample_token": "07175443e8444b8c8c4802fd004e33c1",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "12474742f070a1ec2f799419303e6b4f9c5bc2d70cd94d62d38dc698573fd0ff",
+            "CAM_FRONT_LEFT": "83029888791e0527b1a648d1478c24dedae72862df0fdb1fda58aa25dd3980ce",
+            "CAM_FRONT_RIGHT": "b36aa7ea81d08f365e81dbaac2649d7eb2e3eab25e4b1e5ce850424d72188019",
+            "CAM_BACK": "19b9a7d7e4e74fd86c9e6b15bf38eb9c2e29e74216d8fc9600eef003061250fc",
+            "CAM_BACK_LEFT": "2a2157bba673fdaec82d03c9bc537526edf979a99f77f7a67f809000a3467ece",
+            "CAM_BACK_RIGHT": "8c278d61c56af9a1c3512baa5e0f13308172deec82d050c28d1644e2c1bb6239"
+          }
+        },
+        {
+          "sample_token": "6cb024831cce4b6e8acf85afb7cece6e",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "b3831865b5419103cf73eed49b06ab30deee7a5a72e1ac48fcc55f9c0c7d2317",
+            "CAM_FRONT_LEFT": "5bc920594bce571e67d183c35f067f9702e5b7d73f96f86b15f99f83182a08a1",
+            "CAM_FRONT_RIGHT": "fa792f2a950fa2fe1327a5d08e7e9127b26644925809422fa40b512335612ad3",
+            "CAM_BACK": "ed87ce63fea9104f1f9dd91a71aa4af68df26949140f1915ffea9bb8ed54d454",
+            "CAM_BACK_LEFT": "0a04756e31156c0849fcacadbc3ad5fd30c5b0d7082cf4c91bcb652073df3150",
+            "CAM_BACK_RIGHT": "3f8f9ff0ce188459b5c35e7314b10cde1762a859f38c65ddec3c38281fd9f08b"
+          }
+        },
+        {
+          "sample_token": "98fa81992fb04e799c329eca220e7164",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "ce63d94457f397826c9a61a0defba0dc8db8f1a8315964405418893dcc12f7fb",
+            "CAM_FRONT_LEFT": "37b8d59c6594ef1b9b2c0a5e6c9f212aa91781df985a009077d6fe33e257ac68",
+            "CAM_FRONT_RIGHT": "49172412dc8be64a66c9d4217e3ad204275dd300cffe6467f4c452328c21f93a",
+            "CAM_BACK": "49d5158f3338dfa29b81844c8b507a01e548b8118a65bfd1e83e156f22ac30fc",
+            "CAM_BACK_LEFT": "59e7627573153b0f083613693d87ed63f84b05225ebaf818f8dacfe5595ad5c1",
+            "CAM_BACK_RIGHT": "a150896c863b3812ec7745a137179542da9a4d1567bb8dcfaa42736ed0958cd7"
+          }
+        },
+        {
+          "sample_token": "27749aa3de2545219186c61d4d415e1c",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "ea2280ec4a8e9fa3ed2b52a7ac9f568289ea2f804d3089d2a3beb8d65796bcb4",
+            "CAM_FRONT_LEFT": "80cd163dc3ce0f5552028d7398d9c6cc8b47eae06ff22b3309d6b53b244f38bd",
+            "CAM_FRONT_RIGHT": "9feabe50585e01a03fdf5a8e9c75ad03f32cdcceb4af54e18020e254b6deb964",
+            "CAM_BACK": "2cf0f498a12889085c82038c760da0bb98140465c37f08bdb7b0b6fbef540e7f",
+            "CAM_BACK_LEFT": "c95f42de32a2f885f703cabc2e54f8ec7256a4bad06e8d26771b468205236977",
+            "CAM_BACK_RIGHT": "6fa3c4eb2166982fc0710acd4804a7e26d3aff6cfaf148e6c1293194baa0bfcd"
+          }
+        },
+        {
+          "sample_token": "4e1d1031fe9f45f981a2f598365fc645",
+          "scene_token": "de7d80a1f5fb4c3e82ce8a4f213b450a",
+          "image_sha256": {
+            "CAM_FRONT": "8ff2af10ed6f6cf1d8e726e28a0510d6631c040e58cd48802a36eeec72558468",
+            "CAM_FRONT_LEFT": "9dc27770f79e2b457487f255c4b6732807925681c7ab78f0df38afc14bc4d89d",
+            "CAM_FRONT_RIGHT": "78bbed9b56a59698853dc477676919b89121e2e5e82a8b0a10679d147dd6a51c",
+            "CAM_BACK": "1ba8d8d33f8fb0b1486622b7eb9fab08f76f98a3d49a1cd06767f359ceb62f29",
+            "CAM_BACK_LEFT": "ef73f5d5ba535cc498157b18ec186ea20b1a54afd8c7f24df8cf922dd5b0fc4f",
+            "CAM_BACK_RIGHT": "d77549e6ce45ce0f6b6fb5f20ff5f1b6975a98ee84ee45c2c55819edd5b86120"
+          }
+        },
+        {
+          "sample_token": "a480496a5988410fbe3d8ed6c84da996",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "987683fafd3d0d003908e0cb97f1f59f59a77db71e7c3583990724a47e0297d2",
+            "CAM_FRONT_LEFT": "108c24b93fbe35118c850adafe768759e46c63a6e91e90d4e7512cece192501d",
+            "CAM_FRONT_RIGHT": "91a48ccca9494a2406fb99ac626a944a70d83cc27c5e8d6bcd03090624455474",
+            "CAM_BACK": "ff9e4fdaa27d77a5e70dac15f501592463114e41b8890176d2380da7df0219f4",
+            "CAM_BACK_LEFT": "a5c84ad543e4d823bdc1dda0b6afac1913ed4ba98beb89a6d8aaaf63c76e49b6",
+            "CAM_BACK_RIGHT": "99de3dff1d51f7f59e0cb206bd0c5264a4a86563c707ef1ce86ca6987a561a23"
+          }
+        },
+        {
+          "sample_token": "c9e812f2705b4b198f4675dfaa33812d",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "71b97c394452548a8ceb09c915435fcb678cacfe5c8c9bc69bb2b3304100b5f0",
+            "CAM_FRONT_LEFT": "20438c780b0076cd28fb8632bdf7ba9e0a6da7f360d48121785dcf5692c9554f",
+            "CAM_FRONT_RIGHT": "fab00221cf133b8db4ac0b2ddc6b691dd1795cb7cb397dd96d239066ac7e91ea",
+            "CAM_BACK": "4b8fa40bfbe6cd534f3dfde1baac99922e033e0dba458058efe86264a19bc75a",
+            "CAM_BACK_LEFT": "1119539e465e6f2d3db41b63b7fb5080be2e1aa51afc7bedc720c1003ab269a5",
+            "CAM_BACK_RIGHT": "c8ea36873b54554fd486c3ad5a296a87f6dc585e384eca62e74c269907ac10c2"
+          }
+        },
+        {
+          "sample_token": "3ff58ee0fc4748d9895300f02114aa56",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "9a9ba493ae5a6d49a88cf4a575a6913c4d5a9dc8b82ea2fdd22be3b2b73264bb",
+            "CAM_FRONT_LEFT": "c0dd1d2ac6a4ac989396fb9aa196570d8069130c743c073aa75ae3371852ea57",
+            "CAM_FRONT_RIGHT": "d6a96775f08ac504dcc5442d366746f98b8856a4d8c12fe35d761cc4de773714",
+            "CAM_BACK": "6b086464c8a5cd57adf4234c812d7b8b7e6b30bd20af9d71cbf3fc65322da4e7",
+            "CAM_BACK_LEFT": "e9375de30ed71dfec7420a21b0c984be9cb9eda0c501d79be8c1dca9e6bc092d",
+            "CAM_BACK_RIGHT": "5729e8e9531d587b0375c76f20bdd5058d88c84e4b0691278b2a663d8dab5d2e"
+          }
+        },
+        {
+          "sample_token": "25a4a6aa9096458285cba35c950f2717",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "4842072ce897bd466c63d2eb98272692aea0857fc6a09c43f2a07af072f79245",
+            "CAM_FRONT_LEFT": "e23a78788d052d11e2130fb893bfe16132dc565682a0b76f98e7486bd1aa331a",
+            "CAM_FRONT_RIGHT": "a49df415714fb14866c7a467ca4731f8802f9f377cd651d88c67be6556cfc66b",
+            "CAM_BACK": "f52e7a7fdee6318275c43aef844266cab411da61462d8347b4985f4d323490b8",
+            "CAM_BACK_LEFT": "dfd5cfe410d5de6555a64dac430f8a811bd9d795c0adba15fc20d060476832b9",
+            "CAM_BACK_RIGHT": "01accdd87f54f9cb7a9573e9f8b04885ba7b23a7864c05c34157a70b0735b3b2"
+          }
+        },
+        {
+          "sample_token": "36aa1c0eeb50457b97911c3bd742a730",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "d545a7c096887154bc75f3bfa041dab8b8f0dda97adf38eb06b4248da81eab21",
+            "CAM_FRONT_LEFT": "0e2796278bfa6a8b737bc93fc8894633911e7e9c2ca5f11411704a619967d3b8",
+            "CAM_FRONT_RIGHT": "21412f762b9fccf27bf7b9fb405ea735e007ec7d9b22ef2b59f25851933902fe",
+            "CAM_BACK": "95ee6d14035e05607910ee257d8614c048c603088eb8f53103a22d5cc4323354",
+            "CAM_BACK_LEFT": "e1e46471e1f0598a8a9bbc42f540c54026a1c60e8d81663b84d76ce09ea6478a",
+            "CAM_BACK_RIGHT": "47550832b070a04d23408fe26d24e35daddac66c569b01eb5c95ad1e60460c49"
+          }
+        },
+        {
+          "sample_token": "f2a6d0e38153467ba0d02706024e258d",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "9b25977faebb01b6aa89e2c56451e34c897b4705052417ae1b9767908b6b771f",
+            "CAM_FRONT_LEFT": "9ca9c71467b4017047d39e17198733bd6b6c83ccd1023d9211a64e88ab53cbd9",
+            "CAM_FRONT_RIGHT": "612ad8e19688be7c4e84c330283fda6787f7cb09ce8227fbd068ebdaeaa09423",
+            "CAM_BACK": "d1231e6906cf17c79d27477c6403a12a51e4ed75dcd74f9c5a70421ac696d835",
+            "CAM_BACK_LEFT": "a8ae0129e163fc04ed1d4a70c045ccdc12c5ba7cf24ca9bd227d830ab7a95fa1",
+            "CAM_BACK_RIGHT": "8ca01eeb2af8d89a155b44419322665f1f5e53e7764cc50937eec7fa18107a44"
+          }
+        },
+        {
+          "sample_token": "236f1ecb6ee7459d918cd011831674d6",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "1cb20ae5302891cf0440797b478b9c052978613a152bf7aa220e08cd57069f7c",
+            "CAM_FRONT_LEFT": "191792e80582d8c3b10ffb6ba93345ceaa5f6a66374e13cd05e5d9e8f04efecf",
+            "CAM_FRONT_RIGHT": "baaf7101258368e827b75d52948b797603341cf872a6c0f3337504da1714db32",
+            "CAM_BACK": "c1a46eb922fcd95b710ab3513a913832123540a328d55ed3fb21d81f4e8b4a97",
+            "CAM_BACK_LEFT": "f9f874db56705d90e0cf575add57511ebd411840469e97f26a2f85f1e5b1fc5c",
+            "CAM_BACK_RIGHT": "8c2ea802dcb026ed0635e50c08838735e1f14dca3e448eb9a6cb4d8deb781d1b"
+          }
+        },
+        {
+          "sample_token": "abf3d91d3c28407e80e3334fe89c03cb",
+          "scene_token": "e233467e827140efa4b42d2b4c435855",
+          "image_sha256": {
+            "CAM_FRONT": "6db475130c9c53ab34c3bd8514de3d1c7d384f730d6471a0eeabe6e9f8c963c1",
+            "CAM_FRONT_LEFT": "cf382c570ee6f91229087c26f8db85ad52257fd0fc612188dd808872bbc91d3b",
+            "CAM_FRONT_RIGHT": "0e4d087f34df0c19148eaa66d44fb00572261956b8247d187be8ddf4edfcf4be",
+            "CAM_BACK": "7b84cf2fa02acccb8bcf34f7bfbe9154e61e902ed43a2509c8440a2f81858c25",
+            "CAM_BACK_LEFT": "4f48c0fa60c4734c02b7b5cf7eaf0e926b53ded51374bbe64419c270b3a298a1",
+            "CAM_BACK_RIGHT": "a4d2077a98251cacd6c9542a4385a0e9dfd5521de3205b5e2b37ab8576767645"
+          }
+        },
+        {
+          "sample_token": "3e8750f331d7499e9b5123e9eb70f2e2",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "0e2067a1618c4424050c45c393ada8c9dbf130fff8d6015004fce901dc07984d",
+            "CAM_FRONT_LEFT": "8c52f73a3ef06a129c27ef51ac65704428caebfaa60c52f14a5953bbb0124a18",
+            "CAM_FRONT_RIGHT": "15cf59c79b086d14da6fae5a7ee5b0f4d0fac0c0a22c0a85faaa5fb215521191",
+            "CAM_BACK": "047dd43f3f9fb7cc426b1d4ae369181242c5555b84baff5d7e1cbd0dc8b07259",
+            "CAM_BACK_LEFT": "27b2826991733662e4f17c509ad5a66e85e0ca66a6413063d8db9645fa608c11",
+            "CAM_BACK_RIGHT": "a998caf0e327816b82d2a142d2581a8c1f9c4e67d50b4af3718a381337b7e415"
+          }
+        },
+        {
+          "sample_token": "f4f86af4da3b49e79497deda5c5f223a",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "85b1b0937c423c393e4a79cfd755d31d6dc3711ca42d778514091b0f507a3b17",
+            "CAM_FRONT_LEFT": "7d02c2d3fdad80ea36b6a977e30f828f7bf064b7d3f0adc10477a3636d40c8aa",
+            "CAM_FRONT_RIGHT": "0bfa3a47a1d72a9a1d2d3236ebbf7071560d51986e9515d0582abfc4cd2b1dc3",
+            "CAM_BACK": "c39d506f2f361e6f42917fe65821fd7312689467709bf1701749b819573d4ec1",
+            "CAM_BACK_LEFT": "68f00389431eddeb156ad21d4b30f133de529e303983a0509e1d306ce3ee5cf8",
+            "CAM_BACK_RIGHT": "efbae42bc54bd7667f359cfade527f64e3e5f947ea2b368a3c9197a7b221de48"
+          }
+        },
+        {
+          "sample_token": "796b1988dd254f74bf2fb19ba9c5b8c6",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "e8275a4c6eae82284334d554b31abd979c3e1ba137e73ab2f158854627684423",
+            "CAM_FRONT_LEFT": "b9ee0a772d7f5e050206cdfbd2e8e030b2dd0b0d2524c945280992b0d532209c",
+            "CAM_FRONT_RIGHT": "86d3781e670469a01d7141c5eda865bb39344d6f8d6b472f952f3382c848fb08",
+            "CAM_BACK": "8516fe434eda1120a361ad14ae948f093fb19687b430752bb054ec518dbcb256",
+            "CAM_BACK_LEFT": "07cd0cfb3c71805e4183c71fe05f71e36ec6ea10c5abe7e680e97c0e960ac62f",
+            "CAM_BACK_RIGHT": "4bbf95ec909494e54a08547551bb0d207258d8b29d4b8a5652318be052a17d4e"
+          }
+        },
+        {
+          "sample_token": "0a0d6b8c2e884134a3b48df43d54c36a",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "2a41bc321c6dc966f328e2a9d8c625adf7e2e2660f6bac60329c54166000c7e6",
+            "CAM_FRONT_LEFT": "680723efecc641fd6c2e2189022ca5cab5f34947f5a80512641c1020ea15b641",
+            "CAM_FRONT_RIGHT": "758732a352d7dcc516a6d4fade9660da3c18f809badb6ed43ac0165564142eb1",
+            "CAM_BACK": "456efed140b274163ce1b22a085225efacbd6fcf0199c8ead43b7e83a73ade39",
+            "CAM_BACK_LEFT": "b3e7406e540eb2b1f4cfc035c3d57eedfbdc76b7b6c3c4682340418778877107",
+            "CAM_BACK_RIGHT": "a8c790a70f5b415c31eb7670bdaf4d71951589aaa031cf288156ae5dedf59092"
+          }
+        },
+        {
+          "sample_token": "456ec36cb4a44ca78f36fbd90c0c34fa",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "10442fdafa2e579645cc5fc7c89b4017111f575c9f45a7e28467205b6c17e8ec",
+            "CAM_FRONT_LEFT": "b321bb62d3971e042497186b77f4e314a5e37d693bf2b39c4e6752993839cc97",
+            "CAM_FRONT_RIGHT": "1a8a147b1cd4ec018b13a3a921952a3ed821c45791280f957c53e866c9f4dfe2",
+            "CAM_BACK": "265a8e16ac5242318c9d3599411ce5b759fedbec1620056d068bd3358905c75d",
+            "CAM_BACK_LEFT": "41cc5f72fee8c6d9a96fffd4e46e2c66b90083b03c5bdf1829694d8c69714d2c",
+            "CAM_BACK_RIGHT": "9b190f5587d9ec8db408e0f2c76f242e5fc8ab0e34dcd3901b35564ed2e865d6"
+          }
+        },
+        {
+          "sample_token": "cc57c1ea80fe46a7abddfdb15654c872",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "82ef56fcece6e1ad147f4908bdc6aa5e10409dc61299349a860215e2792fad64",
+            "CAM_FRONT_LEFT": "13c35f7d6d296408f43371becdd9ea6081668d08816a04e91e149072941fc223",
+            "CAM_FRONT_RIGHT": "2c7d47ffe164b6e5a903a05c6fe45c6eb03fb1cec4aff32093556d5700d680da",
+            "CAM_BACK": "f5ca5be1b1429c14b8625fc90905d98ba6a973fb457970351dc8ddd43bdf1e0c",
+            "CAM_BACK_LEFT": "a4c028a0fbaecf50a28e3bdd86d0a96e655e95cf9775a66141abac33cb3425c1",
+            "CAM_BACK_RIGHT": "a548b402766ffd29e72a564aef0e64a20b854e23a7de821dffc9c14807ee33a7"
+          }
+        },
+        {
+          "sample_token": "9fcdc52b791045e99c623c5fc643331f",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "a08fdf1245e38528db954e5f25a1cc3568de61d3b0fd7221c96687060ffc7ef7",
+            "CAM_FRONT_LEFT": "f6d566f8e2e83bce8736a0edb6b3e231cca93f8a56f73d0842a5b10864c0402d",
+            "CAM_FRONT_RIGHT": "e6c5c170b533a998e2f6bbc806ed7253069148087c0c013a83376c8b1a4ae5de",
+            "CAM_BACK": "b142e0ace9c307b082650278cc3c377709a69bee4930d1aa781f0ae37569e166",
+            "CAM_BACK_LEFT": "9c19332bb36e96d77e1bc08dfd9444146e1106840a48ff68f56e6f7e8086caa1",
+            "CAM_BACK_RIGHT": "3f5635671e98dec8a5fdda31fb68a4727f6d4375f2c58ef5fdc2d060a2921424"
+          }
+        },
+        {
+          "sample_token": "281b92269fd648d4b52d06ac06ca6d65",
+          "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+          "image_sha256": {
+            "CAM_FRONT": "1fc64221853acb75b1714cfff2e3f6001da5e6adc1930871dac8a48f71386c22",
+            "CAM_FRONT_LEFT": "f5b74c4c0a0070f6d9a045946362cbc9dee7a04807ee19dc804db5f2df436b7a",
+            "CAM_FRONT_RIGHT": "2d43df698ba500babe3d332fe08aa9de97cc9b26efc77be3b717f659bb01fb61",
+            "CAM_BACK": "c6221b628b0d0ab9c36e54fda615e5784afca2962f1ca8ea2799ef627fd0252e",
+            "CAM_BACK_LEFT": "ba4043690237373f5d257e54c20f45f7cbea27d39518acc75ff4d8ba2354c558",
+            "CAM_BACK_RIGHT": "066fae9fd1329124b271393c46d0fefc3d42a158cbd44150dbe4facf8b7cc4bb"
+          }
+        }
+      ],
+      "camera_order": [
+        "CAM_FRONT",
+        "CAM_FRONT_LEFT",
+        "CAM_FRONT_RIGHT",
+        "CAM_BACK",
+        "CAM_BACK_LEFT",
+        "CAM_BACK_RIGHT"
+      ],
+      "layers": [
+        1
+      ],
+      "pooling": [
+        "camera_concat"
+      ],
+      "hook": "resnet18 avgpool; six-camera concatenation",
+      "storage_aliases": {
+        "layer1_mlp_output_mean.npy": "camera_concat",
+        "layer1_mlp_output_last_token.npy": "camera_concat (identical compatibility alias)"
+      },
+      "dtype": "float32",
+      "device": "cpu",
+      "threads": 2,
+      "resize_short_side": 256,
+      "crop_size": 224,
+      "interpolation": "PIL bilinear",
+      "normalization_mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "normalization_std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "view_feature_dim": 512,
+      "feature_dim": 3072,
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "numpy": "2.5.4",
+        "Pillow": "13.0.0"
+      },
+      "source_sha256": {
+        "cpu_image_encoder.py": "fbabff5aab45f804f243f568a2c04fc6bba06e61941ba7b8520ca98307e55e22",
+        "extract_cpu.py": "cb12ccf1f37aab5aaf6f2a8e76e96783fea2e47f7254a885d765bd941c86589e",
+        "extract.py": "05f7809a327aba9f290004a8102a3f82d305edb8ef351ca50408c01cb4d7646e",
+        "extraction_contract.py": "847aac6ad169c5c45ec943ecb3cdd49a628ae7fe25da01c8866f6b974ddc1175"
+      },
+      "protocol_scope": "Image-only CPU reference experiment; not Cosmos/VLM reproduction"
+    }
+  },
+  "seed": 42,
+  "python": "3.12.14",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0",
+    "threadpoolctl": "3.7.0",
+    "torch": "2.14.1+cpu",
+    "matplotlib": "3.11.2"
+  },
+  "source": {
+    "commit": "b57eaffa21d54ad67d98d441935cf6b17cdc5294",
+    "dirty": true,
+    "git_status": "M .gitignore\n M Makefile\n M README.md\n M docs/apply.md\n M docs/design.md\n M docs/developer.md\n M docs/neurons.md\n M docs/prompt_templates.md\n M docs/reference.md\n M docs/tasks.md\n M docs/testing.md\n M docs/user.md\n M results/README.md\n M scripts/extract.py\n M scripts/neuron_explorer.py\n M scripts/sae_common.py\n M scripts/screen.py\n M tests/test_sae_common.py\n?? .github/\n?? cloud/\n?? docs/cpu-route.md\n?? docs/e2e.md\n?? docs/evaluation.md\n?? docs/feedback-status.md\n?? docs/from-zero.md\n?? docs/local-upload.md\n?? docs/methods-history.md\n?? docs/real-mini-cpu-run.md\n?? docs/third_party_resnet18.txt\n?? notebooks/\n?? requirements-cpu-lock.txt\n?? requirements-gpu.txt\n?? scripts/acquire_cpu_encoder.py\n?? scripts/acquire_nuscenes_mini.py\n?? scripts/ai_pilot_labels.py\n?? scripts/build_driving_notebook.py\n?? scripts/cloud.sh\n?? scripts/cpu_image_encoder.py\n?? scripts/data_manifest.py\n?? scripts/driving_preflight.py\n?? scripts/evaluate_runs.py\n?? scripts/evaluation_fixture.py\n?? scripts/extract_cpu.py\n?? scripts/extraction_contract.py\n?? scripts/import_mini_parts.py\n?? scripts/notebook_review.py\n?? scripts/portable_handoff.py\n?? scripts/prepare_driving.py\n?? scripts/run_real_driving.py\n?? scripts/summarize_runs.py\n?? scripts/supervised_baselines.py\n?? scripts/synthetic_demo.py\n?? scripts/verify_browser_http.py\n?? scripts/verify_browser_ui.py\n?? tests/test_acquire_cpu_encoder.py\n?? tests/test_acquire_mini.py\n?? tests/test_ai_label_scope.py\n?? tests/test_ai_pilot_labels.py\n?? tests/test_cpu_extraction.py\n?? tests/test_evaluation.py\n?? tests/test_extract_checkpoints.py\n?? tests/test_extraction_contract.py\n?? tests/test_import_mini_parts.py\n?? tests/test_local_upload_html.py\n?? tests/test_notebook_review.py\n?? tests/test_portable_handoff.py\n?? tests/test_portable_notebook.py\n?? tests/test_prepare_driving.py\n?? tests/test_real_assets.py\n?? tests/test_real_driving_workflow.py\n?? tests/test_screening.py\n?? tools/",
+    "source_files_sha256": {
+      "scripts/ablation_sae_cosmos_baseline.py": "f8990c76ec8ba1a29b4d59425efae532466b49c23316df6afa8fd207fa1c28d6",
+      "scripts/ablation_topk_sae.py": "34ee06db6e57fb71c9d4ff0b772eecf15abc93fbb81708688aed43e194eee583",
+      "scripts/acquire_cpu_encoder.py": "7fc207dbffb4b7075ab9b3a1e89239f948903832af23e32103074e4ff7564575",
+      "scripts/acquire_nuscenes_mini.py": "7a045a56548bf86129514d413522fab320bef98090fef8aaed9e353951f20502",
+      "scripts/ai_pilot_labels.py": "1e592d82236e947d8b6d1c0453e84091d6c85b9020e55fb0b0ea5e4b7b9f5e49",
+      "scripts/annotate_normal_core.py": "a8fbb88ceeba9b4e34b4deaa5fd312d6c6b8d2e7fb489d75df2d72479b47d9a1",
+      "scripts/build_driving_notebook.py": "217f394763330851a1a32d8b409fffd5edf5a3799ca9f41957851bfedba48fac",
+      "scripts/cpu_image_encoder.py": "fbabff5aab45f804f243f568a2c04fc6bba06e61941ba7b8520ca98307e55e22",
+      "scripts/data_manifest.py": "1f760bc48c5552fa94776962998ccd68e60e6d7da453e39f0754762ebcd041ea",
+      "scripts/driving_preflight.py": "4f8fd35c97631e0235669ae6981b502535072fc528179571e58662a74957529e",
+      "scripts/evaluate_runs.py": "932cc595fc5aed9cc0a6a1b2e9c41afa6d3f7deb8d7b939bfcc894fdfae0ebf5",
+      "scripts/evaluation_fixture.py": "aadc70ef8015f8cac39688ea05e0d2de98e001f84f2584a99df6448e5296a02f",
+      "scripts/extract.py": "05f7809a327aba9f290004a8102a3f82d305edb8ef351ca50408c01cb4d7646e",
+      "scripts/extract_cpu.py": "cb12ccf1f37aab5aaf6f2a8e76e96783fea2e47f7254a885d765bd941c86589e",
+      "scripts/extraction_contract.py": "847aac6ad169c5c45ec943ecb3cdd49a628ae7fe25da01c8866f6b974ddc1175",
+      "scripts/import_mini_parts.py": "c0ec3119b5886b797462fa625c9659a00b5482b26dc8e9dc9e33b70bffb888a3",
+      "scripts/neuron_explorer.py": "49007bf5ddf307be8573d31365df2e8870830a729582a4abbd3adc93a9a3ad80",
+      "scripts/notebook_review.py": "bc46f9cd3ca7a5bf396e170201e7daf0197c248b423a6dae65e635cdef6b1e17",
+      "scripts/portable_handoff.py": "d7e26ffb134de5feeca3102746e1d64bd39e23f7b9ea183ac19d8b60b32813dd",
+      "scripts/prepare_driving.py": "5cb64c6c93fdd5027ed31f529c9256d639fbf2004f8075f39f140172799d9308",
+      "scripts/run_real_driving.py": "ffa2a7ef611fe4231407b33bc816b7692ba355f9863d8d8b026e4a082c4e1bbd",
+      "scripts/sae_abstopk_tail_reward.py": "7fdc2df419242a327d70a6e7f8087211710594367bdf82b91734c5f8c59e801b",
+      "scripts/sae_common.py": "4de1d39d0242abde69787ab8a49b13d7bf2694d4c3e158ea63dcfa6f0627a029",
+      "scripts/screen.py": "96f12810998fae16ee46b1ed4fdf9a53596c97777378bb57432f09e165f1b403",
+      "scripts/summarize_runs.py": "9569bb215afc5b0433812fdb2ade32af5201af89c5e569fda108c5868d39b650",
+      "scripts/supervised_baselines.py": "23c25c31b367c0d240307d453ffd0412dd277b5f46482b4ddb69c3a8db786490",
+      "scripts/synthetic_demo.py": "3986e67e019dcb47df8155df73bfa03c591eba006708a437afd3691c9f324c1b",
+      "scripts/tail_activations.py": "1c61e57c01c9e3c5f0393040cbea16bdc1cd5da953c5ad370bda998232d7c14b",
+      "scripts/verify_browser_http.py": "435195cabbb1250f0b0460f78db935adb5dbaad591c51bb814c89423b7a73dcf",
+      "scripts/verify_browser_ui.py": "c8e4c0b618a2b34d8c49e842ec01f3bbc4e56585122b1827f0106caf1af7326c"
+    },
+    "source_tree_sha256": "eb4ed302aaeef1c18a0910f2611b8bfc5f2d27efdada7d86f82042a10dae43ca",
+    "source_snapshot_sha256": "bd424559256a7269de025b52944d6080a8f4ed1b4eb0739f975ae26b475bc0c4",
+    "tracked_diff_sha256": "26a7b749d99c5a45f27441257672879aad34a2b88b3b0d729b2957aa4ea3a3c3"
+  },
+  "inputs": {
+    "features": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/layer1_mlp_output_mean.npy",
+      "sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+      "bytes": 983168
+    },
+    "meta": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/meta.json",
+      "sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b",
+      "bytes": 65752
+    },
+    "manifest": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/annotations/manifest.json",
+      "sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+      "bytes": 58294
+    },
+    "labels_0": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/annotations/labels.json",
+      "sha256": "e1373e4095f1fe1b1210f696b221b4200852f84f9006e73a4dd6a372c300f500",
+      "bytes": 165249
+    },
+    "feature_config": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/extraction_config.json",
+      "sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59",
+      "bytes": 59197
+    }
+  },
+  "checkpoint": {
+    "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/ai-pilot/comparison_runs/logistic/model.joblib",
+    "sha256": "333cbed51c2075d4a2db8675e03ff415b44fead4cba8a2b42bdeacd935e8b1cb",
+    "bytes": 37872
+  },
+  "manifest_sha256": "37b92eea75c81ae0abaf0335691f70f6c9dd7cff643770fae7d5dde97ba6f745",
+  "predictions_sha256": "d492e302dec97d69cc57bf38a6637d3be0ebdeea3f5a0ae02306621889225698",
+  "label_scope": {
+    "label_protocol": "ai-visual-pilot",
+    "human_reviewed": false,
+    "interpretation": "Agreement with provisional AI visual labels; not human-ground-truth accuracy or a benchmark result"
+  }
+}

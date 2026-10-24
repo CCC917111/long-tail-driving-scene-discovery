@@ -17,9 +17,9 @@ from __future__ import annotations
 
 import os
 import sys
-import types
 
 import numpy as np
+import pytest
 import torch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
@@ -28,8 +28,10 @@ from sae_common import (  # noqa: E402
     LongTailGuidedSAE,
     classification_metrics,
     load_label_map,
+    load_dataset,
     split_indices,
 )
+from data_manifest import create_manifest, load_frozen_manifest  # noqa: E402
 from tail_activations import predict_long_tail, tail_score  # noqa: E402
 
 
@@ -161,7 +163,7 @@ def test_split_is_stratified_over_long_tail_samples():
 # --- Labels -----------------------------------------------------------------
 
 def test_label_protocol():
-    """normal maps to 0, uncertain is dropped, anything else is long-tail."""
+    """Only explicit normal/tail labels map to binary targets."""
     import json
     import tempfile
     from pathlib import Path
@@ -183,6 +185,89 @@ def test_label_protocol():
     assert mapping["c"] is None, "uncertain must be dropped, not counted as tail"
     assert mapping["d"] == 1, "the {'labels': {'label': ...}} form must be read"
     assert mapping["e"] is None
+
+
+@pytest.mark.parametrize("value", ["not-nromal", "yes", "1", 1, True])
+def test_unknown_label_is_an_error(tmp_path, value):
+    import json
+    path = tmp_path / "labels.json"
+    path.write_text(json.dumps([{"sample_token": "a", "label": value}]))
+    with pytest.raises(ValueError, match="Unrecognised label"):
+        load_label_map([path])
+
+
+@pytest.mark.parametrize("second", ["normal_core", "long_tail", "uncertain"])
+def test_duplicate_and_conflicting_label_tokens_are_rejected(tmp_path, second):
+    import json
+    path = tmp_path / "labels.json"
+    path.write_text(json.dumps([{"sample_token": "a", "label": "normal_core"},
+                                {"sample_token": "a", "label": second}]))
+    with pytest.raises(ValueError, match="duplicate token|conflicting labels"):
+        load_label_map([path])
+
+
+def test_split_cannot_fall_back_to_frames():
+    with pytest.raises(ValueError, match="Scene groups"):
+        split_indices(np.array([0, 1, 0, 1]), None, .15, .15, 0)
+
+
+def test_manifest_is_token_aligned_and_rejects_scene_leakage(tmp_path):
+    import json
+    meta = [{"sample_token": f"t{i}", "scene_token": f"s{i // 2}"} for i in range(6)]
+    labels = np.array([0, 1] * 3)
+    splits = {"train": np.array([0, 1]), "val": np.array([2, 3]), "test": np.array([4, 5])}
+    manifest = create_manifest(meta, labels, splits)
+    path = tmp_path / "manifest.json"
+    path.write_text(json.dumps(manifest[::-1]))
+    frozen = load_frozen_manifest(path, meta, labels)
+    assert set(frozen["train"]) == {0, 1}
+    manifest[1]["split"] = "val"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="leaks"):
+        load_frozen_manifest(path, meta, labels)
+
+
+def test_manifest_rejects_missing_tokens_and_changed_labels(tmp_path):
+    import json
+    meta = [{"sample_token": f"t{i}", "scene_token": f"s{i}"} for i in range(3)]
+    labels = np.array([0, 1, 0])
+    splits = {k: np.array([i]) for i, k in enumerate(("train", "val", "test"))}
+    manifest = create_manifest(meta, labels, splits)
+    path = tmp_path / "manifest.json"
+    path.write_text(json.dumps(manifest[:-1]))
+    with pytest.raises(ValueError, match="cover"):
+        load_frozen_manifest(path, meta, labels)
+    manifest[0]["label"] = 1
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="Label conflict"):
+        load_frozen_manifest(path, meta, labels)
+
+
+@pytest.mark.parametrize("problem", ["duplicate", "missing_scene", "nan", "empty"])
+def test_dataset_rejects_invalid_features_and_identifiers(tmp_path, problem):
+    import json
+    from types import SimpleNamespace
+    x = np.zeros((2, 4), dtype=np.float32)
+    meta = [{"sample_token": "a", "scene_token": "s1"},
+            {"sample_token": "b", "scene_token": "s2"}]
+    if problem == "duplicate":
+        meta[1]["sample_token"] = "a"
+    elif problem == "missing_scene":
+        del meta[1]["scene_token"]
+    elif problem == "nan":
+        x[0, 0] = np.nan
+    else:
+        x = x[:0]
+        meta = []
+    np.save(tmp_path / "features.npy", x)
+    (tmp_path / "meta.json").write_text(json.dumps(meta))
+    (tmp_path / "labels.json").write_text(json.dumps([
+        {"sample_token": "a", "label": "normal_core"},
+        {"sample_token": "b", "label": "long_tail"}]))
+    args = SimpleNamespace(features=tmp_path / "features.npy", meta=tmp_path / "meta.json",
+                           labels=[tmp_path / "labels.json"], output_dir=tmp_path / "out")
+    with pytest.raises(ValueError):
+        load_dataset(args)
 
 
 # --- Decision and metrics ---------------------------------------------------
@@ -209,9 +294,4 @@ def test_metrics_report_both_classes():
 
 
 if __name__ == "__main__":
-    tests = [value for name, value in sorted(globals().items())
-             if name.startswith("test_") and isinstance(value, types.FunctionType)]
-    for test in tests:
-        test()
-        print(f"ok  {test.__name__}")
-    print(f"\n{len(tests)} tests passed")
+    raise SystemExit(pytest.main([__file__, "-q"]))

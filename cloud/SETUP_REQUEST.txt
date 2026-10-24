@@ -1,0 +1,56 @@
+Driving cloud setup request
+
+Historical network setup request, superseded for the CPU smoke by local uploads
+on 2026-10-23. The official download host is still blocked, but four user-supplied
+parts now support real CPU extraction and a completed, explicitly AI-labelled
+four-model pilot. Human verification remains pending; see docs/ai-pilot.md.
+The network configuration below has not been applied and is not required to
+inspect the offline demo with those existing parts.
+
+Use the existing worker that contains DWTS and Driving. Keep DWTS's repository
+and /workspace/dwts-voting-audit/.venv unchanged. Driving needs its own interpreter.
+
+Repository: https://github.com/CCC917111/long-tail-driving-scene-discovery
+Working directory: /workspace/long-tail-driving-scene-discovery
+
+The latest implementation is in the attached Driving CPU-route source bundle.
+It contains uncommitted follow-up work beyond the repository's original commit.
+Preserve current files; do not replace them with the repository's older default branch.
+
+CPU setup:
+  bash scripts/cloud.sh setup
+
+The no-GPU route uses a pinned ImageNet ResNet18 encoder. Its weights host,
+download.pytorch.org, is already in the package-manager preset. No GPU or
+Hugging Face access is required for this separate image-feature experiment:
+  bash scripts/cloud.sh acquire-cpu-encoder
+  bash scripts/cloud.sh cpu-notebook
+  See docs/cpu-route.md for preparation, extraction and controlled CPU training.
+
+The launcher uses a project-local .venv or the verified /workspace/yike-top2-venv.
+If neither exists, setup creates a project-local Python 3.12 environment and
+installs requirements-cpu-lock.txt. Existing environments are checked, not silently
+changed to match. A new environment must have enough storage for the mini archive
+and extracted keyframe camera data; confirm actual size before acquisition.
+
+Required environment network configuration:
+  Keep the existing package-manager domains and www.contest.comap.com.
+  Enable normal internet access with an additional allowed hostname:
+    d36yt3mvayqw5m.cloudfront.net
+
+This must be applied through the platform's environment configuration workflow.
+Changing a local policy file or merely granting command approval does not apply it.
+
+Acceptance:
+  1. bash scripts/cloud.sh setup reports cpu_ready=true and no dependency differences.
+  2. bash scripts/cloud.sh demo OUTPUT=output/new-cloud-fixture completes all four
+     trained CPU methods, table rebuilding and screening on synthetic fixtures.
+  3. An actual HTTPS request to the published mini archive reaches the official
+     origin successfully through the configured proxy; a proxy403 is a failure.
+  4. bash scripts/cloud.sh acquire-mini OUTPUT=output/real-mini downloads and
+     stages real metadata/keyframe cameras, with an acquisition report.
+
+The existing worker has passed steps 1 and 2. Step 3 is still blocked by the
+platform network policy, so step 4 and real-data experiments remain incomplete.
+No new cloud instance has been created or published by the task tools. This is
+a concrete request for the environment setup flow, not an applied platform config.

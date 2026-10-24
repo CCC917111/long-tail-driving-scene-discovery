@@ -30,6 +30,10 @@ model then screens unlabelled data, the sparse units it learned double as named,
 reusable descriptions of specific risk patterns, and the neuron explorer lets
 anyone browse them in both directions.
 
+The [contribution statement](../README.md#team-and-contribution) preserves the
+team's stated historical roles. The current AI-assisted refactor is recorded in
+[feedback status](feedback-status.md). New real-data results remain pending.
+
 ## Layout
 
 ```
@@ -58,8 +62,8 @@ six camera views of a keyframe
   -> extract.py                scene-description prompt, forward hook on layer L
                                -> layer{L}_mlp_output_mean.npy  (N, 3584)
                                -> meta.json                     (N, sample_token, scene, images)
-  -> sae_common.load_dataset   join features + labels, drop uncertain rows
-  -> split_indices             scene-level, greedily stratified
+  -> sae_common.load_dataset   whitelist labels, reject duplicate tokens, record exclusions
+  -> frozen manifest           strict scene tokens, greedily stratified; reuse across seeds
   -> standardise               training-split mean/std only
   -> LongTailGuidedSAE         z = AbsTopK(f_enc(h)) = [z_n, z_t]
   -> tail_activations          c_tail = #{|z_t| > eta}; long-tail if c_tail >= 1
@@ -71,16 +75,15 @@ six camera views of a keyframe
 ```
 
 The two VLM stages are the expensive ones and both write incrementally, so an
-interrupted run resumes instead of starting over. Everything downstream of the
-`.npy` files is cheap and CPU-friendly, which is what makes the layer sweep and
-the ablations practical.
+interrupted run resumes instead of starting over. Cached-feature experiments can run on CPU. Measure runtime and memory before
+choosing a budget; no real-data speed or cost advantage has been measured here.
 
 ## Where to start
 
 | You want to | Start in |
 |---|---|
 | Change the model or the objective | `sae_common.py`, class `LongTailGuidedSAE` |
-| Change the split or the metrics | `sae_common.py`, `split_indices` / `classification_metrics` |
+| Change split/metrics contracts | `data_manifest.py`, `evaluate_runs.py`; version the protocol |
 | Add an SAE variant | A new entry point with its own `DEFAULTS` |
 | Change what counts as long-tail | `latest_grading_criteria.md` and the prompts |
 | Change the VLM or the layer | `extract.py`, then re-train |
@@ -106,3 +109,8 @@ make lint
 
 New behaviour comes with a test in `tests/`; the [Testing](testing.md) page
 explains what the suite already covers and what kind of test fits here.
+
+The controlled comparison tools and frozen manifests are documented in
+[evaluation](evaluation.md). Shared implementation does not by itself make
+legacy default variants controlled ablations. Test coverage and the blocked
+HTTP route are recorded in [testing](testing.md).

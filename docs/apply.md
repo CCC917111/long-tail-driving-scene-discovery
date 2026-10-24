@@ -24,26 +24,19 @@ objects, and it makes no claim about a frame beyond "this looks like the kind of
 situation the SAE learned to associate with defensive driving". It is a
 prioritisation tool for a data pipeline.
 
-Two properties are worth knowing before you choose it over the alternatives,
-because they are what it was built for:
-
-- It finds samples that are **not** feature-space outliers. The wheelchair frame
-  in the case study ranks above only 1.4% of samples by KNN outlier degree —
-  globally it looks like an ordinary urban street, and what makes it matter is
-  one local detail.
-- It finds samples the model is **confident** about. Low-confidence filtering
-  selects that frame in 0 of 20 trials. Uncertainty and long-tail value are not
-  the same axis.
+The historical wheelchair case and raw-VLM comparisons have not been reverified
+from original outputs. They do not establish current review yield or an
+advantage over anomaly/uncertainty methods. See [evidence limits](../results/README.md).
 
 ## What you need
 
-- A trained SAE run directory, produced by `make train` (or by running
+- A trained SAE run directory, produced by `make train REVIEW_K=K` with a frozen manifest (or by running
   `scripts/sae_abstopk_tail_reward.py` directly). It contains `best_model.pth`,
   `standardizer.npz` and `metrics.json`; the repository ships the code, not the
   weights.
 - The same VLM used for that run, to extract features from your frames.
 - A CUDA GPU for the extraction step (bf16 inference, 24 GB or more is
-  comfortable). The screening step itself runs on CPU in seconds.
+  comfortable). The screening step can run on CPU; measure its latency for your input size.
 
 ## Input format
 
@@ -96,12 +89,14 @@ python scripts/screen.py \
     --output-dir output/screening
 ```
 
-No labels are needed at this point. Labels are only used to *train* the SAE; at
-screening time the method is unsupervised.
+No labels are needed to score new frames. Labels are used for training,
+validation and offline evaluation; at
+screening time inference is label-free; the SAE was trained with supervision.
 
 The decision is the rule used in training: a frame is flagged when at least one
 long-tail unit has `|z_t| > eta`, with `eta` read from the run's
-`metrics.json` (0.01). Nothing is re-tuned on your data. `--eta` changes the
+`metrics.json` (0.01). This is the original fixed activation rule, separate from the evaluator's
+validation-selected score operating point. Nothing is automatically re-tuned on your data. `--eta` changes the
 floor if you want to experiment; to shorten the list instead, take the top of
 the ranking or filter on the units you care about.
 
@@ -123,7 +118,7 @@ the ranking or filter on the units you care about.
 
 plus `long_tail_samples.json`, just the flagged tokens, ready to be handed to an
 annotation tool, and `activations.npz`, which the
-[neuron explorer](neurons.md#browsing-the-units) opens directly:
+[neuron explorer](neurons.md#browse-a-trained-run) opens directly:
 
 ```bash
 python scripts/neuron_explorer.py serve --run output/screening \
@@ -142,15 +137,15 @@ why they were flagged:
      14  Wheelchair user ahead
 ```
 
-That tally is often the first genuinely useful output: it is a profile of what
-kinds of rare situations your archive contains, computed without anyone having
-labelled it.
+The console tally above is illustrative, not an observed run. Glossary names
+are human interpretations tied to a specific checkpoint, not verified semantic
+counts for a new archive.
 
 ## Working with the result
 
 - **Spend the annotation budget top-down.** Take the first N rows of
-  `screening.csv`. With the reported long-tail precision of 0.90, most of what
-  a human opens is worth opening.
+  `screening.csv`, then independently measure review yield. Historical precision
+  does not transfer to a new split or corpus.
 - **Fill a specific gap.** If your model fails on wet-road glare, filter on the
   unit for it rather than on the score — see
   [The Interpretable Neurons](neurons.md). The units act as retrieval keys for
@@ -172,3 +167,8 @@ model: write your own rubric in place of
 with `scripts/annotate_normal_core.py` or by hand, and train a new SAE. Only the
 labels change; the pipeline is identical. [Common Tasks](tasks.md) has the
 details, including how to swap in a different VLM backbone.
+
+Feature dimension and row count checks cannot verify semantic compatibility.
+Recover and compare the model revision, layer, pooling and preprocessing
+settings with the trained run. Real screening is pending recovered assets;
+the [CPU demo](../README.md#cpu-quickstart) uses generated data and weights.
