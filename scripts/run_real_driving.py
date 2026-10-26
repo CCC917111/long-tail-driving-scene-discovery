@@ -26,7 +26,8 @@ from types import SimpleNamespace
 
 from data_manifest import load_frozen_manifest, validate_tokens
 from extraction_contract import sha256
-from prepare_driving import CAMERAS, TABLES, VERSION_RATIOS, import_labels
+from prepare_driving import (CAMERAS, POST_AI_REVIEW_CONTEXT, TABLES, VERSION_RATIOS,
+                             import_labels, post_ai_review_scope)
 from sae_common import load_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -129,6 +130,12 @@ def validate_label_import(args, prepared: Path, annotations: Path, imported: dic
                 "use --label-protocol ai-visual-pilot explicitly for AI silver labels")
         identity = {"label_protocol": "manual", "label_scope": "Recorded manual judgments",
                     "human_reviewed": True, "human_ground_truth_verified": False}
+        if imported.get("review_context") is not None:
+            require(imported.get("review_context") == POST_AI_REVIEW_CONTEXT
+                    and imported.get("label_scope") == post_ai_review_scope(),
+                    "Invalid recorded manual review_context or label_scope")
+            identity.update(review_context=POST_AI_REVIEW_CONTEXT,
+                            label_scope=post_ai_review_scope())
     require(imported.get("split_recomputed") is False, "Unfrozen or unsupported label import")
     require(imported.get("prepare_metadata_sha256") == sha256(prepared / "prepare_metadata.json")
             and imported.get("raw_manifest_sha256") == sha256(prepared / "raw_manifest.json"),
@@ -374,7 +381,9 @@ def train_workflow(args) -> dict:
                {**settings, "device": "cpu", "selection": "validation only; no test tuning",
                 **{key: report[key] for key in
                    ("feature_protocol", "encoder", "feature_semantics", "label_protocol",
-                    "label_scope", "human_reviewed", "human_ground_truth_verified")}})
+                    "label_scope", "human_reviewed", "human_ground_truth_verified")},
+                **({"review_context": report["review_context"]}
+                   if "review_context" in report else {})})
     (output / "command.txt").write_text(shlex.join([sys.executable, *sys.argv]) + "\n")
     inputs = report["inputs"]
     common = ["--features", inputs["features"]["path"], "--meta", inputs["meta"]["path"],
@@ -424,6 +433,8 @@ def train_workflow(args) -> dict:
                   "label_scope", "human_reviewed", "human_ground_truth_verified")},
               "evaluation_scope": report["evaluation_scope"],
               "provenance_limit": report["provenance_limit"]}
+    if "review_context" in report:
+        result["review_context"] = report["review_context"]
     write_json(output / "workflow_summary.json", result)
     return result
 

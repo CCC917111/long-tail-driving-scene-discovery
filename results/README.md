@@ -1,12 +1,41 @@
 # Results and evidence status
 
-No new real-data result has been established under the current scene-disjoint
-protocol. The numbers below are historical reports retained from `b57eaffa`.
+No real-data result has been established under the original VLM/Cosmos
+v1.0-trainval scene-disjoint 70/15/15 protocol. The historical numbers below
+are reports retained from `b57eaffa`.
 They have not been regenerated from original predictions, logs or checkpoints
 in this round. New controlled results must be published in a separate table
 with one identifiable run per row.
 
-## Current protocol: no real-data results yet
+## Latest mini CPU run: post-AI-exposure human review
+
+The [2026-10-26 record](human-ai-exposed-20261026/README.md) records Yike's
+completed 80-row human CSV: 77 reviewed binary labels (12 normal / 65 tail),
+three uncertain and no pending rows. The final submission followed exposure to
+the full AI label table and has one reviewer; it is not blind independent ground
+truth. The original first-ten pre-exposure checkpoint and its four subsequent
+label revisions are retained. All notes are empty, including uncertainty
+reasons; no reasons have been invented. The raw final CSV SHA-256 is
+`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
+The 77 eligible rows retain the frozen internal mini 6/2/2-scene allocation.
+All four CPU fits are now complete with the original ResNet18 feature cache
+and unchanged training settings; the linked record contains the independently
+reconstructed comparison. On 15 test timestamps from two scenes, both SAE
+variants have AP 0.9353, precision@4 1.0 and recall@4 0.4. Their validation-selected
+operating point has test precision 1.0 and recall 0.2. The SAE checkpoints are
+byte-identical to each other and to the earlier AI pilot: no reward benefit
+was observed. These are agreement results against one reviewer's judgments
+after AI-label exposure, with only three normal training frames and one seed.
+The fit-time source snapshot is preserved; the current evaluator also contains
+a later provenance guard, recorded separately from the fitted runs.
+
+The earlier [CPU mini AI-label pilot](cpu-mini-ai-pilot-20261023/README.md)
+contains real-image CPU results against provisional AI references, with 73
+binary decisions and seven uncertain exclusions. Its results retain that
+scope and are separate from this human-review submission and the historical
+VLM/Cosmos reports below.
+
+## Original VLM/trainval 70/15/15 protocol: no real-data results yet
 
 The planned comparison shares frozen VLM features, one scene-disjoint manifest,
 train-only normalisation and validation-only model/operating-point selection:

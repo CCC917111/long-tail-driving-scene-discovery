@@ -92,7 +92,7 @@ def collect_runs(run_dirs: list[Path]) -> tuple[list[dict], list[dict]]:
             "method": method, "seed": seed, "run_dir": str(run_dir), "n": point["n"],
             "label_protocol": (label_scope["label_protocol"] if label_scope
                                else "recorded-reference"),
-            "human_reviewed": False if label_scope else None,
+            "human_reviewed": label_scope["human_reviewed"] if label_scope else None,
             "feature_protocol": feature_protocol, "encoder": encoder,
             "feature_semantics": feature_semantics,
             "feature_config_sha256": feature_config_hash,
@@ -114,6 +114,9 @@ def collect_runs(run_dirs: list[Path]) -> tuple[list[dict], list[dict]]:
             "features_sha256": metadata["inputs"]["features"]["sha256"],
             "meta_sha256": metadata["inputs"]["meta"]["sha256"],
         })
+        if label_scope is not None and label_scope.get("review_context"):
+            rows[-1].update({key: value for key, value in label_scope.items()
+                             if key not in ("label_protocol", "human_reviewed")})
     summaries = []
     for method in sorted({row["method"] for row in rows}):
         group = [row for row in rows if row["method"] == method]
@@ -121,6 +124,11 @@ def collect_runs(run_dirs: list[Path]) -> tuple[list[dict], list[dict]]:
                    "label_protocol": group[0]["label_protocol"],
                    "human_reviewed": group[0]["human_reviewed"],
                    "seeds": ",".join(str(row["seed"]) for row in group)}
+        if "review_context" in group[0]:
+            summary.update({key: group[0][key] for key in
+                            ("review_context", "human_ground_truth_verified",
+                             "independent_human_review", "prior_ai_labels_exposed",
+                             "reviewer_count", "official_benchmark", "interpretation")})
         for metric in ("ap", "fixed_precision", "fixed_recall", "fixed_f1",
                        "operating_precision", "operating_recall", "operating_f1",
                        "precision_at_k", "tail_found"):

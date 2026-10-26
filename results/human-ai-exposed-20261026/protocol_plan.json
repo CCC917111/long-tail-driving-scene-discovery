@@ -1,0 +1,26 @@
+{
+  "schema": "driving-final-user-review-training-plan-v1",
+  "purpose": "Controlled rerun on final single-reviewer judgments submitted after full AI-label exposure",
+  "training_not_started": true,
+  "hyperparameter_origin": "Carried unchanged from seed42 CPU pilot fixed before original annotations; no new result-dependent tuning",
+  "seed": 42,
+  "epochs": 10,
+  "hidden_dim": 256,
+  "top_k": 32,
+  "review_k": 4,
+  "target_precision": 0.9,
+  "feature_protocol": "cpu-resnet18-six-camera-v1",
+  "features_sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf",
+  "models": [
+    "logistic",
+    "mlp",
+    "sae_abstopk_none",
+    "sae_abstopk_norm"
+  ],
+  "frozen_scene_allocation": "original custom mini6/2/2; no reshuffling",
+  "review_context": "post_ai_exposure_single_reviewer",
+  "uncertain_policy": "exclude all3; retain judgments and empty-reason fact",
+  "scope": "small engineering pilot; not independent blind human truth or official benchmark",
+  "old_ai_runs_immutable": true,
+  "additional_paid_resources": false
+}

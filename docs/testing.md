@@ -1,5 +1,16 @@
 # Testing and verification
 
+The 2026-10-26 [post-AI-exposure user-review run](../results/human-ai-exposed-20261026/README.md)
+completed all four real CPU fits and an independent checkpoint/scaler/metric
+audit. A local full non-HTTP selection passed **225 tests and 18 subtests**,
+including the configured real-asset integration; one socket-dependent HTTP case
+was deselected. That record predates the final nested-scope guard hardening.
+After hardening, 24 context tests plus 12 evaluation/AI-scope tests and two
+subtests passed, with lint/compile clean. The publication PR's GitHub Actions
+checks cover the final source and generated-data HTTP workflow. These checks
+preserve single-reviewer, post-AI-exposure scope; they do not authenticate
+judgment correctness or establish independent blind human truth.
+
 The default CPU suite uses synthetic arrays and images to validate software
 contracts. A separately configured integration test and independent audits also
 ran against the real mini CPU pilot. Its labels remain provisional AI decisions;

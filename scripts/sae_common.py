@@ -50,7 +50,7 @@ from sklearn.metrics import (
 from torch.utils.data import DataLoader, TensorDataset
 
 from data_manifest import create_manifest, load_frozen_manifest, validate_tokens
-from evaluate_runs import write_evaluation_artifacts
+from evaluate_runs import label_scope_from_manifest, write_evaluation_artifacts
 
 from tail_activations import (
     predict_long_tail,
@@ -543,6 +543,7 @@ def run(description: str, defaults: dict) -> None:
               split_indices(labels, groups, args.val_ratio, args.test_ratio, args.seed))
     manifest = (json.loads(args.manifest.read_text(encoding="utf-8")) if args.manifest else
                 create_manifest(meta, labels, splits))
+    label_scope = label_scope_from_manifest(manifest)
     for name, idx in splits.items():
         n_tail = int(labels[idx].sum())
         print(f"[split] {name}: {len(idx)} samples "
@@ -593,6 +594,9 @@ def run(description: str, defaults: dict) -> None:
         "val": classification_metrics(labels[va], pred[va], score[va]),
         "test": classification_metrics(labels[te], pred[te], score[te]),
     }
+    if label_scope is not None and label_scope.get("review_context"):
+        metrics["label_scope"] = label_scope
+        metrics["config"] = dict(metrics["config"], label_scope=label_scope)
     print(f"\n{'=' * 70}\nLong-tail detection: long-tail if at least one z_t unit has "
           f"|z| > {args.act_threshold}\n{'=' * 70}")
     for name in ("val", "test"):
@@ -613,9 +617,14 @@ def run(description: str, defaults: dict) -> None:
     np.save(args.output_dir / "is_tail.npy", labels)
     save_activations(args.output_dir / "activations.npz", z_t, meta,
                      labels=labels.astype(int), splits=list(split_name))
+    context_by_token = ({row["sample_token"]: {
+        **{key: row[key] for key in ("review_context", "reviewer", "label_origin")},
+        "label_scope": label_scope} for row in manifest if row.get("split") in splits}
+        if label_scope is not None and label_scope.get("review_context") else {})
     with (args.output_dir / "rows.json").open("w", encoding="utf-8") as f:
         json.dump([{"sample_token": m.get("sample_token"), "split": s, "label": int(l),
-                    "prediction": int(pr), "active_tail_units": int(c), "score": float(sc)}
+                    "prediction": int(pr), "active_tail_units": int(c), "score": float(sc),
+                    **context_by_token.get(m["sample_token"], {})}
                    for m, s, l, pr, c, sc in zip(meta, split_name, labels, pred, count, score)],
                   f, indent=1)
     np.savez(args.output_dir / "standardizer.npz", mean=mean, std=std)

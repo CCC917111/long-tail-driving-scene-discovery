@@ -1,0 +1,4 @@
+rank,sample_token,scene,prediction,active_tail_units,tail_score,strong_units,top_neurons,reasons
+1,b5989651183643369174912bc5641d3b,scene-0916,long_tail,16,5.7377364185216795,16,8 72 26 43 84,
+2,f4f86af4da3b49e79497deda5c5f223a,scene-0103,long_tail,14,5.431895929972641,14,111 33 74 4 115,
+3,639a4120779f44bb9cf41be3e8612e36,scene-0796,long_tail,11,3.9823814234985617,11,58 46 17 56 37,
