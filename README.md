@@ -66,7 +66,8 @@ references. Train still has only three normal frames, all from one scene.
 The final judgments were collected after AI-label exposure by one reviewer;
 the earlier first-ten checkpoint and four revisions are preserved. Read the
 [full reviewed-reference run and evidence](results/human-ai-exposed-20261026/README.md).
-The offline HTML demo below continues to replay the original AI pilot.
+The default offline HTML demo now replays this reviewed-reference run; the
+original AI demo is retained as a byte-identical archive.
 
 ## Original AI-reference pilot
 
@@ -111,7 +112,10 @@ Edge. With the original four locally held ZIP parts, it displays six camera
 views, learned activations, per-frame scores from all four methods, error
 bookmarks and a downloadable review CSV. Images stay in your browser.
 
-The HTML contains cached numeric outputs, not raw images or a live model.
+The default viewer contains all 308 method values for the latest 77 retained
+timestamps, with same-rule MLP error bookmarks and the post-AI-exposure review
+scope. The [archived AI viewer](demo/driving_ai_pilot.html) retains the original
+73-frame pilot. Both contain cached numeric outputs, not raw images or a live model.
 Without the matching parts, you can read its result summary; interactive image
 inspection requires those parts. For a generated-data example requiring no
 nuScenes access, use the quickstart below. The [demo guide](demo/README.md)
@@ -145,6 +149,11 @@ same workflow without HTTP checks:
 
 ## Team and contribution
 
+**Project lead: Yike Chen.** Yike is responsible for the GitHub project's
+repository-wide optimization and delivery, including the CPU workflow,
+experiment organization, review process, reproducibility materials and demo.
+The modernization phase used AI-assisted development, as documented below.
+
 The original capstone is shared work by **Yike Chen, Zihua Chen and Yusong Zhao**.
 These roles preserve the contribution statement at `b57eaffa`; original reports
 and run records remain necessary to substantiate individual claims.
@@ -172,7 +181,8 @@ retained in the [result bundle](results/cpu-mini-ai-pilot-20261023/README.md).
 
 CPU CI runs tests, lint and the generated-data HTTP workflow. Browser CI checks
 desktop/mobile interaction with synthetic, watermarked ZIPs. Separately, Node
-checks verified all 480 original image bytes and all 292 displayed model values.
+checks verified all 480 original image bytes and all 308 displayed values in
+the latest viewer; the archived AI viewer retains its separate 292-value proof.
 See [verification scope](docs/testing.md).
 
 | Read next | Purpose |
