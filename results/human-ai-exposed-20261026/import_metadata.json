@@ -1,0 +1,41 @@
+{
+  "schema_version": "new-manual-label-import-v1",
+  "scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+  "split_recomputed": false,
+  "review_inputs_sha256": {
+    "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv": "a713cc15a582fe8b90d6c3cfefc118702bd52e214460720eb121495a28024724"
+  },
+  "prepare_metadata_sha256": "de39e03c37feb0affe6a7dd3e3d3bad54e48c1d8794891ad938e645e0b9210a9",
+  "raw_manifest_sha256": "1dba60575bf753e4a3124fb402f1f41dce34b4523650d792efb251a95cc3f525",
+  "rubric_version": "sha256:f19373f55ffc930f",
+  "rubric_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+  "included_labels": 77,
+  "excluded_rows": 3,
+  "support": {
+    "train": {
+      "normal": 3,
+      "tail": 45
+    },
+    "val": {
+      "normal": 4,
+      "tail": 10
+    },
+    "test": {
+      "normal": 5,
+      "tail": 10
+    }
+  },
+  "ready_for_current_training_contract": true,
+  "review_context": "post_ai_exposure_single_reviewer",
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  }
+}

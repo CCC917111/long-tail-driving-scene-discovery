@@ -10,13 +10,14 @@ keyframes. A reproducible CPU follow-up connects data validation, four-model
 comparison, saved predictions and an offline neuron explorer.
 
 [**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) ·
-[**Saved results**](results/cpu-mini-ai-pilot-20261023/README.md) ·
+[**Saved results**](results/human-ai-exposed-20261026/README.md) ·
 [**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
 
-> **Current evidence:** the real-image CPU pipeline is complete. The pilot uses
-> provisional AI visual labels; **zero labels have been verified by a human**.
-> Its scores measure agreement with those references, not benchmark accuracy.
+> **Current evidence:** the real-image CPU pipeline is complete. The latest run
+> uses 77 retained single-reviewer judgments submitted after the full AI-label
+> table was shown. Its scores describe those references; independent blind human
+> ground truth and an official benchmark result have not been established.
 
 ## What the project does
 
@@ -41,7 +42,33 @@ CPU pilot uses a pinned ImageNet ResNet18, concatenating six 512-dimensional
 views. These are separate feature protocols; the CPU run does not reproduce
 the original Cosmos experiment.
 
-## Completed real-image pilot
+## Latest: reviewed references after AI-label exposure
+
+On 2026-10-26, Yike submitted all 80 decisions: 12 normal, 65 tail and three
+uncertain. Four CPU models were rerun with unchanged features, scene allocation
+and seed-42 settings. Train/validation/test retain 48/14/15 timestamps; test has
+ten tail and five normal references in two scenes.
+
+| Method | Test AP | Precision@4 | Test recall at validation-selected operating point |
+|---|---:|---:|---:|
+| Logistic regression | 0.6143 | 0.50 | 0.00 |
+| Small MLP | 0.5984 | 0.50 | 0.00 |
+| AbsTopK SAE, no reward | 0.9353 | 1.00 | 0.20 |
+| AbsTopK SAE, norm reward | 0.9353 | 1.00 | 0.20 |
+
+The SAE operating point has test precision 1.00 on only **two selected frames**.
+Its top-four policy separately finds four of ten reference positives. Reward
+and no-reward checkpoints remain identical. Their weights also match the original
+AI pilot: labels and retained evaluation IDs changed, so the new AP is not a
+model-improvement claim. MLP selects a different epoch under the new validation
+references. Train still has only three normal frames, all from one scene.
+
+The final judgments were collected after AI-label exposure by one reviewer;
+the earlier first-ten checkpoint and four revisions are preserved. Read the
+[full reviewed-reference run and evidence](results/human-ai-exposed-20261026/README.md).
+The offline HTML demo below continues to replay the original AI pilot.
+
+## Original AI-reference pilot
 
 **Protocol `cpu-resnet18-six-camera-v1` · 2026-10-23 · seed 42 · review budget 4**
 
@@ -131,7 +158,8 @@ and run records remain necessary to substantiate individual claims.
 The later CPU workflow, provenance hardening, tests, offline tools and this
 documentation are **AI-assisted follow-up work**, recorded separately from
 original capstone authorship. The pilot annotations were produced by an AI
-visual assistant and remain pending independent human review.
+visual assistant. The later user review is recorded separately with its known
+AI-label exposure, single-reviewer scope and original/revised CSV evidence.
 
 ## Evidence and reproducibility
 

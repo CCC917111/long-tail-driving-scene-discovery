@@ -7,6 +7,47 @@
 **人工核验由实际看图的人完成。Subagent 可以执行同样的检查步骤，但记录为
 AI 复核；多次 AI 判断一致也不构成人工真值或标签准确率。**
 
+## 已完成的提交与 AI 暴露记录（2026-10-26）
+
+本轮已收到 Yike 的最终 CSV，覆盖冻结清单中的全部 80 个唯一 sample token，
+没有缺失、重复或额外 token。原始文件 SHA-256：
+`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`。
+CSV 是本次状态与标签计数的来源；每行 reviewer 均为 `Yike`。
+最终有 77 条二分类 `reviewed`（12 条 `normal_core`、65 条
+`not_normal_core`），另有 3 条标签与状态均为 `uncertain`，没有 `pending`。
+80 条 `review_notes` 全部为空，三条不确定记录也未提供原因；执行者没有补写
+或推断这些原因。
+
+最初仅完成前 10 条的 CSV 作为展示完整 AI 标签表之前的检查点保留，原始
+SHA-256 为 `c56adb638a09276ff027fb039b049ec8be90d251aaa3b3477c3263760d4c49ec`。
+其后用户看过完整 AI 标签表，才提交最终文件。因此最终版本属于**接触 AI
+标签后的单人复核**，不能称为盲法独立人工真值。前 10 条中有四条后来修订：
+按工具从 0 开始的索引，0、3、9 从 `normal_core` 改为 `not_normal_core`，
+8 从 `normal_core` 改为 `uncertain`；两个原始版本及修订记录均保留。
+剩余 70 条从待完成变为 68 条 `reviewed` 和两条 `uncertain`。
+
+沿用原来的 6/2/2 场景划分，二分类支持数为：
+
+| 冻结 split | normal | not normal | uncertain（排除） |
+|---|---:|---:|---:|
+| train | 3 | 45 | 0 |
+| validation | 4 | 10 | 2 |
+| test | 5 | 10 | 1 |
+
+77 条二分类记录满足当前导入器「每个 split 都有两类」的支持数检查；这不
+代表标注独立性或模型效果已经得到验证。三个正常训练时间点来自同一场景，
+样本量与场景覆盖仍有限。三条 `uncertain` 保留原判并排除出有监督训练/评估。
+随后已用这 77 条记录、原有 ResNet18 特征和不变的训练设置完成四个 CPU 方法
+的拟合，并独立核对输入/源码 hash、仅训练集拟合的标准化、四个 checkpoint
+重载得分、仅 validation 选择的阈值、保存的指标与比较表。
+这些指标衡量与接触 AI 标签后判断的一致程度，不是盲法独立真值准确率。
+两个 SAE checkpoint 与彼此及原 AI 试跑字节相同，本轮未观察到 reward 增益；
+MLP 则因 validation 判断改变，从第 4 轮改选第 5 轮 checkpoint，训练设置
+与十轮训练 loss 轨迹保持不变。拟合时源码快照保留，之后的来源字段防护修复
+单独记录。已完成的实验及其证据范围见
+[本轮记录](../results/human-ai-exposed-20261026/README.md)；原 AI 试跑与
+[AI 复核记录](../results/ai-label-recheck-20261024/README.md)继续单独保留。
+
 ## 1. 准备与独立判断
 
 1. 从 GitHub 下载 [空白复核工具](../tools/review_upload.html)，保存 HTML，

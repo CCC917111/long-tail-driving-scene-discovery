@@ -1,0 +1,206 @@
+[
+  {
+    "sample_token": "b5989651183643369174912bc5641d3b",
+    "scene_token": "325cef682f064c55a255f2625c533b75",
+    "scene_name": "scene-0916",
+    "timestamp": 1538984233547259,
+    "scene_position": 0,
+    "source_version": "v1.0-mini",
+    "evaluation_scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+    "split": "excluded",
+    "label": "uncertain",
+    "label_source": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv",
+    "review_status": "uncertain",
+    "reviewer": "Yike",
+    "images": {
+      "CAM_FRONT": "CAM_FRONT/n015-2018-10-08-15-36-50+0800__CAM_FRONT__1538984233512470.jpg",
+      "CAM_FRONT_LEFT": "CAM_FRONT_LEFT/n015-2018-10-08-15-36-50+0800__CAM_FRONT_LEFT__1538984233504844.jpg",
+      "CAM_FRONT_RIGHT": "CAM_FRONT_RIGHT/n015-2018-10-08-15-36-50+0800__CAM_FRONT_RIGHT__1538984233520339.jpg",
+      "CAM_BACK": "CAM_BACK/n015-2018-10-08-15-36-50+0800__CAM_BACK__1538984233537525.jpg",
+      "CAM_BACK_LEFT": "CAM_BACK_LEFT/n015-2018-10-08-15-36-50+0800__CAM_BACK_LEFT__1538984233547423.jpg",
+      "CAM_BACK_RIGHT": "CAM_BACK_RIGHT/n015-2018-10-08-15-36-50+0800__CAM_BACK_RIGHT__1538984233527893.jpg"
+    },
+    "image_files": {
+      "CAM_FRONT": {
+        "filename": "samples/CAM_FRONT/n015-2018-10-08-15-36-50+0800__CAM_FRONT__1538984233512470.jpg",
+        "sha256": "eb299dff2240c756d2d4725c6247247655be92531a1d79717ed1da461ce2e130",
+        "bytes": 119917,
+        "error": null
+      },
+      "CAM_FRONT_LEFT": {
+        "filename": "samples/CAM_FRONT_LEFT/n015-2018-10-08-15-36-50+0800__CAM_FRONT_LEFT__1538984233504844.jpg",
+        "sha256": "475c1dacfd3c4f5375ff9c1598c082ec65c4f3bfa0a720107522eba6cada5efe",
+        "bytes": 112859,
+        "error": null
+      },
+      "CAM_FRONT_RIGHT": {
+        "filename": "samples/CAM_FRONT_RIGHT/n015-2018-10-08-15-36-50+0800__CAM_FRONT_RIGHT__1538984233520339.jpg",
+        "sha256": "6ea9d5981baa64e78b937a2a1a1cf67717a8a974043872d2db75e07fa1bfc35e",
+        "bytes": 148884,
+        "error": null
+      },
+      "CAM_BACK": {
+        "filename": "samples/CAM_BACK/n015-2018-10-08-15-36-50+0800__CAM_BACK__1538984233537525.jpg",
+        "sha256": "a2b3399c6d1afc905a43442c82531bcf61bbfde289f5da51bc73d3956a2c8fd0",
+        "bytes": 141061,
+        "error": null
+      },
+      "CAM_BACK_LEFT": {
+        "filename": "samples/CAM_BACK_LEFT/n015-2018-10-08-15-36-50+0800__CAM_BACK_LEFT__1538984233547423.jpg",
+        "sha256": "e48128afe5ae8fd7e06cdde2a5bab4da1f4f02d1e4b14112dc1f734b68297f8f",
+        "bytes": 127442,
+        "error": null
+      },
+      "CAM_BACK_RIGHT": {
+        "filename": "samples/CAM_BACK_RIGHT/n015-2018-10-08-15-36-50+0800__CAM_BACK_RIGHT__1538984233527893.jpg",
+        "sha256": "74ac683901d10e618323b5ebaf895ddf6bb17bb2c8532bf35eaa70a71d06b5cb",
+        "bytes": 153180,
+        "error": null
+      }
+    },
+    "exclusion_reason": "pending_or_uncertain_manual_review",
+    "original_split": "test",
+    "review_notes": "",
+    "review_csv_line": 10,
+    "review_context": "post_ai_exposure_single_reviewer",
+    "label_origin": "human_post_ai_exposure",
+    "submitted_label": "uncertain",
+    "rubric_version": "sha256:f19373f55ffc930f"
+  },
+  {
+    "sample_token": "639a4120779f44bb9cf41be3e8612e36",
+    "scene_token": "c5224b9b454b4ded9b5d2d2634bbda8a",
+    "scene_name": "scene-0796",
+    "timestamp": 1538448752549040,
+    "scene_position": 16,
+    "source_version": "v1.0-mini",
+    "evaluation_scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+    "split": "excluded",
+    "label": "uncertain",
+    "label_source": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv",
+    "review_status": "uncertain",
+    "reviewer": "Yike",
+    "images": {
+      "CAM_FRONT": "CAM_FRONT/n015-2018-10-02-10-50-40+0800__CAM_FRONT__1538448752512460.jpg",
+      "CAM_FRONT_LEFT": "CAM_FRONT_LEFT/n015-2018-10-02-10-50-40+0800__CAM_FRONT_LEFT__1538448752504844.jpg",
+      "CAM_FRONT_RIGHT": "CAM_FRONT_RIGHT/n015-2018-10-02-10-50-40+0800__CAM_FRONT_RIGHT__1538448752520339.jpg",
+      "CAM_BACK": "CAM_BACK/n015-2018-10-02-10-50-40+0800__CAM_BACK__1538448752537525.jpg",
+      "CAM_BACK_LEFT": "CAM_BACK_LEFT/n015-2018-10-02-10-50-40+0800__CAM_BACK_LEFT__1538448752547423.jpg",
+      "CAM_BACK_RIGHT": "CAM_BACK_RIGHT/n015-2018-10-02-10-50-40+0800__CAM_BACK_RIGHT__1538448752527893.jpg"
+    },
+    "image_files": {
+      "CAM_FRONT": {
+        "filename": "samples/CAM_FRONT/n015-2018-10-02-10-50-40+0800__CAM_FRONT__1538448752512460.jpg",
+        "sha256": "f2697349c52f782783cc47e5e5462a7f2a0fd6de1c97c79690f9a261eaab8173",
+        "bytes": 184088,
+        "error": null
+      },
+      "CAM_FRONT_LEFT": {
+        "filename": "samples/CAM_FRONT_LEFT/n015-2018-10-02-10-50-40+0800__CAM_FRONT_LEFT__1538448752504844.jpg",
+        "sha256": "a2335eef6a609f59a8f9d714cef36749ae714442347b826db1e5496c2ff8d78b",
+        "bytes": 202162,
+        "error": null
+      },
+      "CAM_FRONT_RIGHT": {
+        "filename": "samples/CAM_FRONT_RIGHT/n015-2018-10-02-10-50-40+0800__CAM_FRONT_RIGHT__1538448752520339.jpg",
+        "sha256": "cc02aa219c758031244aa54d4528f55916ddfe84973a98aae8014d6ecf5c4c4e",
+        "bytes": 177855,
+        "error": null
+      },
+      "CAM_BACK": {
+        "filename": "samples/CAM_BACK/n015-2018-10-02-10-50-40+0800__CAM_BACK__1538448752537525.jpg",
+        "sha256": "208308f36b51fa2742fbad6264b2375f10d00db14f5bd06f09e54c29338bbe95",
+        "bytes": 119720,
+        "error": null
+      },
+      "CAM_BACK_LEFT": {
+        "filename": "samples/CAM_BACK_LEFT/n015-2018-10-02-10-50-40+0800__CAM_BACK_LEFT__1538448752547423.jpg",
+        "sha256": "390a2543ee5ea77ae6392507831966e6f631067f419d89d50f6de19cb844e32d",
+        "bytes": 186988,
+        "error": null
+      },
+      "CAM_BACK_RIGHT": {
+        "filename": "samples/CAM_BACK_RIGHT/n015-2018-10-02-10-50-40+0800__CAM_BACK_RIGHT__1538448752527893.jpg",
+        "sha256": "b5d36c410cb351900cc3bdf9a799197caa3e143bac29b648a0299b9576c13104",
+        "bytes": 161468,
+        "error": null
+      }
+    },
+    "exclusion_reason": "pending_or_uncertain_manual_review",
+    "original_split": "val",
+    "review_notes": "",
+    "review_csv_line": 37,
+    "review_context": "post_ai_exposure_single_reviewer",
+    "label_origin": "human_post_ai_exposure",
+    "submitted_label": "uncertain",
+    "rubric_version": "sha256:f19373f55ffc930f"
+  },
+  {
+    "sample_token": "f4f86af4da3b49e79497deda5c5f223a",
+    "scene_token": "fcbccedd61424f1b85dcbf8f897f9754",
+    "scene_name": "scene-0103",
+    "timestamp": 1533151606048630,
+    "scene_position": 5,
+    "source_version": "v1.0-mini",
+    "evaluation_scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+    "split": "excluded",
+    "label": "uncertain",
+    "label_source": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv",
+    "review_status": "uncertain",
+    "reviewer": "Yike",
+    "images": {
+      "CAM_FRONT": "CAM_FRONT/n008-2018-08-01-15-16-36-0400__CAM_FRONT__1533151606012404.jpg",
+      "CAM_FRONT_LEFT": "CAM_FRONT_LEFT/n008-2018-08-01-15-16-36-0400__CAM_FRONT_LEFT__1533151606004803.jpg",
+      "CAM_FRONT_RIGHT": "CAM_FRONT_RIGHT/n008-2018-08-01-15-16-36-0400__CAM_FRONT_RIGHT__1533151606020482.jpg",
+      "CAM_BACK": "CAM_BACK/n008-2018-08-01-15-16-36-0400__CAM_BACK__1533151606037558.jpg",
+      "CAM_BACK_LEFT": "CAM_BACK_LEFT/n008-2018-08-01-15-16-36-0400__CAM_BACK_LEFT__1533151606047405.jpg",
+      "CAM_BACK_RIGHT": "CAM_BACK_RIGHT/n008-2018-08-01-15-16-36-0400__CAM_BACK_RIGHT__1533151606028113.jpg"
+    },
+    "image_files": {
+      "CAM_FRONT": {
+        "filename": "samples/CAM_FRONT/n008-2018-08-01-15-16-36-0400__CAM_FRONT__1533151606012404.jpg",
+        "sha256": "85b1b0937c423c393e4a79cfd755d31d6dc3711ca42d778514091b0f507a3b17",
+        "bytes": 147444,
+        "error": null
+      },
+      "CAM_FRONT_LEFT": {
+        "filename": "samples/CAM_FRONT_LEFT/n008-2018-08-01-15-16-36-0400__CAM_FRONT_LEFT__1533151606004803.jpg",
+        "sha256": "7d02c2d3fdad80ea36b6a977e30f828f7bf064b7d3f0adc10477a3636d40c8aa",
+        "bytes": 171598,
+        "error": null
+      },
+      "CAM_FRONT_RIGHT": {
+        "filename": "samples/CAM_FRONT_RIGHT/n008-2018-08-01-15-16-36-0400__CAM_FRONT_RIGHT__1533151606020482.jpg",
+        "sha256": "0bfa3a47a1d72a9a1d2d3236ebbf7071560d51986e9515d0582abfc4cd2b1dc3",
+        "bytes": 156613,
+        "error": null
+      },
+      "CAM_BACK": {
+        "filename": "samples/CAM_BACK/n008-2018-08-01-15-16-36-0400__CAM_BACK__1533151606037558.jpg",
+        "sha256": "c39d506f2f361e6f42917fe65821fd7312689467709bf1701749b819573d4ec1",
+        "bytes": 117091,
+        "error": null
+      },
+      "CAM_BACK_LEFT": {
+        "filename": "samples/CAM_BACK_LEFT/n008-2018-08-01-15-16-36-0400__CAM_BACK_LEFT__1533151606047405.jpg",
+        "sha256": "68f00389431eddeb156ad21d4b30f133de529e303983a0509e1d306ce3ee5cf8",
+        "bytes": 116994,
+        "error": null
+      },
+      "CAM_BACK_RIGHT": {
+        "filename": "samples/CAM_BACK_RIGHT/n008-2018-08-01-15-16-36-0400__CAM_BACK_RIGHT__1533151606028113.jpg",
+        "sha256": "efbae42bc54bd7667f359cfade527f64e3e5f947ea2b368a3c9197a7b221de48",
+        "bytes": 152604,
+        "error": null
+      }
+    },
+    "exclusion_reason": "pending_or_uncertain_manual_review",
+    "original_split": "val",
+    "review_notes": "",
+    "review_csv_line": 75,
+    "review_context": "post_ai_exposure_single_reviewer",
+    "label_origin": "human_post_ai_exposure",
+    "submitted_label": "uncertain",
+    "rubric_version": "sha256:f19373f55ffc930f"
+  }
+]

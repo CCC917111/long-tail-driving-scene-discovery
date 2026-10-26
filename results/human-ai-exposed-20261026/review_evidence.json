@@ -1,0 +1,50 @@
+{
+  "schema": "post-ai-exposure-human-review-evidence-v1",
+  "reviewer": "Yike",
+  "reviewer_identity_source": "CSV declaration and user submission; not identity authentication",
+  "raw_csv_file": "reviewed-original.csv",
+  "raw_csv_sha256": "c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a",
+  "context_csv_file": "reviewed-with-context.csv",
+  "context_csv_sha256": "a713cc15a582fe8b90d6c3cfefc118702bd52e214460720eb121495a28024724",
+  "context_column_added_by": "execution assistant from known chat exposure; five user fields unchanged",
+  "human_judgments_count": 80,
+  "binary_judgments_retained": 77,
+  "uncertain_excluded": 3,
+  "pending": 0,
+  "prior_ai_labels_exposed": true,
+  "prior_aggregate_model_metrics_exposed": true,
+  "per_frame_model_score_exposure": "not recorded",
+  "independent_human_review": false,
+  "human_ground_truth_verified": false,
+  "official_benchmark": false,
+  "first10_pre_exposure_checkpoint_sha256": "c56adb638a09276ff027fb039b049ec8be90d251aaa3b3477c3263760d4c49ec",
+  "first10_changes_after_exposure": [
+    {
+      "frame_no": 1,
+      "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+      "before_label": "normal_core",
+      "after_label": "not_normal_core"
+    },
+    {
+      "frame_no": 4,
+      "sample_token": "a9def8f915cf4bfe9c74b864384ec6c7",
+      "before_label": "normal_core",
+      "after_label": "not_normal_core"
+    },
+    {
+      "frame_no": 9,
+      "sample_token": "b5989651183643369174912bc5641d3b",
+      "before_label": "normal_core",
+      "after_label": "uncertain"
+    },
+    {
+      "frame_no": 10,
+      "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+      "before_label": "normal_core",
+      "after_label": "not_normal_core"
+    }
+  ],
+  "notes_nonempty": 0,
+  "uncertain_reasons_recorded": false,
+  "no_user_labels_modified": true
+}

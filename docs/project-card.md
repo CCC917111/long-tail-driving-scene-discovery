@@ -28,6 +28,13 @@ review and understand it before presenting it as current engineering work.
 
 ## What is demonstrated
 
+The later [2026-10-26 reviewed-reference run](../results/human-ai-exposed-20261026/README.md)
+retains 77 final user judgments after the full AI-label table was disclosed,
+with three uncertain exclusions. Its four-model rerun and independent reload
+audit are complete. It remains a single-reviewer, post-exposure reference set;
+the original AI pilot below is archived separately. SAE weights are unchanged,
+so differences between the two result tables are not model-improvement evidence.
+
 | Evidence | What it establishes |
 |---|---|
 | 80 real timestamps, 480 original images, ten scenes | Real inputs passed transport, decoding and frozen-split preparation. |

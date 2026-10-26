@@ -1,0 +1,202 @@
+{
+  "protocol_version": "scene-disjoint-evaluation-v1",
+  "seed": 42,
+  "score_direction": "higher means more likely tail",
+  "operating_point": {
+    "selection_split": "val",
+    "target_precision": 0.9,
+    "selection_rule": "max recall, then precision, then threshold",
+    "comparison": "score >= threshold",
+    "status": "target_unreachable",
+    "threshold": null,
+    "validation_precision": 0.0,
+    "validation_recall": 0.0
+  },
+  "fixed_rule": {
+    "rule": "score >= 0.5",
+    "threshold": 0.5
+  },
+  "split_summary": {
+    "train": {
+      "n_frames": 48,
+      "n_scenes": 6,
+      "tail_support": 45,
+      "normal_support": 3
+    },
+    "val": {
+      "n_frames": 14,
+      "n_scenes": 2,
+      "tail_support": 10,
+      "normal_support": 4
+    },
+    "test": {
+      "n_frames": 15,
+      "n_scenes": 2,
+      "tail_support": 10,
+      "normal_support": 5
+    }
+  },
+  "splits": {
+    "val": {
+      "scene_count": 2,
+      "operating": {
+        "n": 14,
+        "tail_support": 10,
+        "normal_support": 4,
+        "confusion": {
+          "tn": 4,
+          "fp": 0,
+          "fn": 10,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.5586607836607836,
+        "auc": 0.1
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 1,
+        "precision_at_k": 0.25,
+        "recall_at_k": 0.1,
+        "random_expected_tail_found": 2.857142857142857,
+        "random_expected_precision_at_k": 0.7142857142857143,
+        "random_expected_recall_at_k": 0.2857142857142857,
+        "selected_tokens": [
+          "63c24b51feb94f14bec29022dae4975d",
+          "61d47d1198184bfdaa6777e9448d825d",
+          "269ccf1fe399403c914e1f649d2a8ca2",
+          "c1676a2feac74eee8aa38ca3901787d6"
+        ]
+      },
+      "fixed": {
+        "n": 14,
+        "tail_support": 10,
+        "normal_support": 4,
+        "confusion": {
+          "tn": 0,
+          "fp": 4,
+          "fn": 0,
+          "tp": 10
+        },
+        "precision": 0.7142857142857143,
+        "recall": 1.0,
+        "f1": 0.8333333333333333,
+        "ap": 0.5586607836607836,
+        "auc": 0.1
+      }
+    },
+    "test": {
+      "scene_count": 2,
+      "operating": {
+        "n": 15,
+        "tail_support": 10,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 5,
+          "fp": 0,
+          "fn": 10,
+          "tp": 0
+        },
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "ap": 0.6142957042957042,
+        "auc": 0.39999999999999997
+      },
+      "review_budget": {
+        "requested_k": 4,
+        "effective_k": 4,
+        "tie_break": "sample_token ascending",
+        "tail_found": 2,
+        "precision_at_k": 0.5,
+        "recall_at_k": 0.2,
+        "random_expected_tail_found": 2.6666666666666665,
+        "random_expected_precision_at_k": 0.6666666666666666,
+        "random_expected_recall_at_k": 0.26666666666666666,
+        "selected_tokens": [
+          "b4ff30109dd14c89b24789dc5713cf8c",
+          "e54b784a608644a2804fcf800c7499f7",
+          "858a1ece22cf45d9bc71e42336604b78",
+          "d68668cb98fe4be5a00f58b5ac8a0a7d"
+        ]
+      },
+      "fixed": {
+        "n": 15,
+        "tail_support": 10,
+        "normal_support": 5,
+        "confusion": {
+          "tn": 0,
+          "fp": 5,
+          "fn": 0,
+          "tp": 10
+        },
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "ap": 0.6142957042957042,
+        "auc": 0.39999999999999997
+      }
+    }
+  },
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "test_scene_bootstrap": {
+    "unit": "scene",
+    "seed": 42,
+    "requested_samples": 1000,
+    "scene_count": 2,
+    "threshold_refitted": false,
+    "confidence": 0.95,
+    "intervals": {
+      "ap": {
+        "lower": 0.3333333333333333,
+        "upper": 1.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "auc": {
+        "lower": 0.39999999999999997,
+        "upper": 0.39999999999999997,
+        "valid_samples": 748,
+        "undefined_samples": 252
+      },
+      "precision": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "recall": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      },
+      "f1": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_samples": 1000,
+        "undefined_samples": 0
+      }
+    },
+    "status": "computed"
+  },
+  "provenance": {
+    "run_metadata": "run_metadata.json",
+    "manifest_sha256": "99ddb4d3c4d45c8f72881203e07eb2e45e0602d58f98e8983ef9f0b3542334cb",
+    "predictions_sha256": "a4f50bbaa58cdc6634433a9d95044f4ef86ae2cc6aa10cde2205153d93d57cdf"
+  }
+}
