@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export a cached AI-pilot explorer whose original images stay on the user's PC.
+"""Export a scoped cached explorer whose original images stay on the user's PC.
 
 Reuses neuron_explorer.PAGE and Explorer, plus the already checked local ZIP
 reader. No pixels, model inference or network calls are embedded in the HTML.
@@ -11,10 +11,12 @@ import argparse
 import hashlib
 import html
 import json
+import math
 from pathlib import Path
 import re
 
 from neuron_explorer import PAGE, Explorer
+from prepare_driving import post_ai_review_scope
 from summarize_runs import collect_runs
 from tail_activations import ActivationStore, CAMERAS, DEFAULT_NEURON_THRESHOLD
 
@@ -47,14 +49,85 @@ def replace_once(source, original, replacement):
     return source.replace(original, replacement)
 
 
-def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report):
+def reference_from_scope(scope):
+    """Accept only the two recorded reference protocols, without upgrading either."""
+    require(isinstance(scope, dict), "Explicit label scope is required")
+    if scope.get("label_protocol") == "ai-visual-pilot":
+        require(scope.get("human_reviewed") is False
+                and not scope.get("review_context")
+                and all(scope.get(key, False) is False for key in
+                        ("human_ground_truth_verified", "independent_human_review",
+                         "prior_ai_labels_exposed", "official_benchmark"))
+                and scope.get("reviewer_count", 0) == 0,
+                "AI label scope must be provisional with human review pending")
+        return {"kind": "ai_provisional", "label": "AI 初标", "short_label": "AI 参考",
+                "review_context": None,
+                "description": "AI provisional labels; human review pending. Errors and "
+                               "purity are relative to AI references."}
+    canonical = post_ai_review_scope()
+    require(all(key in scope and type(scope[key]) is type(value) and scope[key] == value
+                for key, value in canonical.items()),
+            "Manual label scope requires canonical post-AI-exposure single-reviewer provenance")
+    return {"kind": "human_ai_exposed", "label": "AI 曝露后单人复核",
+            "short_label": "人工复核参考", "review_context": canonical["review_context"],
+            "description": "Agreement with one human reviewer after AI-label exposure; "
+                           "not independent human ground truth or an official benchmark."}
+
+
+def error_type(label, prediction):
+    return "fp" if prediction and not label else "fn" if label and not prediction else None
+
+
+def failure_bookmarks(predictions, reference, failure_cases=None):
+    """Use one saved fixed rule for the illustrative FP and two FNs."""
+    rows = [row for row in predictions["mlp"].values() if row["split"] == "test"]
+    false_positives = sorted((row for row in rows if row["label"] == 0
+                              and row["prediction"] == 1),
+                             key=lambda row: (-row["score"], row["sample_token"]))
+    false_negatives = sorted((row for row in rows if row["label"] == 1
+                              and row["prediction"] == 0),
+                             key=lambda row: (row["score"], row["sample_token"]))
+    selected = false_positives[:1] + false_negatives[:2]
+    require(len(selected) == 3, "Expected an MLP fixed-rule test FP and two FNs")
+    if failure_cases is not None:
+        recorded = read_json(failure_cases)
+        if reference["kind"] == "human_ai_exposed":
+            require(reference_from_scope(recorded.get("label_scope")) == reference,
+                    "Failure-case reference scope differs")
+        cases = recorded["cases"]
+        require([row["sample_token"] for row in cases]
+                == [row["sample_token"] for row in selected],
+                "Failure cases differ from the saved fixed-rule disagreements")
+        for case, row in zip(cases, selected):
+            score = case.get("score", case.get("model_score"))
+            require(case.get("model", case.get("method")) == "mlp"
+                    and isinstance(score, (float, int)) and math.isclose(score, row["score"]),
+                    "Failure-case model or score differs from saved predictions")
+            if reference["kind"] == "human_ai_exposed":
+                require(case.get("reference_label") == row["label"]
+                        and case.get("error_relative_to_final_review")
+                        == error_type(row["label"], row["prediction"]),
+                        "Failure-case label or error differs from saved predictions")
+    return [{"title": "MLP 固定规则" + ("误报" if row["label"] == 0 else "漏报")
+             + "（相对 " + reference["label"] + "）",
+             "method": "mlp", "sample_token": row["sample_token"], "split": "test",
+             "rule": "fixed probability >= 0.5", "error_type": error_type(
+                 row["label"], row["prediction"]),
+             "reference_label": row["label"], "score": row["score"],
+             "selection": "Illustrative post-evaluation cases; not used for tuning"}
+            for row in selected]
+
+
+def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report,
+                  failure_cases=None):
     run, comparison_dir, prepared_dir = (Path(path).resolve()
                                          for path in (run, comparison_dir, prepared_dir))
     imported = read_json(import_report)
     prepared = read_json(prepared_dir / "prepare_metadata.json")
     selected = read_json(prepared_dir / "selected_samples.json")
     raw = read_json(prepared_dir / "raw_manifest.json")
-    require(imported.get("status") == "completed" and imported.get("labels_created") is False,
+    require(imported.get("status") == "completed" and imported.get("labels_created") is False
+            and imported.get("parts") == 4 and imported.get("transfer_id"),
             "A completed original small-part import report is required")
     for filename in ("selected_samples.json", "raw_manifest.json", "rubric.md"):
         require(digest(prepared_dir / filename) == prepared["prepared_files"][filename],
@@ -62,7 +135,9 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
     require(prepared["included_frames"] == imported["selected_samples"] == len(selected),
             "Imported selection count differs from preparation")
     raw_by_token = {row["sample_token"]: row for row in raw if not row.get("exclusion_reason")}
-    require(len(raw_by_token) == len(selected), "Prepared selection has duplicate/missing rows")
+    require(len(raw_by_token) == len(selected)
+            == len({row["sample_token"] for row in selected}),
+            "Prepared selection has duplicate/missing rows")
     expected_images = {}
     expected_frames = []
     for row in selected:
@@ -76,27 +151,33 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
         expected_frames.append({key: row[key] for key in
                                 ("sample_token", "scene_token", "timestamp")})
         expected_frames[-1]["images"] = images
+    require(len(expected_images) == len(selected) * len(CAMERAS),
+            "Original image filenames must be unique for each selected frame and camera")
 
     recorded_table = read_json(comparison_dir / "comparison/main_table.json")
-    require(len(recorded_table) == 4, "Expected the four controlled pilot methods")
+    require(len(recorded_table) == 4 and {row["method"] for row in recorded_table}
+            == {"logistic", "mlp", "sae_abstopk_none", "sae_abstopk_norm"},
+            "Expected the four controlled comparison methods")
     comparison, _ = collect_runs([comparison_dir / row["method"] for row in recorded_table])
     for recorded, rebuilt in zip(recorded_table, comparison):
         require({key: value for key, value in recorded.items() if key != "run_dir"}
                 == {key: value for key, value in rebuilt.items() if key != "run_dir"},
                 "Comparison table differs from saved per-sample predictions")
-    methods, model_predictions, checkpoints = [], {}, {}
-    manifest_hash = None
+    methods, model_predictions, checkpoints, operating_rules = [], {}, {}, {}
+    manifest_hash, scope, reference = None, None, None
     for summary in comparison:
         name = summary["method"]
         require(name not in model_predictions, "Duplicate method in table")
         directory = comparison_dir / name
         metadata = read_json(directory / "run_metadata.json")
         evaluation = read_json(directory / "evaluation.json")
-        scope = metadata.get("label_scope", {})
-        require(scope.get("label_protocol") == "ai-visual-pilot"
-                and scope.get("human_reviewed") is False
-                and evaluation.get("label_scope") == scope,
-                "Offline pilot export requires explicit pending-human AI label scope")
+        current_scope = metadata.get("label_scope")
+        current_reference = reference_from_scope(current_scope)
+        require(evaluation.get("label_scope") == current_scope,
+                "Evaluation and run label scopes differ")
+        if scope is None:
+            scope, reference = current_scope, current_reference
+        require(scope == current_scope, "Mixed reference scopes in comparison runs")
         for key, filename in (("predictions_sha256", "predictions.json"),
                               ("manifest_sha256", "evaluation_manifest.json")):
             require(digest(directory / filename) == metadata[key],
@@ -113,12 +194,31 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
         rows = read_json(directory / "predictions.json")
         require(len({row["sample_token"] for row in rows}) == len(rows),
                 "Prediction tokens are not unique")
+        point = evaluation["operating_point"]
+        for row in rows:
+            prediction = int(point["threshold"] is not None
+                             and row["score"] >= point["threshold"])
+            require(row.get("operating_prediction") == prediction
+                    and row.get("operating_error") == error_type(row["label"], prediction),
+                    "Saved operating predictions differ: " + name)
+        test = evaluation["splits"]["test"]["operating"]
+        operating_rules[name] = {"fixed_rule": evaluation["fixed_rule"],
+                                 "operating_point": point, "test": test,
+                                 "test_candidates": test["confusion"]["tp"]
+                                 + test["confusion"]["fp"]}
         model_predictions[name] = {row["sample_token"]: row for row in rows}
         methods.append(name)
 
     metadata = read_json(run / "run_metadata.json")
-    scope = metadata["label_scope"]
-    decision = read_json(run / "metrics.json")["decision"]
+    require(run == comparison_dir / run.name and run.name.startswith("sae_")
+            and run.name in methods
+            and metadata.get("label_scope") == scope,
+            "Activation run must belong to the same comparison and reference scope")
+    metrics = read_json(run / "metrics.json")
+    require(metrics.get("label_scope") == scope
+            or (reference["kind"] == "ai_provisional" and "label_scope" not in metrics),
+            "Activation metrics label scope differs")
+    decision = metrics["decision"]
     store = ActivationStore(run)
     explorer = Explorer(store, samples_root=samples_root, eta=decision["eta"],
                         neuron_threshold=DEFAULT_NEURON_THRESHOLD, label_scope=scope)
@@ -126,14 +226,31 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
               for row in store.samples}
     require(all(set(predictions) == set(frames) for predictions in model_predictions.values()),
             "Model token sets differ from trained activation cache")
+    require(len(frames) == len(store) and store.labels is not None and store.splits is not None,
+            "Activation cache must contain unique labelled and split-bound samples")
     image_paths = {row["sample_token"]: row["images"] for row in expected_frames}
     for token, frame in frames.items():
+        require(token in image_paths, "Cached frame is outside the original ZIP selection")
         require(frame["cameras"] and set(frame["cameras"]) == set(CAMERAS),
                 "The cached frame has missing original camera images")
+        cached = store.samples[store.row_of[token]]
+        require(all("samples/" + cached["images"][camera] == image_paths[token][camera]
+                    for camera in CAMERAS), "Cached image mapping differs from original ZIPs")
+        for method in methods:
+            row = model_predictions[method][token]
+            require(frame["label"] == ("long_tail" if row["label"] else "normal")
+                    and frame["split"] == row["split"],
+                    "Activation labels or splits differ from saved predictions")
+        row = model_predictions[run.name][token]
+        require(frame["prediction"] == ("long_tail" if row["prediction"] else "normal")
+                and math.isclose(frame["tail_score"], row["score"], rel_tol=1e-6, abs_tol=1e-6),
+                "Activation cache differs from saved SAE predictions")
         frame["images"] = image_paths[token]
         frame["comparisons"] = [{"method": method, **{
             key: model_predictions[method][token].get(key)
-            for key in ("score", "prediction", "operating_prediction", "operating_error")}}
+            for key in ("score", "label", "prediction", "operating_prediction", "operating_error")},
+            "fixed_error": error_type(model_predictions[method][token]["label"],
+                                      model_predictions[method][token]["prediction"])}
             for method in methods]
 
     units = {}
@@ -144,30 +261,21 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
                                         "activation": row["activation"]}
                                        for row in explorer.frames_of_unit(unit, top=len(store))]}
 
-    def pick(method, condition):
-        choices = [row for row in model_predictions[method].values()
-                   if row["split"] == "test" and condition(row)]
-        return sorted(choices, key=lambda row: (-row["score"], row["sample_token"]))
-
-    bookmarks = []
-    for title, method, condition in (
-        ("SAE 固定规则误报（相对 AI 初标）", run.name,
-         lambda row: row["label"] == 0 and row["prediction"] == 1),
-        ("MLP 固定规则漏报（相对 AI 初标）", "mlp",
-         lambda row: row["label"] == 1 and row["prediction"] == 0),
-        ("SAE 高分候选与激活单元", run.name,
-         lambda row: row["label"] == 1),
-    ):
-        candidates = pick(method, condition)
-        if candidates:
-            bookmarks.append({"title": title, "method": method,
-                              "sample_token": candidates[0]["sample_token"]})
-    require(len(bookmarks) == 3, "Pilot does not contain all requested real disagreement examples")
+    bookmarks = failure_bookmarks(model_predictions, reference, failure_cases)
+    sae_identical = checkpoints["sae_abstopk_none"] == checkpoints["sae_abstopk_norm"]
+    operating_notes = []
+    for method, rule in operating_rules.items():
+        point, test = rule["operating_point"], rule["test"]
+        operating_notes.append(
+            f"{method}: validation {point['status']}; test candidates="
+            f"{rule['test_candidates']}, precision={test['precision']:.4f}, "
+            f"recall={test['recall']:.4f}.")
     source_hashes = {str(path.relative_to(ROOT)): digest(path) for path in (
         ROOT / "scripts/neuron_explorer.py", ROOT / "scripts/tail_activations.py",
         ROOT / "tools/review_upload.html", Path(__file__))}
     return {
-        "schema": "offline-trained-explorer-ai-pilot-v1",
+        "schema": "offline-trained-explorer-v2", "reference": reference,
+        "reference_kind": reference["kind"], "expected_part_count": imported["parts"],
         "label_scope": scope, "transfer_id": imported["transfer_id"],
         "frames_per_scene": imported["frames_per_scene"],
         "expected_frames": expected_frames, "expected_images": expected_images,
@@ -181,13 +289,16 @@ def build_payload(run, comparison_dir, prepared_dir, samples_root, import_report
         "frames": frames, "unit_list": explorer.units(top=store.tail_dim), "units": units,
         "review_csv": explorer.review_csv().decode("utf-8"),
         "comparison": comparison, "methods": methods, "bookmarks": bookmarks,
+        "operating_rules": operating_rules, "sae_checkpoints_identical": sae_identical,
         "checkpoints": checkpoints, "source_sha256": source_hashes,
         "manifest_sha256": manifest_hash,
         "scope_notes": [
             "Cached outputs from trained CPU ResNet18 + SAE; no Cosmos reproduction.",
-            "AI provisional labels; human review pending. Errors are AI-reference disagreements.",
-            "All validation precision targets were unreachable: operating predictions are none.",
-            "Reward/no-reward SAE checkpoints are identical; no reward improvement is established.",
+            reference["description"],
+            *operating_notes,
+            ("Reward/no-reward SAE checkpoints are identical; no reward improvement is established."
+             if sae_identical else "Distinct SAE checkpoints do not by themselves establish reward "
+             "improvement."),
             "Mini custom scene split with two test scenes; not an official benchmark.",
         ],
     }
@@ -229,6 +340,7 @@ function api(path){
 }
 function validateLoaded(model){
  check(model.manifest.transfer_id===payload.transfer_id,'分包不属于本次结果包，请选择原来的四个 ZIP。');
+ check(model.manifest.part_count===payload.expected_part_count,'分包总数与原始四个 ZIP 不一致');
  check(model.manifest.frames_per_scene===payload.frames_per_scene,'分包帧数设置不一致');
  check(model.rubric_sha256===payload.rubric_sha256,'标注标准版本不一致');
  check(model.selected.length===payload.expected_frames.length,'所选时间点数量不一致');
@@ -287,14 +399,19 @@ window.addEventListener('unload',()=>{for(const url of urls.values())URL.revokeO
 
 
 def render_html(payload, review_source):
+    reference = reference_from_scope(payload.get("label_scope"))
+    require(payload.get("reference", reference) == reference, "Payload reference scope differs")
+    reviewed = reference["kind"] == "human_ai_exposed"
     match = re.search(r"<script>([\s\S]*?)</script>", review_source)
     require(match is not None, "Local review tool has no script")
     marker = "if(typeof document==='undefined')return;"
     require(marker in match[1], "Local review core boundary changed")
     loader = match[1].split(marker, 1)[0] + "})();"
     source = PAGE
+    title = ("Driving reviewed references — trained offline explorer" if reviewed
+             else "Driving AI pilot — trained offline explorer")
     source = replace_once(source, "<title>Neuron Explorer</title>",
-                          "<title>Driving AI pilot — trained offline explorer</title>")
+                          "<title>" + title + "</title>")
     csp = ("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; "
            "script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob:; "
            "connect-src 'none'; base-uri 'none'; form-action 'none'\">\n")
@@ -303,17 +420,27 @@ def render_html(payload, review_source):
               "border-bottom:1px solid #d8dfec}"
               ".offline-setup h2{margin:0 0 8px}.offline-warning{background:#fff1d6;color:#703d00;"
               "padding:12px 18px;margin:0}.offline-setup table{max-width:1000px}"
-              ".offline-setup pre{white-space:pre-wrap}.offline-cases{display:flex;gap:14px;"
+              ".offline-setup pre{white-space:pre-wrap;overflow-wrap:anywhere}"
+              ".offline-cases{display:flex;gap:14px;"
               "flex-wrap:wrap;margin:12px 0}.offline-cases a{color:#1c3478}"
               "body:not(.offline-loaded) header form{pointer-events:none;opacity:.5}"
               "#offline-status{white-space:pre-wrap}details{margin:12px 0}"
               ".comparison-table{margin:20px 0}.comparison-table caption{text-align:left;"
-              "font-weight:bold;padding:8px 0}\n")
+              "font-weight:bold;padding:8px 0}.offline-results{overflow-x:auto}"
+              ".offline-results table{min-width:850px}"
+              ".offline-frame-comparison,.offline-frame-activations{overflow-x:auto;max-width:100%}"
+              ".offline-frame-comparison .comparison-table{min-width:650px}\n")
     source = replace_once(source, "</style>", styles + "</style>")
     table_rows = "".join(
         "<tr><td>" + html.escape(row["method"]) + "</td><td>"
         + f"{row['ap']:.4f}</td><td>{row['precision_at_k']:.2f}</td><td>"
-        + html.escape(row["target_status"]) + "</td></tr>" for row in payload["comparison"])
+        + f"{row['fixed_precision']:.2f} / {row['fixed_recall']:.2f}</td><td>"
+        + html.escape(row["target_status"]) + "</td><td>"
+        + ("—" if row["validation_threshold"] is None
+           else f"{row['validation_threshold']:.6f}") + "</td><td>"
+        + f"{row['operating_precision']:.2f} / {row['operating_recall']:.2f}</td><td>"
+        + str(payload["operating_rules"][row["method"]]["test_candidates"])
+        + "</td></tr>" for row in payload["comparison"])
     bookmarks = "".join(
         '<a data-offline-token="' + html.escape(row["sample_token"], quote=True)
         + '" href="#/sample/' + html.escape(row["sample_token"], quote=True) + '">'
@@ -323,27 +450,72 @@ def render_html(payload, review_source):
                f"K={first['requested_k']} · seed={first['seed']}")
     included = payload["summary"]["frames"]
     excluded = len(payload["expected_frames"]) - included
+    warning = ("AI 曝露后单人复核：同一位复核者在看过 AI 初标后提交最终判断。"
+               "以下分数、误报/漏报和纯度均相对这些人工复核参考；不是独立人工真值，"
+               "也不是官方 benchmark。CPU ResNet18 路线与 Cosmos 独立。" if reviewed else
+               "AI 初标试跑，尚未人工核验。以下分数、误报/漏报和纯度均相对 AI 初标，"
+               "不代表真实准确率或官方 benchmark。CPU ResNet18 路线与 Cosmos 独立。")
+    rule_notes = []
+    for method, rule in payload["operating_rules"].items():
+        point, test = rule["operating_point"], rule["test"]
+        if point["status"] == "target_unreachable":
+            selection = (f"validation {point['target_precision']:.0%} precision 目标不可达；"
+                         "未选择阈值，工作点不产生候选")
+        else:
+            selection = (f"validation 选定 score ≥ {point['threshold']:.6f}；"
+                         f"test 产生 {rule['test_candidates']} 个候选，"
+                         f"precision={test['precision']:.2f}、recall={test['recall']:.2f}")
+        fixed = rule["fixed_rule"]
+        rule_notes.append("<li><b>" + html.escape(method) + "</b>：固定规则 "
+                          + html.escape(fixed["rule"])
+                          + (f"（eta={fixed['eta']}）" if "eta" in fixed else "")
+                          + "；" + html.escape(selection) + "。</li>")
+    reward_note = ("Reward 与 no-reward SAE 的 checkpoint 相同，本轮未证明 reward 增益。"
+                   if payload["sae_checkpoints_identical"] else
+                   "SAE checkpoint 的差异本身不证明 reward 增益。")
+    source_scope = json.dumps({"reference": reference, "label_scope": payload["label_scope"],
+                               "manifest_sha256": payload["manifest_sha256"],
+                               "checkpoints": payload["checkpoints"],
+                               "source_sha256": payload["source_sha256"]},
+                              ensure_ascii=False, indent=2)
     setup = ("<section class=\"offline-setup\"><h2>真实数据 · CPU 训练缓存演示</h2>"
              "<p>选择你已下载的全部四个 ZIP，然后查看真实六视角、激活单元和相似高激活样本。"
              "图像不上传；页面不重新训练或调用在线模型。</p>"
              "<input id=\"offline-parts\" type=\"file\" accept=\".zip\" multiple> "
              "<button id=\"offline-load\">打开原图</button>"
              "<p id=\"offline-status\" role=\"status\">请在电脑 Chrome 或 Edge 中打开此 HTML。</p>"
-             "<p class=\"offline-warning\">AI 初标试跑，尚未人工核验。以下分数、误报/漏报和纯度"
-             "均相对 AI 初标，不代表真实准确率或官方 benchmark。CPU ResNet18 路线与 Cosmos 独立。</p>"
-             "<table><caption>" + html.escape(caption) + "</caption>"
-             "<tr><th>模型</th><th>AP（AI 参考）</th><th>precision@4</th><th>validation 工作点</th></tr>"
-             + table_rows + "</table><p>四组均未达到 validation 90% precision 目标，因此工作点预测全部拒绝。"
-             "浏览器顶部的 normal/long-tail 使用原固定激活规则；下面逐帧表分别列出两种预测。"
-             "Reward 与 no-reward SAE 的 checkpoint 相同，本轮未证明 reward 增益。</p>"
+             "<p id=\"reference-scope-warning\" class=\"offline-warning\" data-reference-kind=\""
+             + reference["kind"] + "\">" + html.escape(warning) + "</p>"
+             "<div class=\"offline-results\"><table><caption>" + html.escape(caption) + "</caption>"
+             "<tr><th>模型</th><th>AP（" + reference["short_label"] + "）</th><th>precision@"
+             + str(first["requested_k"]) + "</th><th>固定规则 P / R</th>"
+             "<th>validation 工作点</th><th>阈值</th><th>test 工作点 P / R</th>"
+             "<th>test 候选数</th></tr>" + table_rows + "</table></div>"
+             "<p>浏览器顶部的 normal/long-tail 使用 SAE 原固定激活规则；下面逐帧表分别列出固定"
+             "规则与 validation 工作点预测。高 AP 与 precision@K 衡量排序；工作点的 test precision "
+             "需结合候选数与 recall 理解。" + reward_note + "</p><ul>"
+             + "".join(rule_notes) + "</ul><p>激活单元仅用编号表示，尚未验证语义名称。"
+             "以下同一 MLP 固定规则的误报与两例漏报是在评估后选取的说明案例，未用于调参。</p>"
              "<div class=\"offline-cases\">" + bookmarks + "</div>"
              "<details><summary>冻结标注标准与使用范围</summary><p>"
-             + str(included) + " 组 AI 暂定标签参与训练/评估；" + str(excluded)
-             + " 组不确定样本未参与。人类核验仍未完成。</p>"
+             + str(included) + " 组" + reference["label"] + "标签参与训练/评估；" + str(excluded)
+             + " 组不确定样本未参与。</p>"
              "<pre id=\"offline-rubric\"></pre></details>"
+             "<details><summary>结果来源与参考范围</summary><pre>"
+             + html.escape(source_scope) + "</pre></details>"
              "</section>")
     source = replace_once(source, "<header><h1>Neuron Explorer</h1>",
-                          setup + "<header><h1>Neuron Explorer · AI pilot</h1>")
+                          setup + "<header><h1>Neuron Explorer · "
+                          + ("AI-exposed human review" if reviewed else "AI pilot") + "</h1>")
+    inherited_warning = (" if(S.label_scope&&S.label_scope.human_reviewed===false){\n"
+                         "  const warning=document.createElement('p');warning.textContent='"
+                         "AI visual-label pilot: labels are provisional and have not been verified "
+                         "by a human. Scores, errors and purity refer to AI labels; this is not "
+                         "benchmark accuracy.';\n"
+                         "  warning.style.cssText='margin:0;padding:12px 20px;background:#fff1d6;"
+                         "color:#703d00';\n"
+                         "  document.querySelector('header').after(warning);\n }")
+    source = replace_once(source, inherited_warning, "")
     source = replace_once(
         source, '<a href="export/review.csv" download="review.csv">Export review CSV</a>',
         '<a id="review-export" href="#" download="review.csv">Export review CSV</a>')
@@ -359,25 +531,36 @@ def render_html(payload, review_source):
                          'src="${DrivingOffline.imageURL(tok,cam)}">`}')
     source = replace_once(source, original_image, replacement_image)
     comparison_js = r"""
+  const activationTable=$('#main > table');
+  if(activationTable){
+   const activationWrap=document.createElement('div');
+   activationWrap.className='offline-frame-activations';
+   activationTable.replaceWith(activationWrap);activationWrap.append(activationTable);
+  }
   const comparison=document.createElement('table');comparison.className='comparison-table';
   const caption=document.createElement('caption');
-  caption.textContent='同一帧：四模型预测（参考标签为 AI 初标）';comparison.append(caption);
+  caption.textContent='同一帧：四模型预测（参考标签为 '+
+   DrivingOffline.payload.reference.label+'）';comparison.append(caption);
   const heading=document.createElement('tr');
-  const titles=['模型','分数','固定预测','validation 工作点预测','相对 AI 参考的工作点错误'];
+  const titles=['模型','分数','参考标签','固定预测','固定规则错误',
+   'validation 工作点预测','相对参考的工作点错误'];
   for(const title of titles){
    const th=document.createElement('th');th.textContent=title;heading.append(th);
   }
   comparison.append(heading);
   for(const row of f.comparisons){
    const tr=document.createElement('tr');
-   const values=[row.method,row.score.toFixed(4),row.prediction===1?'long-tail':'normal',
+   const values=[row.method,row.score.toFixed(4),row.label===1?'long-tail':'normal',
+    row.prediction===1?'long-tail':'normal',row.fixed_error||'—',
     row.operating_prediction===1?'long-tail':'normal',row.operating_error||'—'];
    for(const value of values){
     const td=document.createElement('td');td.textContent=value;tr.append(td);
    }
    comparison.append(tr);
   }
-  $('#main').append(comparison);
+  const comparisonWrap=document.createElement('div');
+  comparisonWrap.className='offline-frame-comparison';comparisonWrap.append(comparison);
+  $('#main').append(comparisonWrap);
   document.querySelectorAll('.views img').forEach(image=>{
    image.style.cursor='zoom-in';
    image.onclick=()=>window.open(image.src,'_blank','noopener');
@@ -397,7 +580,8 @@ def render_html(payload, review_source):
 
 def export(args):
     payload = build_payload(args.run, args.comparison_dir, args.prepared_dir,
-                            args.samples_root, args.import_report)
+                            args.samples_root, args.import_report,
+                            getattr(args, "failure_cases", None))
     review_source = (ROOT / "tools/review_upload.html").read_text(encoding="utf-8")
     source = render_html(payload, review_source)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -416,6 +600,8 @@ def main():
     names = ("run", "comparison-dir", "prepared-dir", "samples-root", "import-report", "output")
     for name in names:
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--failure-cases", type=Path,
+                        help="Optional saved cases to check against computed MLP bookmarks")
     print(json.dumps(export(parser.parse_args()), indent=2, allow_nan=False))
 
 

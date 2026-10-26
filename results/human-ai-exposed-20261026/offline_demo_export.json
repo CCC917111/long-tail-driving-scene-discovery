@@ -1,0 +1,55 @@
+{
+  "status": "exported",
+  "output": "output/real-cpu-mini-20261023/human-ai-exposed-20261026/demo/driving_reviewed_final.html",
+  "bytes": 519673,
+  "sha256": "76ab509cbaf2e3ee4987d3850f8ed9ac29397803a0c022032161894c280bc1ac",
+  "frames": 77,
+  "source_images_embedded": 0,
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "bookmarks": [
+    {
+      "title": "MLP \u56fa\u5b9a\u89c4\u5219\u8bef\u62a5\uff08\u76f8\u5bf9 AI \u66dd\u9732\u540e\u5355\u4eba\u590d\u6838\uff09",
+      "method": "mlp",
+      "sample_token": "b4ff30109dd14c89b24789dc5713cf8c",
+      "split": "test",
+      "rule": "fixed probability >= 0.5",
+      "error_type": "fp",
+      "reference_label": 0,
+      "score": 0.8976826071739197,
+      "selection": "Illustrative post-evaluation cases; not used for tuning"
+    },
+    {
+      "title": "MLP \u56fa\u5b9a\u89c4\u5219\u6f0f\u62a5\uff08\u76f8\u5bf9 AI \u66dd\u9732\u540e\u5355\u4eba\u590d\u6838\uff09",
+      "method": "mlp",
+      "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+      "split": "test",
+      "rule": "fixed probability >= 0.5",
+      "error_type": "fn",
+      "reference_label": 1,
+      "score": 0.06504454463720322,
+      "selection": "Illustrative post-evaluation cases; not used for tuning"
+    },
+    {
+      "title": "MLP \u56fa\u5b9a\u89c4\u5219\u6f0f\u62a5\uff08\u76f8\u5bf9 AI \u66dd\u9732\u540e\u5355\u4eba\u590d\u6838\uff09",
+      "method": "mlp",
+      "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+      "split": "test",
+      "rule": "fixed probability >= 0.5",
+      "error_type": "fn",
+      "reference_label": 1,
+      "score": 0.16905081272125244,
+      "selection": "Illustrative post-evaluation cases; not used for tuning"
+    }
+  ],
+  "browser_ui_verified": false
+}

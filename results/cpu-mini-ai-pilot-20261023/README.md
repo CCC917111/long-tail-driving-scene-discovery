@@ -3,7 +3,7 @@
 This bundle contains derived annotations, numeric predictions, diagnostics and the source snapshot used by the run. **No labels have been verified by a human.** Scores measure agreement with provisional AI labels; they are not benchmark accuracy.
 
 - [Run explanation and exact scope](../../docs/ai-pilot.md)
-- [Download the offline explorer](../../demo/driving_pilot.html): save HTML, open it locally in Chrome/Edge and choose the same four user-held ZIP parts. Images remain local.
+- [Download the archived AI-reference explorer](../../demo/driving_ai_pilot.html): save HTML, open it locally in Chrome/Edge and choose the same four user-held ZIP parts. Images remain local. The archive preserves the original HTML bytes; `demo/driving_pilot.html` now names the latest reviewed-reference demo.
 - `ai_visual_labels.json` preserves all 80 decisions, evidence and uncertainty; `manifest.json` retains 73 active labels and the original scene split.
 - `main_table.json` / `.csv` and each method directory preserve the four actual saved-output comparisons.
 - `reward_diagnostic.json` records zero reward gradient from cap saturation; the two SAE checkpoints are identical.
