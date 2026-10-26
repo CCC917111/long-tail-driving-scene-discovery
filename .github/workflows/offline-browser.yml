@@ -9,6 +9,7 @@ on:
       - scripts/neuron_explorer.py
       - tools/review_upload.html
       - demo/driving_pilot.html
+      - demo/driving_ai_pilot.html
   pull_request:
     paths:
       - .github/workflows/offline-browser.yml
@@ -17,12 +18,17 @@ on:
       - scripts/neuron_explorer.py
       - tools/review_upload.html
       - demo/driving_pilot.html
+      - demo/driving_ai_pilot.html
 permissions:
   contents: read
 jobs:
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        demo: [driving_pilot, driving_ai_pilot]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,14 +43,21 @@ jobs:
           else
             python -m playwright install --with-deps chromium
           fi
-      - run: python scripts/verify_offline_browser.py --source-html demo/driving_pilot.html --output output/browser-smoke
+      - name: Exercise cached demo with synthetic local images
+        run: >-
+          python scripts/verify_offline_browser.py
+          --source-html demo/${{ matrix.demo }}.html
+          --output output/browser-smoke/${{ matrix.demo }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: driving-offline-browser
+          name: driving-offline-browser-${{ matrix.demo }}
           path: |
-            output/browser-smoke/verification.json
-            output/browser-smoke/desktop.png
-            output/browser-smoke/mobile.png
+            output/browser-smoke/${{ matrix.demo }}/verification.json
+            output/browser-smoke/${{ matrix.demo }}/desktop.png
+            output/browser-smoke/${{ matrix.demo }}/mobile.png
+            output/browser-smoke/${{ matrix.demo }}/core.stdout.txt
+            output/browser-smoke/${{ matrix.demo }}/core.stderr.txt
+            output/browser-smoke/${{ matrix.demo }}/failure.txt
           if-no-files-found: warn
           retention-days: 7

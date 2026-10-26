@@ -115,7 +115,7 @@ been certified. The retained
 records that scope. CPU CI also passed tests, lint and the generated-data HTTP
 workflow on the same head; see [testing](testing.md).
 
-Download the [offline demo](../demo/driving_pilot.html), save the HTML and open
+Download the [archived AI-reference demo](../demo/driving_ai_pilot.html), save the HTML and open
 it in desktop Chrome/Edge, then select the same four original ZIPs. The
 [derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md) records
 provisional labels, saved scores, diagnostic evidence and hashes. Original

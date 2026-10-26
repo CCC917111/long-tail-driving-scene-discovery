@@ -130,5 +130,13 @@ Exact executed commands/settings are in [commands.json](commands.json),
 [runner_config.json](runner_config.json) and [protocol_plan.json](protocol_plan.json).
 No raw image bytes, original metadata tables, feature arrays or weights are
 published in this bundle. Obtain data under nuScenes terms. The downloadable
-[offline HTML demo](../../demo/README.md) still replays the separately labelled
-**original AI pilot**, not these new reviewed-reference runs.
+[offline HTML demo](../../demo/README.md) now replays these 77 reviewed-reference
+timestamps and all 308 method values. The original AI viewer is kept as a
+byte-identical [archive](../../demo/driving_ai_pilot.html).
+
+The [export record](offline_demo_export.json) and
+[actual-image/score audit](offline_demo_independent_verification.json) bind this
+viewer to the retained run. Synthetic transport/API checks for the
+[latest viewer](offline_demo_synthetic_core.json) and
+[archive](archived_ai_demo_synthetic_core.json) are recorded separately from
+Chrome UI checks and from original-image integrity.

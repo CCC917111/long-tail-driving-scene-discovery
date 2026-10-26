@@ -1,5 +1,15 @@
 # Testing and verification
 
+The latest offline viewer now binds the reviewed-reference run's 77 timestamps
+and all 308 method values. Independent Node checks loaded the actual four ZIPs,
+compared all 480 image files byte-for-byte with the originals, and checked all
+cached values, blank review fields and script syntax. The old AI viewer is
+archived byte-identically with its 73-frame/292-value record. Separate synthetic
+core checks pass for both. The updated browser CI runs both HTML versions at
+desktop/mobile sizes using synthetic images and checks case/metric tables,
+navigation and CSV downloads. The latest publication PR checks establish the
+current Chrome result; core-only checks do not claim browser verification.
+
 The 2026-10-26 [post-AI-exposure user-review run](../results/human-ai-exposed-20261026/README.md)
 completed all four real CPU fits and an independent checkpoint/scaler/metric
 audit. A local full non-HTTP selection passed **225 tests and 18 subtests**,
