@@ -1,0 +1,56 @@
+{
+  "status": "core_passed_browser_not_run",
+  "browser_verified": false,
+  "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+  "fixture": {
+    "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+    "source_html_sha256": "c02a902d5653921d3c2c6c3c5b1886f8e1bba86fecf1256bb33c97984b28c810",
+    "fixture_html_sha256": "b8e3f62fd7afb1b5dc2598395e69a1d0a9d29f6001f85ecaccc767adb6c8ff3f",
+    "selected_timestamps": 80,
+    "synthetic_images": 480,
+    "part_count": 4,
+    "cached_reference_frames": 73,
+    "cached_model_values": 292,
+    "source_schema": "offline-trained-explorer-ai-pilot-v1",
+    "reference_kind": "ai_provisional",
+    "source_label_scope": {
+      "label_protocol": "ai-visual-pilot",
+      "human_reviewed": false,
+      "interpretation": "Agreement with provisional AI visual labels; not human-ground-truth accuracy or a benchmark result"
+    },
+    "shipped_runtime_scripts_unchanged": true,
+    "parts": [
+      {
+        "name": "synthetic-part-001-of-004.zip",
+        "bytes": 1555095,
+        "sha256": "8e85153628df47af8f71b44bcb969322a8bfcc3fdab794d493614b18308c659a"
+      },
+      {
+        "name": "synthetic-part-002-of-004.zip",
+        "bytes": 1563148,
+        "sha256": "e4ec7cd6146ade423fe35f83d97be367b8579695e273c9edf9e1e8c3ffa271c1"
+      },
+      {
+        "name": "synthetic-part-003-of-004.zip",
+        "bytes": 1562065,
+        "sha256": "4bc58d7a42231308b366dc361a7d4fef54e74b011532dbdeb2e65847bfee7ee9"
+      },
+      {
+        "name": "synthetic-part-004-of-004.zip",
+        "bytes": 1560040,
+        "sha256": "e15d019793ab5f8a87e581bc4a18061bd4f3bf71dead5bfeabee95376e9d0324"
+      }
+    ]
+  },
+  "core": {
+    "status": "passed",
+    "synthetic_images": 480,
+    "cached_frames": 73,
+    "cached_model_values": 292,
+    "reference_kind": "ai_provisional",
+    "all_cached_frame_apis_match": true,
+    "negative_transfer_and_hash_checks": true,
+    "browser_verified": false,
+    "scope": "Synthetic file transport and cached API binding only"
+  }
+}

@@ -14,10 +14,14 @@ human-validated real-data effectiveness result has been established in this roun
 | Explicit AI-label pilot | 80 six-view AI decisions; 73 retained / seven uncertain; four real-image model fits, reload/result audit and unlabelled screening; [record](ai-pilot.md) | Independent human truth, more normal training scenes and formal multi-seed evidence; no observed reward increment |
 | Portable execution | Embedded-source notebook; staged archive acquisition; saved review/backup; strict four-method CPU driver | Real download/GPU execution and Colab visual verification |
 | P1 comparison | Four matched real-image CPU fits against explicit AI references; shared evaluator, saved-output table reconstruction and unchanged scene allocation | Independent human-reference evaluation and formal multi-seed evidence; all validation precision targets unreachable and no observed reward increment |
-| P2 demonstration | Downloadable offline trained-activation explorer; private local ZIP image loading, four-method scores, three AI-reference error examples and blank human-review export; synthetic Chrome UI passed | A recorded 90-second demonstration, independent human error review and verified semantic interpretation |
+| P2 demonstration | Latest reviewed-reference offline explorer with 77 cached timestamps / 308 method values, same-rule MLP FP/FN bookmarks and blank new-review export; original 73-frame AI viewer archived byte-for-byte; 90-second script prepared | A narrated real-image recording, independent human error review and verified semantic interpretation; current Chrome status is recorded in publication PR checks |
 | Documentation | Historical results isolated; original contribution wording retained; AI-assisted follow-up identified; [derived pilot bundle](../results/cpu-mini-ai-pilot-20261023/README.md) published | Original contribution evidence and human-validated result claims |
 
 The original README contribution table records Yike's stated capstone work.
+Yike is the project lead and is responsible for the GitHub repository's overall
+optimization and delivery, as confirmed in the project discussion. This role
+covers the modernization phase while preserving the original team-role table
+and the documented AI-assisted implementation history.
 The 2026-10-19–23 changes to validation, provenance, baseline evaluation, data
 handoff, the offline explorer, fixtures and documentation are AI-assisted
 follow-up work. They must be reviewed and

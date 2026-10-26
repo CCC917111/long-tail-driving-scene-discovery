@@ -1,0 +1,62 @@
+{
+  "status": "core_passed_browser_not_run",
+  "browser_verified": false,
+  "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+  "fixture": {
+    "scope": "SYNTHETIC UI FIXTURE: generated pixels and metadata; cached numbers are copied rendering references, not new model inference or real-data validation.",
+    "source_html_sha256": "76ab509cbaf2e3ee4987d3850f8ed9ac29397803a0c022032161894c280bc1ac",
+    "fixture_html_sha256": "d1cb78d93bda214b4cdab6f79346344045e34ad01948e3ab283b9bb631b1a35f",
+    "selected_timestamps": 80,
+    "synthetic_images": 480,
+    "part_count": 4,
+    "cached_reference_frames": 77,
+    "cached_model_values": 308,
+    "source_schema": "offline-trained-explorer-v2",
+    "reference_kind": "human_ai_exposed",
+    "source_label_scope": {
+      "label_protocol": "manual",
+      "review_context": "post_ai_exposure_single_reviewer",
+      "human_reviewed": true,
+      "human_ground_truth_verified": false,
+      "independent_human_review": false,
+      "prior_ai_labels_exposed": true,
+      "reviewer_count": 1,
+      "official_benchmark": false,
+      "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+    },
+    "shipped_runtime_scripts_unchanged": true,
+    "parts": [
+      {
+        "name": "synthetic-part-001-of-004.zip",
+        "bytes": 1555095,
+        "sha256": "344822c49b14538b7e715a9915064ef80d9d6a7a8ad56a7f4640a69a2a510eb2"
+      },
+      {
+        "name": "synthetic-part-002-of-004.zip",
+        "bytes": 1563148,
+        "sha256": "0599ebf157cb1d4f0d1223d1f16c0431610776df76a1744fa6ab2e1635136325"
+      },
+      {
+        "name": "synthetic-part-003-of-004.zip",
+        "bytes": 1562065,
+        "sha256": "43e566ea1c1fa1c275cb8c08ea9dc216369a2eddb251874873f470562b0ef848"
+      },
+      {
+        "name": "synthetic-part-004-of-004.zip",
+        "bytes": 1560040,
+        "sha256": "d0b7a518013cf9fc7acafb454cb5a7f36eaed662eabd460173b65179b4fc517d"
+      }
+    ]
+  },
+  "core": {
+    "status": "passed",
+    "synthetic_images": 480,
+    "cached_frames": 77,
+    "cached_model_values": 308,
+    "reference_kind": "human_ai_exposed",
+    "all_cached_frame_apis_match": true,
+    "negative_transfer_and_hash_checks": true,
+    "browser_verified": false,
+    "scope": "Synthetic file transport and cached API binding only"
+  }
+}
