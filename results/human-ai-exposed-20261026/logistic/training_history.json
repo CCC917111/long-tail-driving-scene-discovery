@@ -1,0 +1,8 @@
+{
+  "selection": "single fixed-C fit; no checkpoint search",
+  "best_epoch": null,
+  "iterations": 39,
+  "val_log_loss": [
+    2.040740489959717
+  ]
+}

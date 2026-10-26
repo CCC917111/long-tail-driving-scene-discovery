@@ -22,6 +22,9 @@ from pathlib import Path
 import numpy as np
 from sklearn.metrics import average_precision_score, precision_recall_curve, roc_auc_score
 
+from prepare_driving import (POST_AI_LABEL_ORIGIN, POST_AI_REVIEW_CONTEXT,
+                             review_context_scope)
+
 PROTOCOL_VERSION = "scene-disjoint-evaluation-v1"
 SPLITS = ("train", "val", "test")
 
@@ -71,6 +74,9 @@ def align_rows(rows: list[dict], manifest: list[dict]) -> list[dict]:
             raise ValueError(f"Scene {scene!r} overlaps {scene_split[scene]} and {split}")
         scene_split[scene] = split
     included = {t: e for t, e in expected.items() if e.get("split") in SPLITS}
+    context_scope = (label_scope_from_manifest(manifest)
+                     if any(entry.get("review_context") == POST_AI_REVIEW_CONTEXT
+                            for entry in included.values()) else None)
     by_token = {}
     for row in rows:
         token = row.get("sample_token")
@@ -93,6 +99,15 @@ def align_rows(rows: list[dict], manifest: list[dict]) -> list[dict]:
             raise ValueError(f"{token}: score must be finite")
         result = dict(row, scene_token=entry["scene_token"], score=score,
                       label=int(entry["label"]))
+        if entry.get("review_context") == POST_AI_REVIEW_CONTEXT:
+            for key in ("review_context", "reviewer", "label_origin"):
+                if key in row and row[key] != entry.get(key):
+                    raise ValueError(f"{token}: prediction {key} disagrees with manifest")
+                result[key] = entry[key]
+            if "label_scope" in row:
+                if row["label_scope"] != context_scope:
+                    raise ValueError(f"{token}: prediction label_scope disagrees with manifest")
+                result["label_scope"] = context_scope
         if "prediction" in row:
             result["prediction"] = _binary_label(row["prediction"], token)
         by_token[token] = result
@@ -271,8 +286,17 @@ def _write_pr_curve(output_dir: Path, split: str, rows: list[dict]) -> None:
 
 
 def label_scope_from_manifest(manifest: list[dict]) -> dict | None:
-    """Preserve AI-label limitations in every metric bundle and rebuilt table."""
+    """Preserve recorded review limitations in metrics and rebuilt tables."""
     active = [row for row in manifest if row.get("split") in SPLITS]
+    context_scope = review_context_scope(active)
+    if context_scope is not None:
+        if not all(row.get("review_status") == "reviewed"
+                   and row.get("label_origin") == POST_AI_LABEL_ORIGIN
+                   and isinstance(row.get("reviewer"), str) and row["reviewer"].strip()
+                   for row in active):
+            raise ValueError("Manual review_context requires reviewed human judgments "
+                             "and their recorded reviewer and label_origin")
+        return context_scope
 
     def is_ai(row):
         return (row.get("label_origin") == "ai_visual_provisional"
@@ -298,6 +322,8 @@ def write_evaluation_artifacts(output_dir: Path, rows: list[dict], manifest: lis
     """Save reproducible metrics, PR curves and review queues from saved scores."""
     aligned = align_rows(rows, manifest)
     label_scope = label_scope_from_manifest(manifest)
+    if label_scope is not None and label_scope.get("review_context"):
+        config = dict(config, label_scope=label_scope)
     if review_k <= 0 or bootstrap_samples < 0:
         raise ValueError("review_k must be positive; bootstrap_samples must be nonnegative")
     val = [row for row in aligned if row["split"] == "val"]
@@ -353,6 +379,8 @@ def write_evaluation_artifacts(output_dir: Path, rows: list[dict], manifest: lis
     _write_json(output_dir / "predictions.json", aligned)
     columns = ["sample_token", "scene_token", "split", "label", "score", "prediction",
                "operating_prediction", "operating_error"]
+    if label_scope is not None and label_scope.get("review_context"):
+        columns.extend(("review_context", "reviewer", "label_origin"))
     with (output_dir / "predictions.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
         writer.writeheader()

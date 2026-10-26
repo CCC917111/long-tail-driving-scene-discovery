@@ -29,6 +29,40 @@ REVIEW_FIELDS = ("sample_token", "scene_token", "split", "label", "review_status
                  "reviewer", "review_notes")
 VERSION_RATIOS = {"v1.0-mini": (0.6, 0.2, 0.2), "v1.0-trainval": (0.7, 0.15, 0.15)}
 DEFAULT_RUBRIC = Path(__file__).resolve().parents[1] / "latest_grading_criteria.md"
+POST_AI_REVIEW_CONTEXT = "post_ai_exposure_single_reviewer"
+POST_AI_LABEL_ORIGIN = "human_post_ai_exposure"
+
+
+def post_ai_review_scope() -> dict:
+    return {"label_protocol": "manual", "review_context": POST_AI_REVIEW_CONTEXT,
+            "human_reviewed": True, "human_ground_truth_verified": False,
+            "independent_human_review": False, "prior_ai_labels_exposed": True,
+            "reviewer_count": 1, "official_benchmark": False,
+            "interpretation": "Agreement with post-AI-exposure human review by a single "
+                              "reviewer; not independent human ground truth or an official "
+                              "benchmark result"}
+
+
+def review_context_scope(rows: list[dict]) -> dict | None:
+    """Validate the optional recorded context, including excluded judgments."""
+    contexts = [row.get("review_context", "") for row in rows]
+    if any(context not in ("", POST_AI_REVIEW_CONTEXT) for context in contexts):
+        raise ValueError("Unknown review_context")
+    if not any(contexts) and not any(row.get("label_origin") == POST_AI_LABEL_ORIGIN
+                                     for row in rows):
+        return None
+    if not all(context == POST_AI_REVIEW_CONTEXT for context in contexts):
+        raise ValueError("Mixed or missing review_context in manual judgments")
+    if any(row.get("label_origin") == "ai_visual_provisional"
+           or row.get("label_source") == "ai_visual_provisional"
+           or row.get("review_status") == "ai_provisional"
+           or row.get("label_protocol") == "ai-visual-pilot" for row in rows):
+        raise ValueError("AI provisional labels cannot carry a manual review_context")
+    reviewers = {row["reviewer"].strip() for row in rows
+                 if isinstance(row.get("reviewer"), str) and row["reviewer"].strip()}
+    if len(reviewers) != 1:
+        raise ValueError("Single-reviewer review_context requires exactly one nonblank reviewer")
+    return post_ai_review_scope()
 
 
 def sha256(path: Path) -> str:
@@ -305,7 +339,7 @@ def import_labels(prepared_dir: Path, reviews: list[Path], output_dir: Path) -> 
             raise ValueError(f"Prepared file changed after split freeze: {name}")
     raw = json.loads((prepared_dir / "raw_manifest.json").read_text())
     eligible = {row["sample_token"]: row for row in raw if not row["exclusion_reason"]}
-    reviewed, source_hashes = {}, {}
+    reviewed, source_hashes, context_rows = {}, {}, []
     for path in map(Path, reviews):
         source_hashes[str(path.resolve())] = sha256(path)
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
@@ -337,10 +371,21 @@ def import_labels(prepared_dir: Path, reviews: list[Path], output_dir: Path) -> 
                 reviewer = row["reviewer"].strip()
                 if status == "reviewed" and not reviewer:
                     raise ValueError(f"Reviewed label requires a reviewer for {token}")
+                context = row.get("review_context", "")
+                if not isinstance(context, str):
+                    raise ValueError(f"Malformed review_context for {token}")
+                context = context.strip()
+                if context not in ("", POST_AI_REVIEW_CONTEXT):
+                    raise ValueError(f"Unknown review_context {context!r}")
+                context_rows.append(dict(row, review_context=context, reviewer=reviewer))
                 reviewed[token] = {"binary": label, "raw_label": row["label"],
                                    "review_status": status, "reviewer": reviewer,
                                    "review_notes": row.get("review_notes", ""),
                                    "label_source": str(path.resolve()), "review_csv_line": line}
+                if context:
+                    reviewed[token].update(review_context=context,
+                                           label_origin=POST_AI_LABEL_ORIGIN)
+    label_scope = review_context_scope(context_rows)
     labels, manifest, excluded = [], [], []
     for source in raw:
         token = source["sample_token"]
@@ -370,6 +415,9 @@ def import_labels(prepared_dir: Path, reviews: list[Path], output_dir: Path) -> 
                              "evaluation_scope": source["evaluation_scope"],
                              "rubric_version": preparation["rubric_version"],
                              "rubric_sha256": preparation["rubric_sha256"]})
+            if label_scope is not None:
+                manifest[-1].update(review_context=review["review_context"],
+                                    label_origin=review["label_origin"])
         else:
             excluded.append(dict(source, split="excluded", original_split=source["split"],
                                  exclusion_reason="pending_or_uncertain_manual_review", **record))
@@ -389,6 +437,8 @@ def import_labels(prepared_dir: Path, reviews: list[Path], output_dir: Path) -> 
                 "excluded_rows": len(excluded), "support": support,
                 "ready_for_current_training_contract": all(all(v.values())
                                                            for v in support.values())}
+    if label_scope is not None:
+        metadata.update(review_context=POST_AI_REVIEW_CONTEXT, label_scope=label_scope)
     write_json(out / "import_metadata.json", metadata)
     return metadata
 

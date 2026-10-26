@@ -1,0 +1,87 @@
+{
+  "status": "validated",
+  "schema": "real-driving-handoff-v1",
+  "source_version": "v1.0-mini",
+  "feature_protocol": "cpu-resnet18",
+  "encoder": "resnet18-imagenet1k-v1",
+  "feature_semantics": "Six ordered 512-dimensional pretrained image embeddings concatenated to 3072 dimensions; separate from VLM features",
+  "label_protocol": "manual",
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "human_reviewed": true,
+  "human_ground_truth_verified": false,
+  "review_context": "post_ai_exposure_single_reviewer",
+  "evaluation_scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+  "official_benchmark": false,
+  "provenance_limit": "Recorded file provenance and review records; data authenticity and judgment truth are not established.",
+  "selection_complete": true,
+  "extracted_rows": 80,
+  "labelled_rows": 77,
+  "feature_dim": 3072,
+  "layer": 1,
+  "pooling": "camera_concat",
+  "storage_pooling": "mean",
+  "support": {
+    "train": {
+      "normal": 3,
+      "tail": 45,
+      "scenes": 6
+    },
+    "val": {
+      "normal": 4,
+      "tail": 10,
+      "scenes": 2
+    },
+    "test": {
+      "normal": 5,
+      "tail": 10,
+      "scenes": 2
+    }
+  },
+  "review_csv_evidence": [
+    {
+      "recorded_path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv",
+      "resolved_path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/reviewed-with-context.csv",
+      "sha256": "a713cc15a582fe8b90d6c3cfefc118702bd52e214460720eb121495a28024724"
+    }
+  ],
+  "ai_annotation_evidence": [],
+  "checkpoint_generation": ".checkpoints/73a86846ece7441eb88480f7235d80f6",
+  "inputs": {
+    "features": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/layer1_mlp_output_mean.npy",
+      "sha256": "52f9872ca45f85151ebeefc73c86063d539c26a42f1fc5c1533f96601c169ecf"
+    },
+    "meta": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/meta.json",
+      "sha256": "444c6568b76764671983ff6233e192f1c0abf5a0b47f0cf3b0ef050b8085194b"
+    },
+    "labels": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/annotations/labels.json",
+      "sha256": "26de6a09b357d176461248f64f48e86cb01b4cf48fd0cdcf729dae304329136f"
+    },
+    "manifest": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/annotations/manifest.json",
+      "sha256": "99ddb4d3c4d45c8f72881203e07eb2e45e0602d58f98e8983ef9f0b3542334cb"
+    },
+    "feature_config": {
+      "path": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/extraction_config.json",
+      "sha256": "1f420faa0d7306bd2573a59f0fe7678e834f7b71d5823c030c9f370274878c59"
+    }
+  },
+  "handoff_hashes": {
+    "prepare_metadata": "de39e03c37feb0affe6a7dd3e3d3bad54e48c1d8794891ad938e645e0b9210a9",
+    "import_metadata": "71038315442c1ee4f9757113d6a2e786a33d5b4c54728cab40297ba77d01d605",
+    "checkpoint_state": "21632c2f4c52e7dd9b615e84fa56712cc20e1095b2837f1a36584f7480d7dd6a",
+    "extraction_summary": "7e1c25902d10649ada981625e2135fce4201a4f0f04565c782f1114b5880994a"
+  }
+}

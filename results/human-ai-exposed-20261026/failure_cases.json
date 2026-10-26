@@ -1,0 +1,43 @@
+{
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "selection": "Illustrative highest-scoring FP and two lowest-scoring FNs after evaluation, samemodel/fixedrule; not usedforselection/tuning",
+  "cases": [
+    {
+      "frame_no": 16,
+      "sample_token": "b4ff30109dd14c89b24789dc5713cf8c",
+      "model": "mlp",
+      "rule": "fixed probability >=0.5",
+      "error_relative_to_final_review": "fp",
+      "reference_label": 0,
+      "score": 0.8976826071739197
+    },
+    {
+      "frame_no": 10,
+      "sample_token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+      "model": "mlp",
+      "rule": "fixed probability >=0.5",
+      "error_relative_to_final_review": "fn",
+      "reference_label": 1,
+      "score": 0.06504454463720322
+    },
+    {
+      "frame_no": 1,
+      "sample_token": "cd9964f8c3d34383b16e9c2997de1ed0",
+      "model": "mlp",
+      "rule": "fixed probability >=0.5",
+      "error_relative_to_final_review": "fn",
+      "reference_label": 1,
+      "score": 0.16905081272125244
+    }
+  ]
+}
