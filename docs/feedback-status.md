@@ -1,6 +1,6 @@
 # Feedback implementation status
 
-Updated 2026-10-23. Original audited version: `b57eaffa21d54ad67d98d441935cf6b17cdc5294`.
+Updated 2026-10-26. Original audited version: `b57eaffa21d54ad67d98d441935cf6b17cdc5294`.
 This file distinguishes software work from experimental evidence. No new
 human-validated real-data effectiveness result has been established in this round.
 
@@ -10,6 +10,7 @@ human-validated real-data effectiveness result has been established in this roun
 |---|---|---|
 | P0 data contracts | Strict scene-token and label validation; frozen manifest interface; input/run provenance | Recover historical assets, review manifest, explain six-frame gap and raw-VLM supports |
 | Fresh real-data setup | Four real mini parts imported; five tables / 480 camera images checked; 80 CPU ResNet18 feature vectors extracted on a frozen 6/2/2-scene split | Independent human decisions and adequate normal/tail scene support; original VLM/GPU extraction remains separate |
+| Post-AI-exposure human-review CPU run | Yike supplied 80 judgments: 77 reviewed binary labels (12 normal / 65 tail), three uncertain, no pending; all four CPU methods fitted and independently reconstructed; [record](../results/human-ai-exposed-20261026/README.md) | Single reviewer after the full AI label table, empty notes, one seed, two test scenes and three normal training frames; no observed reward increment |
 | Explicit AI-label pilot | 80 six-view AI decisions; 73 retained / seven uncertain; four real-image model fits, reload/result audit and unlabelled screening; [record](ai-pilot.md) | Independent human truth, more normal training scenes and formal multi-seed evidence; no observed reward increment |
 | Portable execution | Embedded-source notebook; staged archive acquisition; saved review/backup; strict four-method CPU driver | Real download/GPU execution and Colab visual verification |
 | P1 comparison | Four matched real-image CPU fits against explicit AI references; shared evaluator, saved-output table reconstruction and unchanged scene allocation | Independent human-reference evaluation and formal multi-seed evidence; all validation precision targets unreachable and no observed reward increment |
@@ -72,7 +73,7 @@ froze an internal mini allocation of 48/16/16 frames, and completed extraction
 into an `(80, 3072)` cache after a one-frame smoke and verified resume. It created
 no labels. Raw logs and hashes are retained under
 `output/real-cpu-mini-20261023/`; [CPU route](cpu-route.md) records the scope.
-No VLM inference, original-checkpoint evaluation or human-label audit has run in
+No VLM inference or original-checkpoint evaluation has run in
 this round. A subsequent explicitly AI-labelled pilot trained and reloaded all
 four methods on 73 retained timestamps and screened seven uncertain timestamps.
 Its complete result bundle, source snapshot, hashes and numeric offline explorer
@@ -81,6 +82,37 @@ their own images locally. Scores remain agreement with provisional AI references
 two test scenes, only three normal training examples, one seed, identical SAE
 reward/no-reward checkpoints and unreachable validation precision targets limit
 the conclusions. The [pilot record](ai-pilot.md) includes these failures.
+
+On 2026-10-26, the final human CSV was received and checked against all 80
+frozen sample IDs. Its SHA-256 is
+`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
+Every row names Yike; the final submission contains 12 `normal_core`, 65
+`not_normal_core` and three `uncertain` judgments. All binary rows are
+`reviewed`, all uncertain rows have status `uncertain`, and none remain pending.
+All review notes are blank, including the three uncertainty reasons; no reasons
+have been inferred or added. The earlier first-ten submission is retained as a
+pre-exposure checkpoint, together with the four later revisions to those labels.
+The completed submission followed display of the full AI label table, so it is
+post-AI-exposure single-reviewer evidence, not blind independent ground truth.
+The frozen split is unchanged: train has 3 normal / 45 tail; validation has
+4 normal / 10 tail plus two uncertain; test has 5 normal / 10 tail plus one
+uncertain. The 77 binary rows meet the current class-support import contract;
+the three uncertain rows remain excluded from supervised training/evaluation.
+The subsequent controlled CPU rerun fitted Logistic, MLP and both SAE variants
+with the retained 77 rows, original ResNet18 cache and unchanged training
+settings. Independent reconstruction verified the inputs/source hashes,
+train-only scalers, all four checkpoint scores, validation-only thresholds,
+saved metrics and comparison table. On the 15-row test split, SAE AP is 0.9353,
+precision@4 is 1.0 and recall@4 is 0.4; its validation-selected operating point
+has test precision 1.0 and recall 0.2. Both SAE checkpoints are byte-identical
+to each other and to the earlier AI pilot, so no reward improvement was
+observed. Logistic remains byte-identical; MLP's validation-selected checkpoint
+moved from epoch 4 to 5 with the same training settings and loss trajectory.
+These scores measure agreement with the post-AI-exposure judgments. The
+training source snapshots are retained; a later provenance guard in the current
+evaluator does not rewrite those snapshots or the saved run evidence.
+See the [completed record](../results/human-ai-exposed-20261026/README.md) and
+[review workflow](human-review.md) for the full comparison and limits.
 
 ## Historical claims needing recovery
 

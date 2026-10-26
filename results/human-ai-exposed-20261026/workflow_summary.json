@@ -1,0 +1,34 @@
+{
+  "status": "completed",
+  "output_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/comparison_runs",
+  "methods": [
+    "logistic",
+    "mlp",
+    "sae_abstopk_none",
+    "sae_abstopk_norm"
+  ],
+  "main_table": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/comparison_runs/comparison/main_table.csv",
+  "validation": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/comparison_runs/validation.json",
+  "commands": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/comparison_runs/commands.json",
+  "source_version": "v1.0-mini",
+  "feature_protocol": "cpu-resnet18",
+  "encoder": "resnet18-imagenet1k-v1",
+  "feature_semantics": "Six ordered 512-dimensional pretrained image embeddings concatenated to 3072 dimensions; separate from VLM features",
+  "label_protocol": "manual",
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "human_reviewed": true,
+  "human_ground_truth_verified": false,
+  "evaluation_scope": "INTERNAL mini proof-of-concept 60/20/20 scene split; not an official test benchmark.",
+  "provenance_limit": "Recorded file provenance and review records; data authenticity and judgment truth are not established.",
+  "review_context": "post_ai_exposure_single_reviewer"
+}

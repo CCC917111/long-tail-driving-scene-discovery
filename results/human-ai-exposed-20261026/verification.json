@@ -1,0 +1,19 @@
+{
+  "scope": "Local full selection completed before final nested-scope guard regression tests were added; final source is checked separately by focused tests and remote CI",
+  "full_local": {
+    "passed": 225,
+    "http_deselected": 1,
+    "subtests": 18,
+    "real_feature_bundle_test_executed": true,
+    "source_stage": "initial review-context implementation, before later nested-scope hardening",
+    "log_sha256": "e45c4629bd67be6e06e68dda9a780353637a0dee9612f52a8a27e341732c12c9"
+  },
+  "post_hardening_focused": {
+    "context_tests_passed": 24,
+    "evaluation_ai_scope_tests_passed": 12,
+    "subtests": 2,
+    "lint_passed": true,
+    "compile_passed": true
+  },
+  "remote_ci": "See publication PR GitHub Actions checks for final-source tests and generated-data HTTP workflow; this file records local checks only."
+}

@@ -1,0 +1,95 @@
+{
+  "config": {
+    "features": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/layer1_mlp_output_mean.npy",
+    "meta": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/meta.json",
+    "labels": [
+      "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/annotations/labels.json"
+    ],
+    "output_dir": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/comparison_runs/sae_abstopk_none",
+    "manifest": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/human-ai-exposed-20261026/annotations/manifest.json",
+    "freeze_manifest_only": false,
+    "feature_config": "/workspace/long-tail-driving-scene-discovery/output/real-cpu-mini-20261023/extract/extraction_config.json",
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "seed": 42,
+    "hidden_dim": 256,
+    "tail_ratio": 0.5,
+    "dropout": 0.2,
+    "k": 32,
+    "sparsity": "abstopk",
+    "reward": "none",
+    "alpha": 1.0,
+    "beta": 0.1,
+    "reward_coeff": 0.5,
+    "reward_max": 2.0,
+    "epochs": 10,
+    "batch_size": 64,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "act_threshold": 0.01,
+    "neuron_threshold": 1.0,
+    "review_k": 4,
+    "target_precision": 0.9,
+    "bootstrap_samples": 1000,
+    "device": "cpu",
+    "label_scope": {
+      "label_protocol": "manual",
+      "review_context": "post_ai_exposure_single_reviewer",
+      "human_reviewed": true,
+      "human_ground_truth_verified": false,
+      "independent_human_review": false,
+      "prior_ai_labels_exposed": true,
+      "reviewer_count": 1,
+      "official_benchmark": false,
+      "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+    }
+  },
+  "decision": {
+    "rule": "c_tail >= 1",
+    "eta": 0.01
+  },
+  "score": "||z_t||_2",
+  "val": {
+    "auc": 0.6499999999999999,
+    "ap": 0.8493578643578643,
+    "long_tail": {
+      "precision": 0.7142857142857143,
+      "recall": 1.0,
+      "f1": 0.8333333333333334,
+      "support": 10
+    },
+    "normal": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 4
+    }
+  },
+  "test": {
+    "auc": 0.8400000000000001,
+    "ap": 0.9353174603174602,
+    "long_tail": {
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "f1": 0.8,
+      "support": 10
+    },
+    "normal": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 5
+    }
+  },
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  }
+}
