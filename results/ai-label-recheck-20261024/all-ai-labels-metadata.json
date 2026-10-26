@@ -1,0 +1,51 @@
+{
+  "schema": "all-ai-labels-export-v1",
+  "n": 80,
+  "frame_numbering": "source index + 1; matches local reviewer UI",
+  "original_ai_counts": {
+    "not_normal_core": 60,
+    "uncertain": 7,
+    "normal_core": 13
+  },
+  "recheck_ai_counts": {
+    "not_normal_core": 63,
+    "normal_core": 12,
+    "uncertain": 5
+  },
+  "ai_disagreements": 7,
+  "includes_human_labels": false,
+  "is_new_annotation_round": false,
+  "original_training_labels_changed": false,
+  "sources": [
+    {
+      "path": "results/cpu-mini-ai-pilot-20261023/ai_visual_labels.json",
+      "sha256": "64b4f56855ab03ea36fb37727bf756a05ef29a93a59ce39dc01fbaa87e5314d4"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/reviewer-0.json",
+      "sha256": "2359511273f856433d2833c4e8c082b0e71804036520854600af46f54cc22d46"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/reviewer-1.json",
+      "sha256": "38d9ebfb84e2f46ade414ab09dc72b73259cf58a23c9e55f55eb8bc550c15bff"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/reviewer-2.json",
+      "sha256": "e4f7a066e8c0b3d2f3ca655153183b35841fc327cbfb44888dd2ec85cc5312ab"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/reviewer-3.json",
+      "sha256": "245b441bccd070e7ed340599efc8f5ba2043707307f048b2fd39e964aa975166"
+    }
+  ],
+  "exports": [
+    {
+      "path": "all-ai-labels.csv",
+      "sha256": "e83faff1aeec5ddd0d8e6c5697cde28bd034194c8ea84a82c28c5c367aa4c259"
+    },
+    {
+      "path": "all-ai-labels.md",
+      "sha256": "47135f92d42b7ad9a861120641678f0f991d5e5378ea69188f945c6ac4ca6d3f"
+    }
+  ]
+}
