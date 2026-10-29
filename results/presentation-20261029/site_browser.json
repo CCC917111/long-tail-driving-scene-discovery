@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "real_browser": true,
+  "authenticated_production_visit": false,
+  "page_errors": [],
+  "http_errors": [],
+  "viewports": {
+    "desktop": {
+      "video": {
+        "duration": 89.96,
+        "width": 1440,
+        "height": 1000
+      },
+      "playback_advances": true,
+      "mp4_download_hash_matches": true,
+      "copy_matches_cv_text": true,
+      "speech_word_counts": [
+        122,
+        368
+      ],
+      "no_horizontal_overflow": true
+    },
+    "mobile": {
+      "video": {
+        "duration": 89.96,
+        "width": 1440,
+        "height": 1000
+      },
+      "playback_advances": true,
+      "mp4_download_hash_matches": true,
+      "copy_matches_cv_text": true,
+      "speech_word_counts": [
+        122,
+        368
+      ],
+      "no_horizontal_overflow": true
+    }
+  }
+}

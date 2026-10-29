@@ -9,7 +9,7 @@ This team capstone explores sparse autoencoders (SAEs) for ranking six-camera
 keyframes. A reproducible CPU follow-up connects data validation, four-model
 comparison, saved predictions and an offline neuron explorer.
 
-[**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) ·
+[**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) · [**Final presentation copy**](docs/presentation.md) ·
 [**Saved results**](results/human-ai-exposed-20261026/README.md) ·
 [**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
