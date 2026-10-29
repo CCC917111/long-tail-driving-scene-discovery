@@ -169,7 +169,7 @@ assert.equal(node('normal').disabled,true);
 const last=api.payload.camera_layout.at(-1);
 api.completeImage(first,generation,last,{...good,complete:false});
 assert.equal(api.imageState.ready,false);
-assert.ok(node('image-status').textContent.includes('images 文件夹'));
+assert.ok(node('image-status').textContent.includes('images folder'));
 api.completeImage(first,generation,last,{...good,naturalWidth:0});
 assert.equal(api.imageState.ready,false);
 api.completeImage(first,generation,last,good);
@@ -212,9 +212,9 @@ secondImages[0].onerror();
 assert.equal(api.imageState.ready,false);
 assert.equal(node('normal').disabled,true);
 assert.equal(node('clear').disabled,false);
-assert.ok(node('image-status').textContent.includes('作者原图'));
+assert.ok(node('image-status').textContent.includes('original author images'));
 assert.ok(!node('image-status').textContent.includes('ZIP'));
-assert.ok(!node('image-status').textContent.includes('images 文件夹'));
+assert.ok(!node('image-status').textContent.includes('images folder'));
 ''')
     result = subprocess.run([node, str(script), str(page)], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr

@@ -1,9 +1,9 @@
 # Driving end-to-end verification
 
-This workflow verifies generated feature/image inputs through training,
-evaluation, checkpoint reload, new-sample screening and review export. It does
-not run a VLM or establish nuScenes performance. Use Python 3.12 with the
-[pinned CPU dependencies](../requirements-cpu-lock.txt).
+This workflow uses generated images and features to verify training,
+evaluation, checkpoint reload, screening and review export. Use Python 3.12
+with the [pinned CPU dependencies](../requirements-cpu-lock.txt). For real-image
+results and their review limits, see [the CPU route](cpu-route.md).
 
 ## One command
 
@@ -20,7 +20,7 @@ trains Logistic, MLP, AbsTopK without reward and the same SAE with reward on
 reloaded predictions and train-only standardisers, rebuilds the comparison,
 and screens 40 independent unlabelled synthetic samples.
 
-For the same cached-feature workflow without HTTP checks:
+To run the cached-feature workflow without HTTP checks:
 
 ```bash
 .venv/bin/python scripts/synthetic_demo.py --output-dir output/cpu-example
@@ -52,9 +52,9 @@ reviewer fields without reference labels.
 ## Real browser checks
 
 `scripts/verify_browser_ui.py` uses Playwright and installed Chromium. Those
-browser dependencies are separate from the CPU training lock. In this managed
-environment, use the global `python` for the UI verifier; the shared training
-venv does not contain Playwright.
+browser dependencies are separate from the CPU training lock. In the recorded managed environment, the global `python` contains Playwright;
+the shared training venv does not. Select an interpreter with Playwright and
+Chromium installed.
 
 Read the current sample token/unit from `browser/smoke.json`, then supply them:
 

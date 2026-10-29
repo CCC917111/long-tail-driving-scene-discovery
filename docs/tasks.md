@@ -1,9 +1,9 @@
 # Common tasks
 
-Use the [user guide](user.md) for commands and the
-[evaluation protocol](evaluation.md) for controlled comparisons. Historical
-configuration comparisons are documented separately in
-[results](../results/README.md).
+Use the [CPU guide](cpu-route.md) for the current feature route, the
+[user guide](user.md) for CLI details and the [evaluation protocol](evaluation.md)
+for controlled comparisons. The [historical results](../results/README.md) use a
+different representation and protocol.
 
 ## Recover and freeze a study
 
@@ -71,9 +71,11 @@ test purity/coverage. A new seed, layer or latent width needs a new glossary;
 the historical glossary is not a universal category mapping. See
 [the explorer guide](neurons.md).
 
-For a demonstration, show a frame's score and active units, compare high-unit
-examples, inspect a real false positive or false negative, then export the
-review queue. Synthetic images and weights must be labelled as synthetic.
+For a demonstration, show a sample's score and active units, compare examples
+for one unit, inspect a saved false positive or false negative, then export the
+review queue. State the decision rule and reference-label scope. Keep current
+CPU unit IDs unnamed until their interpretations have been validated; label
+synthetic images and weights as synthetic.
 
 ## Change a decision or reuse a run
 

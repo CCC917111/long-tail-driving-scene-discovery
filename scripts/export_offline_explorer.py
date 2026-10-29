@@ -60,7 +60,8 @@ def reference_from_scope(scope):
                          "prior_ai_labels_exposed", "official_benchmark"))
                 and scope.get("reviewer_count", 0) == 0,
                 "AI label scope must be provisional with human review pending")
-        return {"kind": "ai_provisional", "label": "AI 初标", "short_label": "AI 参考",
+        return {"kind": "ai_provisional", "label": "provisional AI labels",
+                "short_label": "AI reference",
                 "review_context": None,
                 "description": "AI provisional labels; human review pending. Errors and "
                                "purity are relative to AI references."}
@@ -68,8 +69,8 @@ def reference_from_scope(scope):
     require(all(key in scope and type(scope[key]) is type(value) and scope[key] == value
                 for key, value in canonical.items()),
             "Manual label scope requires canonical post-AI-exposure single-reviewer provenance")
-    return {"kind": "human_ai_exposed", "label": "AI 曝露后单人复核",
-            "short_label": "人工复核参考", "review_context": canonical["review_context"],
+    return {"kind": "human_ai_exposed", "label": "single-reviewer post-AI-exposure review",
+            "short_label": "human review reference", "review_context": canonical["review_context"],
             "description": "Agreement with one human reviewer after AI-label exposure; "
                            "not independent human ground truth or an official benchmark."}
 
@@ -108,8 +109,9 @@ def failure_bookmarks(predictions, reference, failure_cases=None):
                         and case.get("error_relative_to_final_review")
                         == error_type(row["label"], row["prediction"]),
                         "Failure-case label or error differs from saved predictions")
-    return [{"title": "MLP 固定规则" + ("误报" if row["label"] == 0 else "漏报")
-             + "（相对 " + reference["label"] + "）",
+    return [{"title": "MLP fixed-rule " + ("false positive" if row["label"] == 0 else
+                                           "false negative")
+             + " (relative to " + reference["label"] + ")",
              "method": "mlp", "sample_token": row["sample_token"], "split": "test",
              "rule": "fixed probability >= 0.5", "error_type": error_type(
                  row["label"], row["prediction"]),
@@ -339,24 +341,27 @@ function api(path){
  throw new Error('Unsupported offline API route');
 }
 function validateLoaded(model){
- check(model.manifest.transfer_id===payload.transfer_id,'分包不属于本次结果包，请选择原来的四个 ZIP。');
- check(model.manifest.part_count===payload.expected_part_count,'分包总数与原始四个 ZIP 不一致');
- check(model.manifest.frames_per_scene===payload.frames_per_scene,'分包帧数设置不一致');
- check(model.rubric_sha256===payload.rubric_sha256,'标注标准版本不一致');
- check(model.selected.length===payload.expected_frames.length,'所选时间点数量不一致');
+ check(model.manifest.transfer_id===payload.transfer_id,
+       'These parts do not belong to this result bundle. Select the original four ZIPs.');
+ check(model.manifest.part_count===payload.expected_part_count,
+       'Part count differs from the original four ZIPs');
+ check(model.manifest.frames_per_scene===payload.frames_per_scene,'Frames per scene differ');
+ check(model.rubric_sha256===payload.rubric_sha256,'Labelling rubric version differs');
+ check(model.selected.length===payload.expected_frames.length,'Selected frame count differs');
  for(let i=0;i<model.selected.length;i++){
   const actual=model.selected[i],expected=payload.expected_frames[i];
   check(actual.sample_token===expected.sample_token&&actual.scene_token===expected.scene_token&&
-        actual.timestamp===expected.timestamp,'所选时间点与结果不一致');
+        actual.timestamp===expected.timestamp,'Selected frames differ from these results');
   for(const camera of reader.CAMERAS)
-   check(actual.images[camera]===expected.images[camera],'六视角映射不一致');
+   check(actual.images[camera]===expected.images[camera],'Six-camera image mapping differs');
  }
  for(const [name,digest]of Object.entries(payload.expected_metadata))
-  check(model.manifest.metadata_sha256[name]===digest,'原始元数据与本轮结果不同');
+  check(model.manifest.metadata_sha256[name]===digest,
+        'Original metadata differs from these results');
  const inventory=new Map(model.manifest.files.map(row=>[row.path,row]));
  for(const [path,digest]of Object.entries(payload.expected_images))
   check(inventory.has(path)&&inventory.get(path).output_sha256===digest&&model.images.has(path),
-        '图片内容与本轮结果不同');
+        'Image contents differ from these results');
  return true;
 }
 function attachLoaded(model){
@@ -364,7 +369,7 @@ function attachLoaded(model){
  urls=new Map();loaded=model;resolveReady();return model;
 }
 function imageURL(token,camera){
- check(loaded,'请先打开 ZIP 分包');const frame=payload.frames[token];
+ check(loaded,'Open the ZIP parts first');const frame=payload.frames[token];
  check(frame&&frame.images[camera],'Unknown image');const path=frame.images[camera];
  if(!urls.has(path))urls.set(path,URL.createObjectURL(loaded.images.get(path)));
  return urls.get(path);
@@ -385,12 +390,13 @@ load.onclick=async()=>{load.disabled=true;try{
  const files=Array.from(document.getElementById('offline-parts').files);
  const model=await reader.loadParts(files,text=>{status.textContent=text;});
  attachLoaded(model);document.body.classList.add('offline-loaded');
- status.textContent='校验完成：'+model.selected.length+' 组原图，本页展示 '+
-  payload.summary.frames+' 组训练/评估缓存。图像留在你的电脑上。';
-}catch(error){status.textContent='未打开：'+error.message;}finally{load.disabled=false;}};
+ status.textContent='Verified: '+model.selected.length+' original frames; this page shows '+
+  payload.summary.frames+' cached training/evaluation frames. Images stay on your computer.';
+}catch(error){status.textContent='Could not open: '+error.message;}finally{load.disabled=false;}};
 document.querySelectorAll('[data-offline-token]').forEach(link=>{
  link.addEventListener('click',event=>{
-  if(!loaded){event.preventDefault();status.textContent='请先选择四个 ZIP 并点击「打开原图」。';}
+  if(!loaded){event.preventDefault();
+   status.textContent='Select all four ZIPs and click "Open original images" first.';}
  });
 });
 window.addEventListener('unload',()=>{for(const url of urls.values())URL.revokeObjectURL(url);});
@@ -446,62 +452,75 @@ def render_html(payload, review_source):
         + '" href="#/sample/' + html.escape(row["sample_token"], quote=True) + '">'
         + html.escape(row["title"]) + "</a>" for row in payload["bookmarks"])
     first = payload["comparison"][0]
-    caption = (f"{first['n']} 个 test 时间点 / {first['test_scenes']} 个场景 · "
+    caption = (f"{first['n']} test frames / {first['test_scenes']} scenes · "
                f"K={first['requested_k']} · seed={first['seed']}")
     included = payload["summary"]["frames"]
     excluded = len(payload["expected_frames"]) - included
-    warning = ("AI 曝露后单人复核：同一位复核者在看过 AI 初标后提交最终判断。"
-               "以下分数、误报/漏报和纯度均相对这些人工复核参考；不是独立人工真值，"
-               "也不是官方 benchmark。CPU ResNet18 路线与 Cosmos 独立。" if reviewed else
-               "AI 初标试跑，尚未人工核验。以下分数、误报/漏报和纯度均相对 AI 初标，"
-               "不代表真实准确率或官方 benchmark。CPU ResNet18 路线与 Cosmos 独立。")
+    warning = ("Single-reviewer post-AI-exposure review: one reviewer submitted final decisions "
+               "after seeing provisional AI labels. Scores, false positives/negatives and purity "
+               "are relative to these human review references; they are not independent human "
+               "ground truth or an official benchmark. The CPU ResNet18 route is separate from "
+               "Cosmos." if reviewed else
+               "Provisional AI-label pilot; human review pending. Scores, false "
+               "positives/negatives "
+               "and purity are relative to provisional AI labels, not measured real-world accuracy "
+               "or an official benchmark. The CPU ResNet18 route is separate from Cosmos.")
     rule_notes = []
     for method, rule in payload["operating_rules"].items():
         point, test = rule["operating_point"], rule["test"]
         if point["status"] == "target_unreachable":
-            selection = (f"validation {point['target_precision']:.0%} precision 目标不可达；"
-                         "未选择阈值，工作点不产生候选")
+            selection = (f"validation {point['target_precision']:.0%} precision target "
+                         "unreachable; "
+                         "no threshold selected, so the operating point produces no candidates")
         else:
-            selection = (f"validation 选定 score ≥ {point['threshold']:.6f}；"
-                         f"test 产生 {rule['test_candidates']} 个候选，"
-                         f"precision={test['precision']:.2f}、recall={test['recall']:.2f}")
+            selection = (f"validation selected score ≥ {point['threshold']:.6f}; "
+                         f"test produces {rule['test_candidates']} candidates, "
+                         f"precision={test['precision']:.2f}, recall={test['recall']:.2f}")
         fixed = rule["fixed_rule"]
-        rule_notes.append("<li><b>" + html.escape(method) + "</b>：固定规则 "
+        rule_notes.append("<li><b>" + html.escape(method) + "</b>: fixed rule "
                           + html.escape(fixed["rule"])
-                          + (f"（eta={fixed['eta']}）" if "eta" in fixed else "")
-                          + "；" + html.escape(selection) + "。</li>")
-    reward_note = ("Reward 与 no-reward SAE 的 checkpoint 相同，本轮未证明 reward 增益。"
+                          + (f" (eta={fixed['eta']})" if "eta" in fixed else "")
+                          + "; " + html.escape(selection) + ".</li>")
+    reward_note = ("Reward and no-reward SAE checkpoints are identical; this run establishes no "
+                   "reward improvement."
                    if payload["sae_checkpoints_identical"] else
-                   "SAE checkpoint 的差异本身不证明 reward 增益。")
+                   "Different SAE checkpoints alone do not establish a reward improvement.")
     source_scope = json.dumps({"reference": reference, "label_scope": payload["label_scope"],
                                "manifest_sha256": payload["manifest_sha256"],
                                "checkpoints": payload["checkpoints"],
                                "source_sha256": payload["source_sha256"]},
                               ensure_ascii=False, indent=2)
-    setup = ("<section class=\"offline-setup\"><h2>真实数据 · CPU 训练缓存演示</h2>"
-             "<p>选择你已下载的全部四个 ZIP，然后查看真实六视角、激活单元和相似高激活样本。"
-             "图像不上传；页面不重新训练或调用在线模型。</p>"
+    setup = ("<section class=\"offline-setup\"><h2>Real data · cached CPU training demo</h2>"
+             "<p>Select all four downloaded ZIPs to explore original six-camera images, "
+             "activated units and similar high-activation samples. Images stay local; "
+             "this page does not retrain or call an online model.</p>"
              "<input id=\"offline-parts\" type=\"file\" accept=\".zip\" multiple> "
-             "<button id=\"offline-load\">打开原图</button>"
-             "<p id=\"offline-status\" role=\"status\">请在电脑 Chrome 或 Edge 中打开此 HTML。</p>"
+             "<button id=\"offline-load\">Open original images</button>"
+             "<p id=\"offline-status\" role=\"status\">Open this HTML in desktop Chrome or "
+             "Edge.</p>"
              "<p id=\"reference-scope-warning\" class=\"offline-warning\" data-reference-kind=\""
              + reference["kind"] + "\">" + html.escape(warning) + "</p>"
              "<div class=\"offline-results\"><table><caption>" + html.escape(caption) + "</caption>"
-             "<tr><th>模型</th><th>AP（" + reference["short_label"] + "）</th><th>precision@"
-             + str(first["requested_k"]) + "</th><th>固定规则 P / R</th>"
-             "<th>validation 工作点</th><th>阈值</th><th>test 工作点 P / R</th>"
-             "<th>test 候选数</th></tr>" + table_rows + "</table></div>"
-             "<p>浏览器顶部的 normal/long-tail 使用 SAE 原固定激活规则；下面逐帧表分别列出固定"
-             "规则与 validation 工作点预测。高 AP 与 precision@K 衡量排序；工作点的 test precision "
-             "需结合候选数与 recall 理解。" + reward_note + "</p><ul>"
-             + "".join(rule_notes) + "</ul><p>激活单元仅用编号表示，尚未验证语义名称。"
-             "以下同一 MLP 固定规则的误报与两例漏报是在评估后选取的说明案例，未用于调参。</p>"
+             "<tr><th>Model</th><th>AP (" + reference["short_label"] + ")</th><th>precision@"
+             + str(first["requested_k"]) + "</th><th>Fixed-rule P / R</th>"
+             "<th>Validation operating point</th><th>Threshold</th>"
+             "<th>Test operating-point P / R</th>"
+             "<th>Test candidates</th></tr>" + table_rows + "</table></div>"
+             "<p>The normal/long-tail prediction at the top uses the original SAE fixed activation "
+             "rule. Each frame table lists fixed-rule and validation operating-point predictions "
+             "separately. AP and precision@K measure ranking; interpret operating-point test "
+             "precision together with candidate count and recall. " + reward_note + "</p><ul>"
+             + "".join(rule_notes) + "</ul><p>Activated units use numeric identifiers; "
+             "semantic names "
+             "have not been validated. The following false positive and two false negatives use "
+             "the same MLP fixed rule. They were selected after evaluation as illustrations and "
+             "were not used for tuning.</p>"
              "<div class=\"offline-cases\">" + bookmarks + "</div>"
-             "<details><summary>冻结标注标准与使用范围</summary><p>"
-             + str(included) + " 组" + reference["label"] + "标签参与训练/评估；" + str(excluded)
-             + " 组不确定样本未参与。</p>"
+             "<details><summary>Frozen labelling rubric and scope</summary><p>"
+             + str(included) + " frames with " + reference["label"] + " were used for "
+             "training/evaluation; " + str(excluded) + " uncertain frames were excluded.</p>"
              "<pre id=\"offline-rubric\"></pre></details>"
-             "<details><summary>结果来源与参考范围</summary><pre>"
+             "<details><summary>Result provenance and reference scope</summary><pre>"
              + html.escape(source_scope) + "</pre></details>"
              "</section>")
     source = replace_once(source, "<header><h1>Neuron Explorer</h1>",
@@ -539,11 +558,11 @@ def render_html(payload, review_source):
   }
   const comparison=document.createElement('table');comparison.className='comparison-table';
   const caption=document.createElement('caption');
-  caption.textContent='同一帧：四模型预测（参考标签为 '+
-   DrivingOffline.payload.reference.label+'）';comparison.append(caption);
+  caption.textContent='Same frame: four-model predictions (reference: '+
+   DrivingOffline.payload.reference.label+')';comparison.append(caption);
   const heading=document.createElement('tr');
-  const titles=['模型','分数','参考标签','固定预测','固定规则错误',
-   'validation 工作点预测','相对参考的工作点错误'];
+  const titles=['Model','Score','Reference label','Fixed prediction','Fixed-rule error',
+   'Validation operating-point prediction','Operating-point error relative to reference'];
   for(const title of titles){
    const th=document.createElement('th');th.textContent=title;heading.append(th);
   }

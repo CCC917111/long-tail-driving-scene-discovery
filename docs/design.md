@@ -1,16 +1,18 @@
 # High-level design
 
-The detailed extraction, SAE equations and research references live in
-[method and historical context](methods-history.md). This page describes
-implementation decisions and their limits. The
-[historical results](../results/README.md) and
-[current evaluation protocol](evaluation.md) use different evidence scopes.
+The implementation separates feature extraction, supervised fitting, evaluation
+and sample review. Current real-data runs use a frozen CPU ResNet18 encoder;
+the [original VLM architecture](methods-history.md) remains a separate route.
+The [historical results](../results/README.md) were produced under a different
+protocol from the [current evaluation](evaluation.md).
 
 ## Representation and decision
 
-The pipeline consumes one timestamp with six ordered camera views. A frozen
-VLM produces a dense feature vector under a scene-description prompt. A linear
-encoder, sparse selection and linear decoder learn a code `[z_n, z_t]`.
+Each sample contains one timestamp and six ordered camera views. The current
+CPU encoder concatenates six 512-dimensional image vectors into 3,072 features.
+The original VLM route instead extracts a hidden state under a scene-description
+prompt. Both feed a linear encoder, sparse selection and linear decoder with a
+code split into `[z_n, z_t]`.
 The objective combines reconstruction, suppression of tail-code activity on
 normal-labelled training samples, and optional capped reward on tail-labelled
 samples. These constraints encourage task sensitivity; they do not guarantee

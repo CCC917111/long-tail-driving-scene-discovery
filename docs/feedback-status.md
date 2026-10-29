@@ -1,181 +1,155 @@
 # Feedback implementation status
 
-Updated 2026-10-28. Original audited version: `b57eaffa21d54ad67d98d441935cf6b17cdc5294`.
-This file distinguishes completed software and descriptive review checks from
-independent human-reference benchmarks. Stable model-effectiveness and independent
-blind-label claims remain unestablished.
+Updated 2026-10-29. The original audited version was
+`b57eaffa21d54ad67d98d441935cf6b17cdc5294`. The current publication baseline is
+`e4d8fc4c9a3bf877c98f24a42558dadc174c063b`, after PRs
+[#4](https://github.com/CCC917111/long-tail-driving-scene-discovery/pull/4) and
+[#5](https://github.com/CCC917111/long-tail-driving-scene-discovery/pull/5) merged.
 
-The [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-is owner-private and requires the owner's ChatGPT sign-in. It serves all 54
-new images from the same origin. The [downloadable fallback](../demo/driving_new_scenes.html)
-still requires access to the author's image URLs on `raw.githubusercontent.com`.
+The CPU pipeline, saved-output audits and review interfaces are complete.
+Research conclusions remain limited by the small cohorts, AI-disclosed
+single-reviewer references and scene/class confounding. Stable model gains and
+independent blind-label accuracy have not been established.
 
 ## Current round
 
-| Area | Implemented / prepared | Still required |
+| Area | Completed | Remaining limitation |
 |---|---|---|
-| P0 data contracts | Strict scene-token and label validation; frozen manifest interface; input/run provenance | Recover historical assets, review manifest, explain six-frame gap and raw-VLM supports |
-| Fresh real-data setup | Four real mini parts imported; five tables / 480 camera images checked; 80 CPU ResNet18 feature vectors extracted on a frozen 6/2/2-scene split | Independent human decisions and adequate normal/tail scene support; original VLM/GPU extraction remains separate |
-| Post-AI-exposure human-review CPU run | Yike supplied 80 judgments: 77 reviewed binary labels (12 normal / 65 tail), three uncertain, no pending; all four CPU methods fitted and independently reconstructed; [record](../results/human-ai-exposed-20261026/README.md) | Single reviewer after the full AI label table, empty notes, one seed, two test scenes and three normal training frames; no observed reward increment |
-| Supplemental new-scene check | Nine real timestamps / 54 images from two additional scenes; new-input CPU inference and exact independent replay; Yike completed five normal / four non-normal references; [record](../results/new-scene-human-review-20261028/README.md) | Chat AI-reference disclosure before submission; per-row timing unknown; empty notes; all normals in one scene and all non-normals in another; no new model fit |
-| Frozen working-point replay | Old validation-selected threshold selects five of nine, precision 60% and recall 75%, versus the fixed activation rule selecting all nine; [saved replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json) | Descriptive comparison with submitted references; no threshold adjustment on new labels and no independent generalization claim |
-| Explicit AI-label pilot | 80 six-view AI decisions; 73 retained / seven uncertain; four real-image model fits, reload/result audit and unlabelled screening; [record](ai-pilot.md) | Independent human truth, more normal training scenes and formal multi-seed evidence; no observed reward increment |
-| Portable execution | Embedded-source notebook; staged archive acquisition; saved review/backup; strict four-method CPU driver | Real download/GPU execution and Colab visual verification |
-| P1 comparison | Four matched real-image CPU fits against explicit AI references, then a separately recorded post-disclosure human-reference fit; shared evaluator and saved-output reconstruction | Independent human-reference evaluation and formal multi-seed evidence; all validation targets were unreachable in the original AI pilot; no observed reward increment |
-| P2 demonstration | Latest reviewed-reference offline explorer with 77 cached timestamps / 308 method values, same-rule MLP FP/FN bookmarks and blank new-review export; original 73-frame AI viewer archived byte-for-byte; 90-second script prepared | A narrated real-image recording, independent human error review and verified semantic interpretation; current Chrome status is recorded in publication PR checks |
-| New review delivery | Owner-private Site with same-origin original images; local Chromium desktop/mobile bundle checks, CSV export, loading guards, failed-image retry and successful native publication; [repair evidence](../results/review-page-repair-20261028/README.md) | Owner ChatGPT sign-in is required; authenticated production browsing was not recorded; external GitHub reviewers have no automatic access |
-| Documentation | Historical results isolated; original contribution wording retained; AI-assisted follow-up identified; [derived pilot bundle](../results/cpu-mini-ai-pilot-20261023/README.md) published | Original contribution evidence and human-validated result claims |
+| Data contracts | Strict labels and scene IDs, frozen manifests, provenance and exclusion records. | Historical assets, raw-VLM supports and the six-frame count gap remain unresolved. |
+| Real mini inputs | Four transferred parts validated; 80 timestamps, ten scenes and 480 images; pinned CPU ResNet18 cache and frozen 6/2/2-scene allocation. | The original archive checksum was not independently verified; current features do not reproduce Cosmos. |
+| Human-reference CPU fit | 77 binary judgments and three uncertain exclusions; Logistic, MLP and both SAE variants fitted and independently reconstructed. | One reviewer after AI-label exposure, blank notes, seed 42, two test scenes and three normal training samples from one scene. |
+| New-scene replay | Nine timestamps and 54 images from two additional scenes; existing models applied without fitting; all nine human judgments received. | AI-reference disclosure preceded submission; per-row timing is unknown; all five normals are in one scene and all four tails in the other. Original log IDs are unavailable. |
+| Frozen score policy | Old validation threshold `6.074954873` selected five of nine: precision 60%, recall 75%. | Descriptive agreement with submitted references; no tuning on these labels or independent generalization estimate. The original activation rule selected all nine. |
+| Reward comparison | Matched reward/no-reward configurations, common inputs and rebuilt result tables. | Both SAE checkpoints are identical; no reward benefit was observed. |
+| Review and demonstration | Offline explorer with 77 retained timestamps and 308 cached method values, saved MLP FP/FN bookmarks, blank review export and an [English recording](../demo/driving-walkthrough-90s.mp4). | Unit IDs have no validated semantic names; example context does not prove an error's cause. |
+| Portable execution | Embedded-source CPU notebook, staged acquisition, persisted review and strict four-method driver. | Real Colab execution and the original GPU/VLM route have not been verified. |
 
-The original README contribution table records Yike's stated capstone work.
-Yike is the project lead and is responsible for the GitHub repository's overall
-optimization and delivery, as confirmed in the project discussion. This role
-covers the modernization phase while preserving the original team-role table
-and the documented AI-assisted implementation history.
-The 2026-10-19–23 changes to validation, provenance, baseline evaluation, data
-handoff, the offline explorer, fixtures and documentation are AI-assisted
-follow-up work. They must be reviewed and
-understood by Yike before being presented as current engineering work; they
-must not be retroactively attributed to the original capstone period. No
-unsupported statement about earlier AI use is made.
+Total real input coverage is 89 timestamps, 12 scenes and 534 images. The nine
+supplemental timestamps were scored with existing models; they did not enlarge
+the fitting cohort.
+
+The [private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+requires the owner's ChatGPT sign-in and serves all 54 supplemental images from
+the same origin. The [downloadable fallback](../demo/driving_new_scenes.html)
+uses the author's `raw.githubusercontent.com` image URLs. External GitHub
+reviewers do not automatically have access to the private Site. See the
+[presentation record](../results/presentation-20261029/README.md) for the public
+recording and the distinct original private-delivery receipts.
+
+Yike leads the project and the repository modernization and delivery. The
+[original contribution table](../README.md) retains the capstone team's roles,
+including the annotation platform and most feature interpretation by named
+teammates. Validation, provenance, baselines, data handoff, the offline explorer,
+fixtures and documentation added on 2026-10-19–23 were AI-assisted follow-up
+work. That work belongs to the modernization phase and should be reviewed and
+understood by Yike before presentation. It must not be attributed retroactively
+to the original capstone period; earlier AI use is not inferred.
+
+## Human-reference provenance and results
+
+The final old-cohort CSV was received on 2026-10-26 and matched all 80 frozen
+sample IDs. Its SHA256 is
+`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
+Every row names Yike: 12 `normal_core`, 65 `not_normal_core` and three
+`uncertain`. Binary rows have status `reviewed`; the uncertain rows are excluded
+from supervised fitting and evaluation. None remain pending.
+
+All notes are blank, including uncertainty reasons. The first ten judgments
+are preserved as a pre-exposure checkpoint, along with four subsequent
+revisions. The full submission followed display of the complete AI label table.
+It is single-reviewer evidence after AI-label exposure, not blind independent
+reference data.
+
+| Old split | Normal | Tail | Uncertain |
+|---|---:|---:|---:|
+| Train | 3 | 45 | 0 |
+| Validation | 4 | 10 | 2 |
+| Test | 5 | 10 | 1 |
+
+The CPU rerun reused the ResNet18 cache, frozen scenes and training settings.
+Independent reconstruction checked source/input hashes, training-only scalers,
+checkpoint scores, validation thresholds, metrics and the comparison table. On
+the 15-row test subset, SAE AP was `0.9353`, precision@4 was `1.0` and recall@4
+was `0.4`. Its validation-selected operating point had precision `1.0` and
+recall `0.2`. These measure agreement with the disclosed references.
+
+Both SAE checkpoints are byte-identical to each other and to the earlier
+AI-label pilot. Logistic is also unchanged. MLP checkpoint selection moved
+from epoch 4 to 5 under the same settings and training loss trajectory. The
+[completed result bundle](../results/human-ai-exposed-20261026/README.md) retains
+source snapshots; a later evaluator provenance guard does not rewrite them.
+The [nine-row supplement](../results/new-scene-human-review-20261028/README.md)
+is reported separately.
 
 ## Verification record
 
-The 2026-10-27 new-scene execution has a separate original
-[source snapshot](../results/new-scene-e2e-20261027/execution_source.zip).
-The later exporter loading/retry repair and private deployment are recorded in
-[2026-10-28 evidence](../results/review-page-repair-20261028/README.md), rather
-than replacing the old run's hashes. All 54 real original images were decoded
-in desktop/mobile review checks. The temporary test decisions are not human
-annotations. Source-linked fallback CI and the owner-private Site have distinct
-verification scopes.
+The following checks retain their original dates and scopes; software checks
+do not validate label quality.
 
-The following earlier local and CI records retain their original dates/scopes:
+- The final local CPU selection passed **205 tests and 18 subtests**, plus lint.
+  One HTTP test was deselected because the sandbox denied loopback binding.
+  The optional real-asset integration ran with the actual feature bundle and
+  explicitly provisional AI labels; that private-asset check was skipped in CI.
+- At `ba8efddd46b357f492965b941172a8fd1f6dd948`, Actions passed the
+  [CPU/lint/HTTP workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920171)
+  and [offline Chrome workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157).
+  The [earlier CPU run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
+  records the 205 tests and 18 subtests.
+- Chrome 155 checked desktop/mobile navigation, six-view rendering, cached
+  values and CSV download with watermarked synthetic ZIPs. Separate Node checks
+  verified all 480 local real-image bytes and 292 displayed AI-pilot values
+  against saved outputs. Those checks covered different artifacts.
+- The synthetic E2E run fitted four models on 60 scenes/240 samples, reloaded
+  checkpoints and training scalers, rebuilt the table and screened 40 separate
+  unlabelled samples. Two HTTP explorers passed 14 route checks each, including
+  images and blank-label `/export/review.csv`. The screening override `eta=0.05`
+  persisted through reload, separately from the training `eta=0.01`.
+- Synthetic preparation/import checks used an 80-sample, ten-scene fixture.
+  Extraction hooks and resume used a fixture model. These preceded real mini
+  acquisition and do not constitute VLM execution.
+- Real CPU extraction on 2026-10-23 passed a one-sample smoke and resume into an
+  `(80, 3072)` cache on the frozen 48/16/16 timestamp allocation. Logs and hashes
+  remain under `output/real-cpu-mini-20261023/` in the execution workspace.
+- The later [AI-label pilot](ai-pilot.md) fitted four methods on 73 retained
+  timestamps and screened seven uncertain ones. It used one seed and two test
+  scenes; all validation precision targets were unreachable and both SAEs were
+  identical. Its published bundle excludes original images, metadata and weights.
+- The 2026-10-27 new-scene run retains its original
+  [execution source](../results/new-scene-e2e-20261027/execution_source.zip).
+  The [2026-10-28 repair record](../results/review-page-repair-20261028/README.md)
+  covers loading guards, retry, CSV export and private publication separately.
+  All 54 real images decoded in local desktop/mobile checks. Temporary UI test
+  decisions were discarded; authenticated production browsing was not recorded.
 
-The final local CPU selection passed **205 tests and 18 subtests**, with one
-HTTP test deselected because the sandbox denied loopback binding. The optional
-real-asset integration actually ran against the real feature bundle and
-explicitly AI-provisional labels. Lint passed. This is a local non-HTTP pass;
-the HTTP-dependent case was not counted as passed locally.
-
-At `ba8efddd46b357f492965b941172a8fd1f6dd948`, GitHub Actions passed
-[CPU tests/lint and the HTTP end-to-end workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920171)
-and the [offline Chrome browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157).
-The earlier [CPU run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
-records 205 tests and 18 subtests passed, with the private-real-asset test
-explicitly skipped in CI.
-
-Chrome 155 passed desktop/mobile navigation, six-image rendering, cached score
-checks and actual CSV download using generated, watermarked images in synthetic
-ZIPs. Independent Node checks separately verified all 480 actual local image
-bytes and all 292 displayed model values against saved outputs. The browser
-check is UI evidence, not a real-image browser run or label-quality measurement.
-See [testing](testing.md) for the scope of each check.
-
-The synthetic end-to-end run trained all four core models on 60 scenes / 240
-frames, reloaded their checkpoints and train-only standardisers, rebuilt the
-main table and screened 40 independent unlabelled samples. Both real HTTP
-explorers passed 14 route checks each (28 total), including image responses
-and `/export/review.csv` without reference labels. The screening override
-`eta=0.05` survives reload, distinct from the trained run's `eta=0.01`.
-
-This round also repaired screening threshold persistence and validation of
-duplicate tokens, nonfinite values and standardiser inputs. These are software
-fixes, not new real-data model results. See [end-to-end verification](e2e.md)
-for commands and artifacts. CPU dependency versions are in
-`requirements-cpu-lock.txt`; GPU/VLM lower bounds are in
-`requirements-gpu.txt` and have not been verified on a CUDA machine.
-
-The new raw-data preparation and label-import CLI passed against an explicitly
-synthetic 80-frame, 10-scene fixture, including consumption by the shared data
-loader and frozen-manifest loader. Extraction hooks and resume were exercised
-with a fixture model. The earlier preflight reported no real dataset, local VLM
-weights or CUDA device. A real mini subset and pinned ResNet18 weights are now
-available; local Cosmos weights and CUDA remain absent.
-
-The 2026-10-23 real CPU run imported 80 timestamps / ten scenes / 480 JPEGs,
-froze an internal mini allocation of 48/16/16 frames, and completed extraction
-into an `(80, 3072)` cache after a one-frame smoke and verified resume. It created
-no labels. Raw logs and hashes are retained under
-`output/real-cpu-mini-20261023/`; [CPU route](cpu-route.md) records the scope.
-No VLM inference or original-checkpoint evaluation has run in
-this round. A subsequent explicitly AI-labelled pilot trained and reloaded all
-four methods on 73 retained timestamps and screened seven uncertain timestamps.
-Its complete result bundle, source snapshot, hashes and numeric offline explorer
-are published without original images, raw metadata or weights. The user loads
-their own images locally. Scores remain agreement with provisional AI references:
-two test scenes, only three normal training examples, one seed, identical SAE
-reward/no-reward checkpoints and unreachable validation precision targets limit
-the conclusions. The [pilot record](ai-pilot.md) includes these failures.
-
-On 2026-10-26, the final human CSV was received and checked against all 80
-frozen sample IDs. Its SHA-256 is
-`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
-Every row names Yike; the final submission contains 12 `normal_core`, 65
-`not_normal_core` and three `uncertain` judgments. All binary rows are
-`reviewed`, all uncertain rows have status `uncertain`, and none remain pending.
-All review notes are blank, including the three uncertainty reasons; no reasons
-have been inferred or added. The earlier first-ten submission is retained as a
-pre-exposure checkpoint, together with the four later revisions to those labels.
-The completed submission followed display of the full AI label table, so it is
-post-AI-exposure single-reviewer evidence, not blind independent ground truth.
-The frozen split is unchanged: train has 3 normal / 45 tail; validation has
-4 normal / 10 tail plus two uncertain; test has 5 normal / 10 tail plus one
-uncertain. The 77 binary rows meet the current class-support import contract;
-the three uncertain rows remain excluded from supervised training/evaluation.
-The subsequent controlled CPU rerun fitted Logistic, MLP and both SAE variants
-with the retained 77 rows, original ResNet18 cache and unchanged training
-settings. Independent reconstruction verified the inputs/source hashes,
-train-only scalers, all four checkpoint scores, validation-only thresholds,
-saved metrics and comparison table. On the 15-row test split, SAE AP is 0.9353,
-precision@4 is 1.0 and recall@4 is 0.4; its validation-selected operating point
-has test precision 1.0 and recall 0.2. Both SAE checkpoints are byte-identical
-to each other and to the earlier AI pilot, so no reward improvement was
-observed. Logistic remains byte-identical; MLP's validation-selected checkpoint
-moved from epoch 4 to 5 with the same training settings and loss trajectory.
-These scores measure agreement with the post-AI-exposure judgments. The
-training source snapshots are retained; a later provenance guard in the current
-evaluator does not rewrite those snapshots or the saved run evidence.
-See the [completed record](../results/human-ai-exposed-20261026/README.md) and
-[review workflow](human-review.md) for the full comparison and limits.
+Screening persistence, duplicate-token, nonfinite-input and standardizer checks
+are software fixes. See [testing](testing.md) and [E2E verification](e2e.md) for
+artifacts and commands. CPU versions are pinned in `requirements-cpu-lock.txt`;
+`requirements-gpu.txt` has not been verified on CUDA. Local Cosmos weights and a
+CUDA device remain unavailable.
 
 ## Historical claims needing recovery
 
-- Recover labels and review records, sample/scene tokens, extraction settings,
-  feature arrays, checkpoint, standardiser, original commands and old logs.
-- Reconcile raw-VLM predictions with the stated test supports before making a
-  matched-test comparison; preserve each original file rather than rewriting it.
-- Explain why 824 scenes at eight keyframes would yield 6,592 samples while the
-  historical report lists 6,586. Record excluded tokens and reasons.
-- Keep historical random-frame 80/20 results separate from current scene-level
-  70/15/15 results. Do not infer old provenance from the current implementation.
-- Verify contribution records with the original report, commits and team records.
-  The annotation platform and most feature interpretation belong to the named
-  teammates in the existing contribution table.
+Recover the original labels/review records, sample and scene IDs, extraction
+settings, feature arrays, checkpoint, standardizer, commands and logs. Reconcile
+raw-VLM predictions and supports on the same test IDs before claiming a matched
+comparison. Explain why 824 scenes at eight keyframes imply 6,592 samples while
+the report lists 6,586; retain exclusion IDs and reasons. Preserve historical
+random-frame 80/20 results separately from current scene-level protocols and
+verify capstone contributions against the report, commits and team records.
 
-## Human-validated experiment completion gate
+<a id="human-validated-experiment-completion-gate"></a>
 
-The CPU software pilot has completed the shared-input fits, saved-output
-reconstruction and an inspection tool. The remaining gate concerns research
-claims and independent human evidence:
+## Next research milestone
 
-1. Validate and freeze an authorised manifest with no duplicate tokens,
-   conflicting labels or scene overlap, with provenance/exclusion records.
-2. Use the same feature/metadata hashes and manifest for Logistic, MLP,
-   AbsTopK without reward and AbsTopK with reward. Change only reward between
-   the two SAE core configurations. Freeze the review budget in advance.
-3. Run a small smoke before estimating training/download/annotation costs.
-   Begin with one seed; run core groups with three seeds within the agreed
-   resource budget. Report mean and spread separately from scene intervals.
-4. Rebuild the main table from saved predictions and retain config, source,
-   seed, logs, checkpoint hash, feature settings and input hashes for every row.
-5. Review real high-confidence errors and disagreements with independent human
-   decisions. Name units using train/validation, freeze them, then measure test
-   purity/coverage. VLM agreement is not human-ground-truth accuracy.
-6. Show real FP/FN examples and one explanation in the explorer; export the
-   candidate review list. Document data/weight redistribution conditions.
+The [expansion plan](research-expansion.md) calls for new scene/log coverage,
+blind human review and adequate normal training support. Freeze that inventory,
+rubric, manifest and review budget before model results. Use one shared cache and
+selection protocol for Logistic, MLP and the two SAE configurations; vary only
+reward in the core SAE comparison. Retain seeds, attempted settings, source
+hashes and per-sample outputs so every table can be reconstructed.
 
-A valid outcome may show the SAE loses to a cheaper baseline. End the round
-when claims can be traced, a small example runs, failures are explainable and
-individual responsibilities are evidenced. Estimate download, annotation and
-extraction costs from the smoke run; obtain the user's budget decision before
-buying compute or other paid resources.
+Report model-seed spread separately from scene intervals and reviewer
+disagreement. Name units on train/validation, freeze the interpretations and
+check them on independent samples. A result favoring a cheaper baseline remains
+a valid outcome. Estimate transfer, review and compute costs from a small run
+before committing paid resources.

@@ -1,18 +1,23 @@
 # Starting with no nuScenes data and no GPU
 
-An alternative [CPU-only image-feature route](cpu-route.md) now removes the GPU
-requirement for feature extraction as well. It uses pretrained ResNet18 in a
-separate experiment; the Cosmos/VLM route below remains available.
+The completed [CPU image-feature route](cpu-route.md) uses pretrained ResNet18
+and needs no GPU. Across the fitted cohort and supplemental intake, it has
+processed 89 six-view timestamps from 12 scenes: 534 original images. The
+models were fitted on the older 80 timestamps, using 77 binary human references
+and excluding three uncertain decisions. That review followed AI-reference
+disclosure. The later nine-timestamp batch used the saved model and old
+validation threshold, with no new fit or tuning. See [the fitted result](../results/human-ai-exposed-20261026/README.md)
+and [supplemental review](../results/new-scene-human-review-20261028/README.md)
+for the evaluation limits.
 
-Prepare raw-data indexes and human labels on CPU. Later use a GPU for a
-one-frame resource smoke and one cached extraction pass; return to CPU for
-training and browsing. The original VLM/GPU route has not run in this session.
-The separate CPU route has now imported a real mini subset and encoded 80
-six-view timestamps; human labels and model-effectiveness evaluation remain
-pending. Commands below run from the repository root; official references were
-checked on 2026-10-20–21.
+This page documents acquisition, human review and the optional original
+Cosmos/VLM route. VLM extraction has not run in this environment. Prepare and
+review data on CPU, measure one frame on a suitable GPU, cache the features,
+then return to CPU for fitting and browsing. Commands run from the repository
+root. Official download and hardware references below were checked on
+2026-10-20–21; check their current requirements before use.
 
-For an executable portable route, use
+The portable version is
 [`notebooks/driving_from_zero.ipynb`](../notebooks/driving_from_zero.ipynb).
 It embeds the current source, runs in Jupyter/Colab, saves review decisions as
 they are made, and includes a small review backup/restore before changing
@@ -23,13 +28,11 @@ has been performed. Rebuild it with `make notebook` after source changes.
 
 ## 1. Obtain the small official dataset
 
-The shared worker already contains both DWTS and Driving. To reuse its CPU
-capacity without changing DWTS dependencies, run `bash scripts/cloud.sh setup`.
-The launcher selects Driving's local `.venv`, the verified
-`/workspace/yike-top2-venv`, or creates a project-local venv during setup.
-`DRIVING_PYTHON` explicitly selects another interpreter. Setup records all CPU
-lock comparisons and prerequisite checks under `output/cloud/`. It does not
-create/publish a platform environment, grant network access, or provide a GPU.
+Run `bash scripts/cloud.sh setup` to select the project's local `.venv`,
+the verified shared `/workspace/yike-top2-venv`, or a new project-local CPU
+venv. Set `DRIVING_PYTHON` to select another interpreter. Setup records CPU
+lock comparisons and prerequisite checks under `output/cloud/`. Platform
+network access and GPU allocation are configured separately.
 
 The [official mini tutorial](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/tutorials/nuscenes_tutorial.ipynb)
 publishes `https://www.nuscenes.org/data/v1.0-mini.tgz` as a direct download.
@@ -48,9 +51,10 @@ repository's MIT licence do not grant rights to redistribute the data.
 
 On 2026-10-21–22 this workspace's managed proxy rejected archive HEAD requests
 with HTTP 403 before contacting the origin. Its enforced allowlist does not
-include nuScenes/Motional download hosts. No archive was downloaded, and the
-origin's current availability has not been established here. Add the official
-hosts through the managed environment's network settings before retrying;
+include nuScenes/Motional download hosts. That attempt downloaded no archive
+and did not establish the origin's availability. A later [local upload](local-upload.md) supplied the real images
+used by the CPU experiment. Add the official hosts through the managed
+environment's network settings before retrying;
 editing `/etc/codex/network-policy.json` does not change the enforced policy.
 
 The acquisition entry point can also consume an existing archive without a
@@ -81,7 +85,7 @@ The [official split definitions](https://github.com/nutonomy/nuscenes-devkit/blo
 contain eight `mini_train` scenes and two `mini_val` scenes, used for debugging
 and visualisation. **There is no official `mini_test`.** This project's mini
 preparation creates a custom 6/2/2-scene proof-of-concept split; its test is not
-an official nuScenes benchmark split. Ten scenes are insufficient evidence for a reliable
+an official nuScenes benchmark split. Ten scenes do not support a reliable
 long-tail generalisation claim.
 
 ## 2. Prepare and label on CPU
@@ -145,8 +149,7 @@ H100, A100 and GB200 and the NVIDIA Open Model License. Keep this project on
 Use an existing school/lab allocation if available. If trying
 [Colab](https://research.google.com/colaboratory/faq.html), its official FAQ says
 GPU availability, model and usage limits vary; a free 24 GB GPU is not promised.
-No GPU booking or purchase has been made. Without suitable access, stop after
-CPU preparation and labelling.
+No GPU booking or purchase has been made. Without suitable access, continue with the separate [CPU route](cpu-route.md).
 
 Use a separate GPU environment: choose a CUDA-compatible build with the
 [PyTorch installer](https://pytorch.org/get-started/locally/), then install
@@ -259,15 +262,14 @@ python scripts/neuron_explorer.py serve \
   --samples-root dataset/nuscenes/samples
 ```
 
-Inspect real FP/FN images and export the review CSV. Keep model/data versions, exclusions, human review
-records and all predictions. The
-[synthetic end-to-end checks](e2e.md) establish the software path only; the first
-original-VLM checkpoint and human-validated scene-disjoint results remain to
-be produced. The separate [CPU AI-label pilot](ai-pilot.md) completed real-image
-extraction and four-method training, with provisional-label limits and an
-offline demonstration.
+Inspect FP/FN images and export the review CSV. Retain model/data versions,
+exclusions, human review records and all predictions. The [synthetic end-to-end
+checks](e2e.md) verify the software path. The original VLM checkpoint and a
+human-validated scene-disjoint VLM result remain to be produced.
 
-Preparation/import and the review CSV export were exercised with a watermarked,
-80-frame synthetic schema fixture, not real nuScenes or human annotations.
-The environment probe and extraction CLI/contract checks do not constitute a
-model download, GPU inference, measured extraction time or real-data result.
+Early preparation/import checks used a watermarked 80-frame schema fixture.
+The later local upload, ResNet18 extraction and CPU fits used real camera
+images; their evidence is separate from those fixture checks. The first
+[CPU AI-reference pilot](ai-pilot.md) was followed by the explicitly
+[post-disclosure human-reference fit](human-review.md). Neither is a Cosmos
+replication or independent blind-label evaluation.

@@ -1,21 +1,26 @@
 # Presentation and interview copy
 
-[Watch or download the approximately 90-second captioned walkthrough](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/) (owner-private; use the owner’s ChatGPT sign-in). The recording is silent, uses scripted browser navigation and shows original images with cached trained outputs. It performs no new inference or annotation.
+[Watch the 90-second walkthrough on GitHub](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4)
+or [download the MP4](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
+It shows real images and cached trained outputs, with English captions and no
+spoken narration. Navigation is scripted. The
+[recording record](../results/presentation-english-20261029/README.md) identifies the
+selected cases, source images and attribution.
 
-Final wording for Yike's SWE/MLE portfolio, based on the recorded project
-artifacts. The original work was a team capstone; Yike led the repository
-modernization and delivery with AI-assisted implementation and documentation.
-The CPU ResNet18 follow-up is a separate feature protocol from the original
-Cosmos/VLM route.
+These CV bullets and interview scripts describe Yike's work on the team
+capstone and the later repository modernization. The original team was Yike
+Chen, Zihua Chen and Yusong Zhao. Yike led the modernization with AI-assisted
+implementation and documentation. Its CPU ResNet18 experiment uses a separate
+feature protocol from the original Cosmos/VLM route.
 
 ## CV bullets
 
-- Led the AI-assisted modernization of a team capstone into a reproducible CPU pipeline for six-camera driving-scene screening, integrating input validation, checkpoint reloads, CI, and a browser-based human-review and CSV-export workflow.
+- Led the modernization of a team capstone into a reproducible CPU pipeline for six-camera driving-scene screening, integrating input validation, checkpoint reloads, CI, and a browser review tool with CSV export.
 - Implemented feature-extraction and SAE-training code for the original capstone; led a matched four-model CPU evaluation with scene-disjoint splits and validation-only thresholds, documenting reward saturation and preserving per-sample predictions and review provenance.
 
-Use these bullets together under **Long-Tail Driving Scene Discovery — Project
-Lead**. They emphasize verified implementation, evaluation and delivery without
-presenting the small pilot's metrics as independent benchmark accuracy.
+Use both under **Long-Tail Driving Scene Discovery — Project Lead**. The
+modernization used AI coding assistance, as recorded above. Keep any numerical
+result tied to its small, single-reviewer reference protocol.
 
 ## 60-second introduction
 
@@ -76,13 +81,24 @@ scenes. If the SAE then fails to beat a cheaper baseline, I would choose the
 cheaper model. The completed outcome today is a traceable screening and review
 workflow with explicit limits.
 
-## 中文使用说明
+## Delivery notes
 
-- **开场先讲任务和职责。** Yike 是项目 lead，负责后续仓库优化和交付；原始 capstone 是团队合作，后续实现和文档使用过 AI 辅助。不要把团队模块都说成本人独立完成。
-- **区分输入总量和训练量。** 89 组、534 张、12 个场景是累计输入；新增九组没有用于重训。现有模型训练集中的正常样本仍只有三组，来自一个场景。
-- **把失败讲成一次技术决策。** 固定规则全选九组；沿用旧 validation 阈值后选五组，仍有两个误报和一个漏报。不要把减少四个候选说成已经测得省了多少人工时间。
-- **指标需要带协议。** 如被追问 AP，说明旧测试集只有 15 组、两个场景，标签来自 AI 信息披露后的单人复核。新九组的五个正常样本全部来自一个场景，四个非正常样本来自另一个场景。
-- **对负结果坦诚。** 两种 SAE 权重相同，reward 饱和导致没有观察到增益。可以解释诊断和下一步，不能把它说成已验证的新算法优势。
+Lead with the task and your responsibilities. Credit the original team and
+describe the later implementation as AI-assisted work. Yike's original
+contributions were feature extraction, SAE training, precision-oriented
+evaluation and parts of the ablations.
+
+If asked about scale, distinguish the 89 input timestamps from the training
+set. The later nine timestamps were used for inference and review; the fitted
+models still have only three normal training frames from one scene. If asked
+about AP, name the 15-frame, two-scene test set and the single reviewer's prior
+AI-label exposure.
+
+Use the new-batch failure to explain the threshold decision: the fixed rule
+selected all nine, while the old validation threshold selected five with two
+false positives and one missed positive. No review-time savings were measured.
+Likewise, identical SAE weights and a saturated reward cap are a diagnosed
+negative result, not evidence that the reward improved the algorithm.
 
 ## Evidence for follow-up questions
 
@@ -94,7 +110,8 @@ workflow with explicit limits.
 | Was the later threshold chosen using the new labels? | [Frozen-policy source and replay](../results/new-scene-human-review-20261028/README.md#replay-of-policies-frozen-before-these-new-scenes) |
 | Can someone inspect the workflow? | [Demo access and verification limits](../demo/README.md) |
 
-The hosted review Site is owner-private and requires the owner's ChatGPT
-sign-in. External reviewers can use the documented public HTML fallback or
-the generated-data CPU quickstart; they are not automatically granted access
-to the private Site.
+For an interview, use the public GitHub video linked above. The optional
+[hosted presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
+requires the owner's ChatGPT sign-in. The
+[demo guide](../demo/README.md) also explains the downloadable HTML and
+generated-data CPU example.

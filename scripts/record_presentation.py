@@ -3,7 +3,7 @@
 
 Uses original local ZIPs and saved outputs. Navigation is scripted and captions
 are presentation annotations; no model inference, fitting or human annotation
-is performed. Private footage must not be committed to the public repository.
+is performed. Published footage requires source attribution and a video license.
 Requires Playwright, Chromium and FFmpeg in addition to the CPU project lock.
 """
 from __future__ import annotations
@@ -86,7 +86,9 @@ def add_caption(page, heading, text):
         box.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99999;'
           +'background:rgba(13,29,52,.97);color:white;padding:16px 30px 20px;'
           +'border-top:3px solid #6fc5bf;font-family:Arial,sans-serif;pointer-events:none';
-        box.innerHTML='<div id="recording-chapter"></div><div id="recording-text"></div>';
+        box.innerHTML='<div id="recording-chapter"></div><div id="recording-text"></div>'
+          +'<div style="font-size:12px;color:#9bded8;margin-top:8px">'
+          +'Images: nuScenes / Motional · CC BY-NC-SA 4.0 · Captioned screen recording by Yike Chen</div>';
         document.body.append(box);document.body.style.paddingBottom='130px';
       }
       document.getElementById('recording-chapter').textContent=heading;
@@ -147,7 +149,8 @@ def main(argv=None):
     report = {'schema': 'real-driving-presentation-v1', 'status': 'running',
               'scripted_navigation': True, 'original_images': True,
               'new_inference': False, 'new_training': False, 'human_annotation_performed': False,
-              'audio': 'none; English captions', 'private_footage': True,
+              'audio': 'none; English captions', 'private_footage': False,
+              'video_license': 'CC-BY-NC-SA-4.0; see demo/VIDEO-LICENSE.md',
               'html_sha256': digest(args.html), 'recorder_sha256': digest(__file__),
               'zip_inputs': [{'filename': p.name, 'bytes': p.stat().st_size,
                               'sha256': digest(p)} for p in args.parts],
@@ -175,7 +178,7 @@ def main(argv=None):
             page.locator('#offline-parts').set_input_files([str(p.resolve()) for p in args.parts])
             page.locator('#offline-load').click()
             page.wait_for_function(
-                '()=>document.getElementById("offline-status").textContent.includes("校验完成")',
+                '()=>document.getElementById("offline-status").textContent.includes("Verified:")',
                 timeout=180000)
             page.locator('.offline-results').evaluate('e=>e.scrollIntoView({block:"start"})')
             demo_clock = time.perf_counter()
