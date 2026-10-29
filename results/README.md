@@ -1,5 +1,20 @@
 # Results and evidence status
 
+The [new-scene E2E record](new-scene-e2e-20261027/README.md) added nine real
+timestamps from two new scenes, initially without human labels. The later
+[2026-10-28 human submission](new-scene-human-review-20261028/README.md) contains
+five normal and four non-normal judgments, preserved separately with chat
+AI-reference disclosure provenance. No model was retrained on those nine rows.
+
+The [frozen-policy replay](new-scene-human-review-20261028/frozen_policy_evaluation.json)
+applies the operating threshold selected on the old validation set: five of
+nine frames are selected, precision is 60% and recall 75% against the submitted
+references. The fixed activation rule instead selects all nine (precision
+44.4%, recall 100%). These are descriptive comparisons on two author-selected,
+class-confounded scenes, not an independent benchmark or a threshold tuned on
+the new labels. The [hosted-page repair record](review-page-repair-20261028/README.md)
+separately documents same-origin image delivery and real-browser checks.
+
 No real-data result has been established under the original VLM/Cosmos
 v1.0-trainval scene-disjoint 70/15/15 protocol. The historical numbers below
 are reports retained from `b57eaffa`.

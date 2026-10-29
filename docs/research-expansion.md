@@ -1,13 +1,30 @@
 # Driving research expansion
 
-This is a data audit and a proposed next experiment, dated 2026-10-26. The
-expanded experiment has **not** run. Its immediate blocker is original camera
-data and matching metadata for additional scenes. No data download, paid
-service, GPU reservation, new labels, or new training is established here.
+**Updated 2026-10-28.** The broader representative experiment below has **not**
+run. Two smaller follow-ups are complete:
 
-The next useful step is to identify any already-authorized trainval assets and
-their available scene/image coverage. A larger experiment should follow that
-inventory; an empty experiment framework cannot supply the missing evidence.
+- On 2026-10-27, a [real-data E2E smoke test](new-scene-e2e.md) acquired nine
+  timestamps / 54 original images from two additional scenes in the official
+  DriveLM author repository. It verified CPU inference and review export.
+- On 2026-10-28, Yike submitted [all nine judgments](../results/new-scene-human-review-20261028/README.md):
+  five normal and four non-normal. The AI reference table was disclosed in chat
+  before submission; individual judgment timing is unknown. All normals belong
+  to one scene and all non-normals to the other. No model was retrained on them.
+
+The [old validation-selected policy replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
+selects five of nine candidates, with precision 60% and recall 75% against that
+submission. This descriptive check does not tune on the new labels or replace
+the planned independent study. Original log IDs for the new scenes remain
+unavailable. The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+requires the owner's ChatGPT sign-in and serves its images from the same origin.
+
+The inventory below preserves the earlier mini-only audit as of 2026-10-26;
+its no-download and no-new-label observations describe that audit date. The
+owner subsequently reported having no additional data assets. The next
+acquisition step is to inspect legitimate free source availability and metadata
+coverage, rather than require another search of the owner's computer. A larger
+study needs more diverse original images and matching metadata, with scene/log
+allocation frozen before labels and model outputs are inspected.
 
 ## What is actually available
 
@@ -186,14 +203,16 @@ vehicle-safety, or reward-improvement claim follows from successful execution.
 
 ## Acquisition and one concrete handoff
 
-If the local files are uncertain, first search the computer's Downloads folder
-for `trainval` or `nuscenes`. Record the matching file/folder names and displayed
-sizes. A filename containing `v1.0-trainval` is a candidate for inspection;
-`v1.0-mini.tgz` and the four `driving-mini-part` files are the old mini source.
-Filenames alone do not verify contents. Share that small inventory first so the
-required metadata and selected camera paths can be identified before a large
-transfer. The current evidence does not establish that any trainval asset is
-already available on the user's computer.
+The owner has no additional local data to supply. Continue with legitimate free
+sources, checking original metadata and a bounded camera batch before a large
+transfer. The acquired DriveLM author demo provides two new scenes but no
+original log IDs and no representative class coverage. It is not a substitute
+for the larger scene/log-diverse inventory required by v2.
+
+If further authorized local assets become available later, record file/folder
+names, sizes and archive inventories first. A `v1.0-trainval` filename is only
+a candidate; `v1.0-mini.tgz` and the four `driving-mini-part` files are the old
+mini source. Inspect original metadata before selecting a larger transfer.
 
 The public official devkit sources were checked through the read-only GitHub
 connector on 2026-10-26:
@@ -214,9 +233,10 @@ connector on 2026-10-26:
   `scene.log_token` and `log.location`/`date_captured`, and defines keyframe
   image references in `sample_data`.
 
-No current official trainval download size or archive inventory was verified,
-so no total download size is quoted. No account was logged into, terms
-accepted, or dataset downloaded during this documentation work.
+The dated documentation audit did not verify an official trainval archive
+inventory or total download size, log into an account or accept terms. The
+later author-demo acquisition is recorded separately above. No paid compute
+or new GPU reservation is established by either record.
 
 **Input handoff:** identify an already-authorized trainval data root or supply
 an equivalent transfer bundle preserving original paths and bytes:
@@ -246,8 +266,10 @@ If trainval exists only as archives on the user's computer, begin with its
 metadata and archive inventory so the assistant can identify the specific
 disjoint scenes and required image paths before a large transfer. There is no
 need for the user to choose sample tokens, create labels in advance, or buy
-hosting. If only mini is available, that supports the within-scene extension
-only, and the true new-scene experiment remains blocked.
+hosting. Mini supports a within-scene extension; the later author demo adds
+two new scenes. A representative v2 study still requires broader scene/log
+coverage and a frozen allocation, rather than relabelling this tiny batch as
+the planned new experiment.
 
 The current [browser helper](../tools/prepare_upload.html) and
 [importer](../scripts/import_mini_parts.py) are mini-only: exactly two or eight
@@ -264,9 +286,10 @@ Once that input is accessible, the assistant can autonomously validate source
 coverage, identify old-scene/log overlaps, compute the candidate sample/image
 inventory, estimate transfer and review volume, adapt the minimal necessary
 handoff, and prepare a concrete frozen review batch in fresh directories.
-After actual human review returns, it can validate class support, extract and
+For the future v2 study, after blind human review returns, it can validate class
+support, extract and
 cache CPU features, run the same four methods, audit saved predictions, and
 produce the comparison with its limitations. Human judgments and missing
 original pixels cannot be supplied by scaffolding. The outstanding input is
-whether additional authorized trainval assets exist and can be made accessible;
+which additional authorized source assets can be acquired with matching metadata;
 the stronger experiment is not yet executed.

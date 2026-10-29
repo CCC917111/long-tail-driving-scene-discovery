@@ -1,5 +1,46 @@
 # Testing and verification
 
+## New-scene review and image-delivery repair: 2026-10-28
+
+The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+requires the owner's ChatGPT sign-in and serves all 54 original images from the
+same origin. Local desktop/mobile Chromium checks of that bundle exercised all nine six-camera
+groups, initial blank review CSVs, reviewer validation, notes, signal disclosure,
+refresh persistence and CSV downloads. A separate failed-image test verified
+that missing views disable judgment buttons and that retry restores the images
+while retaining unsubmitted name and notes. These tests use temporary
+`CI_TEST_ONLY` judgments and create no human training labels. The
+[repair evidence](../results/review-page-repair-20261028/README.md) preserves
+these checks and the successful private deployment separately from the original
+2026-10-27 run. The deployed archive matches the checked bundle; native publishing
+status verifies deployment. An authenticated production browser session was not
+recorded.
+
+The original [new-scene inference audit](../results/new-scene-e2e-20261027/independent_audit.json)
+freshly re-encoded the 54 JPEGs and reloaded the saved SAE; features, activations
+and scores matched exactly. Its recorded source hashes describe execution time.
+The [execution snapshot](../results/new-scene-e2e-20261027/execution_source.zip)
+preserves the older exporter before the subsequent image-loading repair; original
+run metadata is not rewritten to match newer source.
+
+Yike's later [nine-row human submission](../results/new-scene-human-review-20261028/README.md)
+is kept separately with chat AI-reference disclosure provenance. Browser
+`model_signal_exposed=false` records only browser signal visibility; it does
+not establish blindness to the chat AI table. The
+[frozen-policy replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
+applies the old validation-selected threshold without tuning on those nine
+labels: five candidates, precision 60%, recall 75%. Both classes are perfectly
+confounded with the two source scenes, so this is descriptive agreement rather
+than independent generalization evidence.
+
+The new source-linked HTML browser workflow depends on the original author's
+public image URLs and tests that fallback's UI. It does not authenticate into
+or certify the owner-private hosted Site. New source/test files cover six-view
+acquisition integrity and loading/failure/retry state; publication checks report
+the CI status of the actual submitted commit.
+
+## Earlier fitted pilot and cached viewers
+
 The latest offline viewer now binds the reviewed-reference run's 77 timestamps
 and all 308 method values. Independent Node checks loaded the actual four ZIPs,
 compared all 480 image files byte-for-byte with the originals, and checked all
@@ -23,11 +64,12 @@ judgment correctness or establish independent blind human truth.
 
 The default CPU suite uses synthetic arrays and images to validate software
 contracts. A separately configured integration test and independent audits also
-ran against the real mini CPU pilot. Its labels remain provisional AI decisions;
-none of these checks establishes human-validated driving accuracy or reproduces
-the original Cosmos experiment.
+ran against the real mini CPU pilot. The original pilot's labels remain
+provisional AI decisions; the later fitted comparison uses single-reviewer
+judgments after AI-label disclosure. None of these checks establishes independent
+human-validated driving accuracy or reproduces the original Cosmos experiment.
 
-## Latest local record
+## Earlier local record: 2026-10-23
 
 On 2026-10-23, in the verified Python 3.12 CPU environment:
 
@@ -129,6 +171,8 @@ real driving performance.
 | `tests/test_import_mini_parts.py`, `tests/test_local_upload_html.py` | ZIP completeness, checksums, safe paths and local browser handoff contracts |
 | `tests/test_ai_pilot_labels.py`, `tests/test_ai_label_scope.py` | Split-blind AI-label evidence, uncertainty exclusion, explicit protocol opt-in and scope propagation |
 | `tests/test_offline_explorer.py` | Cached result integrity, bound local-image loading and review exports without invented semantic unit names |
+| `tests/test_new_scene_e2e.py` | Original camera hashes/decoding, six-view completeness, safe paths and rejection of labels/splits in new intake |
+| `tests/test_unlabelled_review_export.py` | Unlabelled review scope, source-image binding, CSV/exposure state, loading guard, stale callbacks and retry recovery |
 | `tests/test_real_assets.py` | Optional integration against a supplied real feature/label/scene bundle; explicit skip when absent and no label-quality claim |
 
 Run `python -m pytest tests -q` with loopback access to include the HTTP
@@ -164,8 +208,11 @@ The current CPU pilot does not complete the following checks:
    uses a separate feature protocol.
 3. Recover historical weights, features, labels and logs, then compare original
    predictions without rewriting their provenance.
-4. Inspect the real images in an actual browser session and collect independent
-   human decisions. Current FP/FN examples are disagreements with AI references.
+4. Collect independent human decisions with appropriate scene support. Actual
+   browser viewing is verified for the supplemental 54-image batch, but those
+   submitted labels followed chat AI-reference disclosure and do not establish
+   independent blind human truth. The older viewers retain their separately
+   documented browser-verification scope.
 
 The optional cached-feature integration entry point is:
 

@@ -1,0 +1,27 @@
+{
+  "schema": "independent-new-scene-e2e-audit-v1",
+  "status": "passed",
+  "created_utc": "2026-10-27T04:25:32.450478+00:00",
+  "real_jpegs_decoded_and_hashed": 54,
+  "frames": 9,
+  "scenes": 2,
+  "feature_shape": [
+    9,
+    3072
+  ],
+  "old_sample_overlap": 0,
+  "old_scene_overlap": 0,
+  "labels_and_split_absent": true,
+  "log_disjoint_verified": false,
+  "fresh_raw_image_reencoding_max_abs_diff": 0.0,
+  "reloaded_sae_activation_max_abs_diff": 0.0,
+  "reloaded_tail_score_max_abs_diff": 0.0,
+  "prediction_count": 9,
+  "flagged_by_fixed_rule": 9,
+  "model_and_standardizer_hashes_match": true,
+  "bundled_image_bytes_match_original": true,
+  "review_html_hashes_match": true,
+  "browser_ui_executed_by_this_audit": false,
+  "accuracy_evaluation_performed": false,
+  "audit_source_sha256": "a6bfbb54917783aad8034bfd1f35f32ccd28eaf6bf89d172bdd07dce32b0f098"
+}

@@ -1,8 +1,14 @@
 # Feedback implementation status
 
-Updated 2026-10-26. Original audited version: `b57eaffa21d54ad67d98d441935cf6b17cdc5294`.
-This file distinguishes software work from experimental evidence. No new
-human-validated real-data effectiveness result has been established in this round.
+Updated 2026-10-28. Original audited version: `b57eaffa21d54ad67d98d441935cf6b17cdc5294`.
+This file distinguishes completed software and descriptive review checks from
+independent human-reference benchmarks. Stable model-effectiveness and independent
+blind-label claims remain unestablished.
+
+The [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+is owner-private and requires the owner's ChatGPT sign-in. It serves all 54
+new images from the same origin. The [downloadable fallback](../demo/driving_new_scenes.html)
+still requires access to the author's image URLs on `raw.githubusercontent.com`.
 
 ## Current round
 
@@ -11,10 +17,13 @@ human-validated real-data effectiveness result has been established in this roun
 | P0 data contracts | Strict scene-token and label validation; frozen manifest interface; input/run provenance | Recover historical assets, review manifest, explain six-frame gap and raw-VLM supports |
 | Fresh real-data setup | Four real mini parts imported; five tables / 480 camera images checked; 80 CPU ResNet18 feature vectors extracted on a frozen 6/2/2-scene split | Independent human decisions and adequate normal/tail scene support; original VLM/GPU extraction remains separate |
 | Post-AI-exposure human-review CPU run | Yike supplied 80 judgments: 77 reviewed binary labels (12 normal / 65 tail), three uncertain, no pending; all four CPU methods fitted and independently reconstructed; [record](../results/human-ai-exposed-20261026/README.md) | Single reviewer after the full AI label table, empty notes, one seed, two test scenes and three normal training frames; no observed reward increment |
+| Supplemental new-scene check | Nine real timestamps / 54 images from two additional scenes; new-input CPU inference and exact independent replay; Yike completed five normal / four non-normal references; [record](../results/new-scene-human-review-20261028/README.md) | Chat AI-reference disclosure before submission; per-row timing unknown; empty notes; all normals in one scene and all non-normals in another; no new model fit |
+| Frozen working-point replay | Old validation-selected threshold selects five of nine, precision 60% and recall 75%, versus the fixed activation rule selecting all nine; [saved replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json) | Descriptive comparison with submitted references; no threshold adjustment on new labels and no independent generalization claim |
 | Explicit AI-label pilot | 80 six-view AI decisions; 73 retained / seven uncertain; four real-image model fits, reload/result audit and unlabelled screening; [record](ai-pilot.md) | Independent human truth, more normal training scenes and formal multi-seed evidence; no observed reward increment |
 | Portable execution | Embedded-source notebook; staged archive acquisition; saved review/backup; strict four-method CPU driver | Real download/GPU execution and Colab visual verification |
-| P1 comparison | Four matched real-image CPU fits against explicit AI references; shared evaluator, saved-output table reconstruction and unchanged scene allocation | Independent human-reference evaluation and formal multi-seed evidence; all validation precision targets unreachable and no observed reward increment |
+| P1 comparison | Four matched real-image CPU fits against explicit AI references, then a separately recorded post-disclosure human-reference fit; shared evaluator and saved-output reconstruction | Independent human-reference evaluation and formal multi-seed evidence; all validation targets were unreachable in the original AI pilot; no observed reward increment |
 | P2 demonstration | Latest reviewed-reference offline explorer with 77 cached timestamps / 308 method values, same-rule MLP FP/FN bookmarks and blank new-review export; original 73-frame AI viewer archived byte-for-byte; 90-second script prepared | A narrated real-image recording, independent human error review and verified semantic interpretation; current Chrome status is recorded in publication PR checks |
+| New review delivery | Owner-private Site with same-origin original images; local Chromium desktop/mobile bundle checks, CSV export, loading guards, failed-image retry and successful native publication; [repair evidence](../results/review-page-repair-20261028/README.md) | Owner ChatGPT sign-in is required; authenticated production browsing was not recorded; external GitHub reviewers have no automatic access |
 | Documentation | Historical results isolated; original contribution wording retained; AI-assisted follow-up identified; [derived pilot bundle](../results/cpu-mini-ai-pilot-20261023/README.md) published | Original contribution evidence and human-validated result claims |
 
 The original README contribution table records Yike's stated capstone work.
@@ -30,6 +39,17 @@ must not be retroactively attributed to the original capstone period. No
 unsupported statement about earlier AI use is made.
 
 ## Verification record
+
+The 2026-10-27 new-scene execution has a separate original
+[source snapshot](../results/new-scene-e2e-20261027/execution_source.zip).
+The later exporter loading/retry repair and private deployment are recorded in
+[2026-10-28 evidence](../results/review-page-repair-20261028/README.md), rather
+than replacing the old run's hashes. All 54 real original images were decoded
+in desktop/mobile review checks. The temporary test decisions are not human
+annotations. Source-linked fallback CI and the owner-private Site have distinct
+verification scopes.
+
+The following earlier local and CI records retain their original dates/scopes:
 
 The final local CPU selection passed **205 tests and 18 subtests**, with one
 HTTP test deselected because the sandbox denied loopback binding. The optional

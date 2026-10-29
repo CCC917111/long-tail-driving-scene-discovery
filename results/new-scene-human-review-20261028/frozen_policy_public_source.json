@@ -1,0 +1,22 @@
+{
+  "schema": "frozen-policy-public-evidence-v1",
+  "repository": "CCC917111/long-tail-driving-scene-discovery",
+  "commit_sha": "fb1f2f93ad46958b2994a7f939b4b39c76ffa476",
+  "commit_committed_at": "2026-10-26T22:37:55Z",
+  "evaluation_url": "https://raw.githubusercontent.com/CCC917111/long-tail-driving-scene-discovery/fb1f2f93ad46958b2994a7f939b4b39c76ffa476/results/human-ai-exposed-20261026/sae_abstopk_none/evaluation.json",
+  "operating_point": {
+    "selection_split": "val",
+    "target_precision": 0.9,
+    "selection_rule": "max recall, then precision, then threshold",
+    "comparison": "score >= threshold",
+    "status": "selected",
+    "threshold": 6.074954873387325,
+    "validation_precision": 1,
+    "validation_recall": 0.3
+  },
+  "fixed_rule": {
+    "rule": "c_tail >= 1",
+    "eta": 0.01
+  },
+  "verification": "Read through GitHub connector at immutable commit; selected policy matches local published old result."
+}

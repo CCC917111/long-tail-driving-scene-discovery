@@ -1,0 +1,914 @@
+{
+  "schema": "new-scene-review-browser-v1",
+  "status": "passed",
+  "created_utc": "2026-10-28T18:24:11.256287+00:00",
+  "html_sha256": "87d7937a6b2ecd32ce60191fba58002ee1383b41f9be9dde65345a4ffe668431",
+  "real_browser_executed": true,
+  "page_errors": [],
+  "console_errors": [],
+  "request_failures": [],
+  "http_errors": [],
+  "viewports": {
+    "desktop": {
+      "viewport": {
+        "width": 1365,
+        "height": 1000
+      },
+      "image_count": 54,
+      "all_views_decoded": true,
+      "images": [
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280036154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280036162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280036170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280036197423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280036187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280036177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280042604844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280042612460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280042620339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280042647423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280042637525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280042627893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280039154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280039162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280039170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280039197423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280039187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280039177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280048154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280048162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280048170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280048197442.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280048187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280048177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280045104844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280045112460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280045120339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280045147423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280045137525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280045127893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291010604799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291010612404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291010620482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291010647405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291010637558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291010628113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291005154799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291005162404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291005170482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291005197405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291005187558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291005178113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291013604799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291013612404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291013620482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291013647405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291013637558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291013628113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291002254799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291002262404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291002270482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291002297405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291002287558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291002278113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        }
+      ],
+      "initial_blank_export_verified": true,
+      "reviewer_required": true,
+      "simulated_decision_and_csv_verified": true,
+      "model_exposure_and_refresh_verified": true,
+      "no_horizontal_overflow": true
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "image_count": 54,
+      "all_views_decoded": true,
+      "images": [
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280036154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280036162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280036170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280036197423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280036187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280036177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280042604844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280042612460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280042620339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280042647423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280042637525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280042627893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280039154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280039162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280039170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280039197423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280039187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280039177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280048154844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280048162460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280048170339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280048197442.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280048187525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280048177893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_LEFT__1533280045104844.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT__1533280045112460.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_FRONT_RIGHT__1533280045120339.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_LEFT__1533280045147423.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n015-2018-08-03-15-00-36%2B0800__CAM_BACK__1533280045137525.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36%2B0800__CAM_BACK_RIGHT__1533280045127893.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d5e16062410f4e329d31a881b28e5c1c"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291010604799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291010612404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291010620482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291010647405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291010637558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291010628113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "4a0798f849ca477ab18009c3a20b7df2"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291005154799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291005162404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291005170482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291005197405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291005187558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291005178113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291013604799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291013612404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291013620482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291013647405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291013637558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291013628113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "dfb8d8959b9944d69dcec6d05e419f04"
+        },
+        {
+          "camera": "CAM_FRONT_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291002254799.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_FRONT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291002262404.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_FRONT_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291002270482.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK_LEFT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291002297405.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291002287558.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        },
+        {
+          "camera": "CAM_BACK_RIGHT",
+          "url": "http://127.0.0.1:41761/images/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291002278113.jpg",
+          "width": 1600,
+          "height": 900,
+          "object_fit": "contain",
+          "sample_token": "ffd1bdf020d145759224c629b501d2b2"
+        }
+      ],
+      "initial_blank_export_verified": true,
+      "reviewer_required": true,
+      "simulated_decision_and_csv_verified": true,
+      "model_exposure_and_refresh_verified": true,
+      "no_horizontal_overflow": true
+    }
+  },
+  "human_annotation_performed": false,
+  "serving_mode": "temporary_loopback_http",
+  "simulated_reviewer": "CI_TEST_ONLY",
+  "scope": "UI verification with fake temporary decisions; not human labels or accuracy",
+  "frames": 9,
+  "image_mode": "local",
+  "browser_version": "154.0.8037.57"
+}
