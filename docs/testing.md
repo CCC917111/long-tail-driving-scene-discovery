@@ -6,16 +6,19 @@ browser checks exercise interaction. None can establish label correctness on
 its own. The current fitted comparison uses one reviewer's decisions after
 AI-reference disclosure and a small held-out scene sample.
 
-## Real-image walkthrough: 2026-10-29
+## Current publication checks: 2026-10-29
 
-The [recorded walkthrough](../results/presentation-20261029/README.md) ran in
-real Chromium with the original four image ZIPs and saved trained outputs.
-It exercised sample/unit navigation and a 77-row queue export with blank
-new-review fields. The 89.96-second H.264 video has English captions and uses
-selected examples from the older 80-timestamp cohort; it adds no inference,
-fits or human judgments. Desktop/mobile playback, download bytes and page
-controls were checked against the prepared Site bundle on localhost. That
-check is separate from authenticated production-site browsing.
+At commit `baef43e5dbeed8846a562376f25e26cfee3ec3e7`, the
+[CPU workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145669)
+passed 280 tests, 18 subtests, lint and the synthetic end-to-end HTTP workflow.
+Three tests skipped because their private assets were absent. The
+[offline explorer browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145498)
+passed the current reviewed-reference viewer and archived AI viewer at desktop
+and mobile sizes using synthetic images. The
+[new-scene browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937146035)
+checked the nine-frame fallback page using all 54 original author-hosted images.
+These checks cover software and image delivery; they create no new human labels
+or model-quality result.
 
 ## New-scene review and image-delivery repair: 2026-10-28
 
@@ -140,8 +143,7 @@ Independent Node checks used the actual four user-held ZIPs, verified all 480
 image bytes and matched all 292 displayed model values to saved predictions.
 The exported review CSV retains blank human-decision fields. At the time of that pilot, the Chrome interaction check used synthetic images;
 its real-byte and numeric audits did not include a Chrome session with the
-user's images. The later walkthrough above records the completed real-image
-browser session separately.
+user's images.
 The [derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md)
 preserves the audits and explicit AI-label scope. It includes no original image
 bytes or trained model weights.

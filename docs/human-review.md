@@ -1,4 +1,4 @@
-# Human review and AI-assisted label checks
+# Human review and AI-label checks
 
 This workflow covers the original mini cohort: **80 timestamps, with six
 original camera images per timestamp**. Use the frozen
