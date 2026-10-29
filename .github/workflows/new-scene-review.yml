@@ -1,0 +1,40 @@
+name: New-scene public fallback browser
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/new-scene-review.yml
+      - scripts/verify_new_scene_review.py
+      - scripts/export_unlabelled_review.py
+      - demo/driving_new_scenes.html
+  pull_request:
+    paths:
+      - .github/workflows/new-scene-review.yml
+      - scripts/verify_new_scene_review.py
+      - scripts/export_unlabelled_review.py
+      - demo/driving_new_scenes.html
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.62.0
+      - name: Verify fallback against original author images
+        run: >-
+          python scripts/verify_new_scene_review.py
+          --html demo/driving_new_scenes.html
+          --output-dir output/new-scene-public-review-ci
+          --browser-executable /usr/bin/google-chrome
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: new-scene-review-verification
+          path: output/new-scene-public-review-ci/verification.json
+          if-no-files-found: warn
+          retention-days: 7

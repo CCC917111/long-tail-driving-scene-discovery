@@ -1,0 +1,13 @@
+{
+  "label_protocol": "manual",
+  "human_reviewed": true,
+  "reviewer_count": 1,
+  "human_ground_truth_verified": false,
+  "independent_human_review": false,
+  "official_benchmark": false,
+  "ai_reference_disclosed_in_chat_before_submission": true,
+  "individual_judgment_timing_verified": false,
+  "review_context": "single_reviewer_submission_after_ai_reference_disclosure",
+  "interpretation": "Submission followed AI-reference disclosure in chat. Per-row decision timing is unknown; this is not verified blind review.",
+  "browser_model_signal_exposure_is_separate": true
+}

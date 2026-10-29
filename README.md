@@ -14,10 +14,18 @@ comparison, saved predictions and an offline neuron explorer.
 [**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
 
-> **Current evidence:** the real-image CPU pipeline is complete. The latest run
-> uses 77 retained single-reviewer judgments submitted after the full AI-label
-> table was shown. Its scores describe those references; independent blind human
-> ground truth and an official benchmark result have not been established.
+**New-scene review:** [open the hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).
+This owner-private Site requires the owner's ChatGPT sign-in and serves all
+54 images from the same origin, with no ZIP upload. It is an owner review tool,
+not a public visitor demo. The [downloadable source-linked HTML](demo/driving_new_scenes.html)
+is a separate fallback requiring Internet access to `raw.githubusercontent.com`.
+[Execution and replay guide](docs/new-scene-e2e.md).
+
+> **Current evidence:** the real-image CPU pipeline is complete. The latest
+> fitted four-model comparison uses 77 retained single-reviewer judgments after
+> AI-label disclosure. A later nine-frame, two-scene review is recorded
+> separately; it did not retrain those models. Neither record establishes
+> independent blind human ground truth or an official benchmark result.
 
 ## What the project does
 
@@ -42,7 +50,26 @@ CPU pilot uses a pinned ImageNet ResNet18, concatenating six 512-dimensional
 views. These are separate feature protocols; the CPU run does not reproduce
 the original Cosmos experiment.
 
-## Latest: reviewed references after AI-label exposure
+## Supplemental new-scene review
+
+The 2026-10-28 [supplemental record](results/new-scene-human-review-20261028/README.md)
+contains nine completed judgments: five normal and four non-normal, from two
+new scenes. Together with the earlier cohort, the repository records 89
+timestamps / 12 scenes / 534 original images, with 86 binary judgments and
+three uncertain decisions. These are cumulative inputs, not 89 training rows.
+The existing models still trained with only three normal frames from one scene.
+
+The original fixed SAE rule selects all nine new frames (precision 44.4%,
+recall 100% against this submission). Replaying the operating threshold already
+selected on the old validation set selects five (precision 60%, recall 75%),
+without tuning on these nine labels. See the
+[frozen-policy replay](results/new-scene-human-review-20261028/frozen_policy_evaluation.json).
+All normal references come from one new scene and all non-normal references
+from the other. The AI reference table was disclosed in chat before submission;
+per-frame judgment timing is unknown. These descriptive results do not establish
+generalization or independent label accuracy.
+
+## Latest fitted comparison: reviewed references after AI-label exposure
 
 On 2026-10-26, Yike submitted all 80 decisions: 12 normal, 65 tail and three
 uncertain. Four CPU models were rerun with unchanged features, scene allocation

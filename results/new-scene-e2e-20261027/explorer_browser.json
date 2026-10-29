@@ -1,0 +1,482 @@
+{
+  "status": "passed",
+  "kind": "real-chromium-explorer-ui-check",
+  "started_at": "2026-10-27T04:35:31.891712+00:00",
+  "run": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/screening",
+  "samples_root": "/workspace/long-tail-driving-scene-discovery/dataset/drivelm-author-demo-20261027/samples",
+  "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+  "browser_executable": "/usr/bin/chromium",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "playwright_version": "1.62.0",
+  "viewports": {
+    "desktop": {
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "checks": {
+        "homepage_units": 80,
+        "unit_to_sample_six_images": true,
+        "sample_unit_sample_round_trip": true,
+        "search_exact_sample": true,
+        "search_to_sample_six_images": true,
+        "review_csv_download": true
+      },
+      "screenshots": {
+        "home": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/desktop_home.png",
+        "unit": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/desktop_unit.png",
+        "sample": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/desktop_sample.png"
+      },
+      "summary_text": "9 frames \u00b7 128 long-tail units \u00b7 eta 0.01 \u00b7 unit threshold 1",
+      "images": [
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_LEFT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT_LEFT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_RIGHT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT_RIGHT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_LEFT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK_LEFT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_RIGHT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK_RIGHT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        }
+      ],
+      "layout": {
+        "viewport_width": 1280,
+        "page_width": 1280
+      },
+      "download": {
+        "path": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/desktop_review.csv",
+        "url": "http://127.0.0.1:39263/export/review.csv",
+        "row_count": 9,
+        "columns": [
+          "rank",
+          "sample_token",
+          "scene",
+          "tail_score",
+          "prediction",
+          "active_tail_units",
+          "reviewer_label",
+          "review_notes"
+        ],
+        "sha256": "6e889a88c2941a118cba59b157a3e6df73c8c71217d9fa6e6ee0374bd113d63c",
+        "suggested_filename": "review.csv",
+        "reference_labels_omitted": true
+      }
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "homepage_units": 80,
+        "unit_to_sample_six_images": true,
+        "sample_unit_sample_round_trip": true,
+        "search_exact_sample": true,
+        "search_to_sample_six_images": true,
+        "review_csv_download": true
+      },
+      "screenshots": {
+        "home": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/mobile_home.png",
+        "unit": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/mobile_unit.png",
+        "sample": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/mobile_sample.png"
+      },
+      "summary_text": "9 frames \u00b7 128 long-tail units \u00b7 eta 0.01 \u00b7 unit threshold 1",
+      "images": [
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_LEFT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT_LEFT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_RIGHT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_FRONT_RIGHT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_LEFT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK_LEFT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        },
+        {
+          "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_RIGHT?w=560",
+          "width": 560,
+          "height": 315,
+          "complete": true,
+          "camera": "CAM_BACK_RIGHT",
+          "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3"
+        }
+      ],
+      "layout": {
+        "viewport_width": 421,
+        "page_width": 421
+      },
+      "download": {
+        "path": "/workspace/long-tail-driving-scene-discovery/output/new-scene-e2e-final-20261027/explorer-browser/mobile_review.csv",
+        "url": "http://127.0.0.1:39263/export/review.csv",
+        "row_count": 9,
+        "columns": [
+          "rank",
+          "sample_token",
+          "scene",
+          "tail_score",
+          "prediction",
+          "active_tail_units",
+          "reviewer_label",
+          "review_notes"
+        ],
+        "sha256": "6e889a88c2941a118cba59b157a3e6df73c8c71217d9fa6e6ee0374bd113d63c",
+        "suggested_filename": "review.csv",
+        "reference_labels_omitted": true
+      }
+    }
+  },
+  "page_errors": [],
+  "request_failures": [],
+  "http_errors": [],
+  "http_responses": [
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/summary",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/units?top=80",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/unit/51?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/d5e16062410f4e329d31a881b28e5c1c/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/7abe79e5d3d745bcb237a4b7e03d1577/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/d9075c2a5f864a2b8abf41e703f4cf1c/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/4a0798f849ca477ab18009c3a20b7df2/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/dfb8d8959b9944d69dcec6d05e419f04/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/unit/90?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_LEFT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_RIGHT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_RIGHT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_LEFT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/unit/90?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/search?q=0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/summary",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/units?top=80",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/unit/51?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/d5e16062410f4e329d31a881b28e5c1c/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/dfb8d8959b9944d69dcec6d05e419f04/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/7abe79e5d3d745bcb237a4b7e03d1577/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/4a0798f849ca477ab18009c3a20b7df2/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/d9075c2a5f864a2b8abf41e703f4cf1c/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/unit/90?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=420",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_LEFT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT_RIGHT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_FRONT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_LEFT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/img/0dd14c14cea14dc1b0c0c9b0c9c7c4c3/CAM_BACK_RIGHT?w=560",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/unit/90?top=48",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/search?q=0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:39263/api/sample/0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    }
+  ],
+  "unit": 90,
+  "effective_eta": 0.01,
+  "neuron_threshold": 1.0,
+  "reference_frame": {
+    "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+    "prediction": "long_tail",
+    "tail_score": 4.1559929847717285,
+    "total_active_units": 16
+  },
+  "input_hashes": {
+    "activations.npz": "5e595375dfe2d969f88b636b2f298e643619b97143b59878981c0902b665c94e"
+  },
+  "verifier_sha256": "c8e4c0b618a2b34d8c49e842ec01f3bbc4e56585122b1827f0106caf1af7326c",
+  "server_url": "http://127.0.0.1:39263/",
+  "chromium_version": "154.0.8037.57",
+  "finished_at": "2026-10-27T04:35:37.922547+00:00"
+}

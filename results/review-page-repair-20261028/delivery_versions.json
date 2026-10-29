@@ -1,0 +1,21 @@
+{
+  "schema": "review-delivery-versions-v1",
+  "hosted_site": {
+    "url": "https://yike-driving-review-20261028.upbeatperch12.chatgpt.site",
+    "audience": "owner_private",
+    "chatgpt_sign_in_required": true,
+    "html_sha256": "87d7937a6b2ecd32ce60191fba58002ee1383b41f9be9dde65345a4ffe668431",
+    "image_source": "54 original JPEGs, same-origin private Site assets",
+    "browser_verified_with_original_images": true
+  },
+  "public_fallback": {
+    "path": "demo/driving_new_scenes.html",
+    "html_sha256": "48d1a986a5a5d80b8754cc8911aa54177e208348e4acc276acc27bb5fae656e6",
+    "exporter_sha256": "3bd1a58185725ebaabaabf3dae66d180d330f2004a3caf5d21a0f5fc575c313f",
+    "image_source": "pinned public author raw.githubusercontent.com URLs",
+    "images_embedded": false,
+    "human_reference_labels_embedded": false,
+    "browser_check": "Separate public fallback browser CI; not an authenticated Site check"
+  },
+  "no_model_retraining": true
+}
