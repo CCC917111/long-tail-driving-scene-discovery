@@ -1,5 +1,13 @@
 # Offline Driving Explorer
 
+**Recorded walkthrough and final application copy:**
+[open the private presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
+with the owner's ChatGPT sign-in. It contains an approximately 90-second real-image
+MP4 with English captions, downloadable subtitles, two final CV bullets and
+60-second / three-minute interview scripts. The [text is also public](../docs/presentation.md).
+The recording is silent and navigation is scripted; models are not rerun.
+
+
 **New: [hosted new-scene review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).**
 This owner-private Site requires the owner's ChatGPT sign-in. All 54 images
 are served from the same origin, so the owner can inspect nine six-camera
@@ -68,8 +76,10 @@ The three error bookmarks use the same MLP fixed rule: page frame 16 is an FP,
 and page frames 10 and 1 are FNs. These cases are illustrative, selected after
 evaluation, and did not tune the models. The fixed SAE activation rule flags
 all test frames; it is separate from the ranking and validation policies.
-A walkthrough script is prepared; a narrated real-image recording has not yet
-been made.
+An approximately 90-second English-captioned real-image recording is complete
+and available on the private presentation page above. It has no spoken narration.
+The [recording receipt](../results/presentation-20261029/README.md) preserves
+source/asset hashes and the exact selected examples.
 
 ## Verification and limits
 
