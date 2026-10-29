@@ -1,9 +1,10 @@
 # Method and historical context
 
-The long method description has moved here from the original README. The
-architecture and defaults below describe the method; numerical examples are
-not new validated results. The [historical table](../results/README.md) and
-[current evaluation protocol](evaluation.md) must be read separately.
+This page preserves the original VLM-based method and its architectural defaults.
+The completed experiments use [CPU ResNet18 features](cpu-route.md), not Cosmos
+hidden states. The dimensions and prompts below describe the VLM route; they do
+not describe a new replication. See the [historical results](../results/README.md)
+and [current evaluation protocol](evaluation.md) for their respective scopes.
 
 The core hypothesis is that a tail-guided sparse representation can improve
 long-tail candidate ranking or inspection over cheaper supervised models on
@@ -14,12 +15,9 @@ ablations; see the historical-results caveats.
 
 ## Pipeline
 
-Here is an introduction to the pipeline. The figure gives the overview, and
-each step is described in its own section below it.
-
 ![The six-step pipeline](figures/pipeline.webp)
 
-The pipeline has six steps. **(1)** A single-frame, six-camera driving sample
+**(1)** A single-frame, six-camera driving sample
 **(2)** is read by a frozen vision-language model under a scene-description
 prompt, and its layer-28 hidden state is averaged over tokens into one vector
 *h*. **(3)** A sparse autoencoder encodes *h* into a sparse code split into a
@@ -83,9 +81,8 @@ where *M* is the number of tokens and *h<sub>i,m</sub>* the state of token *m*.
 The SAE encoder maps *h* to a 7,168-unit code. Sparsity follows the k-sparse
 autoencoder [[16]](#ref-16) in its Top-K form [[17]](#ref-17) with the absolute
 selection rule of AbsTopK [[18]](#ref-18): the k = 512 units with the largest
-|activation| are kept with their sign, the rest are set to zero. Keeping large
-*negative* activations matters here, because a feature can be expressed by
-either sign. The code is split into two halves,
+|activation| are kept with their sign, the rest are set to zero. This preserves strong positive and negative activations; its value for this
+task requires a matched comparison. The code is split into two halves,
 *z* = [*z<sub>n</sub>*, *z<sub>t</sub>*], and the decoder reconstructs *h* from
 the whole code. On a mini-batch of *B* samples, with *y<sub>i</sub>* = 1 for a
 long-tail sample and 0 for a normal one, the training loss is
@@ -151,24 +148,15 @@ where AbsTopK<sub>k</sub> keeps the *k* entries of largest magnitude and sets
 the rest to zero.
 
 This is sparse dictionary learning. Each decoder column *d<sub>j</sub>* is a
-*feature direction* in the model's hidden space, and each input is explained
-by the handful of directions that are active for it
-[[19]](#ref-19), [[20]](#ref-20). Sparsity is what makes the result readable:
-because only k = 512 of the 7,168 units may be active for any sample,
-information cannot be spread thinly over all of them, and different units are
-pushed to specialise in different factors.
+feature direction, and reconstruction combines the active directions
+[[19]](#ref-19), [[20]](#ref-20). Restricting the active set can make examples
+easier to inspect, but sparsity alone does not give a unit a reliable meaning.
 
-The reason for this detour is that a model's own neurons are a poor basis for
-interpretation. Individual neurons of large networks are typically
-*polysemantic*, responding to several unrelated concepts, because the network
-represents more features than it has dimensions [[20]](#ref-20). The cited studies investigate whether SAE directions are more *monosemantic*. In language models they line
-up with concepts such as legal text or a particular language, and they are more
-interpretable than directions found by other decomposition methods
-[[19]](#ref-19), [[20]](#ref-20). The approach scales to production-size models
-[[21]](#ref-21) and carries over to vision-language models, where sparse
-features make visual representations markedly more monosemantic
-[[22]](#ref-22). These studies motivate testing sparse representations for this task. They do
-not establish the accuracy, purity or causal meaning of this project's neurons.
+SAE studies investigate whether these directions separate concepts more clearly
+than individual model neurons, which can respond to several unrelated concepts.
+Results in language models [[19]](#ref-19), [[20]](#ref-20), [[21]](#ref-21)
+and vision-language models [[22]](#ref-22) motivate this design. They do not
+validate the semantic purity, accuracy or causal meaning of this project's units.
 
 ## References
 

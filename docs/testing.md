@@ -1,5 +1,22 @@
 # Testing and verification
 
+The checks below cover different things: software contracts use generated
+inputs; real-asset audits compare original image bytes and saved outputs;
+browser checks exercise interaction. None can establish label correctness on
+its own. The current fitted comparison uses one reviewer's decisions after
+AI-reference disclosure and a small held-out scene sample.
+
+## Real-image walkthrough: 2026-10-29
+
+The [recorded walkthrough](../results/presentation-20261029/README.md) ran in
+real Chromium with the original four image ZIPs and saved trained outputs.
+It exercised sample/unit navigation and a 77-row queue export with blank
+new-review fields. The 89.96-second H.264 video has English captions and uses
+selected examples from the older 80-timestamp cohort; it adds no inference,
+fits or human judgments. Desktop/mobile playback, download bytes and page
+controls were checked against the prepared Site bundle on localhost. That
+check is separate from authenticated production-site browsing.
+
 ## New-scene review and image-delivery repair: 2026-10-28
 
 The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
@@ -33,11 +50,10 @@ labels: five candidates, precision 60%, recall 75%. Both classes are perfectly
 confounded with the two source scenes, so this is descriptive agreement rather
 than independent generalization evidence.
 
-The new source-linked HTML browser workflow depends on the original author's
-public image URLs and tests that fallback's UI. It does not authenticate into
-or certify the owner-private hosted Site. New source/test files cover six-view
-acquisition integrity and loading/failure/retry state; publication checks report
-the CI status of the actual submitted commit.
+The source-linked HTML browser workflow checks the fallback UI using the
+original author's public image URLs. It does not authenticate into the private
+Site. Its tests cover six-view integrity and loading, failure and retry state;
+publication checks apply to the submitted commit.
 
 ## Earlier fitted pilot and cached viewers
 
@@ -62,12 +78,13 @@ checks cover the final source and generated-data HTTP workflow. These checks
 preserve single-reviewer, post-AI-exposure scope; they do not authenticate
 judgment correctness or establish independent blind human truth.
 
-The default CPU suite uses synthetic arrays and images to validate software
-contracts. A separately configured integration test and independent audits also
-ran against the real mini CPU pilot. The original pilot's labels remain
-provisional AI decisions; the later fitted comparison uses single-reviewer
-judgments after AI-label disclosure. None of these checks establishes independent
-human-validated driving accuracy or reproduces the original Cosmos experiment.
+The default CPU suite uses synthetic arrays and images. The configured
+integration test and separate audits also consumed the real mini CPU bundle.
+Keep their reference sources distinct: the first pilot uses provisional AI
+decisions, while the later fit uses one reviewer's decisions after AI-label
+disclosure. Neither reproduces the original Cosmos experiment.
+
+<a id="latest-local-record"></a>
 
 ## Earlier local record: 2026-10-23
 
@@ -121,9 +138,10 @@ separately; their scenes can overlap the labelled scenes.
 
 Independent Node checks used the actual four user-held ZIPs, verified all 480
 image bytes and matched all 292 displayed model values to saved predictions.
-The exported review CSV retains blank human-decision fields. These real-byte
-and numeric checks are separate from the synthetic Chrome interaction check;
-a Chrome session with the user's actual images has not been verified here.
+The exported review CSV retains blank human-decision fields. At the time of that pilot, the Chrome interaction check used synthetic images;
+its real-byte and numeric audits did not include a Chrome session with the
+user's images. The later walkthrough above records the completed real-image
+browser session separately.
 The [derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md)
 preserves the audits and explicit AI-label scope. It includes no original image
 bytes or trained model weights.
@@ -190,29 +208,27 @@ does not establish real nuScenes decoding, human label quality or VLM inference;
 follow [the real-data setup guide](from-zero.md) for those steps.
 
 The portable notebook's embedded-source bootstrap and local fixture preparation
-were executed. Review save/reload/import and backup/restore passed fixture tests.
-The new runner also completed four actual CPU estimator runs and table rebuilding
-on a tiny synthetic handoff. Notebook GPU/download cells and visual widget behavior
-in Colab remain unverified. The 2026-10-22 live acquisition attempt failed at the
-managed proxy with HTTP 403 and produced no real archive or labels in that
-attempt. The later local upload succeeded, as recorded above.
+ran successfully. Fixture tests covered review save/reload/import and
+backup/restore; a tiny synthetic handoff completed four CPU fits and table
+rebuilding. GPU/download cells and Colab widget interaction remain unverified.
+The 2026-10-22 archive request failed at the managed proxy with HTTP 403; the
+later local upload supplied the real CPU inputs.
 
 ## Remaining real-asset work
 
-The current CPU pilot does not complete the following checks:
+The current CPU evidence leaves this work open:
 
-1. Obtain independent human labels and review/exclusion records, with enough
-   normal and tail scenes to support a meaningful held-out evaluation.
+1. Collect independent human review and exclusion records across enough
+   normal and tail scenes for a meaningful held-out evaluation.
 2. Run original VLM extraction with recorded model revision, layer, hook,
    pooling and prompt versions. The completed image-only ResNet18 extraction
    uses a separate feature protocol.
 3. Recover historical weights, features, labels and logs, then compare original
    predictions without rewriting their provenance.
-4. Collect independent human decisions with appropriate scene support. Actual
-   browser viewing is verified for the supplemental 54-image batch, but those
-   submitted labels followed chat AI-reference disclosure and do not establish
-   independent blind human truth. The older viewers retain their separately
-   documented browser-verification scope.
+4. Preserve exposure records for future reviews. The supplemental 54-image
+   batch has browser checks, but its submitted decisions followed chat
+   AI-reference disclosure. Browser visibility fields alone cannot establish
+   reviewer blindness.
 
 The optional cached-feature integration entry point is:
 

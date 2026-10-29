@@ -55,9 +55,8 @@ are created. After import, continue with [CPU extraction and manual review](cpu-
 ## Review the same parts locally
 
 Download [`tools/review_upload.html`](../tools/review_upload.html), open it in
-desktop Chrome/Edge and select all the same ZIP parts together. Click
-`校验并打开`, fill the actual reviewer's identity and inspect all six views for
-each timestamp. The original frozen rubric is embedded with its SHA256. Choose
+desktop Chrome/Edge and select all the same ZIP parts together. Run the page's verification action, enter the reviewer's identity and inspect
+all six views for each timestamp. The original frozen rubric is embedded with its SHA256. Choose
 `normal_core`, `not_normal_core` or `uncertain`, then export `reviewed.csv` and
 return that small CSV for strict label import. No split, scene description,
 model prediction or prefilled label is shown.
@@ -72,5 +71,6 @@ The actual four parts passed the reviewer's parser and matched the frozen
 80-timestamp preparation; all 480 image Blobs were byte-identical to the
 imported originals. The exported all-pending CSV was accepted by the Python
 importer with zero eligible labels and training readiness false. CSV roundtrip
-checks used synthetic decisions only. Actual browser clicking, local-storage
-behavior and download interaction remain unverified in this sandbox.
+checks used synthetic decisions only. That parser audit did not exercise browser clicks, local storage or downloads.
+Later browser checks are recorded in [testing](testing.md); their image and
+review scopes should be read separately from this import record.

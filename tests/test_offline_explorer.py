@@ -227,16 +227,16 @@ def test_both_scopes_bind_cached_rows_to_same_original_selection(source_bundle):
     source = render_html(result, (ROOT / "tools/review_upload.html").read_text())
     if source_bundle["reviewed"]:
         assert 'data-reference-kind="human_ai_exposed"' in source
-        assert "尚未人工核验" not in source and "human review pending" not in source
-        assert "AI visual-label pilot:" not in source and "AP（AI 参考）" not in source
-        assert "四组均未达到" not in source and "AI 暂定标签" not in source
-        assert "AP（人工复核参考）" in source and "不是独立人工真值" in source
+        assert "human review pending" not in source and "Provisional AI-label pilot;" not in source
+        assert "AI visual-label pilot:" not in source and "AP (AI reference)" not in source
+        assert "AP (human review reference)" in source
+        assert "not independent human ground truth" in source
         assert result["operating_rules"]["mlp"]["operating_point"]["status"] == "selected"
         assert result["operating_rules"]["mlp"]["test_candidates"] == 0
         assert result["operating_rules"]["sae_abstopk_norm"]["test_candidates"] == 2
     else:
         assert 'data-reference-kind="ai_provisional"' in source
-        assert "尚未人工核验" in source and "AP（AI 参考）" in source
+        assert "human review pending" in source and "AP (AI reference)" in source
 
 
 @pytest.mark.parametrize("location", ["run_metadata.json", "evaluation.json", "metrics.json"])

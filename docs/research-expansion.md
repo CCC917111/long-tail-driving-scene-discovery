@@ -1,7 +1,8 @@
 # Driving research expansion
 
-**Updated 2026-10-28.** The broader representative experiment below has **not**
-run. Two smaller follow-ups are complete:
+Updated 2026-10-29. The proposed larger study has not run. Current real-data
+coverage totals 89 timestamps, 12 scenes and 534 images; the models were fitted
+only on the original mini cohort. Two smaller follow-ups are complete:
 
 - On 2026-10-27, a [real-data E2E smoke test](new-scene-e2e.md) acquired nine
   timestamps / 54 original images from two additional scenes in the official
@@ -18,13 +19,10 @@ the planned independent study. Original log IDs for the new scenes remain
 unavailable. The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
 requires the owner's ChatGPT sign-in and serves its images from the same origin.
 
-The inventory below preserves the earlier mini-only audit as of 2026-10-26;
-its no-download and no-new-label observations describe that audit date. The
-owner subsequently reported having no additional data assets. The next
-acquisition step is to inspect legitimate free source availability and metadata
-coverage, rather than require another search of the owner's computer. A larger
-study needs more diverse original images and matching metadata, with scene/log
-allocation frozen before labels and model outputs are inspected.
+The mini inventory below was audited on 2026-10-26, before the new-scene
+acquisition. No further local source assets are available. A larger study needs
+additional original images and matching metadata, with scene/log allocation
+frozen before reference labels or model outputs are inspected.
 
 ## What is actually available
 
@@ -87,9 +85,9 @@ archive SHA256 is null. Per-file hashes identify the transported bytes; they
 do not independently verify official-source authenticity. The genuine full
 mini archive is not present on this worker.
 
-A read-only workspace inventory, including ignored files but excluding secret
-directories, DWTS, environments, dependencies, and caches, found no additional
-original nuScenes scene assets. The four user ZIPs contain the same 480 mini
+A read-only workspace inventory, including ignored project files and excluding
+unrelated projects, secret directories, environments, dependencies and caches,
+found no additional original nuScenes scene assets. The four user ZIPs contain the same 480 mini
 JPEGs. Other asset-looking tables and archives are synthetic fixtures. In
 particular, `output/upload-helper-20261023/node/v1.0-mini.tgz` is a
 9,033,232-byte **synthetic** fixture, supported by `synthetic_only: true` in
@@ -262,14 +260,11 @@ an equivalent transfer bundle preserving original paths and bytes:
 The required pixels are the six original keyframe JPEGs for every selected
 sample, with metadata referencing them. Include source/version and archive
 inventory/checksums already available; preserve missing provenance as missing.
-If trainval exists only as archives on the user's computer, begin with its
-metadata and archive inventory so the assistant can identify the specific
-disjoint scenes and required image paths before a large transfer. There is no
-need for the user to choose sample tokens, create labels in advance, or buy
-hosting. Mini supports a within-scene extension; the later author demo adds
-two new scenes. A representative v2 study still requires broader scene/log
-coverage and a frozen allocation, rather than relabelling this tiny batch as
-the planned new experiment.
+For an archive-only source, inspect metadata and the archive inventory before
+transferring images, then select disjoint scenes and their exact image paths.
+The existing mini archive can extend coverage within its ten scenes; the author
+demo adds two scenes. Neither provides the broader scene/log coverage required
+by the proposed study.
 
 The current [browser helper](../tools/prepare_upload.html) and
 [importer](../scripts/import_mini_parts.py) are mini-only: exactly two or eight
@@ -278,18 +273,11 @@ timestamps per scene, five to ten source scenes in the helper, and at most
 trainval or expand mini beyond eight timestamps per scene. The Python
 [preparer](../scripts/prepare_driving.py) already reads trainval and arbitrary
 positive frame counts, but does not create missing pixels or implement the
-proposed log-aware split. These constraints should be adapted against the
-actual supplied assets, rather than building an empty transfer or training
-framework now.
+proposed log-aware split. Adapt these limits only after inspecting the additional source assets.
 
-Once that input is accessible, the assistant can autonomously validate source
-coverage, identify old-scene/log overlaps, compute the candidate sample/image
-inventory, estimate transfer and review volume, adapt the minimal necessary
-handoff, and prepare a concrete frozen review batch in fresh directories.
-For the future v2 study, after blind human review returns, it can validate class
-support, extract and
-cache CPU features, run the same four methods, audit saved predictions, and
-produce the comparison with its limitations. Human judgments and missing
-original pixels cannot be supplied by scaffolding. The outstanding input is
-which additional authorized source assets can be acquired with matching metadata;
-the stronger experiment is not yet executed.
+The next deliverable is a source-verified inventory and frozen review batch in
+fresh directories: scene/log overlap checks, selected samples, image coverage,
+and transfer/review estimates. After blind review, validate class support,
+extract the shared CPU cache, fit the four methods and audit saved predictions.
+The larger experiment remains blocked on additional authorized source images
+and matching metadata.

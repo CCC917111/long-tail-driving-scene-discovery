@@ -1,6 +1,6 @@
 # A CPU-only image-feature experiment
 
-This route needs no GPU, GPU account or new model dependency. A fixed ImageNet
+This route runs on a CPU. A fixed ImageNet
 ResNet18 encoder produces one 512-dimensional vector per camera. Six ordered
 views are concatenated into 3,072 dimensions. Logistic regression, MLP and the
 reward/no-reward SAE then share those features, the same frozen scenes, labels
@@ -13,7 +13,27 @@ data and the small encoder, persists manual review, checks the feature cache and
 runs the four methods. The runtime must normally permit the official download
 hosts. No GPU selection, paid service or cloud booking is needed.
 
-## What has actually run
+## Completed runs
+
+The project has processed 89 real timestamps from 12 scenes: the original
+80-timestamp mini cohort and a separate nine-timestamp supplement, totaling
+534 camera images. The model fits still use only the original cohort.
+[Yike's review](human-review.md) retained 77 binary decisions and three uncertain
+rows after prior AI-label disclosure. All four methods used the frozen 6/2/2
+scene allocation and seed 42. Train contains only three normal timestamps,
+all from one scene; test contains 15 retained timestamps in two scenes.
+The SAE's test AP was 0.9353 against those single-reviewer references.
+Reward and no-reward checkpoints were identical, so this run found no reward gain.
+
+The nine later timestamps contain five normal and four non-normal human
+judgments, also submitted after AI-reference disclosure. The old
+validation-selected threshold, `6.074954873387325`, selected five candidates:
+precision 60%, recall 75%. No new fitting or threshold tuning occurred. All
+normal references came from one scene and all non-normal references from the
+other, confounding class with scene. See the
+[supplemental replay](../results/new-scene-human-review-20261028/README.md).
+
+### Encoder and fixture checks
 
 On 2026-10-23, the official 46,830,571-byte pretrained checkpoint was downloaded
 from PyTorch's HTTPS host and pinned by its full SHA256:
@@ -34,6 +54,8 @@ token overlap with training; their extracted features passed the screening
 encoder/weights/preprocessing check. A six-view synthetic false-positive preview
 and a blank-label review export are retained with the local verification artifacts.
 
+### Original real-data extraction
+
 On 2026-10-23, four user-generated offline transfer parts were imported from
 an archive recorded as `v1.0-mini.tgz` (4,168,148,189 bytes). The imported subset
 contains 80 real timestamps from ten scenes and 480 original camera JPEGs.
@@ -48,14 +70,13 @@ seconds, including process startup and input checks. These are local run times,
 not a throughput benchmark. Logs and the preserved smoke/full summaries are
 under `output/real-cpu-mini-20261023/` in the execution workspace.
 
-No human-reviewed ground truth exists yet. A subsequent [AI-label pilot](ai-pilot.md)
-completed all four models on 73 retained timestamps and screened the seven
-uncertain timestamps separately. Those scores measure agreement with provisional
-AI decisions and do not establish benchmark accuracy or a reward benefit. The original
-archive checksum was not independently verified; transfer/file hashes establish
-which bytes were used, not official-source authenticity. The official download
-host remains blocked by the worker's network policy. The local upload route
-resolved ingestion without a GPU or paid service.
+Before the human submission, the [AI-label pilot](ai-pilot.md) fitted all four
+models on 73 retained timestamps and screened seven uncertain timestamps.
+That experiment remains separate from the later human-review run. The original
+archive checksum was not independently verified; transfer and file hashes
+establish which bytes were used, not official-source authenticity. The worker's
+network policy blocked the official download host during acquisition, so the
+local upload route supplied the inputs.
 
 If the mini archive is already downloaded on your computer, the
 [offline small-part transfer tool](local-upload.md) selects a tiny six-view

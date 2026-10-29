@@ -1,94 +1,106 @@
-# 全部 80 帧 AI 标注结果
+# AI labels for all 80 frames
 
-帧号与看图页一致，从 1 开始；一帧代表同一时间点的六视角。
+Frame numbers start at 1 and match the review page. Each frame represents one timestamp
+with six camera views.
 
-- **原始 AI**：训练与已公布指标使用的标签版本，13 正常 / 60 需要额外谨慎 / 7 不确定。
-- **AI 复核**：后来四个新 agent 分工复核的版本，12 正常 / 63 需要额外谨慎 / 5 不确定。
-- 两个版本均为 AI 临时判断。原始实验未换用复核标签，表格不包含用户人工标签。
-- “需要额外谨慎”对应 `not_normal_core`；“正常”对应 `normal_core`。
-- [完整 CSV（含 sample_token、置信度和两轮原始判断理由）](all-ai-labels.csv)。下载箭头可保存，UTF-8 BOM 便于 Excel 识别中文。
+- **Original AI:** the references used for training and the published pilot metrics: 13
+  normal, 60 requiring extra caution and seven uncertain.
+- **AI recheck:** the later review divided among four fresh agent sessions: 12 normal,
+  63 requiring extra caution and five uncertain.
+- Both are provisional AI judgments. The original experiment did not switch to the
+  recheck labels. This table contains no user-submitted human labels.
+- “Requires extra caution” means `not_normal_core`; “Normal” means `normal_core`.
+- [Complete CSV](all-ai-labels.csv): sample tokens, confidence and both rounds' original
+  reasoning. The unchanged UTF-8 BOM CSV preserves the original language and supports
+  Excel import.
 
-| 页面帧号 | 原始 AI | AI 复核 | 两轮是否一致 |
+Documentation translation, 2026-10-29: this table presents the same decisions in
+English. The Markdown hash in [export metadata](all-ai-labels-metadata.json) identifies
+the original export, not this translation. Source annotations and the CSV are unchanged.
+
+| Page frame | Original AI | AI recheck | Agreement |
 |---:|---|---|---|
-| 1 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 2 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 3 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 4 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 5 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 6 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 7 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 8 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 9 | 不确定 | 需要额外谨慎 | **有分歧** |
-| 10 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 11 | 不确定 | 需要额外谨慎 | **有分歧** |
-| 12 | 正常 | 正常 | 一致 |
-| 13 | 正常 | 正常 | 一致 |
-| 14 | 正常 | 正常 | 一致 |
-| 15 | 正常 | 正常 | 一致 |
-| 16 | 正常 | 正常 | 一致 |
-| 17 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 18 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 19 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 20 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 21 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 22 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 23 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 24 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 25 | 正常 | 正常 | 一致 |
-| 26 | 正常 | 正常 | 一致 |
-| 27 | 正常 | 正常 | 一致 |
-| 28 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 29 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 30 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 31 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 32 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 33 | 不确定 | 需要额外谨慎 | **有分歧** |
-| 34 | 需要额外谨慎 | 不确定 | **有分歧** |
-| 35 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 36 | 不确定 | 不确定 | 一致 |
-| 37 | 正常 | 正常 | 一致 |
-| 38 | 正常 | 正常 | 一致 |
-| 39 | 正常 | 正常 | 一致 |
-| 40 | 正常 | 正常 | 一致 |
-| 41 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 42 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 43 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 44 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 45 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 46 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 47 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 48 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 49 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 50 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 51 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 52 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 53 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 54 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 55 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 56 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 57 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 58 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 59 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 60 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 61 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 62 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 63 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 64 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 65 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 66 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 67 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 68 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 69 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 70 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 71 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 72 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 73 | 正常 | 需要额外谨慎 | **有分歧** |
-| 74 | 不确定 | 不确定 | 一致 |
-| 75 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 76 | 需要额外谨慎 | 不确定 | **有分歧** |
-| 77 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 78 | 不确定 | 不确定 | 一致 |
-| 79 | 需要额外谨慎 | 需要额外谨慎 | 一致 |
-| 80 | 不确定 | 需要额外谨慎 | **有分歧** |
+| 1 | Requires extra caution | Requires extra caution | Agreement |
+| 2 | Requires extra caution | Requires extra caution | Agreement |
+| 3 | Requires extra caution | Requires extra caution | Agreement |
+| 4 | Requires extra caution | Requires extra caution | Agreement |
+| 5 | Requires extra caution | Requires extra caution | Agreement |
+| 6 | Requires extra caution | Requires extra caution | Agreement |
+| 7 | Requires extra caution | Requires extra caution | Agreement |
+| 8 | Requires extra caution | Requires extra caution | Agreement |
+| 9 | Uncertain | Requires extra caution | **Disagreement** |
+| 10 | Requires extra caution | Requires extra caution | Agreement |
+| 11 | Uncertain | Requires extra caution | **Disagreement** |
+| 12 | Normal | Normal | Agreement |
+| 13 | Normal | Normal | Agreement |
+| 14 | Normal | Normal | Agreement |
+| 15 | Normal | Normal | Agreement |
+| 16 | Normal | Normal | Agreement |
+| 17 | Requires extra caution | Requires extra caution | Agreement |
+| 18 | Requires extra caution | Requires extra caution | Agreement |
+| 19 | Requires extra caution | Requires extra caution | Agreement |
+| 20 | Requires extra caution | Requires extra caution | Agreement |
+| 21 | Requires extra caution | Requires extra caution | Agreement |
+| 22 | Requires extra caution | Requires extra caution | Agreement |
+| 23 | Requires extra caution | Requires extra caution | Agreement |
+| 24 | Requires extra caution | Requires extra caution | Agreement |
+| 25 | Normal | Normal | Agreement |
+| 26 | Normal | Normal | Agreement |
+| 27 | Normal | Normal | Agreement |
+| 28 | Requires extra caution | Requires extra caution | Agreement |
+| 29 | Requires extra caution | Requires extra caution | Agreement |
+| 30 | Requires extra caution | Requires extra caution | Agreement |
+| 31 | Requires extra caution | Requires extra caution | Agreement |
+| 32 | Requires extra caution | Requires extra caution | Agreement |
+| 33 | Uncertain | Requires extra caution | **Disagreement** |
+| 34 | Requires extra caution | Uncertain | **Disagreement** |
+| 35 | Requires extra caution | Requires extra caution | Agreement |
+| 36 | Uncertain | Uncertain | Agreement |
+| 37 | Normal | Normal | Agreement |
+| 38 | Normal | Normal | Agreement |
+| 39 | Normal | Normal | Agreement |
+| 40 | Normal | Normal | Agreement |
+| 41 | Requires extra caution | Requires extra caution | Agreement |
+| 42 | Requires extra caution | Requires extra caution | Agreement |
+| 43 | Requires extra caution | Requires extra caution | Agreement |
+| 44 | Requires extra caution | Requires extra caution | Agreement |
+| 45 | Requires extra caution | Requires extra caution | Agreement |
+| 46 | Requires extra caution | Requires extra caution | Agreement |
+| 47 | Requires extra caution | Requires extra caution | Agreement |
+| 48 | Requires extra caution | Requires extra caution | Agreement |
+| 49 | Requires extra caution | Requires extra caution | Agreement |
+| 50 | Requires extra caution | Requires extra caution | Agreement |
+| 51 | Requires extra caution | Requires extra caution | Agreement |
+| 52 | Requires extra caution | Requires extra caution | Agreement |
+| 53 | Requires extra caution | Requires extra caution | Agreement |
+| 54 | Requires extra caution | Requires extra caution | Agreement |
+| 55 | Requires extra caution | Requires extra caution | Agreement |
+| 56 | Requires extra caution | Requires extra caution | Agreement |
+| 57 | Requires extra caution | Requires extra caution | Agreement |
+| 58 | Requires extra caution | Requires extra caution | Agreement |
+| 59 | Requires extra caution | Requires extra caution | Agreement |
+| 60 | Requires extra caution | Requires extra caution | Agreement |
+| 61 | Requires extra caution | Requires extra caution | Agreement |
+| 62 | Requires extra caution | Requires extra caution | Agreement |
+| 63 | Requires extra caution | Requires extra caution | Agreement |
+| 64 | Requires extra caution | Requires extra caution | Agreement |
+| 65 | Requires extra caution | Requires extra caution | Agreement |
+| 66 | Requires extra caution | Requires extra caution | Agreement |
+| 67 | Requires extra caution | Requires extra caution | Agreement |
+| 68 | Requires extra caution | Requires extra caution | Agreement |
+| 69 | Requires extra caution | Requires extra caution | Agreement |
+| 70 | Requires extra caution | Requires extra caution | Agreement |
+| 71 | Requires extra caution | Requires extra caution | Agreement |
+| 72 | Requires extra caution | Requires extra caution | Agreement |
+| 73 | Normal | Requires extra caution | **Disagreement** |
+| 74 | Uncertain | Uncertain | Agreement |
+| 75 | Requires extra caution | Requires extra caution | Agreement |
+| 76 | Requires extra caution | Uncertain | **Disagreement** |
+| 77 | Requires extra caution | Requires extra caution | Agreement |
+| 78 | Uncertain | Uncertain | Agreement |
+| 79 | Requires extra caution | Requires extra caution | Agreement |
+| 80 | Uncertain | Requires extra caution | **Disagreement** |
 
-[AI 复核说明](README.md) · [原始 AI 记录](../cpu-mini-ai-pilot-20261023/ai_visual_labels.json) · [人工复核步骤](../../docs/human-review.md)
+[AI recheck record](README.md) · [Original AI
+record](../cpu-mini-ai-pilot-20261023/ai_visual_labels.json) · [Human-review
+procedure](../../docs/human-review.md)

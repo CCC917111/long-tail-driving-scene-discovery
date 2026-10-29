@@ -1,114 +1,96 @@
-# Offline Driving Explorer
+# Driving Scene Explorer
 
-**Recorded walkthrough and final application copy:**
-[open the private presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
-with the owner's ChatGPT sign-in. It contains an approximately 90-second real-image
-MP4 with English captions, downloadable subtitles, two final CV bullets and
-60-second / three-minute interview scripts. The [text is also public](../docs/presentation.md).
-The recording is silent and navigation is scripted; models are not rerun.
+[**Watch the 90-second walkthrough on GitHub**](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4)
+or [download the MP4](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
+The recording shows real six-camera images, saved model scores, sparse-feature
+inspection, error cases and a review export. It has English captions and no
+spoken narration. Browser navigation is scripted; the viewer reads cached
+outputs rather than rerunning the models.
 
+[Recording evidence and image attribution](../results/presentation-english-20261029/README.md) ·
+[CV bullets and interview scripts](../docs/presentation.md) ·
+[Project role and contributions](../docs/project-card.md)
 
-**New: [hosted new-scene review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).**
-This owner-private Site requires the owner's ChatGPT sign-in. All 54 images
-are served from the same origin, so the owner can inspect nine six-camera
-groups and export CSV without downloading HTML or uploading ZIPs. External
-GitHub readers do not receive access to this private tool automatically.
-Model signals stay hidden until requested; the page does not display human
-reference labels. The separate [downloadable fallback](driving_new_scenes.html)
-uses original author image URLs and requires access to `raw.githubusercontent.com`.
-See the [real-data E2E guide](../docs/new-scene-e2e.md) and
-[image-loading repair evidence](../results/review-page-repair-20261028/README.md).
+## Use the offline viewer
 
-The [later nine-row submission](../results/new-scene-human-review-20261028/README.md)
-contains five normal and four non-normal judgments. The AI reference table had
-been disclosed in chat before submission; browser model-signal visibility does
-not establish blind human review. The two cached result viewers below retain
-their original fitted-run reference protocols.
+The latest viewer replays the 2026-10-26 comparison using one reviewer's final
+judgments after AI-label disclosure. It retains 12 normal and 65 tail references
+and excludes three uncertain decisions. The archived viewer retains the
+earlier provisional AI-reference run.
 
-**Project lead: Yike Chen.** The latest viewer replays the completed
-single-reviewer reference run after AI-label disclosure. It shows six-camera
-images, trained sparse activations, four-model scores and a review export.
-The downloaded HTML runs locally in desktop Chrome/Edge; images stay local.
-
-| Viewer | References | Cached timestamps | Model values |
+| Viewer | Reference source | Timestamps | Cached model scores |
 |---|---|---:|---:|
-| [Latest driving_pilot.html](driving_pilot.html) | Final user review after AI-label exposure | 77 | 308 |
-| [Archived driving_ai_pilot.html](driving_ai_pilot.html) | Original provisional AI labels | 73 | 292 |
+| [driving_pilot.html](driving_pilot.html) | Single-reviewer judgments after AI-label exposure | 77 | 308 |
+| [driving_ai_pilot.html](driving_ai_pilot.html) | Provisional AI labels | 73 | 292 |
 
-The archive preserves the original HTML bytes. The latest viewer does not
-replace the older run's predictions or change training. It uses 12 normal and
-65 tail references; three uncertain decisions are excluded. One reviewer saw
-the full AI-label table before final submission, so these are not independent
-blind human labels or an official benchmark.
+1. Open [driving_pilot.html](driving_pilot.html) on GitHub and choose
+   **Download raw file**. GitHub's source preview does not run the viewer.
+2. Open the saved HTML in desktop Chrome or Edge.
+3. Select all four original ZIP parts, `driving-mini-part-001-of-004.zip`
+   through `driving-mini-part-004-of-004.zip`, and click **Open images**.
+4. Open a case bookmark or select an active unit to inspect its high-activation
+   frames. The table shows fixed-rule and operating-point decisions separately.
+5. Export the review CSV. New-review fields start blank; cached reference
+   labels remain a separate column.
 
-## Open the viewer
+The HTML embeds numeric outputs but no original image bytes. Image navigation
+requires the matching ZIP parts, whose identities and hashes are checked;
+images stay in your browser. Without those assets, watch the public video or
+run the [generated-data CPU example](../README.md#run-a-cpu-example).
 
-1. Open [driving_pilot.html](driving_pilot.html) on GitHub and click the download
-   arrow (**Download raw file**). Save the HTML; GitHub's source preview does
-   not run the app.
-2. Open the saved file in desktop Chrome or Edge.
-3. Select the same four original `driving-mini-part-001-of-004.zip` through
-   `driving-mini-part-004-of-004.zip` files together. Click **打开原图**.
-4. Open a case bookmark, select an active unit and compare its high-activation
-   frames. The per-frame table distinguishes fixed-rule and operating decisions.
-5. Export the review CSV. Its new-review fields are blank; cached reference
-   labels remain a separately disclosed source.
+## What the walkthrough shows
 
-中文：下载最新 HTML → 电脑 Chrome/Edge 打开 → 同时选择原来的四个 ZIP →
-点击「打开原图」。新版本对应最终复核结果；旧 AI 试跑有单独归档。
-
-The HTML has numeric caches and no original image bytes. Matching parts are
-required for image navigation; their transfer identity and hashes are checked.
-For a runnable generated-data example without authorized nuScenes assets, use
-[the CPU quickstart](../README.md#run-a-cpu-example).
-
-## A 90-second walkthrough
-
-| Time | Show | Say |
+| Time | Screen | Point to explain |
 |---|---|---|
-| 0–15 s | Project title, scope banner and result table | “I lead the optimization and delivery of this repository, building on our team capstone. This viewer replays a small CPU experiment using final user judgments after AI-label exposure.” |
-| 15–35 s | One six-camera timestamp, its score and active units | “One timestamp contains six views. Scores and sparse activations come from saved trained models; the viewer runs no new inference.” |
-| 35–50 s | An active unit and its high-activation frames | “I can inspect which examples activate a direction. These numeric unit IDs have no validated semantic names.” |
-| 50–70 s | MLP fixed-rule FP bookmark, then an FN bookmark | “These are disagreements with the final reference labels under the same MLP threshold of 0.5. We retain both mistakes rather than reporting only good examples.” |
-| 70–90 s | Four-model table, operating policy and review export | “SAE top four finds four reference positives. Its validation-selected policy separately selects two test frames; both are positive, recalling two of ten. Reward/no-reward weights are identical. I export the review queue for follow-up.” |
+| 0–15 s | Project scope and result table | Yike leads the repository modernization, building on the team capstone. The results use a small CPU experiment with single-reviewer references after AI-label disclosure. |
+| 15–35 s | Six views, score and active units | One timestamp contains six camera views. Scores and activations come from saved trained models. |
+| 35–50 s | A unit and its high-activation frames | Examples make the learned direction inspectable. The unit's numeric ID has no validated semantic label. |
+| 50–70 s | An MLP false positive and false negative | Both are disagreements with the same reference set under the MLP threshold of 0.5. The examples were selected after evaluation. |
+| 70–90 s | Four-model table and CSV export | The SAE's top four contain four reference positives. Its separate validation-selected policy selects two of 15 test frames and recalls two of ten positives. Reward and no-reward checkpoints are identical. |
 
-The three error bookmarks use the same MLP fixed rule: page frame 16 is an FP,
-and page frames 10 and 1 are FNs. These cases are illustrative, selected after
-evaluation, and did not tune the models. The fixed SAE activation rule flags
-all test frames; it is separate from the ranking and validation policies.
-An approximately 90-second English-captioned real-image recording is complete
-and available on the private presentation page above. It has no spoken narration.
-The [recording receipt](../results/presentation-20261029/README.md) preserves
-source/asset hashes and the exact selected examples.
+The explorer has three MLP error bookmarks: page frame 16 is a false positive,
+and page frames 10 and 1 are false negatives. These examples did not tune the
+models. The SAE's fixed activation rule flags every test frame; its top-four
+ranking and validation-selected operating point answer different questions.
 
-## Verification and limits
+The fitted comparison uses one seed, two test scenes and only three normal
+training frames from one scene. Its references are not independent blind
+labels. See the [full result record](../results/human-ai-exposed-20261026/README.md)
+for predictions, review revisions and policy definitions.
 
-- Export reconstruction checks scope, manifests, cached labels/splits/scores,
-  selected input images and saved-output table integrity for both reference sets.
-- Independent Node checks loaded the actual four local ZIPs and compared all
-  480 image bytes with the originals. All 308 displayed method values match
-  saved predictions; 77 review rows have blank new-review fields.
-- Local synthetic core checks pass for both HTML versions. GitHub Actions
-  exercises Chrome desktop/mobile rendering, case and unit navigation, search,
-  tables and actual CSV downloads using visibly synthetic ZIP images. This
-  remains separate from the original-byte/score checks and does not certify a
-  real-image browser session. See the publication PR checks for current UI status.
+## Review new scenes
 
-The separate new-scene Site bundle passed local desktop/mobile checks against
-all 54 real original images, CSV export, and a failed-image retry check. These
-[repair records](../results/review-page-repair-20261028/README.md) are distinct
-from both authenticated production browsing and the synthetic ZIP checks for
-the two older viewers. Native publishing status verifies private deployment.
-CI for the downloadable
-source-linked fallback does not authenticate into or test the owner-private Site.
+The [new-scene HTML](driving_new_scenes.html) loads nine six-camera timestamps
+from original author image URLs on `raw.githubusercontent.com`. Download it
+and open it with an Internet connection. The optional
+[hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+serves all 54 images from the same origin without ZIP upload, but requires
+the owner's ChatGPT sign-in. Its
+[presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
+has the same access restriction; the GitHub video above is public.
 
-Test contains 15 timestamps from two scenes; training has three normal frames
-from one scene. The two SAE checkpoints match each other and the original AI
-pilot; score changes across reference versions are not model improvements.
-The [research expansion plan](../docs/research-expansion.md) describes the new
-scene data and independent labeling needed for stronger claims; it has not run.
+The [nine-frame review record](../results/new-scene-human-review-20261028/README.md)
+contains five normal and four non-normal judgments after the AI reference
+table was disclosed in chat. Model signals are hidden by default in the
+review UI, but that does not remove the prior disclosure. The models were
+not retrained on this batch. All normal references come from one scene and
+all non-normal references from the other.
 
-[Latest result record](../results/human-ai-exposed-20261026/README.md) ·
+## Verification
+
+The saved viewer checks reconstruct manifests, labels, splits, scores and
+selected input images. Separate Node checks loaded all four original ZIPs and
+compared all 480 image files byte for byte with the originals; all 308 scores in the latest viewer
+match saved predictions. Its 77 exported rows have blank new-review fields.
+The archive retains its original bytes and separate 292-score check.
+
+Browser CI exercises desktop and mobile navigation, search and CSV downloads
+with synthetic watermarked ZIPs. Checks of the separate new-scene bundle cover
+all 54 original images, CSV export and failed-image retry. These checks have
+different scopes; see [testing](../docs/testing.md) and the
+[new-scene repair record](../results/review-page-repair-20261028/README.md).
+
+[Latest fitted results](../results/human-ai-exposed-20261026/README.md) ·
 [Original AI pilot](../results/cpu-mini-ai-pilot-20261023/README.md) ·
-[Project card and interview story](../docs/project-card.md) ·
-[Blank image-review tool](../tools/review_upload.html)
+[New-scene execution guide](../docs/new-scene-e2e.md) ·
+[Research expansion plan](../docs/research-expansion.md)
