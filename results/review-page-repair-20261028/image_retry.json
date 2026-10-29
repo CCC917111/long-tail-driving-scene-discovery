@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "blocked_image_disables_decisions": true,
+  "retry_restores_all_six_images": true,
+  "unsaved_inputs_preserved": true,
+  "human_annotation_performed": false
+}

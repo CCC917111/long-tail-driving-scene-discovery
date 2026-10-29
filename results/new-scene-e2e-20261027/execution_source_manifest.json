@@ -1,0 +1,17 @@
+{
+  "archive_sha256": "52fd3dae5c1c8b10862ace83006ad8bf9e5d1e6674be4757e36671780e5e5f8b",
+  "scope": "Exact seven recorded extraction/inference source files plus the exact independent audit script and licence notices; dependencies from immutable public base fb1f2f93ad46958b2994a7f939b4b39c76ffa476",
+  "files": {
+    "scripts/new_scene_e2e.py": "e886cb0d984fca27ce0ab77af9eaa60b21322af91cee01ec71303bf671ab6c48",
+    "scripts/cpu_image_encoder.py": "fbabff5aab45f804f243f568a2c04fc6bba06e61941ba7b8520ca98307e55e22",
+    "scripts/screen.py": "0601cf42d35503e2eb0ef2914a381159ae8c7800e7d390dc161982b06fef46fe",
+    "scripts/sae_common.py": "9d6114523e31a92a8058aea2107352ac87f78ccf3807c523e56459c449e9677b",
+    "scripts/tail_activations.py": "1c61e57c01c9e3c5f0393040cbea16bdc1cd5da953c5ad370bda998232d7c14b",
+    "scripts/neuron_explorer.py": "9665b9784fc1ffbd443addab4f23f7c778498cf0b924340c749055665348bf9f",
+    "scripts/export_unlabelled_review.py": "4db49f0e40aa5e1067786cb0c1cafc085a5ea18fd730f8652b431f49aea98d60",
+    "verify_e2e.py": "a6bfbb54917783aad8034bfd1f35f32ccd28eaf6bf89d172bdd07dce32b0f098",
+    "LICENSE": "cb99e6f68ba24904651d28dbfcea3ff9946da23ca2eabb01b7cdbc93e484a71c",
+    "docs/third_party_resnet18.txt": "69a8c8f2d011095602e16e61033f41f3f87fa07be51032b31d2cffc18fa6efa1"
+  },
+  "original_run_records_modified": false
+}

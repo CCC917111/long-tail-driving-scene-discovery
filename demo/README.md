@@ -1,5 +1,22 @@
 # Offline Driving Explorer
 
+**New: [hosted new-scene review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).**
+This owner-private Site requires the owner's ChatGPT sign-in. All 54 images
+are served from the same origin, so the owner can inspect nine six-camera
+groups and export CSV without downloading HTML or uploading ZIPs. External
+GitHub readers do not receive access to this private tool automatically.
+Model signals stay hidden until requested; the page does not display human
+reference labels. The separate [downloadable fallback](driving_new_scenes.html)
+uses original author image URLs and requires access to `raw.githubusercontent.com`.
+See the [real-data E2E guide](../docs/new-scene-e2e.md) and
+[image-loading repair evidence](../results/review-page-repair-20261028/README.md).
+
+The [later nine-row submission](../results/new-scene-human-review-20261028/README.md)
+contains five normal and four non-normal judgments. The AI reference table had
+been disclosed in chat before submission; browser model-signal visibility does
+not establish blind human review. The two cached result viewers below retain
+their original fitted-run reference protocols.
+
 **Project lead: Yike Chen.** The latest viewer replays the completed
 single-reviewer reference run after AI-label disclosure. It shows six-camera
 images, trained sparse activations, four-model scores and a review export.
@@ -66,6 +83,14 @@ been made.
   tables and actual CSV downloads using visibly synthetic ZIP images. This
   remains separate from the original-byte/score checks and does not certify a
   real-image browser session. See the publication PR checks for current UI status.
+
+The separate new-scene Site bundle passed local desktop/mobile checks against
+all 54 real original images, CSV export, and a failed-image retry check. These
+[repair records](../results/review-page-repair-20261028/README.md) are distinct
+from both authenticated production browsing and the synthetic ZIP checks for
+the two older viewers. Native publishing status verifies private deployment.
+CI for the downloadable
+source-linked fallback does not authenticate into or test the owner-private Site.
 
 Test contains 15 timestamps from two scenes; training has three normal frames
 from one scene. The two SAE checkpoints match each other and the original AI

@@ -1,0 +1,738 @@
+{
+  "schema": "drivelm-author-demo-acquisition-v1",
+  "source_commit": "1de72a74b257e5373400fa68239e99bd5d20580a",
+  "image_count": 54,
+  "bytes": 6114069,
+  "frame_count": 9,
+  "scene_count": 2,
+  "old_scene_overlap": 0,
+  "old_sample_overlap": 0,
+  "original_log_metadata_available": false,
+  "log_disjoint_verified": false,
+  "human_labels_available": false,
+  "expanded_benchmark_run": false,
+  "frames": [
+    {
+      "scene_token": "f0f120e4d4b0441da90ec53b16ee169d",
+      "sample_token": "4a0798f849ca477ab18009c3a20b7df2",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291010612404.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291010604799.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291010620482.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291010637558.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291010647405.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291010628113.jpg"
+      }
+    },
+    {
+      "scene_token": "f0f120e4d4b0441da90ec53b16ee169d",
+      "sample_token": "ffd1bdf020d145759224c629b501d2b2",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291002262404.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291002254799.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291002270482.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291002287558.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291002297405.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291002278113.jpg"
+      }
+    },
+    {
+      "scene_token": "f0f120e4d4b0441da90ec53b16ee169d",
+      "sample_token": "d9075c2a5f864a2b8abf41e703f4cf1c",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291005162404.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291005154799.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291005170482.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291005187558.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291005197405.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291005178113.jpg"
+      }
+    },
+    {
+      "scene_token": "f0f120e4d4b0441da90ec53b16ee169d",
+      "sample_token": "dfb8d8959b9944d69dcec6d05e419f04",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291013612404.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291013604799.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291013620482.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291013637558.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291013647405.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291013628113.jpg"
+      }
+    },
+    {
+      "scene_token": "54cdaaae372d421fa4734d66f51a8c48",
+      "sample_token": "542eaf1fc9b34895a9e55fab57cb4cf4",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280039162460.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280039154844.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280039170339.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280039187525.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280039197423.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280039177893.jpg"
+      }
+    },
+    {
+      "scene_token": "54cdaaae372d421fa4734d66f51a8c48",
+      "sample_token": "1b45a97a0e5e49fe9cd345dd4bd729c3",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280042612460.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280042604844.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280042620339.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280042637525.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280042647423.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280042627893.jpg"
+      }
+    },
+    {
+      "scene_token": "54cdaaae372d421fa4734d66f51a8c48",
+      "sample_token": "d5e16062410f4e329d31a881b28e5c1c",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280045112460.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280045104844.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280045120339.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280045137525.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280045147423.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280045127893.jpg"
+      }
+    },
+    {
+      "scene_token": "54cdaaae372d421fa4734d66f51a8c48",
+      "sample_token": "7abe79e5d3d745bcb237a4b7e03d1577",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280048162460.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280048154844.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280048170339.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280048187525.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280048197442.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280048177893.jpg"
+      }
+    },
+    {
+      "scene_token": "54cdaaae372d421fa4734d66f51a8c48",
+      "sample_token": "0dd14c14cea14dc1b0c0c9b0c9c7c4c3",
+      "label": null,
+      "split": null,
+      "image_paths": {
+        "CAM_FRONT": "../nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280036162460.jpg",
+        "CAM_FRONT_LEFT": "../nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280036154844.jpg",
+        "CAM_FRONT_RIGHT": "../nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280036170339.jpg",
+        "CAM_BACK": "../nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280036187525.jpg",
+        "CAM_BACK_LEFT": "../nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280036197423.jpg",
+        "CAM_BACK_RIGHT": "../nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280036177893.jpg"
+      }
+    }
+  ],
+  "images": [
+    {
+      "path": "samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291002287558.jpg",
+      "bytes": 131834,
+      "sha256": "77d3d4af06ca78b47a633209b71955e06dde6046bfcca44769617bfa1d00546c",
+      "git_blob_sha1": "0b135b4aa86fe6fc8b681bd99cf4fea112f84f33",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291002287558.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291005187558.jpg",
+      "bytes": 128974,
+      "sha256": "3ef48725f814c809aa9a59878c0d1e89dfa63b0c4bc32ee42da0787d576ff093",
+      "git_blob_sha1": "4805fa74df3b12965705057eba064e3dcf55c19d",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291005187558.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291010637558.jpg",
+      "bytes": 119964,
+      "sha256": "0b8bf2fef4a5349ef49638df3b70837c7f1dbbe29d0e3eaf9c49200fdc4a7015",
+      "git_blob_sha1": "2b6aeeb609cffac1d40df7dfa96f203690c6835d",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291010637558.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291013637558.jpg",
+      "bytes": 117125,
+      "sha256": "25283107195f6350171c5fbf77018cb2f5f1e0ae6a1df0a71784a06e60fb325c",
+      "git_blob_sha1": "8dcdc47adf7eb9565af399d3ef898d5e0cf5798c",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n008-2018-09-18-13-10-39-0400__CAM_BACK__1537291013637558.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280036187525.jpg",
+      "bytes": 103085,
+      "sha256": "60e4d57efc059472085ee88e95856149c24d6434bd57f3224c28c07f46b57a63",
+      "git_blob_sha1": "6f5c60f903e9cbfc89ea7137f52688d665a7b80d",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280036187525.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280039187525.jpg",
+      "bytes": 103097,
+      "sha256": "8df56870908804aa67d9c58d99fe6291b7e37057bb49b03729e735a5028acfe0",
+      "git_blob_sha1": "2159d52506be2a44f960c369d1f9f6c010da6c66",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280039187525.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280042637525.jpg",
+      "bytes": 104935,
+      "sha256": "19732d8baf841d00a8b59ba61e2f441af43b50d53f24387e9ff8be73aa1bcc1d",
+      "git_blob_sha1": "417f24b2ebb137a61307ea699cfcfc328ff7a96f",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280042637525.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280045137525.jpg",
+      "bytes": 103573,
+      "sha256": "9e4c7b1c3bea4ba4d6080af7ed590d94fcde6c41f754b765fe39eb02801273b8",
+      "git_blob_sha1": "0b171265a6433e64396699018290938ac79f2648",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280045137525.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280048187525.jpg",
+      "bytes": 104857,
+      "sha256": "a38b0f4bb4802f679143ad29c0d73c836b2f7d41723b5fa1213a3f7fb2817ca4",
+      "git_blob_sha1": "931ce98f70bd1d3693ee1bcb13162eeebcd4751f",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK/n015-2018-08-03-15-00-36+0800__CAM_BACK__1533280048187525.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291002297405.jpg",
+      "bytes": 113103,
+      "sha256": "193b340db135e7cc4498b1ae9a3772a5a5c9ca119023677e273b3334f01e4cd9",
+      "git_blob_sha1": "a5d9def083faceb6b102814628e920c0981fe13e",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291002297405.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291005197405.jpg",
+      "bytes": 106175,
+      "sha256": "4621c963a46c9ed11ff70577c60ff536a54b9b54c049060f156a73851e0713f8",
+      "git_blob_sha1": "abd194666f8b603eb1474fc88c332fd68841f887",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291005197405.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291010647405.jpg",
+      "bytes": 91120,
+      "sha256": "6036ae1b49fc0319266850058fd2658b0fb2435b5502a4b2afb77a0afa23bdce",
+      "git_blob_sha1": "fa4562b12957ccd310ba1b98a4ed6347a4fd1a38",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291010647405.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291013647405.jpg",
+      "bytes": 94751,
+      "sha256": "80c737db3afd156ec95573b230622e5c25c3b040f3bf8923a9b328fb4101bbdc",
+      "git_blob_sha1": "4cbd064d16a8e11eecbc3c1b9c75d7c5a8395157",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n008-2018-09-18-13-10-39-0400__CAM_BACK_LEFT__1537291013647405.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280036197423.jpg",
+      "bytes": 162410,
+      "sha256": "619bac21cc320d95d3bd7036ab2ace291a5993fe7a87e134f9547e6694e996a2",
+      "git_blob_sha1": "3f4caae61bdeb2e8db2d68329f182e2e3f460369",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280036197423.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280039197423.jpg",
+      "bytes": 154801,
+      "sha256": "8268ac864231945d8dae06bd3d72b0249eaac424d0d9ff34bcda3081f735d500",
+      "git_blob_sha1": "227be0d5dce1c4ea093b8c35c3778ae49202d08f",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280039197423.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280042647423.jpg",
+      "bytes": 161051,
+      "sha256": "dc9e7fda9faf84dc5a154c565424d9360b0690a85686e2bdc38f84e58c36a299",
+      "git_blob_sha1": "1a7dfca589994ada21dc0f3ff7666d3584d53ddd",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280042647423.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280045147423.jpg",
+      "bytes": 168616,
+      "sha256": "6bec9b9031578cef02c70b4ec0028c89ce39cd11498be9aa56e64380c9d46e23",
+      "git_blob_sha1": "cdbb76a09876b59e8a11988ea574d15318aa3654",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280045147423.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280048197442.jpg",
+      "bytes": 164251,
+      "sha256": "c17f75cf3d4450c97e8a5bdf4e7adb5930c26ebfe21e3f25295b568fadff31aa",
+      "git_blob_sha1": "2bc2fe6bba1465843b97e2dba268243418e9ae1b",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_LEFT/n015-2018-08-03-15-00-36+0800__CAM_BACK_LEFT__1533280048197442.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291002278113.jpg",
+      "bytes": 136199,
+      "sha256": "a2b0e081d3d53ede630ff28eea4546c7c9e3eec33c2785650c05436b1d119b0b",
+      "git_blob_sha1": "c4c82de991b258a556052813b70406d588cf76ff",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291002278113.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291005178113.jpg",
+      "bytes": 111812,
+      "sha256": "dd8b9b9b0ce84141edfc9f840897211fdf55c922c8d3dcd15f7a6cbca03a5edb",
+      "git_blob_sha1": "cad40130f0cfb5cf099ed7fdce4372818bf5eb67",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291005178113.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291010628113.jpg",
+      "bytes": 109308,
+      "sha256": "2f12bd8e0bd2ca922f039644ea44335332f226905b9b11d7cad53cd54e51e176",
+      "git_blob_sha1": "132da55befb298446f6140bb99c180635c20ce60",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291010628113.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291013628113.jpg",
+      "bytes": 121244,
+      "sha256": "e4384858c760b778ee188134a890a90b736e7a0491a89fd335f332d5df6bf3bc",
+      "git_blob_sha1": "815e6b1e572d31573c1768ea2ab54a9e8352841d",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_BACK_RIGHT__1537291013628113.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280036177893.jpg",
+      "bytes": 106441,
+      "sha256": "f8f687eee636565a5d309be3d07ef0b14beea533f5658d04b3a6490fe2e5416c",
+      "git_blob_sha1": "b2b5244f125adb3cecd7eecb577c21663a7a92e4",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280036177893.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280039177893.jpg",
+      "bytes": 110941,
+      "sha256": "c4aeadfacd1bf6b1909e0d0788d5783c1583498cf46d38a0b7b87a38fa933397",
+      "git_blob_sha1": "c315603bb558c7dfe36018c8c1b5d7ad286851fe",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280039177893.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280042627893.jpg",
+      "bytes": 112474,
+      "sha256": "3a8935790ecd283aca15035075bc6b85a53445fec50ef23f2cfb01f8349aa347",
+      "git_blob_sha1": "1303d7489dc23b41bc755462fa01f16a3ebf8a04",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280042627893.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280045127893.jpg",
+      "bytes": 112748,
+      "sha256": "add5e8c170992c6ff92e49adfd4a21c30f10b8edfcde956933ae6412777f4039",
+      "git_blob_sha1": "5363fc2bf6e22bce61c79f4d5c0347a04b297404",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280045127893.jpg"
+    },
+    {
+      "path": "samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280048177893.jpg",
+      "bytes": 113043,
+      "sha256": "ab5088e0f0484a1f7b2f996345b92de559d71b12f5e61f4073b7cb3ecd39e04f",
+      "git_blob_sha1": "4812e045617e565b537deaf49e7648b5f2c17e3f",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_BACK_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_BACK_RIGHT__1533280048177893.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291002262404.jpg",
+      "bytes": 77589,
+      "sha256": "107bd84a24874a434fa23f7c35cd3d4a16090756ebdc7bc173edebcfc0c2eea9",
+      "git_blob_sha1": "c3db18634f4241696ec65ef8a7f1f4557b52e2b4",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291002262404.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291005162404.jpg",
+      "bytes": 77808,
+      "sha256": "e0b7100810281a8a0c7c0377567ca62a778f6041a0e439d2ace389a99397505d",
+      "git_blob_sha1": "7b2664c8464292249115e21929344e1111a286ef",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291005162404.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291010612404.jpg",
+      "bytes": 79161,
+      "sha256": "7bb0a269a0321fc2e464a0ab41f8691f0e62db633999b4513ca7fcb2a62dd267",
+      "git_blob_sha1": "9152824c2a966f9b64e32fcfdacb0ea88f9092c8",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291010612404.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291013612404.jpg",
+      "bytes": 79589,
+      "sha256": "2862c193ce8bb0f5aad29bda1e599e62f2227117f0e6adc8768f6c9fe0053d3e",
+      "git_blob_sha1": "1d7ea8118c00ee9ba4de14fbd7c1ab392fa9956e",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n008-2018-09-18-13-10-39-0400__CAM_FRONT__1537291013612404.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280036162460.jpg",
+      "bytes": 118080,
+      "sha256": "5f77203e2177e2af00d7f64b8fa0b0d5ccd3e9d17b5b16f3f7a41abeaadad8c4",
+      "git_blob_sha1": "d2a6d82078389c747cfe637b45d9660569b8adbd",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280036162460.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280039162460.jpg",
+      "bytes": 121840,
+      "sha256": "305444916247bb8b3af38ee388928b6bbed06c937898b3fff14702305eba6fde",
+      "git_blob_sha1": "d19d2f4b5768713212d6250fb9d9dc6572ae4b04",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280039162460.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280042612460.jpg",
+      "bytes": 122759,
+      "sha256": "3d22940e467f2bdead5cd7e9cce2605a10a841c6a463990929b40878cf3a4424",
+      "git_blob_sha1": "999436a06daba212fde289bbf680b93a4cc4a258",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280042612460.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280045112460.jpg",
+      "bytes": 123988,
+      "sha256": "52a280b01aecadb040e9d9c4a7a9d5051151c95ecd09b1e191884dddff266474",
+      "git_blob_sha1": "1166ccd6f2699b9b33131e0e1708acfaf3e5654b",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280045112460.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280048162460.jpg",
+      "bytes": 125809,
+      "sha256": "e8d3fe4e76b77bf8b91ea03ecad49fc15dce6687acbd3577b741c7618a72896a",
+      "git_blob_sha1": "92d32da1a8df1a3e75c49e890dfe03d22926107e",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT/n015-2018-08-03-15-00-36+0800__CAM_FRONT__1533280048162460.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291002254799.jpg",
+      "bytes": 90011,
+      "sha256": "9c76459564759bf2bc942f0da7627c72bd5f03ced7a20f5b982cb9c73c4a8149",
+      "git_blob_sha1": "8d144f024bc681f0d01745b921a91a0c3cb0eeef",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291002254799.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291005154799.jpg",
+      "bytes": 84028,
+      "sha256": "e5d2b7f351327f7593284ed9f9a3da1e25eb4dc3c8beafc9b16662f6554ecb0b",
+      "git_blob_sha1": "9e26a97e8cd57c3329f97925501579216c79d539",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291005154799.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291010604799.jpg",
+      "bytes": 81158,
+      "sha256": "33e84fabe8e6266187fae0dd61cb40d72c063c53846b0f9a51746fe9074b5003",
+      "git_blob_sha1": "28f2ca13e0239105a8fe72c564f34c7a389fd8bb",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291010604799.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291013604799.jpg",
+      "bytes": 73291,
+      "sha256": "113602e7ab8be508af02c9e9796a2f625f4ae9ffa72856ba26ea8e17b2f45bca",
+      "git_blob_sha1": "ffdccfd08a7e072c1a5584b0af0fce6e7a6a01c3",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_LEFT__1537291013604799.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280036154844.jpg",
+      "bytes": 137524,
+      "sha256": "801293f37e086a4317af0cba51c47dd2333ee8aeafef36298e5ed6ee26a515ba",
+      "git_blob_sha1": "db2f183d9590937b2dde6dd877a9691e95e1f623",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280036154844.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280039154844.jpg",
+      "bytes": 137773,
+      "sha256": "3fbcf3106a28b821d8f596611718d1dcaaab3fc81f7cd33f0da3e33ba7c0ea47",
+      "git_blob_sha1": "930823620a032fb5ca99bfab9564f536216f608e",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280039154844.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280042604844.jpg",
+      "bytes": 143746,
+      "sha256": "fdf477bb59fe7254408bdd83fa6a11e1d8dde62f235403c7adb7aa3d3e8216c6",
+      "git_blob_sha1": "11636e0e93d8cbb6246fb2bea450e4c9bf4002a1",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280042604844.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280045104844.jpg",
+      "bytes": 143372,
+      "sha256": "e483bd7041054fce736ac61dedce4e7c464c1910a7e75d445b4094351624cd1d",
+      "git_blob_sha1": "ab58f954525bb759d479cf965a9be568fcd7944b",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280045104844.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280048154844.jpg",
+      "bytes": 144680,
+      "sha256": "bba9aaab3b1d7251e014af76b340ba5725c29585c1d9b0c53210e6514a36975c",
+      "git_blob_sha1": "d57caa1d7650456544a562cb3fbacd241fd51419",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_LEFT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_LEFT__1533280048154844.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291002270482.jpg",
+      "bytes": 105587,
+      "sha256": "3bf8e81099f59d4846f37c9fa2d6228d6903319119f58b49ce56c73ed1973b29",
+      "git_blob_sha1": "3f157b0d7ec8fd074fed8df3518f0edf42b2f96d",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291002270482.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291005170482.jpg",
+      "bytes": 84759,
+      "sha256": "596c17fcda0cf3f00b07743f5a9608f44d96d4364ab31318d091d183215b5cd0",
+      "git_blob_sha1": "b0e0b44581bc4359f2d158c0b1ec423773a45ba5",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291005170482.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291010620482.jpg",
+      "bytes": 82907,
+      "sha256": "275e40bdc981d90748cf874b5509d091413c5d4493ea1d66b81afeb66c2a9f10",
+      "git_blob_sha1": "8809818b4cfbb5f89f38ffcc60e703b489446873",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291010620482.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291013620482.jpg",
+      "bytes": 104799,
+      "sha256": "18130888b9928fb6ec88d1db018a3cb9c7a94988c58c12d20546613aed064f92",
+      "git_blob_sha1": "832084f1b7e577714cd6c56cf6a0ad19d6c591a4",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n008-2018-09-18-13-10-39-0400__CAM_FRONT_RIGHT__1537291013620482.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280036170339.jpg",
+      "bytes": 96651,
+      "sha256": "68239732fdd4fb3400f15cc8c7b273586c193af2f7819128ff0938be50c19a09",
+      "git_blob_sha1": "b77cddb9504794e7292c5a471cec2e6ab760a403",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280036170339.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280039170339.jpg",
+      "bytes": 100911,
+      "sha256": "e47a10815dad8b1f7d4ba1347fdb9ca26d17403643f34d1f6435c6da3c5cfbc3",
+      "git_blob_sha1": "7e303085995f639a6403d9da9dba8f095a60172f",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280039170339.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280042620339.jpg",
+      "bytes": 103189,
+      "sha256": "e547468e98f91497c0e5ea1912d6cbfd3d7073a7485f1e763063b8e9a0650e25",
+      "git_blob_sha1": "7c185a9c8383b69319a3254530b5ee8b46cd48f9",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280042620339.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280045120339.jpg",
+      "bytes": 102326,
+      "sha256": "318a1b5198b6d9a76cf6afe197d8a6e4232990862bb720db88d0f22e3c3bc390",
+      "git_blob_sha1": "6ce78f3175c9a949ed6651b7164ee4a82e9f79a4",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280045120339.jpg"
+    },
+    {
+      "path": "samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280048170339.jpg",
+      "bytes": 102802,
+      "sha256": "ac75fb61a67adcdac15be1f2a201dbda1b4c59c3a28491940d71faeb0393390e",
+      "git_blob_sha1": "4079def32c671a0d64e933958a2449e674d6cd28",
+      "width_height": [
+        1600,
+        900
+      ],
+      "source_url": "https://raw.githubusercontent.com/OpenDriveLab/DriveLM/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/CAM_FRONT_RIGHT/n015-2018-08-03-15-00-36+0800__CAM_FRONT_RIGHT__1533280048170339.jpg"
+    }
+  ]
+}
