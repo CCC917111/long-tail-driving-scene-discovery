@@ -9,16 +9,10 @@ This project grew out of a team capstone on sparse autoencoders (SAEs). The
 completed CPU follow-up connects image validation, four-model evaluation, saved
 predictions and a browser explorer for reviewing sparse activations.
 
-[**Watch the 90-second walkthrough**](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4) ·
 [**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) · [**Presentation scripts**](docs/presentation.md) ·
 [**Saved results**](results/human-ai-exposed-20261026/README.md) ·
 [**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
-
-The video is public on GitHub and can also be
-[downloaded directly](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
-It shows real images and saved model outputs, with English captions and no
-spoken narration. See the [recording and attribution record](results/presentation-english-20261029/README.md).
 
 The [hosted new-scene review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
 is optional and requires the owner's ChatGPT sign-in. Public readers can use
@@ -141,7 +135,7 @@ The default viewer contains 308 method values for 77 retained timestamps and
 MLP error bookmarks under one fixed threshold. The
 [archived AI viewer](demo/driving_ai_pilot.html) retains the 73-frame pilot.
 Both embed numeric outputs; image inspection requires the matching ZIPs.
-Without them, use the public video or the generated-data quickstart. The
+Without them, use the generated-data quickstart. The
 [demo guide](demo/README.md) explains access and the selected error examples.
 
 <a id="cpu-quickstart"></a>
@@ -186,11 +180,9 @@ The following roles preserve the contribution statement at `b57eaffa`.
 | **Zihua Chen** | Developed the local annotation platform; manually reviewed model-generated labels; contributed to SAE feature extraction. |
 | **Yusong Zhao** | Contributed to ablations and SAE feature extraction; led most learned-feature interpretation and analysis. |
 
-**AI assistance:** the modernization used AI-assisted implementation and
-documentation. An AI visual assistant supplied the first pilot's annotations;
-the later single-reviewer submissions retain their AI-label exposure history
-and original/revised CSVs. These records are separate from the team's original
-capstone contributions.
+The first CPU pilot used provisional AI visual labels. Later single-reviewer
+submissions retain their AI-label exposure history and original/revised CSVs.
+These label records are separate from the original capstone contributions.
 
 ## Evidence and reproducibility
 
@@ -199,8 +191,7 @@ input manifest, feature and checkpoint hashes, and training-source snapshot.
 A separate reload audit reconstructed scores from all four checkpoints.
 Raw image archives, original metadata tables, feature arrays and model weights
 are excluded from Git. The [result bundle](results/cpu-mini-ai-pilot-20261023/README.md)
-retains derived evidence and hashes; the video contains selected source images
-with attribution in its recording record.
+retains derived evidence and hashes.
 
 CPU CI runs tests, lint and the generated-data HTTP workflow. Browser CI checks
 desktop/mobile interaction with synthetic, watermarked ZIPs. Separately, Node

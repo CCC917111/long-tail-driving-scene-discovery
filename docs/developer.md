@@ -1,7 +1,7 @@
 # Developer guide
 
 This repository contains the capstone work of Yike Chen, Zihua Chen and Yusong
-Zhao at the Chinese University of Hong Kong, Shenzhen, plus later AI-assisted
+Zhao at the Chinese University of Hong Kong, Shenzhen, plus later
 engineering and evaluation work. The [contribution statement](../README.md#team-and-contribution)
 records the team's historical roles; [feedback status](feedback-status.md)
 records the later changes and evidence.
