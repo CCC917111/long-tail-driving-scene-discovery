@@ -1,0 +1,152 @@
+{
+  "schema": "real-driving-presentation-v1",
+  "status": "completed",
+  "scripted_navigation": true,
+  "original_images": true,
+  "new_inference": false,
+  "new_training": false,
+  "human_annotation_performed": false,
+  "audio": "none; English captions",
+  "private_footage": true,
+  "html_sha256": "76ab509cbaf2e3ee4987d3850f8ed9ac29397803a0c022032161894c280bc1ac",
+  "recorder_sha256": "8df277b01829179ca573cb80a14a64dbe1580ec51bbda68e78e2f0f39a7ec513",
+  "zip_inputs": [
+    {
+      "filename": "driving-mini-part-001-of-004.zip",
+      "bytes": 24693015,
+      "sha256": "4786efa7060ced5dcb402d6ae63c52adfaf915cd6eb8381e4b8579b03c49021a"
+    },
+    {
+      "filename": "driving-mini-part-002-of-004.zip",
+      "bytes": 24682919,
+      "sha256": "43226a1935385bc22875dd07add81cf28fa803a89a6fb9e02c20c0301386858c"
+    },
+    {
+      "filename": "driving-mini-part-003-of-004.zip",
+      "bytes": 24877601,
+      "sha256": "5c2c5254d7bd1f546c12ffa43b45c649f26c8b086e73f83b7f553b449880ea96"
+    },
+    {
+      "filename": "driving-mini-part-004-of-004.zip",
+      "bytes": 14055660,
+      "sha256": "c4483c7ac7527b5f24f44bb1049d73e03b6c20d878d54f275d87170be6210846"
+    }
+  ],
+  "label_scope": {
+    "label_protocol": "manual",
+    "review_context": "post_ai_exposure_single_reviewer",
+    "human_reviewed": true,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "prior_ai_labels_exposed": true,
+    "reviewer_count": 1,
+    "official_benchmark": false,
+    "interpretation": "Agreement with post-AI-exposure human review by a single reviewer; not independent human ground truth or an official benchmark result"
+  },
+  "cases": {
+    "success": "a9def8f915cf4bfe9c74b864384ec6c7",
+    "fp": "b4ff30109dd14c89b24789dc5713cf8c",
+    "fn": "c1eed31234b94e9f8e22fbf3428b0ac2"
+  },
+  "chapters": [
+    {
+      "start": 0,
+      "end": 10,
+      "heading": "01 / A traceable CPU pilot",
+      "text": "Yike leads this team-capstone modernization with AI assistance. The recorded viewer uses 77 single-reviewer references after AI-label disclosure.",
+      "actual_seconds": 0.336058401997434
+    },
+    {
+      "start": 10,
+      "end": 24,
+      "heading": "02 / One timestamp, six real views",
+      "text": "A reference-positive example: cached SAE score 6.490, above the frozen validation threshold 6.075. This is saved-model playback, not live inference.",
+      "actual_seconds": 10.48593136999989
+    },
+    {
+      "start": 24,
+      "end": 36,
+      "heading": "03 / Inspect an activation direction",
+      "text": "Unit 67 links to high-activation examples. Numeric units have no validated semantic names; these examples support inspection, not a causal explanation.",
+      "actual_seconds": 25.142008301016176
+    },
+    {
+      "start": 36,
+      "end": 43,
+      "heading": "04 / False positive: MLP fixed rule",
+      "text": "This clear-road frame has a normal reference. MLP probability 0.898 exceeds its fixed 0.5 threshold: an illustrative false positive.",
+      "actual_seconds": 36.436021147004794
+    },
+    {
+      "start": 43,
+      "end": 50,
+      "heading": "04 / Keep decision policies separate",
+      "text": "The per-frame table separates the fixed prediction from the validation-selected policy. Error labels here are relative to the submitted references.",
+      "actual_seconds": 43.27709675600636
+    },
+    {
+      "start": 50,
+      "end": 57,
+      "heading": "05 / False negative: the same MLP rule",
+      "text": "A bus stop and marked crossing are visible. MLP probability 0.065 is below the same 0.5 threshold, missing this positive reference.",
+      "actual_seconds": 50.43906814401271
+    },
+    {
+      "start": 57,
+      "end": 64,
+      "heading": "05 / Preserve errors for review",
+      "text": "Both mistakes use the same saved model and fixed rule. Cases were selected after evaluation for explanation, not for tuning.",
+      "actual_seconds": 57.263816526014125
+    },
+    {
+      "start": 64,
+      "end": 77,
+      "heading": "06 / Compare methods and retain negative findings",
+      "text": "The old test has 15 timestamps in two scenes. SAE top-four finds four reference positives; reward and no-reward weights are identical.",
+      "actual_seconds": 64.27967251001974
+    },
+    {
+      "start": 77,
+      "end": 84,
+      "heading": "07 / Export the next review queue",
+      "text": "Export 77 candidate rows with blank new-review fields. No new judgments are created in this recording.",
+      "actual_seconds": 77.32951533599407
+    },
+    {
+      "start": 84,
+      "end": 90,
+      "heading": "08 / Scope and next decision",
+      "text": "Pilot limits: one reviewer after AI disclosure, one seed, and three normal training frames from one scene.",
+      "actual_seconds": 84.31286201599869
+    }
+  ],
+  "page_errors": [],
+  "http_errors": [],
+  "recording_trim_start_seconds": 2.099852732993895,
+  "review_export": {
+    "rows": 77,
+    "sha256": "a1f4035734fa6fd63553a407e8b9724494aca22bf2392bc4d0e5072dbf9375e2",
+    "new_review_fields_blank": true
+  },
+  "video": {
+    "filename": "driving-walkthrough-90s.mp4",
+    "bytes": 2708662,
+    "sha256": "e1b293d456d126e4c77e1537162d5390e8598b59018bd0d2e55ce0863903e679",
+    "duration_seconds": 89.96,
+    "codec": "h264",
+    "width": 1440,
+    "height": 1000
+  },
+  "private_delivery_url": "https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/",
+  "public_repository_contains_video_pixels": false,
+  "video_frames_inspected_at_seconds": [
+    2,
+    16,
+    30,
+    40,
+    54,
+    70,
+    82,
+    88
+  ]
+}

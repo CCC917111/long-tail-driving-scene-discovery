@@ -67,50 +67,21 @@ All five new normal references belong to one scene and all four non-normal
 references to another. That class/scene confound and prior AI disclosure
 prevent treating this batch as an independent generalization benchmark.
 
-## A 60-second explanation
+## Final presentation materials
 
-“I lead the optimization and delivery of this GitHub project, which grew out
-of our team capstone on finding driving frames worth human review. My recorded
-capstone work covered SAE feature extraction and training, precision-oriented
-evaluation and parts of the ablations.
+The [final English CV bullets, 60-second introduction and three-minute story](presentation.md)
+are ready to use. The scripts contain 122 and 368 words respectively; actual
+delivery time depends on speaking pace.
 
-“For the repository modernization, we used AI-assisted development to connect
-validated six-camera inputs, CPU features, four matched screening methods and
-an offline explorer. I completed the image review, with prior exposure to the
-AI labels recorded. On this small reference set, the SAE ranks candidates well,
-but its reward and no-reward checkpoints are identical. That negative result
-led us to diagnose a saturated reward rather than claim a reward gain. The
-next research step is independent labels and more normal examples and held-out
-scenes. A later nine-frame check reused the old validation threshold without
-retraining; it remains a small, class-confounded review batch. The current
-release demonstrates a traceable engineering workflow.”
+The [approximately 90-second recorded walkthrough](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
+uses original images and saved trained outputs. It is a silent recording with
+English captions and scripted browser navigation, not Yike's recorded voice or
+a live inference service. The Site remains owner-private with ChatGPT sign-in.
 
-## A three-minute explanation
-
-1. **Problem and role:** candidate discovery, Yike's lead role, original team
-   contributions and the AI-assisted modernization phase.
-2. **Data contract:** one timestamp contains six views; scenes are frozen before
-   labels; unknown/uncertain labels remain separate; scaling uses train only.
-3. **Controlled comparison:** same features and manifest for Logistic, MLP and
-   matched SAEs; explain AP, fixed-budget precision/recall and validation selection.
-4. **One failure:** inspect an MLP fixed-rule FP or FN, or the five supplemental
-   normal frames flagged by the SAE's fixed activation rule. Keep fixed-rule
-   errors separate from the validation-selected operating policy and explain
-   visible reference disagreements without inferring motion from one frame.
-5. **One negative finding:** reward saturation and identical SAE weights.
-6. **Limits and decision:** explain the small scene coverage and label exposure,
-   then describe the data-dependent expansion plan without claiming it ran.
-
-## CV wording
-
-> Led repository-wide optimization and delivery of a team capstone on long-tail
-> driving-scene discovery, integrating a reproducible CPU pipeline, matched
-> four-model evaluation and an offline activation explorer with AI-assisted
-> development.
-
-> Implemented feature-extraction and sparse-autoencoder training code for the
-> original capstone; led precision-oriented evaluation and contributed to
-> ablation studies.
+The video shows a selected SAE reference-positive frame, one MLP false positive
+and one MLP false negative under the same fixed threshold, then exports a blank
+new-review queue. [Recording evidence](../results/presentation-20261029/README.md)
+links each example to its saved prediction and records the private video hash.
 
 Use the role wording that matches the work you can explain. The small pilot's
 AP is scoped to post-AI-exposure, single-reviewer references; the current CV

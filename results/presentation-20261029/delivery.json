@@ -1,0 +1,15 @@
+{
+  "schema": "presentation-delivery-v1",
+  "audience": "owner_private",
+  "page_url": "https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/",
+  "page_sha256": "1e4409a8c080c469fbab594f35cf0621f4a7797910784208e7851c8ae6cf2417",
+  "video_sha256": "e1b293d456d126e4c77e1537162d5390e8598b59018bd0d2e55ce0863903e679",
+  "browser_qa_exact_static_bundle": "passed on desktop and mobile",
+  "authenticated_production_browser_visit": false,
+  "review_payload_and_storage_key_preserved": true,
+  "cv_bullets": 2,
+  "speech_words": {
+    "60_second": 122,
+    "3_minute": 368
+  }
+}
