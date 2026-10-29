@@ -1,23 +1,24 @@
 # Running the pipeline
 
-Start with the [CPU synthetic quickstart](../README.md#cpu-quickstart) to inspect
-the software without nuScenes, VLM weights or a GPU. That demo trains small
-models on generated data. It cannot establish real driving performance.
-The [verification record](feedback-status.md#verification-record) states what
-has actually been checked in this round.
+Use the [CPU synthetic quickstart](../README.md#cpu-quickstart) to try the
+software without driving data or a GPU. For real six-camera images, start with
+the completed [ResNet18 CPU route](cpu-route.md). This guide describes the
+original VLM-feature interfaces and the shared training workflow. The
+[verification record](feedback-status.md#verification-record) distinguishes
+completed runs from setup templates.
 
 ## Environment and real assets
 
 The CPU quickstart was verified with Python 3.12; its pinned package versions
-are in `requirements-cpu-lock.txt`. For VLM
-labelling/extraction, use the full `requirements.txt` in an environment matched
-to your CUDA hardware. Labelling and extraction require the model weights and
-six-camera images; SAE training, cached-feature evaluation and the explorer can
+are in `requirements-cpu-lock.txt`. For VLM labelling/extraction, use a
+CUDA-compatible environment with the GPU requirements described in
+[from zero](from-zero.md). Labelling and extraction require the model weights
+and six-camera images; SAE training, cached-feature evaluation and the explorer can
 run on CPU. GPU memory and runtime should be measured on a small batch before
 scheduling extraction. The old 24 GB recommendation is not a measured bound
 for every image resolution or dependency version.
 
-Recover these assets before attempting a real experiment:
+To reproduce the historical VLM experiment, recover these assets:
 
 - Authorised nuScenes v1.0-trainval metadata and keyframes, with `samples/CAM_*/`.
 - Original labels and manual review records, with sample and scene tokens.
@@ -26,8 +27,9 @@ Recover these assets before attempting a real experiment:
 - Original checkpoints, standardisers, run configurations, predictions and logs
   when evaluating historical claims.
 
-Data and trained real weights are absent from the repository. Public source
-access does not establish redistribution permission for a cached example.
+The repository excludes original camera images and trained weights. The
+current CPU results preserve derived evidence separately from private inputs;
+source availability does not grant permission to redistribute dataset images.
 
 ## Labelling and feature extraction
 
@@ -134,8 +136,10 @@ defaults; they are not the controlled reward/no-reward comparison.
 
 The Makefile offers `manifest`, `train`, `train-no-reward` and `baselines`
 helpers, each requiring an explicit `REVIEW_K`. Its default manifest path is
-`output/protocol/manifest.json`. Inspect flags before long jobs; the real-data
-commands above have not run here because the assets are unavailable.
+`output/protocol/manifest.json`. Inspect flags before long jobs. The VLM-feature
+commands above are templates; the completed real-image CPU fits use the
+separately documented ResNet18
+feature configuration.
 
 SAE runs retain the model/standardiser, sparse activations, per-sample rows,
 manifest and exclusions, metrics and evaluation artifacts. `neuron_report.csv`
@@ -150,7 +154,7 @@ For a recovered trained run with authorised images:
 ```bash
 python scripts/neuron_explorer.py serve \
   --run output/sae_norm_seed17 --samples-root /path/to/nuscenes/samples \
-  --glossary results/neuron_glossary.csv
+  --glossary /path/to/that_run_glossary.csv
 ```
 
 The page defaults to `http://127.0.0.1:8765`. It links units to high-activation

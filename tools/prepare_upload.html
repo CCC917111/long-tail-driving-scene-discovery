@@ -1,22 +1,22 @@
 <!doctype html>
-<html lang="zh-CN"><meta charset="utf-8">
+<html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'">
-<title>Driving 本地小样本打包</title>
+<title>Driving local sample packager</title>
 <style>
 body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;padding:0 20px;color:#15223a;background:#f5f7fb}main{background:white;padding:28px;border:1px solid #dae0eb;border-radius:12px}h1{font-size:25px;margin-top:0}p{margin:12px 0}.note{color:#4c5e77;font-size:14px}button,select,input{font:inherit}button{padding:9px 18px;margin:12px 10px 12px 0;border:0;border-radius:6px;background:#1649a7;color:white;cursor:pointer}button:disabled{background:#a4b1c4;cursor:default}#cancel{background:#67758b}label{display:block;margin:18px 0}progress{width:100%;height:20px}pre{white-space:pre-wrap;word-break:break-word;background:#f0f3f8;padding:14px;max-height:260px;overflow:auto}a{color:#174fae}.downloads a{display:block;padding:10px 0}strong{font-weight:650}.error{color:#a42525}#results{margin-top:20px}
 </style>
 <main>
-<h1>把大压缩包变成可上传的小样本</h1>
-<p><strong>文件只在你的电脑浏览器里读取，本页不联网，也不上传任何内容。</strong>请用电脑上的 Chrome 或 Edge 打开。</p>
-<ol><li>选择已下载的 <code>v1.0-mini.tgz</code> / <code>.tar.gz</code> / <code>.tar</code>。</li><li>点击“生成小包”，保持页面打开；大文件会顺序读取两遍，可能需要几分钟。</li><li>完成后下载所有小 ZIP，再把这些 ZIP 上传到聊天。本页不会修改原压缩包。</li></ol>
-<label>选择原压缩包 <input id="archive" type="file" accept=".tgz,.tar.gz,.tar,.gz"></label>
-<label>每个场景的帧数 <select id="frames"><option value="2">2 帧：最小真实数据试跑（推荐先用）</option><option value="8">8 帧：更大的小样本实验</option></select></label>
-<p class="note">只保留五张必要索引表和所选时间戳的六个摄像头图片，不截图片，不创建标签。默认 2 帧用于端到端试跑，不能据此承诺正式对比成绩。分包大小不超过 24 MiB；原始数据的使用条件仍然适用。</p>
-<button id="start">生成小包</button><button id="cancel" disabled>取消</button>
+<h1>Create a small uploadable sample from a large archive</h1>
+<p><strong>Files are read only in your browser. This page makes no network requests and uploads nothing.</strong> Open it in desktop Chrome or Edge.</p>
+<ol><li>Select your downloaded <code>v1.0-mini.tgz</code>, <code>.tar.gz</code> or <code>.tar</code>.</li><li>Click "Create parts" and keep the page open. The archive is read sequentially twice; this may take a few minutes.</li><li>Download all ZIP parts, then upload them to the chat. The original archive remains unchanged.</li></ol>
+<label>Select original archive <input id="archive" type="file" accept=".tgz,.tar.gz,.tar,.gz"></label>
+<label>Frames per scene <select id="frames"><option value="2">2 frames: smallest real-data trial (recommended first)</option><option value="8">8 frames: larger small-sample experiment</option></select></label>
+<p class="note">Keeps only five required metadata tables and the six camera images for each selected frame. Images are not cropped and labels are not created. The default two frames support an end-to-end trial, not a promise of formal comparison results. Each part is at most 24 MiB. The original data terms still apply.</p>
+<button id="start">Create parts</button><button id="cancel" disabled>Cancel</button>
 <progress id="progress" max="100" value="0"></progress>
-<p id="status" role="status">等待选择文件。</p><pre id="log" aria-live="polite"></pre><section id="results" class="downloads"></section>
-<p class="note">已用合成档案验证软件流程；尚未在你的真实 3.9GB 文件上测试。校验值用于检查传输完整性，不能独立证明原文件来自官方。</p>
+<p id="status" role="status">Waiting for a file.</p><pre id="log" aria-live="polite"></pre><section id="results" class="downloads"></section>
+<p class="note">The software workflow has been checked with synthetic archives; it has not been tested on your actual 3.9 GB file. Checksums verify transfer integrity and do not independently establish that the source file is official.</p>
 </main>
 <script>
 (function () {
@@ -29,32 +29,32 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
   const encoder = new TextEncoder();
   const decoder = new TextDecoder('utf-8', {fatal:true});
   function check(value, message) { if (!value) throw new Error(message); }
-  function aborted(signal) { if (signal && signal.aborted) throw new DOMException('操作已取消', 'AbortError'); }
+  function aborted(signal) { if (signal && signal.aborted) throw new DOMException('Operation cancelled', 'AbortError'); }
   function compare(a,b) { return a < b ? -1 : a > b ? 1 : 0; }
   function text(bytes) { return decoder.decode(bytes); }
   function field(bytes, start, size) { const a=bytes.subarray(start,start+size); const end=a.indexOf(0); return text(end < 0 ? a : a.subarray(0,end)); }
   function canonical(path, directory) {
-    check(typeof path === 'string' && !path.includes('\\') && !path.startsWith('/') && !path.includes('\0'), '档案含不安全路径');
+    check(typeof path === 'string' && !path.includes('\\') && !path.startsWith('/') && !path.includes('\0'), 'Archive contains an unsafe path');
     path=path.replace(/^(?:\.\/)+/,'');
     if (directory) path=path.replace(/\/+$/,'');
     if (directory && (path==='' || path==='.')) return '';
     const pieces=path.split('/');
-    check(path && pieces.every(p=>p && p!=='.' && p!=='..'), '档案含不安全路径：'+path);
+    check(path && pieces.every(p=>p && p!=='.' && p!=='..'), 'Archive contains an unsafe path: '+path);
     return path;
   }
   function number(bytes, start, size) {
     const a=bytes.subarray(start,start+size);
     if (a[0] & 128) {
-      check(!(a[0]&64),'档案含负数大小');
+      check(!(a[0]&64),'Archive contains a negative size');
       let n=BigInt(a[0]&127);
       for(let i=1;i<a.length;i++) n=(n<<8n)+BigInt(a[i]);
-      check(n<=BigInt(Number.MAX_SAFE_INTEGER),'档案大小字段超限');
+      check(n<=BigInt(Number.MAX_SAFE_INTEGER),'Archive size field exceeds the limit');
       return Number(n);
     }
     const s=field(bytes,start,size).trim();
-    check(!s || /^[0-7]+$/.test(s),'无效的 TAR 数字字段');
+    check(!s || /^[0-7]+$/.test(s),'Invalid TAR numeric field');
     const n=s ? parseInt(s,8) : 0;
-    check(Number.isSafeInteger(n) && n>=0,'无效的 TAR 大小');
+    check(Number.isSafeInteger(n) && n>=0,'Invalid TAR size');
     return n;
   }
   class Bytes {
@@ -70,17 +70,17 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
         this.done=value.done;
         this.chunk=value.value || new Uint8Array(0);this.position=0;
         this.total+=this.chunk.length;
-        check(this.total<=this.limit,'解压后的内容超过安全读取上限');
+        check(this.total<=this.limit,'Decompressed content exceeds the safe read limit');
       }
       return this.chunk.length-this.position;
     }
     async read(length,allowEOF=false) {
       if(!length)return new Uint8Array(0);
-      check(length<=64*MiB,'单次读取超限');
+      check(length<=64*MiB,'Single read exceeds the limit');
       const result=new Uint8Array(length);let offset=0;
       while(offset<length) {
         const count=await this.available();
-        if(!count) { if(allowEOF && !offset)return null;throw new Error('TAR 文件被截断，下载可能尚未完成'); }
+        if(!count) { if(allowEOF && !offset)return null;throw new Error('TAR file is truncated; the download may be incomplete'); }
         const take=Math.min(count,length-offset);
         result.set(this.chunk.subarray(this.position,this.position+take),offset);
         this.position+=take;offset+=take;
@@ -89,13 +89,13 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     }
     async skip(length) {
       while(length) {
-        const count=await this.available();check(count,'TAR 文件内容被截断');
+        const count=await this.available();check(count,'TAR file contents are truncated');
         const take=Math.min(count,length);this.position+=take;length-=take;
       }
     }
     async drainZeros() {
       while(await this.available()) {
-        for(let i=this.position;i<this.chunk.length;i++)check(this.chunk[i]===0,'TAR 结束后有非零内容');
+        for(let i=this.position;i<this.chunk.length;i++)check(this.chunk[i]===0,'Nonzero content after the TAR end marker');
         this.position=this.chunk.length;
       }
     }
@@ -109,12 +109,12 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     const result={};let offset=0;
     while(offset<bytes.length) {
       let space=offset;while(space<bytes.length && bytes[space]!==32)space++;
-      check(space<bytes.length,'无效 PAX 扩展头');
-      const digits=text(bytes.subarray(offset,space));check(/^[0-9]+$/.test(digits),'无效 PAX 长度');
-      const length=Number(digits);check(length>space-offset+2 && offset+length<=bytes.length,'PAX 扩展头被截断');
-      check(bytes[offset+length-1]===10,'无效 PAX 换行');
-      const value=text(bytes.subarray(space+1,offset+length-1));const at=value.indexOf('=');check(at>0,'无效 PAX 属性');
-      const key=value.slice(0,at);check(!(key in result),'重复 PAX 属性');result[key]=value.slice(at+1);offset+=length;
+      check(space<bytes.length,'Invalid PAX extended header');
+      const digits=text(bytes.subarray(offset,space));check(/^[0-9]+$/.test(digits),'Invalid PAX length');
+      const length=Number(digits);check(length>space-offset+2 && offset+length<=bytes.length,'PAX extended header is truncated');
+      check(bytes[offset+length-1]===10,'Invalid PAX newline');
+      const value=text(bytes.subarray(space+1,offset+length-1));const at=value.indexOf('=');check(at>0,'Invalid PAX attribute');
+      const key=value.slice(0,at);check(!(key in result),'Duplicate PAX attribute');result[key]=value.slice(at+1);offset+=length;
     }
     return result;
   }
@@ -123,48 +123,48 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     const seen=new Set();let nextPax={},longName=null,ended=false;
     try {
       while(true) {
-        const h=await reader.read(512,true);check(h,'TAR 缺少结束标记，文件可能不完整');
+        const h=await reader.read(512,true);check(h,'TAR end marker is missing; the file may be incomplete');
         if(h.every(b=>b===0)) {
-          const second=await reader.read(512);check(second.every(b=>b===0),'TAR 结束标记损坏');
-          check(!longName && !Object.keys(nextPax).length,'TAR 末尾存在悬空扩展头');
+          const second=await reader.read(512);check(second.every(b=>b===0),'TAR end marker is damaged');
+          check(!longName && !Object.keys(nextPax).length,'Unresolved extended header at the end of the TAR');
           await reader.drainZeros();ended=true;break;
         }
         let checksum=0;for(let i=0;i<512;i++)checksum+=(i>=148 && i<156)?32:h[i];
-        check(checksum===number(h,148,8),'TAR 文件头校验失败');
+        check(checksum===number(h,148,8),'TAR header checksum failed');
         const type=h[156] ? String.fromCharCode(h[156]) : '0';
         let path=field(h,0,100);const magic=field(h,257,6);
         if(magic==='ustar') {const prefix=field(h,345,155);if(prefix)path=prefix+'/'+path;}
-        let size=number(h,124,12);check(size<=128*1024*MiB,'TAR 单个成员大小超限');
+        let size=number(h,124,12);check(size<=128*1024*MiB,'TAR member size exceeds the limit');
         if(type==='x' || type==='g' || type==='L') {
-          check(size<=MiB,'TAR 扩展头超限');const content=await reader.read(size);await reader.skip((512-size%512)%512);
-          if(type==='L') {check(longName===null,'重复 GNU 长文件名');longName=text(content).replace(/\0+$/,'').replace(/\n$/,'');}
+          check(size<=MiB,'TAR extended header exceeds the limit');const content=await reader.read(size);await reader.skip((512-size%512)%512);
+          if(type==='L') {check(longName===null,'Duplicate GNU long filename');longName=text(content).replace(/\0+$/,'').replace(/\n$/,'');}
           else {
             const records=paxRecords(content);
-            if(type==='g')check(!('path' in records) && !('size' in records) && !('linkpath' in records),'不支持改变路径的全局 PAX 属性');
-            else {check(!Object.keys(nextPax).length,'重复 PAX 扩展头');nextPax=records;}
+            if(type==='g')check(!('path' in records) && !('size' in records) && !('linkpath' in records),'Global PAX attributes that change paths are unsupported');
+            else {check(!Object.keys(nextPax).length,'Duplicate PAX extended header');nextPax=records;}
           }
           continue;
         }
-        check(type!=='1' && type!=='2' && type!=='K','档案含链接成员，已拒绝');
+        check(type!=='1' && type!=='2' && type!=='K','Archive rejected because it contains link members');
         if(nextPax.path!==undefined)path=nextPax.path;
         else if(longName!==null)path=longName;
         if(nextPax.size!==undefined) {
-          check(/^[0-9]+$/.test(nextPax.size),'无效 PAX 文件大小');size=Number(nextPax.size);check(Number.isSafeInteger(size)&&size>=0,'无效 PAX 文件大小');
+          check(/^[0-9]+$/.test(nextPax.size),'Invalid PAX file size');size=Number(nextPax.size);check(Number.isSafeInteger(size)&&size>=0,'Invalid PAX file size');
         }
-        check(!nextPax.linkpath,'档案含 PAX 链接成员，已拒绝');
+        check(!nextPax.linkpath,'Archive rejected because it contains PAX link members');
         nextPax={};longName=null;path=canonical(path,type==='5');
-        if(type==='5') {check(size===0,'目录成员大小无效');continue;}
-        check(type==='0' || type==='7','不支持的 TAR 成员类型：'+type);
-        check(!seen.has(path),'档案中有重复文件路径：'+path);seen.add(path);
+        if(type==='5') {check(size===0,'Invalid directory member size');continue;}
+        check(type==='0' || type==='7','Unsupported TAR member type: '+type);
+        check(!seen.has(path),'Duplicate file path in archive: '+path);seen.add(path);
         let consumed=false;
         const take=async (maximum=64*MiB)=>{
-          check(!consumed,'同一 TAR 文件不能重复读取');check(size<=maximum,'所选文件太大：'+path);consumed=true;return reader.read(size);
+          check(!consumed,'A TAR member cannot be read twice');check(size<=maximum,'Selected file is too large: '+path);consumed=true;return reader.read(size);
         };
         await visitor({path,size},take);
         if(!consumed)await reader.skip(size);
         await reader.skip((512-size%512)%512);
       }
-      check(ended,'TAR 未完整读取');
+      check(ended,'TAR was not fully read');
     } finally {await reader.close();}
   }
   async function archiveStream(file,phase,onProgress,signal) {
@@ -176,41 +176,41 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     return first[0]===31 && first[1]===139 ? counted.pipeThrough(new DecompressionStream('gzip')) : counted;
   }
   function index(rows,name) {
-    check(Array.isArray(rows),name+' 必须是 JSON 数组');const result=new Map();
-    for(const row of rows) {check(row && typeof row==='object' && typeof row.token==='string' && row.token.trim() && !result.has(row.token),name+' 存在缺失或重复 token');result.set(row.token,row);}
+    check(Array.isArray(rows),name+' must be a JSON array');const result=new Map();
+    for(const row of rows) {check(row && typeof row==='object' && typeof row.token==='string' && row.token.trim() && !result.has(row.token),name+' has missing or duplicate tokens');result.set(row.token,row);}
     return result;
   }
   function selectMetadata(tables,framesPerScene=2) {
-    check([2,8].includes(framesPerScene),'请选择 2 或 8 帧');
+    check([2,8].includes(framesPerScene),'Choose 2 or 8 frames');
     const idx={};for(const name of TABLES)idx[name]=index(tables[name],name);
-    check(idx.scene.size>=5 && idx.scene.size<=10,'该文件不像 mini：需要 5–10 个完整场景');
+    check(idx.scene.size>=5 && idx.scene.size<=10,'This does not look like mini: 5–10 complete scenes are required');
     const groups=new Map();for(const scene of idx.scene.keys())groups.set(scene,[]);
     for(const row of idx.sample.values()) {
-      check(groups.has(row.scene_token),'sample 引用了未知场景');check(typeof row.timestamp==='number'&&Number.isFinite(row.timestamp),'无效时间戳');groups.get(row.scene_token).push(row);
+      check(groups.has(row.scene_token),'Sample references an unknown scene');check(typeof row.timestamp==='number'&&Number.isFinite(row.timestamp),'Invalid timestamp');groups.get(row.scene_token).push(row);
     }
     const cameras=new Map();
     for(const row of idx.sample_data.values()) {
       if(!row.is_key_frame)continue;
-      check(idx.sample.has(row.sample_token),'关键帧引用了未知 sample');
+      check(idx.sample.has(row.sample_token),'Key frame references an unknown sample');
       const calibration=idx.calibrated_sensor.get(row.calibrated_sensor_token);
       const sensor=calibration && idx.sensor.get(calibration.sensor_token);
-      check(sensor,'摄像头/传感器标定引用缺失');
+      check(sensor,'Missing camera/sensor calibration reference');
       if(sensor.modality!=='camera' || !CAMERAS.includes(sensor.channel))continue;
       if(!cameras.has(row.sample_token))cameras.set(row.sample_token,new Map());
       const m=cameras.get(row.sample_token);if(!m.has(sensor.channel))m.set(sensor.channel,[]);m.get(sensor.channel).push(row);
     }
     const selected=[],wanted=new Set();
     for(const scene of Array.from(groups.keys()).sort(compare)) {
-      const rows=groups.get(scene);check(rows.length,'存在没有样本的场景');rows.sort((a,b)=>a.timestamp-b.timestamp || compare(a.token,b.token));
+      const rows=groups.get(scene);check(rows.length,'A scene has no samples');rows.sort((a,b)=>a.timestamp-b.timestamp || compare(a.token,b.token));
       const count=Math.min(rows.length,framesPerScene);
       const positions=count===1?[Math.floor(rows.length/2)]:Array.from({length:count},(_,i)=>Math.floor(i*(rows.length-1)/(count-1)));
       for(const position of positions) {
         const row=rows[position],views=cameras.get(row.token);
         for(const camera of CAMERAS) {
-          const candidates=views && views.get(camera);check(candidates && candidates.length===1,'所选 sample 缺少或重复摄像头：'+row.token+' / '+camera);
+          const candidates=views && views.get(camera);check(candidates && candidates.length===1,'Selected sample has a missing or duplicate camera: '+row.token+' / '+camera);
           const path=canonical(candidates[0].filename,false);const p=path.split('/');
-          check(p.length===3 && p[0]==='samples' && p[1]===camera,'无效的摄像头图片路径');
-          check(!wanted.has(path),'所选图片被多个样本引用：'+path);wanted.add(path);
+          check(p.length===3 && p[0]==='samples' && p[1]===camera,'Invalid camera image path');
+          check(!wanted.has(path),'Selected image is referenced by multiple samples: '+path);wanted.add(path);
         }
         selected.push({sample_token:row.token,scene_token:scene,timestamp:row.timestamp});
       }
@@ -228,7 +228,7 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     const date=((2026-1980)<<9)|(1<<5)|1;
     for(const entry of entries) {
       const name=encoder.encode(entry.path),size=entry.blob.size;
-      check(name.length<=65535 && size<=0xffffffff,'ZIP 成员超限');
+      check(name.length<=65535 && size<=0xffffffff,'ZIP member exceeds the limit');
       const h=new Uint8Array(30+name.length),v=new DataView(h.buffer);
       v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x800,true);v.setUint16(12,date,true);
       v.setUint32(14,entry.crc,true);v.setUint32(18,size,true);v.setUint32(22,size,true);v.setUint16(26,name.length,true);h.set(name,30);
@@ -238,30 +238,30 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
       w.setUint32(16,entry.crc,true);w.setUint32(20,size,true);w.setUint32(24,size,true);w.setUint16(28,name.length,true);w.setUint32(42,offset,true);c.set(name,46);
       central.push(c);centralLength+=c.length;offset+=h.length+size;
     }
-    check(entries.length<=65535 && offset+centralLength<=0xffffffff,'ZIP 目录超限');
+    check(entries.length<=65535 && offset+centralLength<=0xffffffff,'ZIP directory exceeds the limit');
     const end=new Uint8Array(22),v=new DataView(end.buffer);v.setUint32(0,0x06054b50,true);v.setUint16(8,entries.length,true);v.setUint16(10,entries.length,true);v.setUint32(12,centralLength,true);v.setUint32(16,offset,true);
     return new Blob([...body,...central,end],{type:'application/zip'});
   }
   async function processArchive(file,options={}) {
-    check(globalThis.DecompressionStream && globalThis.CompressionStream && globalThis.crypto && crypto.subtle,'浏览器不支持本地流式解压，请使用新版桌面 Chrome 或 Edge');
+    check(globalThis.DecompressionStream && globalThis.CompressionStream && globalThis.crypto && crypto.subtle,'This browser cannot decompress streams locally. Use a recent desktop Chrome or Edge');
     const framesPerScene=options.framesPerScene===undefined?2:options.framesPerScene;
     const partLimit=options.partLimit || 24*MiB;
-    check(partLimit>=64*1024 && partLimit<=24*MiB,'分包上限无效');
+    check(partLimit>=64*1024 && partLimit<=24*MiB,'Invalid part size limit');
     const reserve=Math.min(512*1024,Math.floor(partLimit/3));
     const progress=options.onProgress || (()=>{}),signal=options.signal;
     aborted(signal);const raw=new Map();let metadataBytes=0;
     await parseTar(await archiveStream(file,1,progress,signal),async(entry,take)=>{
       if(TABLES.some(name=>entry.path===VERSION+'/'+name+'.json')) {
-        const data=await take(64*MiB);metadataBytes+=data.length;check(metadataBytes<=128*MiB,'必要索引总量超限，请联系项目维护者');raw.set(entry.path,data);
+        const data=await take(64*MiB);metadataBytes+=data.length;check(metadataBytes<=128*MiB,'Required metadata exceeds the size limit. Contact the project maintainer');raw.set(entry.path,data);
       }
     },{signal});
-    check(raw.size===5,'没有找到完整的 v1.0-mini 五张索引表；请确认下载的是 mini 数据压缩包');
+    check(raw.size===5,'The five required v1.0-mini metadata tables were not found. Check that this is the mini dataset archive');
     const tables={};for(const name of TABLES)tables[name]=JSON.parse(text(raw.get(VERSION+'/'+name+'.json')));
     const selection=selectMetadata(tables,framesPerScene);let total=0;
     const files=[],entries=[];
     async function add(path,data,outputPath,outputData) {
-      total+=data.length;check(total<=1024*MiB,'所选文件总量超过 1 GiB，请改用更小样本');
-      check(data.length+path.length*2+128<partLimit-reserve,'单个所选文件超过小包上限：'+path);
+      total+=data.length;check(total<=1024*MiB,'Selected files exceed 1 GiB. Choose a smaller sample');
+      check(data.length+path.length*2+128<partLimit-reserve,'A selected file exceeds the part size limit: '+path);
       const digest=await sha256(data);
       const record={path,sha256:digest,bytes:data.length,output_path:outputPath,output_sha256:outputData===data?digest:await sha256(outputData),output_bytes:outputData.length};
       files.push(record);entries.push({path,blob:new Blob([data]),crc:crc32(data)});
@@ -277,18 +277,18 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
     await parseTar(await archiveStream(file,2,progress,signal),async(entry,take)=>{
       if(raw.has(entry.path)) {
         const name=entry.path.slice(VERSION.length+1,-5),data=await take(64*MiB);
-        check(await sha256(data)===metadataHashes[name],'两次读取的索引内容不同，请勿在处理中修改原文件');
+        check(await sha256(data)===metadataHashes[name],'Metadata differs between the two passes. Do not modify the source file during processing');
         confirmedMetadata.add(entry.path);
       }
       if(selection.wanted.has(entry.path)) {
-        const data=await take(12*MiB);check(data.length,'所选图片是空文件：'+entry.path);
+        const data=await take(12*MiB);check(data.length,'Selected image file is empty: '+entry.path);
         await add(entry.path,data,entry.path,data);found.add(entry.path);
         progress({phase:2,selectedFound:found.size,selectedTotal:selection.wanted.size});
         if(found.size%8===0)await new Promise(resolve=>setTimeout(resolve,0));
       }
     },{signal});
-    check(confirmedMetadata.size===5,'第二次读取缺少原始索引表');
-    check(found.size===selection.wanted.size,'压缩包缺少所选图片：'+Array.from(selection.wanted).filter(path=>!found.has(path)).slice(0,3).join(', '));
+    check(confirmedMetadata.size===5,'Original metadata tables are missing in the second pass');
+    check(found.size===selection.wanted.size,'Selected images are missing from the archive: '+Array.from(selection.wanted).filter(path=>!found.has(path)).slice(0,3).join(', '));
     aborted(signal);
     const groups=[];let group=[],size=0;
     for(const entry of entries) {
@@ -310,7 +310,7 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
       const manifest={...common,part_index:i+1,members:groups[i].map(entry=>entry.path)};
       const bytes=encoder.encode(JSON.stringify(manifest,null,2)+'\n');
       const blob=zipBlob([{path:'HANDOFF.json',blob:new Blob([bytes]),crc:crc32(bytes)},...groups[i]]);
-      check(blob.size<=partLimit,'清单开销使小包超限，请联系项目维护者');
+      check(blob.size<=partLimit,'Manifest overhead exceeds the part size limit. Contact the project maintainer');
       const name='driving-mini-part-'+String(i+1).padStart(3,'0')+'-of-'+String(groups.length).padStart(3,'0')+'.zip';
       parts.push({name,blob,manifest});
     }
@@ -323,19 +323,19 @@ body{font:16px/1.65 system-ui,sans-serif;max-width:850px;margin:36px auto;paddin
   function resetLinks(){for(const url of urls)URL.revokeObjectURL(url);urls=[];$('results').replaceChildren();}
   $('cancel').addEventListener('click',()=>{if(controller)controller.abort();});
   $('start').addEventListener('click',async()=>{
-    const file=$('archive').files[0];if(!file){$('status').textContent='请先选择压缩包。';return;}
-    resetLinks();controller=new AbortController();$('start').disabled=true;$('cancel').disabled=false;$('archive').disabled=true;$('frames').disabled=true;$('status').className='';$('log').textContent='正在读取 '+file.name+'（'+(file.size/MiB).toFixed(1)+' MiB）\n';
+    const file=$('archive').files[0];if(!file){$('status').textContent='Select an archive first.';return;}
+    resetLinks();controller=new AbortController();$('start').disabled=true;$('cancel').disabled=false;$('archive').disabled=true;$('frames').disabled=true;$('status').className='';$('log').textContent='Reading '+file.name+' ('+(file.size/MiB).toFixed(1)+' MiB)\n';
     let last=0;
     try {
       const result=await processArchive(file,{framesPerScene:Number($('frames').value),signal:controller.signal,onProgress:p=>{
         if(p.phase==='complete')return;
-        if(p.read!==undefined){$('progress').value=(p.phase===1?0:50)+50*p.read/p.total;if(Date.now()-last>250){$('status').textContent='第 '+p.phase+'/2 遍：已读 '+(p.read/MiB).toFixed(0)+' / '+(p.total/MiB).toFixed(0)+' MiB';last=Date.now();}}
-        if(p.selectedFound!==undefined)$('log').textContent='已找到 '+p.selectedFound+' / '+p.selectedTotal+' 张所选摄像头图片。\n';
+        if(p.read!==undefined){$('progress').value=(p.phase===1?0:50)+50*p.read/p.total;if(Date.now()-last>250){$('status').textContent='Pass '+p.phase+'/2: read '+(p.read/MiB).toFixed(0)+' / '+(p.total/MiB).toFixed(0)+' MiB';last=Date.now();}}
+        if(p.selectedFound!==undefined)$('log').textContent='Found '+p.selectedFound+' / '+p.selectedTotal+' selected camera images.\n';
       }});
-      $('progress').value=100;$('status').textContent='完成：'+result.sceneCount+' 个场景，'+result.selectedSamples+' 个时间戳，'+result.cameraImages+' 张图片。';
-      $('log').textContent='请下载下面全部 '+result.parts.length+' 个 ZIP，再将它们上传到聊天。\n总计 '+(result.totalTransportBytes/MiB).toFixed(1)+' MiB；原文件未修改。\n这些数据尚未人工标注，不是实验成绩。';
-      for(const part of result.parts){const a=document.createElement('a');a.href=URL.createObjectURL(part.blob);urls.push(a.href);a.download=part.name;a.textContent='下载 '+part.name+'（'+(part.blob.size/MiB).toFixed(1)+' MiB）';$('results').append(a);}
-    } catch(error){resetLinks();$('status').className='error';$('status').textContent=error.name==='AbortError'?'已取消；原文件未修改。':'未生成小包：'+error.message;$('log').textContent=String(error.stack || error);}
+      $('progress').value=100;$('status').textContent='Complete: '+result.sceneCount+' scenes, '+result.selectedSamples+' frames, '+result.cameraImages+' images.';
+      $('log').textContent='Download all '+result.parts.length+' ZIPs below, then upload them to the chat.\nTotal: '+(result.totalTransportBytes/MiB).toFixed(1)+' MiB; the original file is unchanged.\nThese data have no human labels and are not experimental results.';
+      for(const part of result.parts){const a=document.createElement('a');a.href=URL.createObjectURL(part.blob);urls.push(a.href);a.download=part.name;a.textContent='Download '+part.name+' ('+(part.blob.size/MiB).toFixed(1)+' MiB)';$('results').append(a);}
+    } catch(error){resetLinks();$('status').className='error';$('status').textContent=error.name==='AbortError'?'Cancelled; the original file is unchanged.':'Could not create parts: '+error.message;$('log').textContent=String(error.stack || error);}
     finally{controller=null;$('start').disabled=false;$('cancel').disabled=true;$('archive').disabled=false;$('frames').disabled=false;}
   });
 })();

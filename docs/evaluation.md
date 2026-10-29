@@ -1,14 +1,16 @@
 # Controlled offline evaluation
 
-The current software can evaluate a frozen feature matrix with Logistic
-regression, a small MLP, and the SAE variants. **No new real-data score is
-established by these changes.** Historical random-frame results remain separate
-from scene-disjoint experiments. The synthetic fixture below checks execution
-and deliberately includes mistakes; it provides no scientific evidence.
+The evaluator compares logistic regression, a small MLP and two SAE variants
+on a frozen feature matrix and scene allocation. The current
+[real CPU run](../results/human-ai-exposed-20261026/README.md) uses 77 binary
+single-reviewer references after AI-label disclosure. Its SAE test AP of 0.9353
+covers 15 timestamps in two scenes at seed 42; both SAE variants are identical.
+Historical random-frame results remain separate. The synthetic fixture below
+checks execution and deliberately includes mistakes; its metrics are test data.
 
 ## Shared data and model selection
 
-All methods must use the same VLM features, labels and frozen manifest. Create
+All methods must use the same encoder features, labels and frozen manifest. Create
 the manifest with the SAE entry point once, review it, then supply its path with
 `--manifest` to every subsequent run. Do not regenerate splits for different
 model seeds. Manifests identify `sample_token`, `scene_token`, binary `label`,

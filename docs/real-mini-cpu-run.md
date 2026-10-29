@@ -1,8 +1,9 @@
 # First real mini CPU extraction
 
-This is the point-in-time extraction record, before annotation and training.
-The subsequent [AI-label pilot](ai-pilot.md) completed four model fits and an
-offline explorer; its labels remain pending independent human verification.
+This is the extraction record from before annotation and training. The
+subsequent [AI-label pilot](ai-pilot.md) and
+[single-reviewer run after AI-label disclosure](../results/human-ai-exposed-20261026/README.md)
+each fitted four models. Their labels and results are retained separately.
 
 On 2026-10-23, the local upload route successfully moved a real nuScenes mini
 subset into the managed workspace and completed feature extraction without a
@@ -48,7 +49,11 @@ run; they are not a performance comparison. The targeted software checks
 passed 34 tests and 16 subtests. Browser interaction has not been verified in
 this sandbox.
 
-## Remaining human input
+## Review handoff recorded at extraction time
+
+The steps below describe the next stage as it stood on 2026-10-23. The later
+[human submission](human-review.md) completed all 80 rows: 77 binary decisions
+and three uncertain rows. It was a single-person review after AI-label exposure.
 
 Inspect all six original views under the frozen normal-core rubric and choose
 `normal_core`, `not_normal_core` or `uncertain`. The classification concerns
@@ -58,8 +63,9 @@ excluded; model output must not be recorded as a human decision.
 
 The [offline reviewer](local-upload.md#review-the-same-parts-locally) opens the
 same four local ZIPs and exports the required CSV. Its actual-part parser,
-image bytes and blank CSV import were checked; browser interaction remains
-unverified in the execution sandbox.
+image bytes and blank CSV import were checked. Browser interaction was not
+verified during this extraction run. Later browser evidence is recorded with
+the [walkthrough](../results/presentation-20261029/README.md).
 
 Import the resulting CSV without changing the frozen split:
 

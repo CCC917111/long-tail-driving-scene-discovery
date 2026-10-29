@@ -1,78 +1,60 @@
-Coding Style
-=============
-Welcome to the long-tail driving data mining project coding style page!
+# Coding conventions
 
-The Python code follows [PEP 8](https://peps.python.org/pep-0008/) with the
-conventions below applied consistently across the scripts.
+Python code follows [PEP 8](https://peps.python.org/pep-0008/). Use these
+conventions when extending the scripts.
 
-## Formatting
+## Formatting and names
 
-- Four-space indentation, 100 columns as the hard limit checked by the linter.
-- `from __future__ import annotations` at the top of every module, so type
-  hints stay readable on older interpreters.
-- Imports in three groups — standard library, third party, then this package —
-  separated by a blank line and alphabetised within each group.
-- Section banners (`# ---- Data ----`) separate the stages of a long module;
-  when a module needs more than about five of them, it is split instead.
+- Use four spaces and a 100-column line limit, as checked by the linter.
+- Add `from __future__ import annotations` to Python modules.
+- Group imports as standard library, third party and local modules, with a
+  blank line between groups and alphabetical order within each group.
+- Use `snake_case` for functions and variables, `CamelCase` for classes and
+  `UPPER_CASE` for constants. Prefix private helpers with an underscore.
+- Keep protocol constants such as `NORMAL_LABELS` and `DROP_LABELS` in one
+  shared definition.
 
-## Naming and interfaces
+Public functions should document their purpose, arguments and expected array
+shapes. Use consistent shape names: `(N, D)` for frames and feature dimension,
+and `P` for latent width. Split long modules by responsibility when section
+banners stop making them easy to navigate.
 
-- `snake_case` for functions and variables, `CamelCase` for classes,
-  `UPPER_CASE` for module-level constants.
-- A leading underscore marks a helper that is not part of a module's public
-  surface, such as `_normalise_label`.
-- Every public function carries a docstring that states its intent, its
-  arguments and the array shapes it expects and returns. Shapes are written as
-  `(N, D)` and named consistently: `N` frames, `D` hidden dimension, `P` latent
-  width.
-- Constants that encode a protocol — `NORMAL_LABELS`, `DROP_LABELS` — live in
-  one place and are imported, never re-spelled as literals at the call site.
+## Comments and validation
 
-## Comments
+Explain choices a reader cannot infer from the code: why uncertain labels are
+excluded, why scaling uses training statistics only, or how a reward relates
+to a hinge penalty. Avoid comments that repeat an assignment or loop.
 
-- Comments explain intent, not mechanics: why `uncertain` frames are dropped
-  rather than counted, why the standardiser uses training statistics only, why
-  the capped reward equals a hinge penalty up to a constant.
-- Anything a future reader would find surprising gets a comment, including
-  deliberate deviations and the reason for them.
+Validate inputs at the boundary. Reject invalid dimensions, duplicate tokens,
+nonfinite features, missing scenes and incompatible feature identities before
+starting a fit or loading a screening model. Preserve exclusions and failure
+reports so a later reviewer can reconstruct what happened.
 
-## Correctness habits
+Keep configuration in command-line flags and recorded run files. Do not commit
+credentials or machine-specific paths. Seed randomness through `--seed` and
+save the effective configuration alongside the checkpoint. Long extraction
+stages should checkpoint incrementally and reject incompatible resume settings.
 
-- Arguments are validated where a wrong value would otherwise fail deep inside
-  a framework call: `LongTailGuidedSAE` rejects `k > hidden_dim`, the training
-  scripts stop when a split does not contain both classes, and `screen.py`
-  checks the feature dimension against the run it was trained on.
-- Randomness is seeded from a single `--seed` flag, and the full configuration
-  is dumped to `metrics.json` next to the checkpoint, so a run can be repeated.
-- Long-running stages write incrementally and resume, because a VLM pass over a
-  dataset is measured in hours.
-- No credentials, absolute paths or machine-specific settings in the source;
-  data roots, model directories and every hyper-parameter are flags with
-  defaults.
+## Experiment records
 
-## Experiment hygiene
+Comparable variants should share the same training implementation. The SAE
+entry points provide `DEFAULTS`; the controlled reward comparison uses the
+same entry point and flags except for reward and output directory. Record the
+exact commands, frozen manifest, feature provenance and evaluation artifacts
+for any reported run. Shared code alone does not make different default
+configurations a controlled ablation.
 
-- Variants that are meant to be compared share their implementation. The three
-  SAE entry points hold nothing but a `DEFAULTS` dictionary, so an ablation
-  cannot accidentally differ in a second place.
-- Anything reported in the README or in `results/` is produced by a script in
-  this repository, with the flags given next to it.
+Avoid importing torch in utilities that only need numpy and Pillow. The
+activation store and explorer can inspect saved runs without torch. The
+explorer uses the standard-library HTTP server and a self-contained page, so
+it needs no front-end build.
 
-## Dependencies per module
-
-- Modules that do not need torch do not import it. The decision rule, the
-  activation store and the neuron explorer (`tail_activations.py`,
-  `neuron_explorer.py`) need only numpy and Pillow, so a trained run can be
-  inspected on any machine.
-- The web interface uses the standard library's HTTP server and a single
-  self-contained page: no front-end build step and no extra package.
-
-## Checking
+## Lint
 
 ```bash
 make lint          # python -m flake8 scripts tests --max-line-length 100
 ```
 
-The configuration is in [`.flake8`](../.flake8). The VLM prompts and the
-explorer's web page are kept verbatim as strings, so those three files are
-exempt from the line-length rule and nothing else is.
+[`.flake8`](../.flake8) contains the configuration. The files containing long
+embedded prompts or HTML have line-length exemptions; other lint rules still
+apply.

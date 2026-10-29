@@ -1,9 +1,10 @@
-# Prompt Templates
+# VLM prompt templates
 
-These are the exact prompts used in the project, copied verbatim from the
-code: (1) the classification prompt that encodes the normal-core rubric and
-(2) the open-ended scene-description prompt used to elicit the internal VLM
-representations that the SAE is trained on.
+These prompts are copied verbatim from the VLM annotation and extraction code.
+The classification prompt encodes the normal-core rubric; the description
+prompt conditions hidden-state extraction. The current CPU ResNet18 feature
+extractor uses neither prompt. These templates do not recover the exact inputs
+or outputs of the historical VLM runs.
 
 ## 1. Normal-core classification prompt
 
@@ -60,12 +61,10 @@ C (uncertain)         - single-frame information is genuinely insufficient
 
 Source: `SCENE_PROMPT` in [`scripts/extract.py`](../scripts/extract.py) (the default of `--prompt`).
 
-For the SAE-based method the VLM is *not* asked to classify the sample as
-long-tail or normal. Instead, this neutral scene-description prompt is used so
-that the hidden states captured by `extract.py` reflect general scene
-understanding rather than a fixed category list; the SAE scripts
-(`scripts/sae_abstopk_tail_reward.py` and the two ablations) are trained on those
-hidden states.
+The VLM extraction route asks for a description rather than a normal/tail
+classification. `extract.py` captures hidden states from that forward pass for
+later SAE fitting. Whether those features support the task is an empirical
+question; the prompt itself does not establish representation quality.
 
 ```
 You are given 6 synchronized camera images from the ego vehicle at a single timestamp. The cameras are provided in this order: CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT.

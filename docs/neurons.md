@@ -1,9 +1,8 @@
 # Inspecting sparse units
 
 The neuron explorer links a frame to active tail units and each unit to
-high-activation frames. A unit's human-assigned name is an interpretation to
-check. It is not an independently validated category detector or a causal
-explanation merely because the code is sparse.
+high-activation frames. A unit's human-assigned name is a hypothesis to check;
+sparsity alone does not establish a category detector or causal explanation.
 
 Historical unit names, the sample figure and reported purity/activation ratios
 are retained in [historical results](../results/README.md#historical-interpretation-and-agreement).
@@ -41,9 +40,10 @@ python scripts/neuron_explorer.py serve \
 ```
 
 The default address is `http://127.0.0.1:8765`. HTTP serving requires an
-environment that allows a loopback socket; it has not been verified in this
-execution sandbox. The local CPU demo verified static queries and image
-previews with a trained synthetic checkpoint. See [testing](testing.md).
+environment that allows a loopback socket. The initial CPU check used static
+queries and synthetic image previews. Later checks include the
+[real-image walkthrough](../results/presentation-20261029/README.md) using
+saved CPU-model outputs. See [testing](testing.md) for verification scope.
 
 The interface provides two directions: a unit's strongest frames (ranked by
 activation magnitude), and a frame's six views plus active units. Unit indices,

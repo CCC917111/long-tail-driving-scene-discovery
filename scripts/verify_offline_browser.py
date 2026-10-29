@@ -315,16 +315,16 @@ def verify_reference_banner(page, payload, expect):
     expect(warning).to_be_visible()
     if kind == "human_ai_exposed":
         expect(warning).to_have_attribute("data-reference-kind", kind)
-        expect(warning).to_contain_text("AI 曝露后单人复核")
-        expect(warning).to_contain_text("不是独立人工真值")
-        expect(warning).to_contain_text("不是官方 benchmark")
+        expect(warning).to_contain_text("Single-reviewer post-AI-exposure review")
+        expect(warning).to_contain_text("not independent human ground truth")
+        expect(warning).to_contain_text("or an official benchmark")
         body = page.locator("body").inner_text()
-        for stale in ("尚未人工核验", "人类核验仍未完成", "human review pending",
+        for stale in ("human review pending", "Provisional AI-label pilot;",
                       "labels are provisional", "not been verified by a human"):
             require(stale not in body, "Human-reviewed UI contains stale AI warning: " + stale)
     else:
-        expect(warning).to_contain_text("AI 初标")
-        expect(warning).to_contain_text("尚未人工核验")
+        expect(warning).to_contain_text("Provisional AI-label pilot")
+        expect(warning).to_contain_text("human review pending")
 
 
 def verify_summary_table(page, payload, expect):
@@ -332,7 +332,7 @@ def verify_summary_table(page, payload, expect):
     expect(rows).to_have_count(len(payload["methods"]) + 1)
     v2 = payload["schema"] == "offline-trained-explorer-v2"
     if v2:
-        expect(rows.first).to_contain_text("AP（" + payload["reference"]["short_label"] + "）")
+        expect(rows.first).to_contain_text("AP (" + payload["reference"]["short_label"] + ")")
     for index, reference in enumerate(payload["comparison"]):
         cells = rows.nth(index + 1).locator("td").all_text_contents()
         require(cells[:3] == [reference["method"], f"{reference['ap']:.4f}",
@@ -366,8 +366,8 @@ def verify_frame(page, payload, token, expect, mobile_width=None):
     v2 = payload["schema"] == "offline-trained-explorer-v2"
     if v2:
         require(rows.first.locator("th").all_text_contents() == [
-            "模型", "分数", "参考标签", "固定预测", "固定规则错误",
-            "validation 工作点预测", "相对参考的工作点错误"],
+            "Model", "Score", "Reference label", "Fixed prediction", "Fixed-rule error",
+            "Validation operating-point prediction", "Operating-point error relative to reference"],
             "Per-frame comparison columns changed")
         expect(page.locator(".comparison-table caption")).to_contain_text(
             payload["reference"]["label"])
@@ -409,7 +409,7 @@ def verify_viewport(browser, payload, fixture_html, parts, output, name, viewpor
         verify_summary_table(page, payload, expect)
         page.locator("#offline-parts").set_input_files(list(map(str, parts)))
         page.locator("#offline-load").click()
-        expect(page.locator("#offline-status")).to_contain_text("校验完成", timeout=60000)
+        expect(page.locator("#offline-status")).to_contain_text("Verified:", timeout=60000)
         expect(page.locator("#meta")).to_contain_text(str(len(payload["frames"])) + " frames")
         verify_reference_banner(page, payload, expect)
         mobile_width = viewport["width"] if name == "mobile" else None
