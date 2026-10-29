@@ -109,10 +109,7 @@ validated all 480 local images. A later
 passed desktop/mobile image rendering, unit/sample navigation, search and CSV
 download using synthetic, watermarked ZIP fixtures. Its three runtime scripts
 are byte-identical to the shipped explorer. This verified the UI with synthetic
-images, separately from the real-image byte/score checks. The later
-[recorded walkthrough](../results/presentation-20261029/README.md) exercised
-real images with the human-review run's saved outputs; it does not change this
-pilot's original verification scope. The retained
+images, separately from the real-image byte/score checks. The retained
 [browser CI report](../results/cpu-mini-ai-pilot-20261023/browser_ci_verification.json)
 records that scope. CPU CI also passed tests, lint and the generated-data HTTP
 workflow on the same head; see [testing](testing.md).

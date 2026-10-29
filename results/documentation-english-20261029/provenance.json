@@ -1,7 +1,7 @@
 {
   "schema": "english-documentation-provenance-v1",
   "date": "2026-10-29",
-  "scope": "Original documents and requested viewer snapshots preserved before the English rewrite, with current-file hashes for comparison.",
+  "scope": "Original documents and viewer snapshots preserved before the English rewrite. Current-file fields identify the English revision at commit 7c9c040c before subsequent documentation edits and video removal; they are historical snapshots, not current-main hashes.",
   "archive": {
     "path": "original-documents.zip",
     "bytes": 233143,

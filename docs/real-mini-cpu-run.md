@@ -64,8 +64,8 @@ excluded; model output must not be recorded as a human decision.
 The [offline reviewer](local-upload.md#review-the-same-parts-locally) opens the
 same four local ZIPs and exports the required CSV. Its actual-part parser,
 image bytes and blank CSV import were checked. Browser interaction was not
-verified during this extraction run. Later browser evidence is recorded with
-the [walkthrough](../results/presentation-20261029/README.md).
+verified during this extraction run. Later browser checks are described in
+[testing](testing.md#earlier-fitted-pilot-and-cached-viewers).
 
 Import the resulting CSV without changing the frozen split:
 
