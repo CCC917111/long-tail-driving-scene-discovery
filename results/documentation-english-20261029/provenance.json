@@ -1,0 +1,435 @@
+{
+  "schema": "english-documentation-provenance-v1",
+  "date": "2026-10-29",
+  "scope": "Original documents and requested viewer snapshots preserved before the English rewrite, with current-file hashes for comparison.",
+  "archive": {
+    "path": "original-documents.zip",
+    "bytes": 233143,
+    "sha256": "5c9f0c5c5ade2b03022cb0c16afdce21df2e449eafe063a4d7a616968b172419",
+    "entry_count": 40,
+    "markdown_documents": 36,
+    "html_viewers": 2,
+    "subtitle_files": 1,
+    "text_documents": 1,
+    "entry_paths": "Repository-relative paths; bytes are copied unchanged from preserved originals."
+  },
+  "original_ai_label_export": {
+    "metadata_path": "results/ai-label-recheck-20261024/all-ai-labels-metadata.json",
+    "export_path": "results/ai-label-recheck-20261024/all-ai-labels.md",
+    "recorded_sha256": "47135f92d42b7ad9a861120641678f0f991d5e5378ea69188f945c6ac4ca6d3f",
+    "archive_entry": "results/ai-label-recheck-20261024/all-ai-labels.md",
+    "current_translation_sha256": "155e4dd0f59c988322c80567ad1377db9add016f8637c4a556d965499c39937a",
+    "interpretation": "The immutable export metadata identifies the original Markdown inside this archive. It does not identify the current English translation. The original CSV and annotation records retain their existing bytes."
+  },
+  "historical_ai_viewer": {
+    "path": "demo/driving_ai_pilot.html",
+    "sha256": "c02a902d5653921d3c2c6c3c5b1886f8e1bba86fecf1256bb33c97984b28c810",
+    "bytes": 483687,
+    "included_in_archive": false,
+    "included_in_current_english_scope": false,
+    "interpretation": "The existing AI-pilot HTML is retained as a historical archive and is excluded from the current English viewer rewrite."
+  },
+  "evidence_policy": "Existing annotation CSVs, predictions, model outputs and historical JSON or ZIP evidence are not rewritten by this documentation archive. Archived prose and viewer text record their original versions and dates; they are not new experimental results.",
+  "files": [
+    {
+      "path": "README.md",
+      "kind": "Markdown document",
+      "archive_entry": "README.md",
+      "original_bytes": 12564,
+      "original_sha256": "f720d69e37f3a1522f192dc75f33015861135ab05190dd28f373275f009fbb57",
+      "current_bytes": 12252,
+      "current_sha256": "badbde40b39dc2306c986e38610420c71149b31ffccaee175c68657d6993dd87",
+      "status": "revised"
+    },
+    {
+      "path": "cloud/SETUP_REQUEST.txt",
+      "kind": "Text document",
+      "archive_entry": "cloud/SETUP_REQUEST.txt",
+      "original_bytes": 3137,
+      "original_sha256": "5d9de00e7329897b7f8aa0332b6a1bd66e04d5a474e71b5c54ea101b29ca6974",
+      "current_bytes": 3287,
+      "current_sha256": "70dcc5b3aa26d5b72308ab7e333a2588f937e9dd260c0ff742fc6ca9b6e3b655",
+      "status": "revised"
+    },
+    {
+      "path": "demo/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "demo/README.md",
+      "original_bytes": 7590,
+      "original_sha256": "a1d6582f3bfb21b1d682dfb9bc34f9fa7259c72200107d642c0b21d647800eb8",
+      "current_bytes": 6020,
+      "current_sha256": "05100de063fcc35ce78a242ac9eea0c2dea086bd5897d20fc5eca553150755a8",
+      "status": "revised"
+    },
+    {
+      "path": "demo/driving_new_scenes.html",
+      "kind": "HTML viewer",
+      "archive_entry": "demo/driving_new_scenes.html",
+      "original_bytes": 40609,
+      "original_sha256": "48d1a986a5a5d80b8754cc8911aa54177e208348e4acc276acc27bb5fae656e6",
+      "current_bytes": 40848,
+      "current_sha256": "79b6d6d4c71d0a77e3643c617eb1a0f88637d9953ac050d4fe2758e6cdd90b13",
+      "status": "revised"
+    },
+    {
+      "path": "demo/driving_pilot.html",
+      "kind": "HTML viewer",
+      "archive_entry": "demo/driving_pilot.html",
+      "original_bytes": 519673,
+      "original_sha256": "76ab509cbaf2e3ee4987d3850f8ed9ac29397803a0c022032161894c280bc1ac",
+      "current_bytes": 520689,
+      "current_sha256": "91fa4104d49d5ed5612e59ce2da14024f27c3b6e25025d612dbbc05d33798e92",
+      "status": "revised"
+    },
+    {
+      "path": "demo/presentation/captions.srt",
+      "kind": "Subtitles",
+      "archive_entry": "demo/presentation/captions.srt",
+      "original_bytes": 1660,
+      "original_sha256": "410795fa2842b966ec9554b6b9b9c9d01bdd03e4e2f94e207132a073d8f27f69",
+      "current_bytes": 1660,
+      "current_sha256": "410795fa2842b966ec9554b6b9b9c9d01bdd03e4e2f94e207132a073d8f27f69",
+      "status": "unchanged"
+    },
+    {
+      "path": "docs/ai-pilot.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/ai-pilot.md",
+      "original_bytes": 8448,
+      "original_sha256": "ce24cdac78d50633f7628be742f014dc9fa5a1e0d84771a728ecec540080e646",
+      "current_bytes": 8589,
+      "current_sha256": "d8542e6977db51586c3d892a63e63186757b1c97e30a134ef29898dd80c07d8e",
+      "status": "revised"
+    },
+    {
+      "path": "docs/apply.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/apply.md",
+      "original_bytes": 8288,
+      "original_sha256": "7324fb521eca513402347bcaab2c046f645598eb5355f53e680f6fd9b0902138",
+      "current_bytes": 7448,
+      "current_sha256": "24d35444efc1ca3317d8e959847e3eecbde056f95adf3156f27f16f60e147707",
+      "status": "revised"
+    },
+    {
+      "path": "docs/coding.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/coding.md",
+      "original_bytes": 3587,
+      "original_sha256": "99b46ff44575c2ea146cafdfc26a47ec0f33068b5e023fd72e6c445da7235ebb",
+      "current_bytes": 2770,
+      "current_sha256": "1762b7a7abc3e74705bd53e407574ffb2edef5cdfa8cf228455f73605b2d6206",
+      "status": "revised"
+    },
+    {
+      "path": "docs/cpu-route.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/cpu-route.md",
+      "original_bytes": 6708,
+      "original_sha256": "feb189ddebf86a95f96b6652a0346ee6f661ab47b710ea6ee786b00d71301a8d",
+      "current_bytes": 7793,
+      "current_sha256": "83a3334a9e61e659efed3998d04281d61083019fdab9d3b76e5f24299c7ad11d",
+      "status": "revised"
+    },
+    {
+      "path": "docs/design.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/design.md",
+      "original_bytes": 3571,
+      "original_sha256": "a9cf2d6ef4f54bdc5eda3d955a0879c552bc2940a14cd5b951f596e14001a39a",
+      "current_bytes": 3746,
+      "current_sha256": "036a71a56eb408192bb2e2a9842d85c5afbe39a9c330a7fcbd0a2abbd80cd748",
+      "status": "revised"
+    },
+    {
+      "path": "docs/developer.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/developer.md",
+      "original_bytes": 6118,
+      "original_sha256": "62a8938d29cb8207a2cc88e3e2c90d4ab6811fd59f4f10265d571a0460f56ec9",
+      "current_bytes": 5624,
+      "current_sha256": "ac6aac57998787fdb0f630f11a3c43b91e380dc10b347d302eab9c20e6bfc410",
+      "status": "revised"
+    },
+    {
+      "path": "docs/e2e.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/e2e.md",
+      "original_bytes": 3536,
+      "original_sha256": "adf0d66476f293a2061fe5a00e48bb8ba7489dfadf91699ef4cb06ea8b78cfe0",
+      "current_bytes": 3593,
+      "current_sha256": "143ba4e70ae89cd9a7fdfc03777286fac147f625160d62f3fe3900261906a964",
+      "status": "revised"
+    },
+    {
+      "path": "docs/evaluation.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/evaluation.md",
+      "original_bytes": 8935,
+      "original_sha256": "394c6e14f3439ca6bbbd6d8d58139ee8f73ebd7440b46607d07bd0eb672a97df",
+      "current_bytes": 9095,
+      "current_sha256": "e8ceb5499923d488f0c318b2577b865a0fa5690dd35cef4175c58090fa2603d7",
+      "status": "revised"
+    },
+    {
+      "path": "docs/feedback-status.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/feedback-status.md",
+      "original_bytes": 14447,
+      "original_sha256": "9abe3617bb951cf81ba98086e3cc99c4861adc0a3d4396b85130a702c745d6be",
+      "current_bytes": 10590,
+      "current_sha256": "49cff4218a9745eb2b82b3264861654a4fdd14109d109598bee0f99a586091d9",
+      "status": "revised"
+    },
+    {
+      "path": "docs/from-zero.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/from-zero.md",
+      "original_bytes": 14593,
+      "original_sha256": "30d0aab7c9737a87391d0a46ff1b3fa77640ad1c8d70978ae0e65389938618de",
+      "current_bytes": 14838,
+      "current_sha256": "24fc2adae2f8b20220128171a84a82bf2586d98957c083e6cb7df64017453178",
+      "status": "revised"
+    },
+    {
+      "path": "docs/human-review.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/human-review.md",
+      "original_bytes": 9713,
+      "original_sha256": "464f6406b7e1712fa377550585c4643c398a0f42653251011778422bcb45cb45",
+      "current_bytes": 10049,
+      "current_sha256": "e66ce3aed39868b4739dc2b10730cd6b188805f34a085d0eb6ae3f88f0980515",
+      "status": "revised"
+    },
+    {
+      "path": "docs/local-upload.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/local-upload.md",
+      "original_bytes": 4391,
+      "original_sha256": "110d531012c11a96c99274b389cba74ce2793e74e02de107930065cb4cc682f4",
+      "current_bytes": 4508,
+      "current_sha256": "7fb884af2ff6dc6f2be00cbdf5a2224fe068b598b3f9b02938b5191c35180352",
+      "status": "revised"
+    },
+    {
+      "path": "docs/methods-history.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/methods-history.md",
+      "original_bytes": 14941,
+      "original_sha256": "71174baa1fbb221c76c5176858a15c6ee5864e6e719cfd4a6959d2738bc6d668",
+      "current_bytes": 14194,
+      "current_sha256": "c6ce37dd600e3a636011ba5293309e17f45c4e21cfe2656cfe8102a95bed111f",
+      "status": "revised"
+    },
+    {
+      "path": "docs/neurons.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/neurons.md",
+      "original_bytes": 4190,
+      "original_sha256": "e039e9b5931747641a762f33ccea6899a1c19cc64b37cb445f87ad2ee334ef06",
+      "current_bytes": 4217,
+      "current_sha256": "e91f5f427bc9050da408dde9157c3dc583bb7c6eca1287f8bea7c196889647f9",
+      "status": "revised"
+    },
+    {
+      "path": "docs/new-scene-e2e.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/new-scene-e2e.md",
+      "original_bytes": 9349,
+      "original_sha256": "80b344a7622f63bb3289b98b6cc79791310b97660582b14b9e2afa185e78a116",
+      "current_bytes": 9410,
+      "current_sha256": "1aaa77a759638a532530363ffaa02abc191a0a19395253e29d09902aa8b63cfe",
+      "status": "revised"
+    },
+    {
+      "path": "docs/presentation.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/presentation.md",
+      "original_bytes": 6939,
+      "original_sha256": "f75722a5080abf73169afafc7157a67e82c89d5e55deb2c94f34d8f6c1d25cf0",
+      "current_bytes": 7084,
+      "current_sha256": "509ab10aa356692f30b456b9953602d8227c6747d37df8c6f14d365a427f5bcc",
+      "status": "revised"
+    },
+    {
+      "path": "docs/project-card.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/project-card.md",
+      "original_bytes": 6087,
+      "original_sha256": "5393128dc75a1030592e6f4e78ca2d36203f468ce6d03a947ec05c2e730a53fc",
+      "current_bytes": 5898,
+      "current_sha256": "eae754764fab05536a785434256a6ebcaf2d19c077dfa7740697798c499e2977",
+      "status": "revised"
+    },
+    {
+      "path": "docs/prompt_templates.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/prompt_templates.md",
+      "original_bytes": 5940,
+      "original_sha256": "3eae3abde626de9a24cfae94c62d885e0f85fd564ab39d64ea899767d489c8ef",
+      "current_bytes": 5935,
+      "current_sha256": "28cfbe830d964ebe91f7cec2c160671c844dc5c79f0076963841333b7e02fb49",
+      "status": "revised"
+    },
+    {
+      "path": "docs/real-mini-cpu-run.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/real-mini-cpu-run.md",
+      "original_bytes": 4168,
+      "original_sha256": "c00b1efca90c5d3703f7e8bbb31edde28dfa052508cf87de263d264ad97d31cd",
+      "current_bytes": 4586,
+      "current_sha256": "0bd62d7f698ab73a2d3c71620c08fff19f295494ea6df129fa85f6cf7f9709fe",
+      "status": "revised"
+    },
+    {
+      "path": "docs/reference.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/reference.md",
+      "original_bytes": 9618,
+      "original_sha256": "0ab0e312c9e38153ed713a3912060068dd778091046322edaea73c63c1b9efc4",
+      "current_bytes": 11441,
+      "current_sha256": "0e2e84e9ca44cf082f00f2a6ee57c87b96681748c9680ea38d9d383839b09be2",
+      "status": "revised"
+    },
+    {
+      "path": "docs/research-expansion.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/research-expansion.md",
+      "original_bytes": 16760,
+      "original_sha256": "ded22986e0c60609c69b3c91665611943f61df8dd469e2e36f9612fc59bf9c07",
+      "current_bytes": 16018,
+      "current_sha256": "eda6b040b715197d69d2b20c61c90aa600868d38d693266c847ce06c04eded9b",
+      "status": "revised"
+    },
+    {
+      "path": "docs/tasks.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/tasks.md",
+      "original_bytes": 4526,
+      "original_sha256": "2b721512cc4644132d4e8de9e9358e23bf43c709e9dd7d61488502268992573d",
+      "current_bytes": 4711,
+      "current_sha256": "ee99231884c80c324425dc876856f585b990e58b6264429d13f1937b737a6d61",
+      "status": "revised"
+    },
+    {
+      "path": "docs/testing.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/testing.md",
+      "original_bytes": 15337,
+      "original_sha256": "3b5c8536e1b836dae1dcd33db1a9d16acef90a5478640cce09d044d13021f220",
+      "current_bytes": 16021,
+      "current_sha256": "9aac24846777f6ae2587aa71d96b4cbc435e684e5f2754a01f700e179cd58d66",
+      "status": "revised"
+    },
+    {
+      "path": "docs/user.md",
+      "kind": "Markdown document",
+      "archive_entry": "docs/user.md",
+      "original_bytes": 8616,
+      "original_sha256": "687a6ad7ca06cb4523196e2c374dd1ef1a58303f85bfc70caad96b9fbcc8bf86",
+      "current_bytes": 8846,
+      "current_sha256": "82388c9ca4a898e0784f4c60a77714be1ba21f3d58eec5d084e95a9ed47172b1",
+      "status": "revised"
+    },
+    {
+      "path": "latest_grading_criteria.md",
+      "kind": "Markdown document",
+      "archive_entry": "latest_grading_criteria.md",
+      "original_bytes": 5491,
+      "original_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+      "current_bytes": 5491,
+      "current_sha256": "f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c",
+      "status": "unchanged"
+    },
+    {
+      "path": "results/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/README.md",
+      "original_bytes": 9301,
+      "original_sha256": "4944c886d0b380bf60f03af8886d885bc25dc354d5bebcdf4087cb483daf15e7",
+      "current_bytes": 9359,
+      "current_sha256": "a1a28bc81f9eb73b088cd443d703baf5e7ee35ad5fdc15804d9fd082660d4634",
+      "status": "revised"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/ai-label-recheck-20261024/README.md",
+      "original_bytes": 3224,
+      "original_sha256": "8d3545260356c6f17969e754731749a8fcdbc74934ba604b8cb4a6def2adbe2e",
+      "current_bytes": 3473,
+      "current_sha256": "1e770ac673e4098a529bd696a9bedf126b76e5c4223ccafe67342435d5233ba7",
+      "status": "revised"
+    },
+    {
+      "path": "results/ai-label-recheck-20261024/all-ai-labels.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/ai-label-recheck-20261024/all-ai-labels.md",
+      "original_bytes": 5223,
+      "original_sha256": "47135f92d42b7ad9a861120641678f0f991d5e5378ea69188f945c6ac4ca6d3f",
+      "current_bytes": 6361,
+      "current_sha256": "155e4dd0f59c988322c80567ad1377db9add016f8637c4a556d965499c39937a",
+      "status": "revised"
+    },
+    {
+      "path": "results/cpu-mini-ai-pilot-20261023/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/cpu-mini-ai-pilot-20261023/README.md",
+      "original_bytes": 2176,
+      "original_sha256": "731714a2d6b4903c38665b71274244f793df9c998d80edc46f40c26c8cebaaad",
+      "current_bytes": 2252,
+      "current_sha256": "08284e9f70d854c9a42a2fd2db3bcd47e88d9aa637fba7733ee1a0100b138de0",
+      "status": "revised"
+    },
+    {
+      "path": "results/human-ai-exposed-20261026/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/human-ai-exposed-20261026/README.md",
+      "original_bytes": 8051,
+      "original_sha256": "f64161dde1ae015ddc7867d799bd4a5b11a54c141fad34a4f4bd2991801c196a",
+      "current_bytes": 8136,
+      "current_sha256": "5e2ccebfb8354d1dbbf598267e8a8076a14b1094e0cca7bdddbdd2404614a619",
+      "status": "revised"
+    },
+    {
+      "path": "results/new-scene-e2e-20261027/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/new-scene-e2e-20261027/README.md",
+      "original_bytes": 4156,
+      "original_sha256": "2f06e486e425ebc397e8a1a4a89957b85cf67864dec40dfe327f511efdf4a970",
+      "current_bytes": 4260,
+      "current_sha256": "759a7e8268e1e0533b388028b879f396ee3f096bf6ecc4c82820565627cf20ae",
+      "status": "revised"
+    },
+    {
+      "path": "results/new-scene-human-review-20261028/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/new-scene-human-review-20261028/README.md",
+      "original_bytes": 5249,
+      "original_sha256": "dfccf0430ec692cbc4abe2d6156809ea2752582b45a5a3474e8426afc40cd571",
+      "current_bytes": 5263,
+      "current_sha256": "c86b672627ae66d32a684ca14d70d62861c19124b5eea171cacea5a1a2270c09",
+      "status": "revised"
+    },
+    {
+      "path": "results/presentation-20261029/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/presentation-20261029/README.md",
+      "original_bytes": 3498,
+      "original_sha256": "87b089512369556ab220f02c7315e66c10ec6ebb093d9471c320e701219a822b",
+      "current_bytes": 3877,
+      "current_sha256": "2fb65ed3a6d389e553793c3360d723ed4d9230c26ef64d6c4cf139c1badc0c3e",
+      "status": "revised"
+    },
+    {
+      "path": "results/review-page-repair-20261028/README.md",
+      "kind": "Markdown document",
+      "archive_entry": "results/review-page-repair-20261028/README.md",
+      "original_bytes": 2180,
+      "original_sha256": "36e3638b25de93301edbf7738b196f7699709a063377366f42057e0a1b93ddf5",
+      "current_bytes": 2195,
+      "current_sha256": "8c46ed299b269270c551db9a9ea338361f93712b1899bdc298e1e785293ecf44",
+      "status": "revised"
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 # Real mini CPU pilot with provisional AI labels
 
-The later [AI recheck](../results/ai-label-recheck-20261024/README.md) preserves
-this original pilot unchanged. It follows a separate
-[human/AI review SOP](human-review.md); its agreement statistics do not provide
-human verification.
+This page preserves the original 2026-10-23 AI-reference experiment. The later
+[AI recheck](../results/ai-label-recheck-20261024/README.md) and
+[single-reviewer run after AI-label disclosure](../results/human-ai-exposed-20261026/README.md)
+are separate experiment records. The [review workflow](human-review.md) explains
+their annotation provenance.
 
 This run completed ingestion, frozen scene allocation, CPU features, four-model
 training, checkpoint reloads, saved-prediction evaluation and unlabelled
@@ -91,14 +92,13 @@ screened using the saved SAE and unchanged training scaler. Their scenes can
 overlap the labelled scenes: this is an unlabelled inference smoke, not another
 spatial/generalization test. Their exported human-review fields are blank.
 
-The offline demo reuses the existing neuron explorer and opens the user's same
+The offline demo uses the neuron explorer and opens the user's same
 four local ZIPs. It displays trained activations, six original views, similar
 high-activation examples, method scores, AI-reference errors and a review CSV.
 No original image bytes are embedded in its downloadable HTML. Units retain
 numeric identifiers; no old Cosmos glossary or invented semantic name is used.
-Core API/image/CSV checks are distinct from actual browser interaction. Loopback
-HTTP binding was denied by this sandbox; that failed check is retained rather
-than counted as a pass.
+The original sandbox denied loopback HTTP binding. That failed check remains
+in the run record; API, image and CSV checks alone did not verify browser use.
 
 The final local suite passed 205 tests and 18 subtests, with the socket-dependent
 HTTP test deselected. The optional real-asset test actually ran against this
@@ -108,9 +108,11 @@ validated all 480 local images. A later
 [GitHub Actions Chrome run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157)
 passed desktop/mobile image rendering, unit/sample navigation, search and CSV
 download using synthetic, watermarked ZIP fixtures. Its three runtime scripts
-are byte-identical to the shipped explorer. This UI verification is separate
-from the real-image byte/score checks; a real-image browser session has not
-been certified. The retained
+are byte-identical to the shipped explorer. This verified the UI with synthetic
+images, separately from the real-image byte/score checks. The later
+[recorded walkthrough](../results/presentation-20261029/README.md) exercised
+real images with the human-review run's saved outputs; it does not change this
+pilot's original verification scope. The retained
 [browser CI report](../results/cpu-mini-ai-pilot-20261023/browser_ci_verification.json)
 records that scope. CPU CI also passed tests, lint and the generated-data HTTP
 workflow on the same head; see [testing](testing.md).
@@ -142,8 +144,7 @@ Use fresh output directories; the commands above describe the preserved run.
 The default manual-label workflow rejects an AI bundle. Each AI row, metric,
 comparison row and demo retains the AI-provisional/human-pending scope.
 
-For a final application claim, collect independent human decisions using the
-blank offline reviewer, retain disagreements, and obtain enough diverse normal
-and tail scenes under a predeclared budget. Diagnose any future reward-cap change
-on train data and treat it as a new protocol. This pilot completes the software
-route while making those experimental limitations explicit.
+Stronger model claims require independent human decisions and more diverse
+normal and tail scenes under a predeclared review budget. Any change to the
+reward cap needs train-only diagnostics and a new protocol; it cannot be
+presented as a gain from this preserved run.

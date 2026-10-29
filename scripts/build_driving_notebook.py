@@ -36,7 +36,8 @@ def source_bundle(root: Path):
     hashes, stream = {}, io.BytesIO()
     with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
         for name in sorted(set(names) - {""}):
-            if name.startswith("notebooks/") or name.endswith((".zip", ".ipynb")):
+            if (name.startswith("notebooks/")
+                    or name.lower().endswith((".zip", ".ipynb", ".mp4", ".webm", ".mov"))):
                 continue
             path = root / name
             if not path.is_file() or not path.resolve().is_relative_to(root.resolve()):
@@ -56,40 +57,43 @@ def cpu_cells(cells):
         "scope": cell("markdown", """
             # Driving: a CPU-only image-feature reference experiment
 
-            **免费 Colab CPU 启动步骤**
+            **Start in Colab with Python 3.12 and a CPU runtime**
 
-            1. 在电脑打开 https://colab.research.google.com/ ，选择「上传笔记本」，
-               上传这份 `.ipynb` 文件；保持默认 CPU，无需购买 GPU。
-            2. 顺序点击前五个代码块左侧的 ▶：初始化、恢复检查、依赖设置、
-               下载数据、显示六视图。无需修改初始化块里的长代码。
-            3. 看到六视图复核界面后停下，按标注规则人工判断。先不要「全部运行」：
-               图片显示不会暂停后续执行，未完成标注时训练会被校验阻止。
-            4. 要暂停时，运行「保存未完成的复核」下载小型备份；Colab 临时存储
-               可能在断开或重置后丢失。重新开始时使用相同 notebook 恢复该备份。
+            1. Open https://colab.research.google.com/ on a computer, choose
+               **Upload notebook**, and upload this `.ipynb`. Keep the CPU runtime.
+            2. Run the first five code cells in order: setup, restore check,
+               dependencies, data preparation, and six-view review. The setup
+               cell contains embedded source code and needs no manual changes.
+            3. Stop at the review interface and label the images using the rubric.
+               Run cells individually: displaying images does not pause **Run all**.
+               The training checks reject incomplete labels.
+            4. Before pausing, run **Save partial review** and download the backup.
+               Colab storage may be lost after a reset; use this same notebook
+               to restore the backup in a later session.
 
-            启动会检查 Python 3.12；若版本不符或下载报错，保留完整报错供排查。
-            这份文件包含项目代码，不需要先上传到 GitHub，也不需要修改原云环境。
+            Startup checks Python 3.12. Keep the complete error message if a
+            version check or download fails. The project source is embedded;
+            a separate GitHub checkout is unnecessary.
 
-            This self-contained Jupyter/Colab notebook needs Python 3.12 and no
-            GPU. It prepares real mini data, saves human six-view review, extracts
-            frozen pretrained ResNet18 features, then compares Logistic, MLP and
-            matched SAE with/without reward entirely on CPU.
+            The workflow prepares nuScenes mini, saves human six-view review,
+            extracts frozen ResNet18 features and compares logistic regression,
+            a small MLP, and matched SAEs with and without reward on CPU.
 
             The representation concatenates six ordered 512-dimensional image
             features into 3072 dimensions. It is a separate image-only reference
-            protocol, not a reproduction of Cosmos hidden states or VLM results.
+            protocol, separate from Cosmos hidden states and VLM results.
             The official pretrained checkpoint is downloaded and hash-verified;
-            no random weights are substituted. Real driving accuracy is unverified.
+            no random weights are substituted. This notebook starts a fresh run;
+            it does not automatically reproduce the repository's saved results.
 
             Use a runtime whose normal network policy permits official data and
-            PyTorch model downloads. Proxy/TLS settings remain intact. No paid
-            runtime, account or resource booking is created. Review the data terms
-            before acquisition. Mini's frozen 6/2/2 scene split is a custom proof
-            of concept, not an official benchmark test split.
+            PyTorch model downloads. Review the data terms before acquisition.
+            Mini's frozen 6/2/2 scene split is a custom experiment allocation;
+            mini has no official benchmark test split.
 
             Keep WORK on retained storage. Images, reviewed labels and feature
-            artifacts are not embedded in this notebook. Synthetic fixture checks
-            establish software behavior, not model effectiveness on driving data.
+            artifacts are not embedded in this notebook. The portable workflow
+            has synthetic fixture checks; real-image result records are separate.
         """, "scope"),
         "protocol": cell("code", """
             import importlib.metadata
@@ -191,11 +195,11 @@ def cpu_cells(cells):
     }
     result = []
     titles = {
-        "bootstrap": "初始化项目（无需修改长代码）",
-        "restore": "检查是否需要恢复已有复核备份（首次运行保持原样）",
-        "protocol": "安装 CPU 依赖并冻结参数",
-        "acquire": "下载官方 mini 数据并准备六视图",
-        "review": "显示人工复核界面（看到图片后先停下）",
+        "bootstrap": "Set up the project (leave embedded code unchanged)",
+        "restore": "Restore a review backup (skip on the first run)",
+        "protocol": "Install CPU dependencies and freeze settings",
+        "acquire": "Download mini and prepare six-camera views",
+        "review": "Open manual review (pause here to label images)",
     }
     for item in cells:
         item = replacements.get(item["id"], item)
@@ -213,16 +217,18 @@ def cpu_cells(cells):
         if item["id"] == "review":
             result.extend([
                 cell("markdown", """
-                    ### 保存未完成的复核（暂停前运行）
+                    ### Save partial review before pausing
 
-                    标注可以分多次完成。下面会导出已保存的判断、原始划分和参数，
-                    不含图片或模型；尚未完成全部标注也能备份。下次使用同一 notebook，
-                    先上传备份，再在前面的恢复单元设置备份路径。
+                    Review can span multiple sessions. This cell exports saved
+                    decisions, frozen splits and settings, including incomplete
+                    review. Images and models are excluded. In a later session,
+                    open this same notebook, upload the backup and set its path
+                    in the restore cell above.
                 """, "partial-review-text"),
                 cell("code", """
-                    #@title 保存未完成的复核，下载小型备份
+                    #@title Save partial review and download a small backup
                     if not (WORK/"reviewed.csv").is_file():
-                        print("请先保存至少一次复核判断，再运行这个单元。")
+                        print("Save a review decision before running this cell.")
                     else:
                         from portable_handoff import pack_review
                         partial_backup = WORK/"partial_review_handoff.zip"
@@ -230,7 +236,7 @@ def cpu_cells(cells):
                         try:
                             from google.colab import files as colab_files
                         except ImportError:
-                            print("请通过文件浏览器保存：", partial_backup)
+                            print("Save this file using your file browser:", partial_backup)
                         else:
                             colab_files.download(str(partial_backup))
                 """, "partial-review-backup"),
@@ -252,19 +258,17 @@ def build(root: Path, destination: Path, feature_protocol="cosmos"):
         Its steps are acquisition, CPU review, one pinned GPU extraction, then
         four CPU models and the existing explorer.
 
-        **Verification boundary:** source bootstrap, archive handling, review
-        persistence and CPU comparisons have fixture checks. This notebook has
-        not completed a real nuScenes download or Cosmos GPU run in the managed
-        workspace. No real score or GPU fit is claimed.
+        Source bootstrap, archive handling, review persistence and CPU comparisons
+        have fixture checks. A complete Cosmos GPU run has not been verified in
+        the managed workspace. The repository's saved ResNet18 CPU results use a
+        separate feature protocol.
 
         Use an environment whose own network policy permits the official data
-        and model hosts. The cells preserve inherited proxies and TLS checks;
-        a blocked download fails normally. No account, paid runtime or resource
-        booking is created. Review data/model terms at their official sources.
-        Mini has ten scenes and no official test split: this workflow's frozen
-        6/2/2 allocation is a custom proof of concept.
+        and model hosts. The cells preserve inherited proxies and TLS checks.
+        Review data and model terms at their official sources. Mini has ten
+        scenes and no official test split; this workflow freezes a custom
+        6/2/2 scene allocation.
 
-        Cells that acquire data or download a model do real work when executed.
         Keep WORK on storage you retain across runtime restarts. Review decisions
         save there immediately. Preserve the whole WORK directory for transfer.
     """, "scope")]
@@ -576,9 +580,10 @@ print("Verified source files:", len(source_manifest))
                              "feature_protocol": feature_protocol,
                              "source_files": len(hashes),
                              "verification_scope": (
-                                 "CPU fixtures; real-data run pending" if
+                                 "CPU fixture checks; saved real-image results "
+                                 "recorded separately" if
                                  feature_protocol == "cpu-resnet18" else
-                                 "CPU fixtures; real-data/GPU run pending")}}
+                                 "CPU fixture checks; Cosmos GPU execution unverified")}}
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
     return {"path": str(destination), "source_files": len(hashes),

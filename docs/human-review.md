@@ -1,140 +1,176 @@
-# Driving 标签复核：人工流程与 AI 辅助流程
+# Human review and AI-assisted label checks
 
-本页适用于现有 **80 个时间点、每个时间点六张原图** 的 mini 试跑。
-使用冻结的 [normal-core 标准](../latest_grading_criteria.md)，版本 SHA256：
-`f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c`。
+This workflow covers the original mini cohort: **80 timestamps, with six
+original camera images per timestamp**. Use the frozen
+[normal-core rubric](../latest_grading_criteria.md), SHA256:
+`f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c`.
 
-**人工核验由实际看图的人完成。Subagent 可以执行同样的检查步骤，但记录为
-AI 复核；多次 AI 判断一致也不构成人工真值或标签准确率。**
+A human review means a person inspected the images and made the decision.
+Agents can follow the same checklist, but their output remains an AI review.
+Agreement between AI passes does not establish human ground truth or label accuracy.
 
-## 已完成的提交与 AI 暴露记录（2026-10-26）
+## Submitted labels and prior AI exposure: 2026-10-26
 
-本轮已收到 Yike 的最终 CSV，覆盖冻结清单中的全部 80 个唯一 sample token，
-没有缺失、重复或额外 token。原始文件 SHA-256：
-`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`。
-CSV 是本次状态与标签计数的来源；每行 reviewer 均为 `Yike`。
-最终有 77 条二分类 `reviewed`（12 条 `normal_core`、65 条
-`not_normal_core`），另有 3 条标签与状态均为 `uncertain`，没有 `pending`。
-80 条 `review_notes` 全部为空，三条不确定记录也未提供原因；执行者没有补写
-或推断这些原因。
+Yike's final CSV contains all 80 frozen sample tokens, with no missing,
+duplicate or extra rows. Its SHA256 is
+`c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
+Every row names `Yike` as reviewer. The CSV records 77 binary `reviewed`
+decisions: 12 `normal_core` and 65 `not_normal_core`. The other three rows
+have both label and status set to `uncertain`; none remain `pending`.
+All 80 `review_notes` fields are blank, including the three uncertain rows.
+No reasons were added or inferred by the project executor.
 
-最初仅完成前 10 条的 CSV 作为展示完整 AI 标签表之前的检查点保留，原始
-SHA-256 为 `c56adb638a09276ff027fb039b049ec8be90d251aaa3b3477c3263760d4c49ec`。
-其后用户看过完整 AI 标签表，才提交最终文件。因此最终版本属于**接触 AI
-标签后的单人复核**，不能称为盲法独立人工真值。前 10 条中有四条后来修订：
-按工具从 0 开始的索引，0、3、9 从 `normal_core` 改为 `not_normal_core`，
-8 从 `normal_core` 改为 `uncertain`；两个原始版本及修订记录均保留。
-剩余 70 条从待完成变为 68 条 `reviewed` 和两条 `uncertain`。
+An earlier CSV, with only the first ten rows completed, is preserved with
+SHA256 `c56adb638a09276ff027fb039b049ec8be90d251aaa3b3477c3263760d4c49ec`.
+Yike saw the complete AI label table before submitting the final version.
+The final labels are therefore **single-reviewer judgments after AI-label
+disclosure**, not an independent blind reference. Four of the first ten rows
+changed: zero-based indices 0, 3 and 9 changed from `normal_core` to
+`not_normal_core`; index 8 changed from `normal_core` to `uncertain`.
+Both original files and the revision record are retained. Of the remaining
+70 rows, 68 became `reviewed` and two became `uncertain`.
 
-沿用原来的 6/2/2 场景划分，二分类支持数为：
+The original 6/2/2-scene allocation was unchanged:
 
-| 冻结 split | normal | not normal | uncertain（排除） |
+| Frozen split | Normal | Not normal | Uncertain, excluded |
 |---|---:|---:|---:|
-| train | 3 | 45 | 0 |
-| validation | 4 | 10 | 2 |
-| test | 5 | 10 | 1 |
+| Train | 3 | 45 | 0 |
+| Validation | 4 | 10 | 2 |
+| Test | 5 | 10 | 1 |
 
-77 条二分类记录满足当前导入器「每个 split 都有两类」的支持数检查；这不
-代表标注独立性或模型效果已经得到验证。三个正常训练时间点来自同一场景，
-样本量与场景覆盖仍有限。三条 `uncertain` 保留原判并排除出有监督训练/评估。
-随后已用这 77 条记录、原有 ResNet18 特征和不变的训练设置完成四个 CPU 方法
-的拟合，并独立核对输入/源码 hash、仅训练集拟合的标准化、四个 checkpoint
-重载得分、仅 validation 选择的阈值、保存的指标与比较表。
-这些指标衡量与接触 AI 标签后判断的一致程度，不是盲法独立真值准确率。
-两个 SAE checkpoint 与彼此及原 AI 试跑字节相同，本轮未观察到 reward 增益；
-MLP 则因 validation 判断改变，从第 4 轮改选第 5 轮 checkpoint，训练设置
-与十轮训练 loss 轨迹保持不变。拟合时源码快照保留，之后的来源字段防护修复
-单独记录。已完成的实验及其证据范围见
-[本轮记录](../results/human-ai-exposed-20261026/README.md)；原 AI 试跑与
-[AI 复核记录](../results/ai-label-recheck-20261024/README.md)继续单独保留。
+The 77 binary decisions meet the importer's requirement for both classes in
+each split. This check establishes usable class support, not annotation
+independence or model quality. All three normal training timestamps belong to
+one scene. The three uncertain decisions remain excluded from supervised
+training and evaluation.
 
-## 1. 准备与独立判断
+All four CPU methods were fitted using these labels, the existing ResNet18
+features and unchanged training settings. An independent replay checked input
+and source hashes, train-only normalization, all four reloaded checkpoints,
+validation-selected thresholds, saved metrics and the comparison table. The
+metrics measure agreement with the disclosed-AI human references. Both SAE
+checkpoints are byte-identical to each other and to the original AI-pilot
+checkpoints; no reward gain was observed. Changed validation decisions moved
+the MLP's selected checkpoint from epoch four to epoch five, while its settings
+and ten-epoch training-loss history remained unchanged.
 
-1. 从 GitHub 下载 [空白复核工具](../tools/review_upload.html)，保存 HTML，
-   用电脑 Chrome/Edge 打开。
-2. 同时选择原来的四个 `driving-mini-part-…zip`，点击「校验并打开」。
-   核对显示的是 80 帧；图片在本机读取。
-   首次独立复核使用独立的浏览器配置，并确认没有恢复别人的答案。工具会自动
-   恢复同一数据和 rubric 的本地记录，重新下载 HTML 不会清空已保存的判断。
-3. 填写实际看图者的名字。先阅读页面中的完整判断标准；查看少量例子熟悉操作。
-4. 正式标注时不查看旧 AI 标签、模型分数、预测或 train/validation/test 归属。
-   使用此空白工具；带模型得分的 explorer 用于后续错误分析。
-5. 熟悉阶段如需澄清标准，记录说明并在正式标注前冻结。已有实验使用的 rubric
-   不回写修改；改变标准时另记版本并重新检查受影响样本。
+The execution source snapshot is preserved. A later provenance-field guard
+repair is recorded separately. See the
+[human-review run](../results/human-ai-exposed-20261026/README.md), the original
+[AI pilot](ai-pilot.md) and the separate
+[AI recheck](../results/ai-label-recheck-20261024/README.md).
 
-## 2. 每帧重复的检查顺序
+## 1. Prepare for an independent review
 
-检查对象是**整个六视角时间点**，不是只看前摄像头。
+1. Download the [blank review tool](../tools/review_upload.html), save the
+   HTML file and open it in desktop Chrome or Edge.
+2. Select all four original `driving-mini-part-…zip` files together and use
+   the load-and-validate control. Confirm that the tool shows 80 frames.
+   Images are read locally. For a first independent review, use a separate
+   browser profile and check that no earlier answers have been restored.
+   The tool restores local records for the same data and rubric; downloading
+   the HTML again does not clear them.
+3. Enter the actual reviewer's name. Read the full rubric, then inspect a few
+   examples to learn the controls.
+4. During formal review, use the blank tool and avoid old AI labels, model
+   scores, predictions and split assignments. Use the scored explorer later
+   for error analysis.
+5. Record any rubric clarifications and freeze them before formal annotation.
+   A changed rubric needs a new version and another check of affected samples;
+   do not revise the rubric recorded for an existing experiment.
 
-1. **清晰度与可见范围：**按界面顺序逐张查看前、前左、前右、后、后左、后右。
-   记录模糊、强光、低照度、雨雾、遮挡等实际可见现象。
-2. **道路与静态设施：**确认可见行驶空间、路口、车道边界、施工、锥桶、
-   护栏、封闭道路和车道内障碍。
-3. **交通参与者：**查看前车距离、行人/骑行者与可见行驶路径的关系，以及
-   大型车或停放车辆是否遮住关键区域。仅凭远处有人或有车，不自动判为异常。
-4. **按标准选择一个标签：**
+## 2. Check every timestamp in the same order
 
-   | 标签 | 使用条件 |
+Review the **whole six-view timestamp**, not just the front camera.
+
+1. Inspect front, front-left, front-right, rear, rear-left and rear-right in
+   the displayed order. Note visible blur, glare, low light, rain, fog or
+   occlusion.
+2. Check the drivable area and static features: junctions, lane boundaries,
+   construction, cones, barriers, road closures and obstacles in the lane.
+3. Check traffic participants, including nearby vehicles, pedestrians and
+   cyclists relative to the visible driving path. Consider whether large or
+   parked vehicles hide a relevant area. A distant person or vehicle alone
+   does not make a frame abnormal.
+4. Choose one label under the frozen rubric:
+
+   | Label | Decision rule |
    |---|---|
-   | `normal_core` | 所见场景清楚、常规，没有明确需要额外防御驾驶的可见因素。 |
-   | `not_normal_core` | 有明确可见因素需要额外谨慎，或符合冻结标准的静态困难条件。 |
-   | `uncertain` | 关键细节看不清、信息不足，或无法稳定判断。 |
+   | `normal_core` | The visible scene is clear and routine, with no evident factor requiring additional defensive driving. |
+   | `not_normal_core` | A visible factor calls for extra caution, or a static difficulty meets the frozen rubric. |
+   | `uncertain` | A key detail is unclear, information is insufficient or the decision is unstable. |
 
-5. **记录依据：**有疑问或判为非正常/不确定时，写明「哪个摄像头、看到什么、
-   为什么影响判断」。例如：「CAM_FRONT_RIGHT：护栏贴近可见通行区域，边界受限」。
-   不写单帧无法证明的事件，如「正在加塞」「即将撞上」；也不凭印象判断统计稀有性。
-6. 点击摄像头缩略图，可在新标签页打开原始 JPEG，使用浏览器图像缩放检查细节。
-   看完细节再切到下一帧；页面切帧后会释放上一帧的 Blob 链接。
-   仍无法确认就选 `uncertain`，保留具体原因。此机制已由代码检查确认；本轮
-   未认证真实图片下的完整浏览器人工操作。
+5. For difficult, non-normal or uncertain decisions, record the camera, visible
+   evidence and its relevance. For example: "CAM_FRONT_RIGHT: a barrier is
+   close to the visible travel area and restricts its boundary." Avoid events
+   that a still image cannot establish, such as an imminent collision, and do
+   not infer statistical rarity from appearance.
+6. Open a camera thumbnail in another tab to inspect the original JPEG at a
+   larger scale. Finish before moving to the next timestamp: changing frames
+   releases the previous frame's Blob links. If the evidence remains unclear,
+   choose `uncertain` and retain the reason. The link lifecycle was checked in
+   code; it did not establish a complete human review session in the original
+   execution sandbox.
 
-每帧独立判断。不要为了让类别更均衡、提高分数或与已有标签一致而改标签。
+Judge each timestamp on its evidence. Do not revise labels to balance classes,
+improve a score or agree with another label set.
 
-## 3. 保存与第二位人工复核
+## 3. Save work and obtain a second human review
 
-- 每完成一批即点击「下载 reviewed.csv」备份，完成后再导出最终版本。
-  浏览器本地存储只是便利功能，不能替代导出的文件。
-- 每位复核者保存自己的一份原始 CSV，使用真实姓名或稳定身份标识。
-- 推荐第二位实际人员在另一台电脑或独立浏览器配置中，先不看第一人的答案，
-  独立检查同一批帧。预算有限时，提前选定抽查范围，并额外检查不确定项；记录
-  「哪些帧单人、哪些帧双人」，不能把未双人检查的部分称作双人核验。
-- 锁定双方原始 CSV 后才对比分歧。共同看原图，另存最终决定、参与者和理由。
-  原始判断不覆盖；不能达成稳定判断的帧保留 `uncertain`。
-- 交给导入器的是每个 token 一条最终决定的 CSV。两个人覆盖相同帧的原始 CSV
-  作为独立证据保留，不能直接合在一起导入造成重复 token。
-- AI 分歧清单可以帮助安排额外人工检查，但应在首次独立人工判断之后展示旧
-  AI 答案，以减少锚定。优先检查分歧不等于随机抽样的标签质量估计。
+- Export `reviewed.csv` after each batch and again when finished. Browser
+  storage is a convenience, not a substitute for the exported file.
+- Keep each reviewer's original CSV with their real name or stable identifier.
+- Ideally, a second person reviews the same frames independently on another
+  computer or browser profile. If the budget permits only a subset, choose it
+  in advance, add uncertain cases and record which frames had one or two
+  reviewers. Do not describe the remainder as double-reviewed.
+- Lock both original files before comparing disagreements. Inspect the
+  original images together and save the final decision, participants and
+  reason separately. Preserve the original judgments; unresolved cases stay
+  `uncertain`.
+- Import one final decision per token. Keep overlapping reviewer CSVs as
+  evidence rather than concatenating them into duplicate-token input.
+- An AI disagreement list can guide extra review after the first independent
+  human pass. Showing old AI decisions earlier can anchor judgments. A
+  disagreement-focused check is not a random-sample estimate of label quality.
 
-## 4. 交给执行者后怎样处理
+## 4. Import labels and define a new experiment
 
-将原始 CSV，以及存在时的第二人 CSV/分歧裁定记录，发回项目执行者。
-执行者核对 token、身份、状态、标签白名单、记录完整性和原场景划分；检查
-每个 split 的两类支持数。`uncertain` 和待完成项保留并排除出有监督训练/评估。
-CSV 中的名字本身不能证明人工来源；只有实际由该人看图作出的决定才记为人工。
+Return the original CSV and any second-reviewer or adjudication records. The
+executor checks token coverage, identity, status, allowed labels, completeness,
+the frozen scene allocation and class support in each split. Pending and
+uncertain rows remain excluded from supervised fitting and evaluation.
+A name in a CSV is not proof that a person inspected the images.
 
-人工标签形成**新的实验版本**。沿用冻结的 6/2/2 场景归属，重新计算标签支持数，
-在查看新 test 结果前固定复核预算 K，重新训练全部四个模型，并仅用 validation
-选 checkpoint 和工作点；不只把旧预测
-换一份标签后声称原模型已在人类真值上完成训练。先前 AI 试跑的标签、预测和表格
-保留原样。若类别支持不足，报告限制并扩充合适的数据，而不是重排场景或改判断。
+Human labels define a **new experiment version**. Retain the frozen 6/2/2 scene
+allocation, recalculate supports, set review budget K before inspecting the new
+test results, retrain all four models and select checkpoints and operating
+points using validation only. Relabelling old predictions alone does not mean
+the old model was trained on human references. Preserve the AI pilot's labels,
+predictions and tables. If class support is insufficient, record the limit and
+collect suitable data rather than changing scenes or judgments to obtain a score.
 
-完成一次人工核验，也仍需说明人员数量、覆盖范围、争议和任务标准。此 mini
-试跑的样本量与场景覆盖限制不会自动消失。
+Report the number of reviewers, their coverage, disagreements and the rubric.
+Human review does not remove the mini cohort's limited size and scene coverage.
 
-## 5. Subagent 可以执行的 AI 复核版本
+## 5. AI recheck with subagents
 
-1. 在看图前冻结本轮 rubric、样本清单、分工、输出字段和比较方式。
-2. 使用新会话的 agent，只提供 rubric、图像及无标签身份信息；不提供旧标签、
-   场景描述、split、模型输出或期望类别比例。独立指输入隔离，仍可能共享模型偏差。
-3. 按第 2 节实际检查六视角，必要时打开原图。每帧记录标签、置信度、摄像头证据、
-   不确定原因、实际查看的图像与 hash。低置信度记录为 `uncertain`。
-4. 每行强制标明 `label_origin=ai_visual_provisional`、
-   `human_review_status=pending`，复核者名称以 `AI` 开头。
-5. 所有 agent 提交后才与旧标签比较；检查全覆盖、唯一 token、rubric/image hash
-   和字段合法性。保留原始结果，不靠重复抽取 agent 或多数票消除分歧。
-6. 输出 AI 一致/分歧统计和待人工检查清单。**不修改人工状态，不自动覆盖旧标签，
-   不据此宣布人工准确率，也不自动替换当前实验结果。**
+1. Freeze the rubric, sample list, assignments, output fields and comparison
+   procedure before image inspection.
+2. Give fresh agent sessions only the rubric, images and unlabelled identities.
+   Withhold old labels, scene descriptions, splits, model outputs and expected
+   class proportions. Input isolation does not remove shared model biases.
+3. Follow the six-view checklist above and enlarge originals as needed. Record
+   label, confidence, camera evidence, uncertainty reason, inspected images and
+   their hashes. Low-confidence decisions become `uncertain`.
+4. Require `label_origin=ai_visual_provisional`,
+   `human_review_status=pending` and a reviewer name beginning with `AI`.
+5. After all agents submit, compare with the old labels and check complete
+   coverage, unique tokens, rubric/image hashes and valid fields. Preserve
+   submissions. Do not rerun agents or use majority voting to erase disagreement.
+6. Report AI agreement, disagreement and a human-review queue. Do not change
+   human status, overwrite old labels or replace an experiment automatically.
 
-2026-10-24 的执行计划将 80 帧以固定种子分给四个新 AI agent，每帧本轮一次判断。
-分组在看图前冻结。该轮属于 AI-to-AI 一致性检查；结果另见
-[AI 复核记录](../results/ai-label-recheck-20261024/README.md)。
+The 2026-10-24 plan assigned 80 frames to four fresh AI agents with a fixed seed,
+one decision per frame and assignments frozen before inspection. Its results
+are an [AI-to-AI consistency check](../results/ai-label-recheck-20261024/README.md).

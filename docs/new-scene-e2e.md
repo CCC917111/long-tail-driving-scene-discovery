@@ -1,15 +1,16 @@
 # New real scenes: CPU inference to human review
 
-**Open the [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).**
+The [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+lets the owner inspect nine new six-camera timestamps and export decisions.
 
-The owner-private Site serves all 54 verified original images from the same
+The private Site serves all 54 verified original images from the same
 origin. No HTML download or external raw-GitHub image access is required.
 Desktop/mobile real-browser checks, CSV export and failed-image retry passed.
 Those checks used the same-origin bundle on a temporary local server; native
 publishing status separately verifies deployment. An authenticated production
 browser session was not recorded.
-Use the owner's current ChatGPT account to sign in. External GitHub readers
-cannot access this owner-private tool automatically. The
+Sign in with the owner's ChatGPT account. External GitHub readers do not
+automatically have access. The
 [repair evidence](../results/review-page-repair-20261028/README.md) records the
 same-origin image delivery, browser checks and deployment. A public source-linked
 HTML fallback is described separately below.
@@ -29,7 +30,7 @@ of these nine rows has been used to retrain the existing models.
    and sign in with the owner's ChatGPT account. No HTML download or ZIP upload
    is needed; images load from the Site itself.
 2. Wait until the current group's six views load. The three judgment buttons
-   remain disabled while images are missing. **重试图片** retries loading while
+   remain disabled while images are missing. The image-retry button retries loading while
    preserving the current unsubmitted name and notes.
 3. Inspect the six views. Enter your name, add a short reason, then choose
    `normal_core`, `not_normal_core` or `uncertain`. The next group opens after
@@ -37,7 +38,7 @@ of these nine rows has been used to retrain the existing models.
 4. Download `reviewed-new-scenes.csv` to preserve your work. Browser storage is
    a convenience, so export before changing device/browser or clearing storage.
 
-Scores and numeric SAE units stay hidden initially. **显示模型信号** reveals
+Scores and numeric SAE units stay hidden initially. The model-signal control reveals
 them and records that subsequent judgments followed model-signal exposure.
 The source HTML contains the cached model values, so this convenience is not
 proof of an independent blind study. The CSV is a fresh review record, not a
@@ -95,8 +96,9 @@ owner-private Site.
 ## Descriptive frozen-policy replay
 
 The [saved replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
-uses the old validation-selected operating threshold without adjusting it to
-the nine new judgments. It selects five candidates (three reference positives,
+uses the old validation-selected operating threshold,
+`6.074954873387325`, without adjusting it to the nine new judgments. It selects
+five candidates (three reference positives,
 two reference negatives): precision 60%, recall 75%. The fixed activation rule
 instead selects all nine: precision 44.4%, recall 100%. These are two different
 policies on unchanged model scores, not a model improvement from retraining.

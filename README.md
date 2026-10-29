@@ -4,35 +4,38 @@
 [![Browser checks](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/workflows/offline-browser.yml/badge.svg)](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/workflows/offline-browser.yml)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 
-**Find driving frames worth reviewing, then inspect why they were selected.**
-This team capstone explores sparse autoencoders (SAEs) for ranking six-camera
-keyframes. A reproducible CPU follow-up connects data validation, four-model
-comparison, saved predictions and an offline neuron explorer.
+**Rank six-camera driving frames for review and inspect the features behind each score.**
+This project grew out of a team capstone on sparse autoencoders (SAEs). The
+completed CPU follow-up connects image validation, four-model evaluation, saved
+predictions and a browser explorer for reviewing sparse activations.
 
-[**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) · [**Final presentation copy**](docs/presentation.md) ·
+[**Watch the 90-second walkthrough**](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4) ·
+[**Demo guide**](demo/README.md) · [**Project card**](docs/project-card.md) · [**Presentation scripts**](docs/presentation.md) ·
 [**Saved results**](results/human-ai-exposed-20261026/README.md) ·
 [**Human review steps**](docs/human-review.md) ·
 [**CPU quickstart**](#run-a-cpu-example)
 
-**New-scene review:** [open the hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site).
-This owner-private Site requires the owner's ChatGPT sign-in and serves all
-54 images from the same origin, with no ZIP upload. It is an owner review tool,
-not a public visitor demo. The [downloadable source-linked HTML](demo/driving_new_scenes.html)
-is a separate fallback requiring Internet access to `raw.githubusercontent.com`.
-[Execution and replay guide](docs/new-scene-e2e.md).
+The video is public on GitHub and can also be
+[downloaded directly](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
+It shows real images and saved model outputs, with English captions and no
+spoken narration. See the [recording and attribution record](results/presentation-english-20261029/README.md).
 
-> **Current evidence:** the real-image CPU pipeline is complete. The latest
-> fitted four-model comparison uses 77 retained single-reviewer judgments after
-> AI-label disclosure. A later nine-frame, two-scene review is recorded
-> separately; it did not retrain those models. Neither record establishes
-> independent blind human ground truth or an official benchmark result.
+The [hosted new-scene review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
+is optional and requires the owner's ChatGPT sign-in. Public readers can use
+the [downloadable HTML](demo/driving_new_scenes.html), which loads images from
+`raw.githubusercontent.com`, or run the generated-data example below.
+
+The latest fitted comparison uses 77 binary judgments from one reviewer after
+AI-label disclosure. Nine later timestamps were reviewed separately without
+retraining. These small reference sets support a workflow demonstration, not
+an independent benchmark claim.
 
 ## What the project does
 
-One timestamp from six cameras produces a candidate score, sparse activations,
-similar high-activation examples and a review queue. The research question is
-whether a tail-guided SAE improves review yield over Logistic regression and a
-small MLP on the same frozen features and scenes.
+For each timestamp, six camera views produce a score and sparse activations.
+The explorer shows examples that strongly activate a selected unit and exports
+a review queue. The experiment asks whether a tail-guided SAE improves review
+yield over logistic regression and a small MLP with the same features and scenes.
 
 ```mermaid
 flowchart LR
@@ -45,36 +48,36 @@ flowchart LR
     F --> G
 ```
 
-The original research route uses Cosmos-Reason1 VLM features. The completed
-CPU pilot uses a pinned ImageNet ResNet18, concatenating six 512-dimensional
-views. These are separate feature protocols; the CPU run does not reproduce
-the original Cosmos experiment.
+The original research route uses Cosmos-Reason1 VLM features. The CPU follow-up
+uses a pinned ImageNet ResNet18 and concatenates six 512-dimensional view
+representations. It is a separate feature protocol from the Cosmos experiment.
 
 ## Supplemental new-scene review
 
 The 2026-10-28 [supplemental record](results/new-scene-human-review-20261028/README.md)
-contains nine completed judgments: five normal and four non-normal, from two
-new scenes. Together with the earlier cohort, the repository records 89
-timestamps / 12 scenes / 534 original images, with 86 binary judgments and
-three uncertain decisions. These are cumulative inputs, not 89 training rows.
-The existing models still trained with only three normal frames from one scene.
+contains nine judgments from two new scenes: five normal and four non-normal.
+Across both batches, the repository records **89 timestamps, 12 scenes and 534
+original images**, with 86 binary judgments and three uncertain decisions.
+These are cumulative inputs; the later nine timestamps were not used for
+training. The existing models trained with only three normal frames from one scene.
 
-The original fixed SAE rule selects all nine new frames (precision 44.4%,
-recall 100% against this submission). Replaying the operating threshold already
-selected on the old validation set selects five (precision 60%, recall 75%),
-without tuning on these nine labels. See the
+The AI reference table was disclosed in chat before this single-reviewer
+submission; per-frame judgment timing is unknown. Against those references,
+the fixed SAE rule selects all nine frames (precision 44.4%, recall 100%).
+Replaying the old validation-selected threshold, **6.074954873**, selects five
+(precision 60%, recall 75%) without tuning on these nine labels. See the
 [frozen-policy replay](results/new-scene-human-review-20261028/frozen_policy_evaluation.json).
-All normal references come from one new scene and all non-normal references
-from the other. The AI reference table was disclosed in chat before submission;
-per-frame judgment timing is unknown. These descriptive results do not establish
-generalization or independent label accuracy.
+All normal references come from one scene and all non-normal references from
+the other, so class and scene are confounded. Selecting fewer candidates here
+does not establish measured review-time savings or generalization.
 
 ## Latest fitted comparison: reviewed references after AI-label exposure
 
-On 2026-10-26, Yike submitted all 80 decisions: 12 normal, 65 tail and three
-uncertain. Four CPU models were rerun with unchanged features, scene allocation
-and seed-42 settings. Train/validation/test retain 48/14/15 timestamps; test has
-ten tail and five normal references in two scenes.
+On 2026-10-26, Yike submitted 80 decisions after seeing the AI-label table:
+12 normal, 65 tail and three uncertain. The four CPU models were rerun with
+unchanged features, scenes and seed-42 settings. Excluding uncertain decisions
+leaves 48/14/15 train/validation/test timestamps. Test contains ten tail and
+five normal references from two scenes.
 
 | Method | Test AP | Precision@4 | Test recall at validation-selected operating point |
 |---|---:|---:|---:|
@@ -83,29 +86,27 @@ ten tail and five normal references in two scenes.
 | AbsTopK SAE, no reward | 0.9353 | 1.00 | 0.20 |
 | AbsTopK SAE, norm reward | 0.9353 | 1.00 | 0.20 |
 
-The SAE operating point has test precision 1.00 on only **two selected frames**.
-Its top-four policy separately finds four of ten reference positives. Reward
-and no-reward checkpoints remain identical. Their weights also match the original
-AI pilot: labels and retained evaluation IDs changed, so the new AP is not a
-model-improvement claim. MLP selects a different epoch under the new validation
-references. Train still has only three normal frames, all from one scene.
+The SAE operating point selects **two test frames**, both positive under these
+references, and recalls two of ten positives. Its top-four ranking is a separate
+policy. The reward and no-reward checkpoints are identical and also match the
+original AI pilot: changed references and retained IDs explain the new SAE AP,
+not improved weights. The MLP selects a different epoch under the new validation
+references. Training still has three normal frames from one scene and one seed.
 
-The final judgments were collected after AI-label exposure by one reviewer;
-the earlier first-ten checkpoint and four revisions are preserved. Read the
-[full reviewed-reference run and evidence](results/human-ai-exposed-20261026/README.md).
-The default offline HTML demo now replays this reviewed-reference run; the
-original AI demo is retained as a byte-identical archive.
+The [full result record](results/human-ai-exposed-20261026/README.md) preserves
+the initial ten judgments and four later revisions. The default HTML viewer
+replays this run; the original AI-reference viewer remains archived.
 
 ## Original AI-reference pilot
 
 **Protocol `cpu-resnet18-six-camera-v1` · 2026-10-23 · seed 42 · review budget 4**
 
-The run imported **80 timestamps / 10 scenes / 480 original images**, froze a
-custom **6/2/2-scene** allocation before annotation, and retained **73 AI-labelled
-timestamps** after excluding seven uncertain decisions. All methods share the
-feature cache and manifest, train-only normalization and validation-only
-model/threshold selection. Test support is **14 timestamps in two scenes:
-9 AI-tail and 5 AI-normal references**.
+The first run imported **80 timestamps, ten scenes and 480 original images**.
+A custom **6/2/2-scene** allocation was frozen before AI annotation. Excluding
+seven uncertain decisions left 73 AI-labeled timestamps. All methods share
+the feature cache, manifest, train-only normalization and validation-only
+selection. Test contains **14 timestamps in two scenes: nine AI-tail and five
+AI-normal references**.
 
 | Method | Test AP, AI references | Precision@4 | AI-tail references found / 4 |
 |---|---:|---:|---:|
@@ -114,18 +115,15 @@ model/threshold selection. Test support is **14 timestamps in two scenes:
 | AbsTopK SAE, no reward | 0.9216 | 1.00 | 4 |
 | AbsTopK SAE, norm reward | 0.9216 | 1.00 | 4 |
 
-Two findings matter when reading this table:
+All four models missed the validation precision target of 90%, so the saved
+operating policy selects no test frames. The SAE's fixed activation rule instead
+flags every test frame. Its reward cap was already saturated at initialization,
+giving a zero reward gradient and identical SAE checkpoints. The experiment
+therefore provides no evidence of a reward benefit.
 
-- **All four models missed the validation 90% precision target.** The saved
-  operating-point policy predicts none, giving test recall zero. The SAE's
-  original fixed activation rule instead flags every test frame.
-- **The two SAE checkpoints are identical.** The capped reward was already
-  saturated at initialization, so its gradient was zero. This run provides
-  no evidence of an incremental reward benefit.
-
-There are only three normal training frames, two test scenes and one seed.
-The normal-core rubric identifies visible need for extra defensive driving;
-it does not establish statistical rarity. Mini has no official test split.
+The normal-core rubric asks whether visible conditions call for extra defensive
+driving; it does not measure statistical rarity. nuScenes mini has no official
+test split.
 Read the [full protocol and failure analysis](docs/ai-pilot.md), including
 [three fixed-rule disagreements](results/cpu-mini-ai-pilot-20261023/failure_cases.json).
 Historical random-frame results are preserved separately in
@@ -139,14 +137,14 @@ Edge. With the original four locally held ZIP parts, it displays six camera
 views, learned activations, per-frame scores from all four methods, error
 bookmarks and a downloadable review CSV. Images stay in your browser.
 
-The default viewer contains all 308 method values for the latest 77 retained
-timestamps, with same-rule MLP error bookmarks and the post-AI-exposure review
-scope. The [archived AI viewer](demo/driving_ai_pilot.html) retains the original
-73-frame pilot. Both contain cached numeric outputs, not raw images or a live model.
-Without the matching parts, you can read its result summary; interactive image
-inspection requires those parts. For a generated-data example requiring no
-nuScenes access, use the quickstart below. The [demo guide](demo/README.md)
-includes a 90-second walkthrough and the scope of its error examples.
+The default viewer contains 308 method values for 77 retained timestamps and
+MLP error bookmarks under one fixed threshold. The
+[archived AI viewer](demo/driving_ai_pilot.html) retains the 73-frame pilot.
+Both embed numeric outputs; image inspection requires the matching ZIPs.
+Without them, use the public video or the generated-data quickstart. The
+[demo guide](demo/README.md) explains access and the selected error examples.
+
+<a id="cpu-quickstart"></a>
 
 ## Run a CPU example
 
@@ -176,39 +174,37 @@ same workflow without HTTP checks:
 
 ## Team and contribution
 
-**Project lead: Yike Chen.** Yike is responsible for the GitHub project's
-repository-wide optimization and delivery, including the CPU workflow,
+**Yike Chen leads the repository modernization and delivery:** the CPU workflow,
 experiment organization, review process, reproducibility materials and demo.
-The modernization phase used AI-assisted development, as documented below.
 
 The original capstone is shared work by **Yike Chen, Zihua Chen and Yusong Zhao**.
-These roles preserve the contribution statement at `b57eaffa`; original reports
-and run records remain necessary to substantiate individual claims.
+The following roles preserve the contribution statement at `b57eaffa`.
 
-| Contributor | Stated capstone contributions |
+| Contributor | Original capstone contributions |
 |---|---|
 | **Yike Chen** | Implemented SAE feature-extraction and training code; led precision-oriented evaluation; contributed to ablations and selected feature interpretation. |
 | **Zihua Chen** | Developed the local annotation platform; manually reviewed model-generated labels; contributed to SAE feature extraction. |
 | **Yusong Zhao** | Contributed to ablations and SAE feature extraction; led most learned-feature interpretation and analysis. |
 
-The later CPU workflow, provenance hardening, tests, offline tools and this
-documentation are **AI-assisted follow-up work**, recorded separately from
-original capstone authorship. The pilot annotations were produced by an AI
-visual assistant. The later user review is recorded separately with its known
-AI-label exposure, single-reviewer scope and original/revised CSV evidence.
+**AI assistance:** the modernization used AI-assisted implementation and
+documentation. An AI visual assistant supplied the first pilot's annotations;
+the later single-reviewer submissions retain their AI-label exposure history
+and original/revised CSVs. These records are separate from the team's original
+capstone contributions.
 
 ## Evidence and reproducibility
 
-Each published result row links through saved predictions and run metadata to
-its seed, configuration, manifest, feature hash, checkpoint hash and actual
-training-source snapshot. The independent audit reloaded all four local models
-and reproduced scores. Raw images, original metadata tables, feature arrays
-and model weights are excluded from Git; derived evidence and hashes are
-retained in the [result bundle](results/cpu-mini-ai-pilot-20261023/README.md).
+Saved predictions and run metadata connect each result to its configuration,
+input manifest, feature and checkpoint hashes, and training-source snapshot.
+A separate reload audit reconstructed scores from all four checkpoints.
+Raw image archives, original metadata tables, feature arrays and model weights
+are excluded from Git. The [result bundle](results/cpu-mini-ai-pilot-20261023/README.md)
+retains derived evidence and hashes; the video contains selected source images
+with attribution in its recording record.
 
 CPU CI runs tests, lint and the generated-data HTTP workflow. Browser CI checks
 desktop/mobile interaction with synthetic, watermarked ZIPs. Separately, Node
-checks verified all 480 original image bytes and all 308 displayed values in
+checks verified all 480 original image files byte for byte and all 308 displayed values in
 the latest viewer; the archived AI viewer retains its separate 292-value proof.
 See [verification scope](docs/testing.md).
 

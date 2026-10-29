@@ -1,11 +1,28 @@
-Programming Reference
-=============
-Welcome to the long-tail driving data mining project programming reference page!
+# Programming reference
 
-This page lists what every script provides. `N` is the number of frames, `D`
-the hidden dimension of the VLM layer (3,584 for Cosmos-Reason1-7B), `P` the SAE
-latent width (7,168 by default), `d_t` the width of the long-tail subspace
-(half of `P`) and `V = 6` the number of camera views.
+`N` is the number of samples, `D` the feature dimension, `P` the SAE latent
+width, `d_t` the tail-subspace width and `V = 6` the camera count. Current CPU
+runs use `D = 3072`; the original Cosmos route uses `D = 3584` and a default
+`P = 7168`. Run a script with `--help` for its complete CLI.
+
+## Current CPU and data workflow
+
+| Script | Purpose |
+|---|---|
+| [`prepare_driving.py`](../scripts/prepare_driving.py) | Select six-view timestamps, freeze scene allocation, create review files and import submitted judgments. |
+| [`import_mini_parts.py`](../scripts/import_mini_parts.py) | Validate the browser helper's mini ZIPs and reconstruct the selected local data root. |
+| [`acquire_cpu_encoder.py`](../scripts/acquire_cpu_encoder.py) | Acquire and verify the pinned official ResNet18 checkpoint. |
+| [`extract_cpu.py`](../scripts/extract_cpu.py) | Extract six ordered 512-dimensional image vectors, concatenate them and resume a checked cache. |
+| [`cpu_image_encoder.py`](../scripts/cpu_image_encoder.py) | Define the encoder, preprocessing and feature identity contract. |
+| [`run_real_driving.py`](../scripts/run_real_driving.py) | Validate a prepared handoff and run the controlled four-method comparison. |
+| [`new_scene_e2e.py`](../scripts/new_scene_e2e.py) | Acquire the recorded author-demo batch and apply existing CPU models to new inputs. |
+| [`export_offline_explorer.py`](../scripts/export_offline_explorer.py) | Build the offline sample, score and sparse-unit viewer. |
+| [`export_unlabelled_review.py`](../scripts/export_unlabelled_review.py) | Export a review interface for new inputs with blank decisions. |
+
+See the [CPU route](cpu-route.md), [new-scene run](new-scene-e2e.md) and
+[developer guide](developer.md) for commands and recorded execution scopes.
+
+## VLM annotation and extraction
 
 ## `scripts/annotate_normal_core.py`
 
@@ -128,15 +145,19 @@ Command-line entry point. Applies a trained run to new, unlabelled features.
 | `build_model(config, input_dim, device)` | Rebuilds the SAE exactly as the run configured it |
 | `encode(model, x, batch_size, device)` | Returns `z_t` for every row |
 
-Flags: `--run-dir`, `--features`, `--meta`, `--output-dir`, `--glossary`,
-`--eta`, `--neuron-threshold`, `--top-neurons`, `--batch-size`, `--device`.
+Flags: `--run-dir`, `--features`, `--meta`, `--feature-config`, `--output-dir`,
+`--glossary`, `--eta`, `--neuron-threshold`, `--top-neurons`, `--batch-size`,
+`--device`.
 Outputs `screening.csv` (flagged frames first, with reasons),
 `long_tail_samples.json` (the flagged tokens) and `activations.npz` (for the
 explorer).
 
-The script stops with an explanatory error if the feature dimension does not
-match the run, or if `meta.json` and the feature matrix disagree on the number
-of rows.
+The script rejects dimension/row mismatches, duplicate tokens, nonfinite
+features and invalid standardisers. For a CPU-trained run, it also compares the
+recorded encoder, pinned weights and preprocessing with `--feature-config` or
+the adjacent `extraction_config.json`. This comparison checks declared feature
+identity; it cannot authenticate arbitrary input arrays. Legacy/VLM runs retain
+explicitly unverified feature identity beyond dimensional checks.
 
 ## `scripts/neuron_explorer.py`
 
@@ -159,10 +180,11 @@ Needs numpy and Pillow only.
 
 ## `results/neuron_glossary.csv`
 
-The named long-tail units of the layer-28 run. `screen.py` reads `neuron` and
-`feature`; `dataset`, `activation_ratio`, `purity`, `n_activated`,
-`n_activated_target` and `notes` carry the evidence for each name.
-[The Interpretable Neurons](neurons.md) explains how to rebuild it.
+This historical glossary contains proposed names for layer-28 units.
+`screen.py` reads `neuron` and `feature`; the other columns record supporting
+counts and notes. These names have not been validated for the current CPU
+models and must not be applied to their unit IDs. The [explorer guide](neurons.md)
+describes how to build a checkpoint-specific glossary.
 
 ## Controlled comparison tools
 
