@@ -1,0 +1,84 @@
+{
+  "schema": "new-scene-human-review-audit-v1",
+  "status": "completed",
+  "created_utc": "2026-10-28T20:08:15.895348+00:00",
+  "scope": {
+    "label_protocol": "manual",
+    "human_reviewed": true,
+    "reviewer_count": 1,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "official_benchmark": false,
+    "ai_reference_disclosed_in_chat_before_submission": true,
+    "individual_judgment_timing_verified": false,
+    "review_context": "single_reviewer_submission_after_ai_reference_disclosure",
+    "interpretation": "Submission followed AI-reference disclosure in chat. Per-row decision timing is unknown; this is not verified blind review.",
+    "browser_model_signal_exposure_is_separate": true
+  },
+  "source_csv_sha256": "b470eab6e17eaa0e6e2cc93a52ddeefd2d6b4ce1c9eff58fcc83da619a3653d2",
+  "source_csv_bytes": 1115,
+  "rows": 9,
+  "unique_tokens": 9,
+  "label_counts": {
+    "normal_core": 5,
+    "not_normal_core": 4
+  },
+  "reviewers": [
+    "Yike"
+  ],
+  "pending": 0,
+  "uncertain": 0,
+  "nonempty_human_notes": 0,
+  "ai_reference_agreement": {
+    "matches": 9,
+    "total": 9,
+    "is_ai_accuracy_estimate": false
+  },
+  "sae_frozen_fixed_rule": {
+    "rule": "at least one tail activation abs(z) > 0.01",
+    "confusion_relative_to_submitted_reference": {
+      "tp": 4,
+      "fp": 5,
+      "tn": 0,
+      "fn": 0
+    },
+    "precision": 0.4444444444444444,
+    "recall": 1.0,
+    "f1": 0.6153846153846153,
+    "flagged": 9,
+    "candidate_fraction": 1.0,
+    "review_items_reduced_in_this_batch": 0
+  },
+  "scene_label_counts": {
+    "54cdaaae372d421fa4734d66f51a8c48": {
+      "normal_core": 5
+    },
+    "f0f120e4d4b0441da90ec53b16ee169d": {
+      "not_normal_core": 4
+    }
+  },
+  "scene_label_confound": true,
+  "training_performed": false,
+  "split_assigned": false,
+  "original_csv_modified": false,
+  "human_notes_invented": false,
+  "inputs": {
+    "review_csv": {
+      "sha256": "b470eab6e17eaa0e6e2cc93a52ddeefd2d6b4ce1c9eff58fcc83da619a3653d2",
+      "filename": "reviewed-new-scenes.csv"
+    },
+    "frame_order": {
+      "sha256": "97d523a8f8febb5cc595b98bc052e68a2fc5ba85dd216a61e82cac148a3c75a8",
+      "filename": "frame_order.json"
+    },
+    "ai_reference": {
+      "sha256": "fe072e20234cd04ae24577091c4d84d30bbe443c6209fb69fdb803921c211d72",
+      "filename": "ai_reference_labels.json"
+    },
+    "screening_csv": {
+      "sha256": "d47e38f4bbc7f823e042435c98a2ac9c68b626d55fb4e4f723378bb7c878e173",
+      "filename": "screening.csv"
+    }
+  },
+  "audit_source_sha256": "d06674e5d3d2aca8410fa4b217c7fdda6e422159c51f682a02a9bfcd83439060"
+}

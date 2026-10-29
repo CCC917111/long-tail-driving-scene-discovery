@@ -1,0 +1,223 @@
+{
+  "schema": "supplemental-frozen-policy-replay-v1",
+  "created_utc": "2026-10-28T20:30:05.340564+00:00",
+  "status": "completed",
+  "scope": {
+    "label_protocol": "manual",
+    "human_reviewed": true,
+    "reviewer_count": 1,
+    "human_ground_truth_verified": false,
+    "independent_human_review": false,
+    "official_benchmark": false,
+    "ai_reference_disclosed_in_chat_before_submission": true,
+    "individual_judgment_timing_verified": false,
+    "review_context": "single_reviewer_submission_after_ai_reference_disclosure",
+    "interpretation": "Submission followed AI-reference disclosure in chat. Per-row decision timing is unknown; this is not verified blind review.",
+    "browser_model_signal_exposure_is_separate": true
+  },
+  "frames": 9,
+  "scenes": 2,
+  "reference_counts": {
+    "normal_core": 5,
+    "not_normal_core": 4
+  },
+  "old_public_policy": {
+    "schema": "frozen-policy-public-evidence-v1",
+    "repository": "CCC917111/long-tail-driving-scene-discovery",
+    "commit_sha": "fb1f2f93ad46958b2994a7f939b4b39c76ffa476",
+    "commit_committed_at": "2026-10-26T22:37:55Z",
+    "evaluation_url": "https://raw.githubusercontent.com/CCC917111/long-tail-driving-scene-discovery/fb1f2f93ad46958b2994a7f939b4b39c76ffa476/results/human-ai-exposed-20261026/sae_abstopk_none/evaluation.json",
+    "operating_point": {
+      "selection_split": "val",
+      "target_precision": 0.9,
+      "selection_rule": "max recall, then precision, then threshold",
+      "comparison": "score >= threshold",
+      "status": "selected",
+      "threshold": 6.074954873387325,
+      "validation_precision": 1,
+      "validation_recall": 0.3
+    },
+    "fixed_rule": {
+      "rule": "c_tail >= 1",
+      "eta": 0.01
+    },
+    "verification": "Read through GitHub connector at immutable commit; selected policy matches local published old result."
+  },
+  "methods": {
+    "sae_abstopk_none": {
+      "created_utc": "2026-10-26T19:50:54.584569+00:00",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "operating_point": {
+        "selection_split": "val",
+        "target_precision": 0.9,
+        "selection_rule": "max recall, then precision, then threshold",
+        "comparison": "score >= threshold",
+        "status": "selected",
+        "threshold": 6.074954873387325,
+        "validation_precision": 1.0,
+        "validation_recall": 0.3
+      },
+      "fixed_rule": {
+        "rule": "c_tail >= 1",
+        "eta": 0.01
+      },
+      "review_k": 4,
+      "actual_checkpoint_bytes_verified": true,
+      "actual_standardizer_bytes_verified": true
+    },
+    "sae_abstopk_norm": {
+      "created_utc": "2026-10-26T19:51:01.388344+00:00",
+      "checkpoint_sha256": "250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb",
+      "operating_point": {
+        "selection_split": "val",
+        "target_precision": 0.9,
+        "selection_rule": "max recall, then precision, then threshold",
+        "comparison": "score >= threshold",
+        "status": "selected",
+        "threshold": 6.074954873387325,
+        "validation_precision": 1.0,
+        "validation_recall": 0.3
+      },
+      "fixed_rule": {
+        "rule": "c_tail >= 1",
+        "eta": 0.01
+      },
+      "review_k": 4,
+      "actual_checkpoint_bytes_verified": true,
+      "actual_standardizer_bytes_verified": true
+    }
+  },
+  "sae_variants_identical": true,
+  "duplicate_variants_are_not_independent_experiments": true,
+  "policies": {
+    "fixed_activation_rule": {
+      "confusion": {
+        "tp": 4,
+        "fp": 5,
+        "tn": 0,
+        "fn": 0
+      },
+      "support": {
+        "normal": 5,
+        "tail": 4
+      },
+      "selected": 9,
+      "selected_groups": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "tail_references_found": 4,
+      "precision": 0.4444444444444444,
+      "recall": 1.0,
+      "f1": 0.6153846153846154,
+      "accuracy": 0.4444444444444444,
+      "review_items_not_selected": 0,
+      "review_item_reduction_fraction": 0.0,
+      "false_positive_groups": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "false_negative_groups": []
+    },
+    "frozen_validation_operating_point": {
+      "confusion": {
+        "tp": 3,
+        "fp": 2,
+        "tn": 3,
+        "fn": 1
+      },
+      "support": {
+        "normal": 5,
+        "tail": 4
+      },
+      "selected": 5,
+      "selected_groups": [
+        4,
+        5,
+        7,
+        8,
+        9
+      ],
+      "tail_references_found": 3,
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1": 0.6666666666666666,
+      "accuracy": 0.6666666666666666,
+      "review_items_not_selected": 4,
+      "review_item_reduction_fraction": 0.4444444444444444,
+      "false_positive_groups": [
+        4,
+        5
+      ],
+      "false_negative_groups": [
+        6
+      ]
+    },
+    "predeclared_budget_k4": {
+      "confusion": {
+        "tp": 2,
+        "fp": 2,
+        "tn": 3,
+        "fn": 2
+      },
+      "support": {
+        "normal": 5,
+        "tail": 4
+      },
+      "selected": 4,
+      "selected_groups": [
+        4,
+        5,
+        7,
+        8
+      ],
+      "tail_references_found": 2,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5,
+      "accuracy": 0.5555555555555556,
+      "review_items_not_selected": 5,
+      "review_item_reduction_fraction": 0.5555555555555556,
+      "false_positive_groups": [
+        4,
+        5
+      ],
+      "false_negative_groups": [
+        6,
+        9
+      ]
+    }
+  },
+  "budget_random_expected_tail_references": 1.7777777777777777,
+  "random_baseline_is_expectation_not_an_experiment": true,
+  "threshold_selection_on_this_batch": false,
+  "training_performed": false,
+  "new_split_assigned": false,
+  "policy_selected_based_on_new_results": false,
+  "interpretation": "Descriptive replay on nine author-selected frames from two scenes. Labels and scene are confounded; AI reference disclosure preceded submission. The old validation precision target is not guaranteed on new data. Review reduction counts items, not measured human time or generalization.",
+  "source_sha256": "f57f90e069a451e4bfe4746705bde7665612d256550ec7c0218780d804c9587d",
+  "input_sha256": {
+    "results/new-scene-human-review-20261028/reviewed-original.csv": "b470eab6e17eaa0e6e2cc93a52ddeefd2d6b4ce1c9eff58fcc83da619a3653d2",
+    "results/new-scene-human-review-20261028/provenance.json": "219d0c994c709489effe3fc85719eff4977fc915ed5a0f6a6d4cb6a0c6b40b7f",
+    "results/new-scene-human-review-20261028/normalized_references.json": "71613bcf1c547e68138e14a15720dfcc93deef3bd6c02d903b5283694f854306",
+    "results/new-scene-human-review-20261028/frozen_policy_public_source.json": "fae8295d3e34fa98f71da2c9cbd229c524331d8f24f04013f6311ca492429280",
+    "results/new-scene-e2e-20261027/screening.csv": "d47e38f4bbc7f823e042435c98a2ac9c68b626d55fb4e4f723378bb7c878e173",
+    "results/new-scene-e2e-20261027/screening_metadata.json": "4abf7f4cfe755cdf63db4bd7ecccfc98db649508ba27d7fd5a63c6c522f9077a",
+    "results/new-scene-e2e-20261027/flow.json": "0c85a233610cc97d4295fe29473fabd0602e06ab03908a3ca6ced29e04c52d32",
+    "results/human-ai-exposed-20261026/protocol_plan.json": "1f2808509a0c4b32e7d454f8e88532941328a838d93194b42c5010892722a69e",
+    "results/human-ai-exposed-20261026/sae_abstopk_none/evaluation.json": "76c6a4be4bca031abf3b777fdc1760adacd497f36750e8841dc073278400a5a8",
+    "results/human-ai-exposed-20261026/sae_abstopk_none/run_metadata.json": "5635ed931d8fa1b3db96e59daba3c4ca121c13ba4a2aa70d8c56f15925d48d71",
+    "results/human-ai-exposed-20261026/sae_abstopk_norm/evaluation.json": "76c6a4be4bca031abf3b777fdc1760adacd497f36750e8841dc073278400a5a8",
+    "results/human-ai-exposed-20261026/sae_abstopk_norm/run_metadata.json": "94e1026d4e7f0074bb7a981f0a839adaaee2786ade3cf248a2aac3cc4dc11658"
+  }
+}

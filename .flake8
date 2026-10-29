@@ -5,3 +5,5 @@ per-file-ignores =
     scripts/annotate_normal_core.py:E501
     scripts/extract.py:E501
     scripts/neuron_explorer.py:E501
+    scripts/export_unlabelled_review.py:E501
+    tests/test_unlabelled_review_export.py:E501
