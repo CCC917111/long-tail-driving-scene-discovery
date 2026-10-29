@@ -322,6 +322,10 @@ def verify_reference_banner(page, payload, expect):
         for stale in ("human review pending", "Provisional AI-label pilot;",
                       "labels are provisional", "not been verified by a human"):
             require(stale not in body, "Human-reviewed UI contains stale AI warning: " + stale)
+    elif payload["schema"] == "offline-trained-explorer-ai-pilot-v1":
+        # The archived v1 page is immutable; verify its original warning text.
+        expect(warning).to_contain_text("AI \u521d\u6807")
+        expect(warning).to_contain_text("\u5c1a\u672a\u4eba\u5de5\u6838\u9a8c")
     else:
         expect(warning).to_contain_text("Provisional AI-label pilot")
         expect(warning).to_contain_text("human review pending")
@@ -409,7 +413,9 @@ def verify_viewport(browser, payload, fixture_html, parts, output, name, viewpor
         verify_summary_table(page, payload, expect)
         page.locator("#offline-parts").set_input_files(list(map(str, parts)))
         page.locator("#offline-load").click()
-        expect(page.locator("#offline-status")).to_contain_text("Verified:", timeout=60000)
+        complete = ("\u6821\u9a8c\u5b8c\u6210"
+                    if payload["schema"] == "offline-trained-explorer-ai-pilot-v1" else "Verified:")
+        expect(page.locator("#offline-status")).to_contain_text(complete, timeout=60000)
         expect(page.locator("#meta")).to_contain_text(str(len(payload["frames"])) + " frames")
         verify_reference_banner(page, payload, expect)
         mobile_width = viewport["width"] if name == "mobile" else None

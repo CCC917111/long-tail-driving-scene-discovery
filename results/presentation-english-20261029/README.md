@@ -17,6 +17,7 @@ This is playback of the existing CPU pilot. No training, inference, threshold se
 
 ## Evidence
 
+- [Recording source](recording_source.py): exact recorder used for this MP4; its hash matches the receipt. The current script has a formatting-only line wrap.
 - [Recording receipt](recording_receipt.json): exact viewer and recorder hashes, ZIP input hashes, chapter timings, browser errors, MP4 properties and CSV export checksum.
 - [Selected cases](case_evidence.json): sample tokens, splits, saved scores, reference labels and decision policies.
 - [Presentation browser checks](site_browser.json): desktop/mobile playback, download checksum, copy controls and layout checks against the exact Site bundle.

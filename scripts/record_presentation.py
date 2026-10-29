@@ -88,7 +88,8 @@ def add_caption(page, heading, text):
           +'border-top:3px solid #6fc5bf;font-family:Arial,sans-serif;pointer-events:none';
         box.innerHTML='<div id="recording-chapter"></div><div id="recording-text"></div>'
           +'<div style="font-size:12px;color:#9bded8;margin-top:8px">'
-          +'Images: nuScenes / Motional · CC BY-NC-SA 4.0 · Captioned screen recording by Yike Chen</div>';
+          +'Images: nuScenes / Motional · CC BY-NC-SA 4.0 · '
+          +'Captioned screen recording by Yike Chen</div>';
         document.body.append(box);document.body.style.paddingBottom='130px';
       }
       document.getElementById('recording-chapter').textContent=heading;
