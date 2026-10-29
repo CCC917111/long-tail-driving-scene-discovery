@@ -21,7 +21,7 @@ independent blind-label accuracy have not been established.
 | New-scene replay | Nine timestamps and 54 images from two additional scenes; existing models applied without fitting; all nine human judgments received. | AI-reference disclosure preceded submission; per-row timing is unknown; all five normals are in one scene and all four tails in the other. Original log IDs are unavailable. |
 | Frozen score policy | Old validation threshold `6.074954873` selected five of nine: precision 60%, recall 75%. | Descriptive agreement with submitted references; no tuning on these labels or independent generalization estimate. The original activation rule selected all nine. |
 | Reward comparison | Matched reward/no-reward configurations, common inputs and rebuilt result tables. | Both SAE checkpoints are identical; no reward benefit was observed. |
-| Review and demonstration | Offline explorer with 77 retained timestamps and 308 cached method values, saved MLP FP/FN bookmarks, blank review export and an [English recording](../demo/driving-walkthrough-90s.mp4). | Unit IDs have no validated semantic names; example context does not prove an error's cause. |
+| Review and demonstration | Offline explorer with 77 retained timestamps and 308 cached method values, saved MLP FP/FN bookmarks, blank review export and six-view image inspection. | Unit IDs have no validated semantic names; example context does not prove an error's cause. |
 | Portable execution | Embedded-source CPU notebook, staged acquisition, persisted review and strict four-method driver. | Real Colab execution and the original GPU/VLM route have not been verified. |
 
 Total real input coverage is 89 timestamps, 12 scenes and 534 images. The nine
@@ -32,18 +32,16 @@ The [private review Site](https://yike-driving-review-20261028.upbeatperch12.cha
 requires the owner's ChatGPT sign-in and serves all 54 supplemental images from
 the same origin. The [downloadable fallback](../demo/driving_new_scenes.html)
 uses the author's `raw.githubusercontent.com` image URLs. External GitHub
-reviewers do not automatically have access to the private Site. See the
-[presentation record](../results/presentation-20261029/README.md) for the public
-recording and the distinct original private-delivery receipts.
+reviewers do not automatically have access to the private Site. The
+[demo guide](../demo/README.md) explains the downloadable interfaces.
 
 Yike leads the project and the repository modernization and delivery. The
 [original contribution table](../README.md) retains the capstone team's roles,
 including the annotation platform and most feature interpretation by named
 teammates. Validation, provenance, baselines, data handoff, the offline explorer,
-fixtures and documentation added on 2026-10-19–23 were AI-assisted follow-up
-work. That work belongs to the modernization phase and should be reviewed and
-understood by Yike before presentation. It must not be attributed retroactively
-to the original capstone period; earlier AI use is not inferred.
+fixtures and documentation added on 2026-10-19–23 belong to the later
+repository development phase. They are distinct from the original capstone
+implementation.
 
 ## Human-reference provenance and results
 

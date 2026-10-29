@@ -1,13 +1,5 @@
 # Driving Scene Explorer
 
-[**Watch the 90-second walkthrough on GitHub**](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4)
-or [download the MP4](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
-The recording shows real six-camera images, saved model scores, sparse-feature
-inspection, error cases and a review export. It has English captions and no
-spoken narration. Browser navigation is scripted; the viewer reads cached
-outputs rather than rerunning the models.
-
-[Recording evidence and image attribution](../results/presentation-english-20261029/README.md) ·
 [CV bullets and interview scripts](../docs/presentation.md) ·
 [Project role and contributions](../docs/project-card.md)
 
@@ -35,18 +27,10 @@ earlier provisional AI-reference run.
 
 The HTML embeds numeric outputs but no original image bytes. Image navigation
 requires the matching ZIP parts, whose identities and hashes are checked;
-images stay in your browser. Without those assets, watch the public video or
-run the [generated-data CPU example](../README.md#run-a-cpu-example).
+images stay in your browser. Without those assets, run the
+[generated-data CPU example](../README.md#run-a-cpu-example).
 
-## What the walkthrough shows
-
-| Time | Screen | Point to explain |
-|---|---|---|
-| 0–15 s | Project scope and result table | Yike leads the repository modernization, building on the team capstone. The results use a small CPU experiment with single-reviewer references after AI-label disclosure. |
-| 15–35 s | Six views, score and active units | One timestamp contains six camera views. Scores and activations come from saved trained models. |
-| 35–50 s | A unit and its high-activation frames | Examples make the learned direction inspectable. The unit's numeric ID has no validated semantic label. |
-| 50–70 s | An MLP false positive and false negative | Both are disagreements with the same reference set under the MLP threshold of 0.5. The examples were selected after evaluation. |
-| 70–90 s | Four-model table and CSV export | The SAE's top four contain four reference positives. Its separate validation-selected policy selects two of 15 test frames and recalls two of ten positives. Reward and no-reward checkpoints are identical. |
+## Inspect results and errors
 
 The explorer has three MLP error bookmarks: page frame 16 is a false positive,
 and page frames 10 and 1 are false negatives. These examples did not tune the
@@ -65,9 +49,7 @@ from original author image URLs on `raw.githubusercontent.com`. Download it
 and open it with an Internet connection. The optional
 [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
 serves all 54 images from the same origin without ZIP upload, but requires
-the owner's ChatGPT sign-in. Its
-[presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
-has the same access restriction; the GitHub video above is public.
+the owner's ChatGPT sign-in.
 
 The [nine-frame review record](../results/new-scene-human-review-20261028/README.md)
 contains five normal and four non-normal judgments after the AI reference

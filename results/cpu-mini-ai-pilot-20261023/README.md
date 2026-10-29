@@ -31,5 +31,5 @@ and original metadata tables are not included. Obtain input data through authori
 nuScenes access; this bundle does not change its terms.
 
 The [human-review workflow](../../docs/human-review.md) is separate. When citing this
-pilot, describe its references as provisional AI labels and distinguish the AI-assisted
-follow-up implementation from the original capstone work.
+pilot, describe its references as provisional AI labels and distinguish the later CPU
+implementation from the original capstone work.

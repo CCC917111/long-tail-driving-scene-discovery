@@ -1,16 +1,12 @@
 # Presentation and interview copy
 
-[Watch the 90-second walkthrough on GitHub](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4)
-or [download the MP4](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4).
-It shows real images and cached trained outputs, with English captions and no
-spoken narration. Navigation is scripted. The
-[recording record](../results/presentation-english-20261029/README.md) identifies the
-selected cases, source images and attribution.
+Use the [interactive demo guide](../demo/README.md) to inspect six-camera inputs,
+saved model scores, activations and review exports alongside these notes.
 
 These CV bullets and interview scripts describe Yike's work on the team
 capstone and the later repository modernization. The original team was Yike
-Chen, Zihua Chen and Yusong Zhao. Yike led the modernization with AI-assisted
-implementation and documentation. Its CPU ResNet18 experiment uses a separate
+Chen, Zihua Chen and Yusong Zhao. Yike leads the later CPU workflow, evaluation
+and review-tool integration. The CPU ResNet18 experiment uses a separate
 feature protocol from the original Cosmos/VLM route.
 
 ## CV bullets
@@ -18,9 +14,8 @@ feature protocol from the original Cosmos/VLM route.
 - Led the modernization of a team capstone into a reproducible CPU pipeline for six-camera driving-scene screening, integrating input validation, checkpoint reloads, CI, and a browser review tool with CSV export.
 - Implemented feature-extraction and SAE-training code for the original capstone; led a matched four-model CPU evaluation with scene-disjoint splits and validation-only thresholds, documenting reward saturation and preserving per-sample predictions and review provenance.
 
-Use both under **Long-Tail Driving Scene Discovery — Project Lead**. The
-modernization used AI coding assistance, as recorded above. Keep any numerical
-result tied to its small, single-reviewer reference protocol.
+Use both under **Long-Tail Driving Scene Discovery — Project Lead**. Keep any
+numerical result tied to its small, single-reviewer reference protocol.
 
 ## 60-second introduction
 
@@ -28,8 +23,8 @@ I lead the modernization of a team capstone that screens six-camera driving
 frames for human review. My original contributions included feature extraction,
 sparse-autoencoder training, and precision-oriented evaluation.
 
-With AI-assisted development, I connected validated images, a frozen CPU
-encoder, four matched models, saved predictions, and a browser review tool.
+I led the integration of validated images, a frozen CPU encoder, four matched
+models, saved predictions, and a browser review tool.
 We kept scenes separate and selected thresholds only on validation data.
 
 One useful failure was that the SAE's fixed rule flagged every frame in a new
@@ -46,8 +41,9 @@ need broader data and independent evaluation.
 I lead the modernization and delivery of a GitHub project that grew out of our
 team capstone on long-tail driving-scene discovery. My original responsibilities
 included feature extraction, sparse-autoencoder training, precision-oriented
-evaluation, and parts of the ablations. The later repository work used
-AI-assisted development, with the original team contributions retained.
+evaluation, and parts of the ablations. The later repository work added CPU
+execution, reproducibility checks, and review tools, with the original team
+contributions retained.
 
 The task is to rank six-camera timestamps for human review. We define a normal
 core through visible driving conditions, rather than assuming that a rare image
@@ -84,7 +80,7 @@ workflow with explicit limits.
 ## Delivery notes
 
 Lead with the task and your responsibilities. Credit the original team and
-describe the later implementation as AI-assisted work. Yike's original
+distinguish the capstone work from the later CPU workflow. Yike's original
 contributions were feature extraction, SAE training, precision-oriented
 evaluation and parts of the ablations.
 
@@ -110,8 +106,6 @@ negative result, not evidence that the reward improved the algorithm.
 | Was the later threshold chosen using the new labels? | [Frozen-policy source and replay](../results/new-scene-human-review-20261028/README.md#replay-of-policies-frozen-before-these-new-scenes) |
 | Can someone inspect the workflow? | [Demo access and verification limits](../demo/README.md) |
 
-For an interview, use the public GitHub video linked above. The optional
-[hosted presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
-requires the owner's ChatGPT sign-in. The
-[demo guide](../demo/README.md) also explains the downloadable HTML and
-generated-data CPU example.
+For an interview, open an example in the offline explorer and trace its saved
+score, active units and review export. The [demo guide](../demo/README.md)
+explains the downloadable HTML and generated-data CPU example.

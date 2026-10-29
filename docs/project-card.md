@@ -9,10 +9,8 @@ Zhao**. Yike's original contributions included feature extraction, SAE training,
 precision-oriented evaluation and parts of the ablation and interpretation
 analysis. Zihua's annotation-platform work and Yusong's learned-feature analysis
 remain credited in the [original contribution table](../README.md#team-and-contribution).
-The later modernization used AI-assisted implementation and documentation.
 
-[**Watch the 90-second walkthrough**](https://github.com/CCC917111/long-tail-driving-scene-discovery/blob/main/demo/driving-walkthrough-90s.mp4) ·
-[**Download the MP4**](https://github.com/CCC917111/long-tail-driving-scene-discovery/raw/refs/heads/main/demo/driving-walkthrough-90s.mp4) ·
+[**Interactive demo guide**](../demo/README.md) ·
 [**CV bullets and interview scripts**](presentation.md)
 
 ## Task and approach
@@ -78,21 +76,15 @@ and independent held-out review as future work.
 
 ## Demonstration and presentation
 
-The public GitHub video linked above uses original images and cached trained
-outputs, with English captions and no spoken narration. Scripted navigation
-shows an SAE reference-positive case, an MLP false positive and false negative
-under the same fixed threshold, followed by a blank new-review CSV export.
-The [recording record](../results/presentation-english-20261029/README.md) identifies
-the cases, source images and attribution.
+The [offline explorer](../demo/driving_pilot.html) loads the four original image
+ZIPs locally and displays six camera views, saved scores, sparse activations
+and MLP false-positive and false-negative bookmarks. Export a blank review
+queue to inspect the handoff to a reviewer. The [demo guide](../demo/README.md)
+explains the required inputs and the generated-data CPU example.
 
-The [English presentation copy](presentation.md) includes two CV bullets,
-a 122-word introduction and a 368-word explanation. Delivery time depends on
-speaking pace.
-
-The optional [hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-and its [presentation page](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site/presentation/)
-require the owner's ChatGPT sign-in. The [demo guide](../demo/README.md)
-explains the public video, downloadable HTML and generated-data CPU example.
+The [presentation copy](presentation.md) includes two CV bullets and short and
+extended interview introductions. Use the result bundles below to answer
+questions about model selection, label provenance and the reward diagnostic.
 
 [Latest fitted results](../results/human-ai-exposed-20261026/README.md) ·
 [Supplemental review](../results/new-scene-human-review-20261028/README.md) ·

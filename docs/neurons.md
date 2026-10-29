@@ -41,9 +41,9 @@ python scripts/neuron_explorer.py serve \
 
 The default address is `http://127.0.0.1:8765`. HTTP serving requires an
 environment that allows a loopback socket. The initial CPU check used static
-queries and synthetic image previews. Later checks include the
-[real-image walkthrough](../results/presentation-20261029/README.md) using
-saved CPU-model outputs. See [testing](testing.md) for verification scope.
+queries and synthetic image previews. The [downloadable explorer](../demo/driving_pilot.html)
+uses saved CPU-model outputs and loads authorised images from the original
+local ZIPs. See [testing](testing.md) for browser-check scope.
 
 The interface provides two directions: a unit's strongest frames (ranked by
 activation magnitude), and a frame's six views plus active units. Unit indices,

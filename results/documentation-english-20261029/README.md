@@ -7,10 +7,11 @@ presentation subtitles and the historical cloud setup request. Entry paths
 match their locations in the repository.
 Script backups are excluded.
 
-The [provenance index](provenance.json) lists each original and current file's
+The [provenance index](provenance.json) lists each original and translated file's
 SHA-256 hash and byte count, plus the archive's hash. The unchanged grading
-rubric is included for completeness. New documentation and new recording
-artifacts have no earlier version in this snapshot.
+rubric is included for completeness. The translated-file hashes describe the
+English revision at `7c9c040c`, before later documentation edits and video removal;
+they are historical snapshots rather than hashes of the current main branch.
 
 The archived documents retain their original language, wording and recorded
 claims. Use the current repository documents for the revised English text and
@@ -34,8 +35,3 @@ The two HTML snapshots preserve the viewers before their interface text was
 translated. The existing [AI-pilot viewer](../../demo/driving_ai_pilot.html)
 remains a separate historical archive and is excluded from the current English
 viewer scope.
-
-The [original presentation record](../presentation-20261029/README.md) describes
-the earlier private recording. Its receipts retain their original hashes and
-delivery claims. See the [demo guide](../../demo/README.md) for the current
-English walkthrough and its separate recording evidence.
