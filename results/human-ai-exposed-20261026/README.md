@@ -1,15 +1,16 @@
-# Human review after AI-label exposure
+# Human review after model-label disclosure
 
 Yike submitted decisions for all **80 six-camera timestamps** on 2026-10-26: **77 binary
 judgments** (12 normal, 65 tail), **three uncertain**, zero pending. This is
-**single-reviewer human review after the full AI-label table was shown**. Metrics
+**single-reviewer human review after the full model-generated label table was shown**.
+Metrics
 measure agreement with those judgments. The submission is neither blind independent
 ground truth nor an official benchmark.
 
 All four CPU models were rerun using the same pinned ResNet18 cache, unchanged
 6/2/2-scene allocation and original seed-42 settings. Checkpoint reloads, train-only
 normalization, saved-score evaluation and table reconstruction passed an independent
-audit. The original AI pilot is preserved separately.
+audit. The original model-reference pilot is preserved separately.
 
 ## Data and review evidence
 
@@ -23,9 +24,10 @@ All 80 rows declare reviewer `Yike`. All notes are blank, including the three un
 rows; no reasons were provided. The uploaded bytes are preserved in
 [reviewed-original.csv](reviewed-original.csv), SHA256
 `c39de8776325f6d72ee22738dcf2c95ee653db439f416de0a4e9403ea8f8a43a`.
-[reviewed-with-context.csv](reviewed-with-context.csv) adds only the assistant's
-`review_context=post_ai_exposure_single_reviewer` marker; the five user fields are
-unchanged. Its hash and known exposure are in
+[reviewed-with-context.csv](reviewed-with-context.csv) adds a separate provenance
+marker, `review_context=post_ai_exposure_single_reviewer`; the five submitted fields
+are unchanged. This marker is not part of the uploaded CSV. Its hash and the known
+prior disclosure are in
 [review_evidence.json](review_evidence.json).
 
 [first10-before-ai-table.csv](first10-before-ai-table.csv) preserves the earlier partial
@@ -59,13 +61,13 @@ this is not an executed random experiment or measured time saving. The original 
 activation rule instead flags all 15 test frames, with precision 2/3, recall 1 and F1
 0.80. These three policies are kept separate.
 
-## What changed from the original AI pilot
+## What changed from the original model-reference pilot
 
 The reference labels and retained validation/test IDs changed, while the feature cache
 and training labels did not. These are **different evaluation references**, so a change
 from the old AP is not evidence that the model learned a better representation.
 
-- Logistic checkpoint bytes match the original AI pilot.
+- Logistic checkpoint bytes match the original model-reference pilot.
 - Both new SAE checkpoints match one another **and the original pilot**: SHA256
   `250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb`. No incremental
   reward benefit was observed. The earlier capped-reward saturation diagnosis remains
@@ -74,7 +76,7 @@ from the old AP is not evidence that the model learned a better representation.
   new validation references. Its selected checkpoint therefore differs.
 
 Train has only three normal frames, all from one scene; test has only two scenes. One
-seed, limited class and scene coverage, and prior AI exposure restrict what these
+seed, limited class and scene coverage, and prior model-label exposure restrict what these
 results establish. Scene-bootstrap intervals assume the fitted model and threshold are
 fixed; the test still has only two scenes. These results do not establish cross-dataset
 performance, Cosmos performance, vehicle safety or accuracy against independent human
@@ -133,7 +135,7 @@ Exact executed commands/settings are in [commands.json](commands.json),
 No raw image bytes, original metadata tables, feature arrays or weights are published in
 this bundle. Obtain data under nuScenes terms. The downloadable [offline HTML
 demo](../../demo/README.md) now replays these 77 reviewed-reference timestamps and all
-308 method values. The original AI viewer is kept as a byte-identical
+308 method values. The original model-reference viewer is kept as a byte-identical
 [archive](../../demo/driving_ai_pilot.html).
 
 The [export record](offline_demo_export.json) and [image/score

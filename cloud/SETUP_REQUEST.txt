@@ -5,7 +5,7 @@ handoff and is superseded for the completed CPU experiments. The official mini
 download host remains blocked on this worker, but four user-supplied parts
 provided 80 real timestamps and supported CPU extraction and four-model fitting.
 The later human-reference fit retained 77 binary judgments and excluded three
-uncertain decisions. Those single-reviewer judgments followed AI-label exposure;
+uncertain decisions. Those single-reviewer judgments followed model-label disclosure;
 see docs/human-review.md. Nine additional timestamps were later scored and
 reviewed without retraining; see docs/new-scene-e2e.md.
 

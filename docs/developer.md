@@ -15,7 +15,7 @@ it does not reproduce the Cosmos experiment.
 The current intake contains 89 timestamps from 12 scenes and 534 camera images.
 The models were fitted on the older 80-timestamp cohort, using 77 binary human
 references and excluding three uncertain decisions. Those decisions came from
-one reviewer after AI-reference disclosure. A later nine-timestamp batch was
+one reviewer who had seen model-generated labels. A later nine-timestamp batch was
 screened with the saved model and old validation threshold, without fitting or
 tuning on its labels. See [the fitted run](../results/human-ai-exposed-20261026/README.md)
 and [new-scene review](../results/new-scene-human-review-20261028/README.md)

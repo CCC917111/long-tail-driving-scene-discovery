@@ -19,14 +19,14 @@ The project has processed 89 real timestamps from 12 scenes: the original
 80-timestamp mini cohort and a separate nine-timestamp supplement, totaling
 534 camera images. The model fits still use only the original cohort.
 [Yike's review](human-review.md) retained 77 binary decisions and three uncertain
-rows after prior AI-label disclosure. All four methods used the frozen 6/2/2
-scene allocation and seed 42. Train contains only three normal timestamps,
+rows after the reviewer had seen model-generated labels. All four methods used
+the frozen 6/2/2 scene allocation and seed 42. Train contains only three normal timestamps,
 all from one scene; test contains 15 retained timestamps in two scenes.
 The SAE's test AP was 0.9353 against those single-reviewer references.
 Reward and no-reward checkpoints were identical, so this run found no reward gain.
 
 The nine later timestamps contain five normal and four non-normal human
-judgments, also submitted after AI-reference disclosure. The old
+judgments, also submitted after disclosure of model-generated labels. The old
 validation-selected threshold, `6.074954873387325`, selected five candidates:
 precision 60%, recall 75%. No new fitting or threshold tuning occurred. All
 normal references came from one scene and all non-normal references from the
@@ -70,7 +70,7 @@ seconds, including process startup and input checks. These are local run times,
 not a throughput benchmark. Logs and the preserved smoke/full summaries are
 under `output/real-cpu-mini-20261023/` in the execution workspace.
 
-Before the human submission, the [AI-label pilot](ai-pilot.md) fitted all four
+Before the human submission, the [provisional-label pilot](ai-pilot.md) fitted all four
 models on 73 retained timestamps and screened seven uncertain timestamps.
 That experiment remains separate from the later human-review run. The original
 archive checksum was not independently verified; transfer and file hashes

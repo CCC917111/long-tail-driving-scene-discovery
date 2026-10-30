@@ -32,9 +32,9 @@ nine-frame batch. An earlier validation threshold reduced that to five
 candidates, but missed one positive reference. That exposed the
 precision–recall tradeoff.
 
-This remains a small, single-reviewer pilot with AI-label exposure recorded.
-Its main result is a reproducible engineering workflow; stronger model claims
-need broader data and independent evaluation.
+The references came from one reviewer who had already seen model-generated
+labels. This remains a small pilot; its main result is a reproducible engineering
+workflow. Stronger model claims need broader data and independent evaluation.
 
 ## Three-minute explanation
 
@@ -70,10 +70,10 @@ than tuning on the new labels. Fewer selected items did not establish measured
 human time savings.
 
 The current models trained with only three normal frames from one scene and
-one seed. The references came from one reviewer with AI-label disclosure
-recorded; the new batch also confounds class with scene. My next research step
-would be broader normal training data and independently reviewed held-out
-scenes. If the SAE then fails to beat a cheaper baseline, I would choose the
+one seed. The references came from one reviewer who had already seen
+model-generated labels; the new batch also confounds class with scene. My next
+research step would be broader normal training data and independently reviewed
+held-out scenes. If the SAE then fails to beat a cheaper baseline, I would choose the
 cheaper model. The completed outcome today is a traceable screening and review
 workflow with explicit limits.
 
@@ -88,7 +88,7 @@ If asked about scale, distinguish the 89 input timestamps from the training
 set. The later nine timestamps were used for inference and review; the fitted
 models still have only three normal training frames from one scene. If asked
 about AP, name the 15-frame, two-scene test set and the single reviewer's prior
-AI-label exposure.
+access to model-generated labels. These were not independently blinded annotations.
 
 Use the new-batch failure to explain the threshold decision: the fixed rule
 selected all nine, while the old validation threshold selected five with two

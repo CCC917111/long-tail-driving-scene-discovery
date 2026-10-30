@@ -4,26 +4,27 @@ The checks below cover different things: software contracts use generated
 inputs; real-asset audits compare original image bytes and saved outputs;
 browser checks exercise interaction. None can establish label correctness on
 its own. The current fitted comparison uses one reviewer's decisions after
-AI-reference disclosure and a small held-out scene sample.
+model-reference disclosure and a small held-out scene sample.
 
 ## Current publication checks: 2026-10-29
 
-At commit `baef43e5dbeed8846a562376f25e26cfee3ec3e7`, the
-[CPU workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145669)
+At commit `baef43e5dbeed8846a562376f25e26cfee3ec3e7`, the [CPU
+workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145669)
 passed 280 tests, 18 subtests, lint and the synthetic end-to-end HTTP workflow.
-Three tests skipped because their private assets were absent. The
-[offline explorer browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145498)
-passed the current reviewed-reference viewer and archived AI viewer at desktop
-and mobile sizes using synthetic images. The
-[new-scene browser workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937146035)
+Three tests skipped because their private assets were absent. The [offline
+explorer browser
+workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937145498)
+passed the current reviewed-reference viewer and archived provisional-label viewer
+at desktop and mobile sizes using synthetic images. The [new-scene browser
+workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40937146035)
 checked the nine-frame fallback page using all 54 original author-hosted images.
-These checks cover software and image delivery; they create no new human labels
-or model-quality result.
+These checks cover software and image delivery; they create no new human labels or
+model-quality result.
 
 ## New-scene review and image-delivery repair: 2026-10-28
 
 The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-requires the owner's ChatGPT sign-in and serves all 54 original images from the
+requires the owner's sign-in and serves all 54 original images from the
 same origin. Local desktop/mobile Chromium checks of that bundle exercised all nine six-camera
 groups, initial blank review CSVs, reviewer validation, notes, signal disclosure,
 refresh persistence and CSV downloads. A separate failed-image test verified
@@ -44,9 +45,9 @@ preserves the older exporter before the subsequent image-loading repair; origina
 run metadata is not rewritten to match newer source.
 
 Yike's later [nine-row human submission](../results/new-scene-human-review-20261028/README.md)
-is kept separately with chat AI-reference disclosure provenance. Browser
+is kept separately with its prior model-reference disclosure record. Browser
 `model_signal_exposed=false` records only browser signal visibility; it does
-not establish blindness to the chat AI table. The
+not establish blindness to previously shown model labels. The
 [frozen-policy replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
 applies the old validation-selected threshold without tuning on those nine
 labels: five candidates, precision 60%, recall 75%. Both classes are perfectly
@@ -63,28 +64,28 @@ publication checks apply to the submitted commit.
 The latest offline viewer now binds the reviewed-reference run's 77 timestamps
 and all 308 method values. Independent Node checks loaded the actual four ZIPs,
 compared all 480 image files byte-for-byte with the originals, and checked all
-cached values, blank review fields and script syntax. The old AI viewer is
+cached values, blank review fields and script syntax. The old provisional-label viewer is
 archived byte-identically with its 73-frame/292-value record. Separate synthetic
 core checks pass for both. The updated browser CI runs both HTML versions at
 desktop/mobile sizes using synthetic images and checks case/metric tables,
 navigation and CSV downloads. The latest publication PR checks establish the
 current Chrome result; core-only checks do not claim browser verification.
 
-The 2026-10-26 [post-AI-exposure user-review run](../results/human-ai-exposed-20261026/README.md)
+The 2026-10-26 [post-disclosure user-review run](../results/human-ai-exposed-20261026/README.md)
 completed all four real CPU fits and an independent checkpoint/scaler/metric
 audit. A local full non-HTTP selection passed **225 tests and 18 subtests**,
 including the configured real-asset integration; one socket-dependent HTTP case
 was deselected. That record predates the final nested-scope guard hardening.
-After hardening, 24 context tests plus 12 evaluation/AI-scope tests and two
+After hardening, 24 context tests plus 12 evaluation/label-scope tests and two
 subtests passed, with lint/compile clean. The publication PR's GitHub Actions
 checks cover the final source and generated-data HTTP workflow. These checks
-preserve single-reviewer, post-AI-exposure scope; they do not authenticate
+preserve single-reviewer, post-disclosure scope; they do not authenticate
 judgment correctness or establish independent blind human truth.
 
 The default CPU suite uses synthetic arrays and images. The configured
 integration test and separate audits also consumed the real mini CPU bundle.
-Keep their reference sources distinct: the first pilot uses provisional AI
-decisions, while the later fit uses one reviewer's decisions after AI-label
+Keep their reference sources distinct: the first pilot uses provisional model-generated
+decisions, while the later fit uses one reviewer's decisions after model-label
 disclosure. Neither reproduces the original Cosmos experiment.
 
 <a id="latest-local-record"></a>
@@ -102,7 +103,7 @@ python -m flake8 scripts tests --max-line-length 100
 The final local selection passed **205 tests and 18 subtests**, with **one HTTP
 test deselected** because this sandbox denied loopback binding. The optional
 real-asset test actually ran against the real feature bundle and explicitly
-AI-provisional labels; it was not skipped in this local record. Lint passed.
+provisional model-generated labels; it was not skipped in this local record. Lint passed.
 This is a non-HTTP local pass, not a claim that the sandbox completed the HTTP
 test. Resolved dependencies are in
 [`requirements-cpu-lock.txt`](../requirements-cpu-lock.txt).
@@ -118,10 +119,11 @@ At commit `ba8efddd46b357f492965b941172a8fd1f6dd948`, both workflows passed:
   navigation, exact-token search, cached model values and an actual review CSV
   download, with no JavaScript errors.
 
-The earlier [CPU run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
-records **205 passed, one real-asset test skipped and 18 subtests passed**.
-CI has no private driving assets, so its real-asset skip is expected and distinct
-from the configured local integration pass.
+The earlier [CPU
+run](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039177713)
+records **205 passed, one real-asset test skipped and 18 subtests passed**. CI has
+no private driving assets, so its real-asset skip is expected and distinct from
+the configured local integration pass.
 
 The browser workflow uses visibly watermarked, generated images and synthetic
 metadata in four ZIPs. It preserves the shipped demo's runtime/UI scripts and
@@ -134,24 +136,24 @@ verification JSON and desktop/mobile screenshots as temporary CI artifacts.
 The [CPU image-feature route](cpu-route.md) imported ten real scenes / 80
 timestamps / 480 original JPEGs, checked the images and metadata, and extracted
 finite `(80, 3072)` pretrained ResNet18 features. The subsequent
-[AI-reference pilot](ai-pilot.md) retained 73 labelled timestamps and completed
+[model-reference pilot](ai-pilot.md) retained 73 labelled timestamps and completed
 four model fits, checkpoint reloads, train-only normalization checks, saved-score
 evaluation and table reconstruction. Seven uncertain timestamps were screened
 separately; their scenes can overlap the labelled scenes.
 
 Independent Node checks used the actual four user-held ZIPs, verified all 480
-image bytes and matched all 292 displayed model values to saved predictions.
-The exported review CSV retains blank human-decision fields. At the time of that pilot, the Chrome interaction check used synthetic images;
-its real-byte and numeric audits did not include a Chrome session with the
-user's images.
-The [derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md)
-preserves the audits and explicit AI-label scope. It includes no original image
-bytes or trained model weights.
+image bytes and matched all 292 displayed model values to saved predictions. The
+exported review CSV retains blank human-decision fields. At the time of that
+pilot, the Chrome interaction check used synthetic images; its real-byte and
+numeric audits did not include a Chrome session with the user's images. The
+[derived result bundle](../results/cpu-mini-ai-pilot-20261023/README.md) preserves
+the audits and explicit model-label scope. It includes no original image bytes or
+trained model weights.
 
 Wrong encoder, weights and preprocessing identities are rejected before
 screening model loading. Legacy screening records unverified feature identity
-explicitly. AI labels require their own importer and an explicit pilot protocol;
-the default manual route rejects an AI bundle.
+explicitly. Model-generated labels require their own importer and an explicit pilot protocol;
+the default manual route rejects a model-label bundle.
 
 ## Synthetic end-to-end checks
 
@@ -189,7 +191,7 @@ real driving performance.
 | `tests/test_real_driving_workflow.py` | Complete real-input handoff gates, immutable input evidence and four actual CPU estimators on a fixture |
 | `tests/test_portable_notebook.py`, `tests/test_portable_handoff.py` | Notebook syntax/bootstrap/local preparation and review backup/restore without downloads/GPU |
 | `tests/test_import_mini_parts.py`, `tests/test_local_upload_html.py` | ZIP completeness, checksums, safe paths and local browser handoff contracts |
-| `tests/test_ai_pilot_labels.py`, `tests/test_ai_label_scope.py` | Split-blind AI-label evidence, uncertainty exclusion, explicit protocol opt-in and scope propagation |
+| `tests/test_ai_pilot_labels.py`, `tests/test_ai_label_scope.py` | Split-blind model-label evidence, uncertainty exclusion, explicit protocol opt-in and scope propagation |
 | `tests/test_offline_explorer.py` | Cached result integrity, bound local-image loading and review exports without invented semantic unit names |
 | `tests/test_new_scene_e2e.py` | Original camera hashes/decoding, six-view completeness, safe paths and rejection of labels/splits in new intake |
 | `tests/test_unlabelled_review_export.py` | Unlabelled review scope, source-image binding, CSV/exposure state, loading guard, stale callbacks and retry recovery |
@@ -228,8 +230,8 @@ The current CPU evidence leaves this work open:
 3. Recover historical weights, features, labels and logs, then compare original
    predictions without rewriting their provenance.
 4. Preserve exposure records for future reviews. The supplemental 54-image
-   batch has browser checks, but its submitted decisions followed chat
-   AI-reference disclosure. Browser visibility fields alone cannot establish
+   batch has browser checks, but its submitted decisions followed
+   model-reference disclosure. Browser visibility fields alone cannot establish
    reviewer blindness.
 
 The optional cached-feature integration entry point is:
@@ -242,7 +244,7 @@ The directory must contain `features.npy`, `meta.json`, `labels.json` and
 `manifest.json`. Without `DRIVING_REAL_ASSET_DIR`, the test explicitly skips;
 synthetic substitutes do not count as real-data integration. This cached-data
 check does not run VLM extraction, verify the original trained checkpoint or
-turn provisional AI labels into human ground truth.
+turn provisional model-generated labels into human ground truth.
 
 ## New checks
 

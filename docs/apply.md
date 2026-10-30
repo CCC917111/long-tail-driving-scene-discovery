@@ -10,8 +10,8 @@ The current real-data route uses [CPU ResNet18 features](cpu-route.md). Its
 models trained on the old mini cohort to nine new timestamps. The old
 validation-selected threshold of `6.074954873` selected five candidates, with
 60% precision and 75% recall against the submitted references. Those judgments
-followed chat AI-reference disclosure, and class and scene coincide in this
-batch. The result is a descriptive check, not a generalization estimate.
+were submitted after disclosure of model-generated labels, and class and scene
+coincide in this batch. The result is a descriptive check, not a generalization estimate.
 
 ## What you need
 

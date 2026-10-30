@@ -1,11 +1,11 @@
-# CPU mini pilot: provisional AI references
+# CPU mini pilot: provisional model-generated references
 
 This bundle contains the pilot annotations, predictions, diagnostics and training source
-snapshot. Its references are provisional AI judgments, with no human verification in
+snapshot. Its references are provisional model-generated judgments, with no human verification in
 this run. Scores measure agreement with those references.
 
 - [Run explanation and exact scope](../../docs/ai-pilot.md)
-- [Archived AI-reference explorer](../../demo/driving_ai_pilot.html): save the HTML,
+- [Archived model-reference explorer](../../demo/driving_ai_pilot.html): save the HTML,
   open it locally in Chrome or Edge, and select the four original ZIP parts. Images
   remain local. This archive preserves the original HTML bytes;
   `demo/driving_pilot.html` contains the later reviewed-reference demo.
@@ -31,5 +31,5 @@ and original metadata tables are not included. Obtain input data through authori
 nuScenes access; this bundle does not change its terms.
 
 The [human-review workflow](../../docs/human-review.md) is separate. When citing this
-pilot, describe its references as provisional AI labels and distinguish the later CPU
+pilot, describe its references as provisional model-generated labels and distinguish the later CPU
 implementation from the original capstone work.

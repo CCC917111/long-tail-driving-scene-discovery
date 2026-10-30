@@ -8,16 +8,18 @@ only on the original mini cohort. Two smaller follow-ups are complete:
   timestamps / 54 original images from two additional scenes in the official
   DriveLM author repository. It verified CPU inference and review export.
 - On 2026-10-28, Yike submitted [all nine judgments](../results/new-scene-human-review-20261028/README.md):
-  five normal and four non-normal. The AI reference table was disclosed in chat
+  five normal and four non-normal. The model-generated reference table was shown
   before submission; individual judgment timing is unknown. All normals belong
   to one scene and all non-normals to the other. No model was retrained on them.
 
-The [old validation-selected policy replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
+The [old validation-selected policy
+replay](../results/new-scene-human-review-20261028/frozen_policy_evaluation.json)
 selects five of nine candidates, with precision 60% and recall 75% against that
-submission. This descriptive check does not tune on the new labels or replace
-the planned independent study. Original log IDs for the new scenes remain
-unavailable. The [owner-private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-requires the owner's ChatGPT sign-in and serves its images from the same origin.
+submission. This descriptive check does not tune on the new labels or replace the
+planned independent study. Original log IDs for the new scenes remain unavailable.
+The [owner-private review
+Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site) requires
+the owner's sign-in and serves its images from the same origin.
 
 The mini inventory below was audited on 2026-10-26, before the new-scene
 acquisition. No further local source assets are available. A larger study needs
@@ -76,7 +78,7 @@ has 77 included judgments and three uncertain exclusions:
 | Test | 5 | 10 | 15 |
 
 All three normal training judgments come from scene-0655. These judgments were
-submitted by one reviewer after AI-label exposure. Their recorded scope must
+submitted by one reviewer after model-label exposure. Their recorded scope must
 remain visible; they are not independent blind reference labels.
 
 The real browser handoff records four uploaded ZIPs, eight selected timestamps
@@ -143,7 +145,7 @@ frames from one sequence.
    list, image inventory, split assignments, rubric, and exclusions.
 2. **Collect blind human judgments.** Present timestamps in randomized order
    with all six views consistently positioned, without model predictions,
-   earlier AI decisions, split names, or scene descriptions. Freeze the
+   earlier model-generated decisions, split names, or scene descriptions. Freeze the
    normal/tail/uncertain rubric first. Have a
    second human independently review a prespecified overlap, such as 20% of
    each split, selected before judgments, plus documented adjudication of

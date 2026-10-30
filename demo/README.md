@@ -6,14 +6,10 @@
 ## Use the offline viewer
 
 The latest viewer replays the 2026-10-26 comparison using one reviewer's final
-judgments after AI-label disclosure. It retains 12 normal and 65 tail references
-and excludes three uncertain decisions. The archived viewer retains the
-earlier provisional AI-reference run.
-
-| Viewer | Reference source | Timestamps | Cached model scores |
-|---|---|---:|---:|
-| [driving_pilot.html](driving_pilot.html) | Single-reviewer judgments after AI-label exposure | 77 | 308 |
-| [driving_ai_pilot.html](driving_ai_pilot.html) | Provisional AI labels | 73 | 292 |
+judgments. The reviewer had seen model-generated reference labels before the
+submission, so the references are not independently blinded. It retains 12
+normal and 65 tail references and excludes three uncertain decisions. The
+viewer contains 77 timestamps and 308 cached method scores.
 
 1. Open [driving_pilot.html](driving_pilot.html) on GitHub and choose
    **Download raw file**. GitHub's source preview does not run the viewer.
@@ -28,7 +24,7 @@ earlier provisional AI-reference run.
 The HTML embeds numeric outputs but no original image bytes. Image navigation
 requires the matching ZIP parts, whose identities and hashes are checked;
 images stay in your browser. Without those assets, run the
-[generated-data CPU example](../README.md#run-a-cpu-example).
+[synthetic CPU example](../README.md#run-a-cpu-example).
 
 ## Inspect results and errors
 
@@ -46,14 +42,12 @@ for predictions, review revisions and policy definitions.
 
 The [new-scene HTML](driving_new_scenes.html) loads nine six-camera timestamps
 from original author image URLs on `raw.githubusercontent.com`. Download it
-and open it with an Internet connection. The optional
-[hosted review tool](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-serves all 54 images from the same origin without ZIP upload, but requires
-the owner's ChatGPT sign-in.
+and open it with an Internet connection. It includes all 54 image links and
+requires no account or ZIP upload.
 
 The [nine-frame review record](../results/new-scene-human-review-20261028/README.md)
-contains five normal and four non-normal judgments after the AI reference
-table was disclosed in chat. Model signals are hidden by default in the
+contains five normal and four non-normal judgments submitted after disclosure
+of a model-generated reference table. Model signals are hidden by default in the
 review UI, but that does not remove the prior disclosure. The models were
 not retrained on this batch. All normal references come from one scene and
 all non-normal references from the other.
@@ -73,6 +67,6 @@ different scopes; see [testing](../docs/testing.md) and the
 [new-scene repair record](../results/review-page-repair-20261028/README.md).
 
 [Latest fitted results](../results/human-ai-exposed-20261026/README.md) ·
-[Original AI pilot](../results/cpu-mini-ai-pilot-20261023/README.md) ·
+[Earlier provisional-label pilot](../results/cpu-mini-ai-pilot-20261023/README.md) ·
 [New-scene execution guide](../docs/new-scene-e2e.md) ·
 [Research expansion plan](../docs/research-expansion.md)

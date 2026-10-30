@@ -3,8 +3,9 @@
 The evaluator compares logistic regression, a small MLP and two SAE variants
 on a frozen feature matrix and scene allocation. The current
 [real CPU run](../results/human-ai-exposed-20261026/README.md) uses 77 binary
-single-reviewer references after AI-label disclosure. Its SAE test AP of 0.9353
-covers 15 timestamps in two scenes at seed 42; both SAE variants are identical.
+references from one reviewer who had seen model-generated labels. Its SAE test
+AP of 0.9353 covers 15 timestamps in two scenes at seed 42; both SAE variants
+are identical.
 Historical random-frame results remain separate. The synthetic fixture below
 checks execution and deliberately includes mistakes; its metrics are test data.
 

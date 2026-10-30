@@ -1,4 +1,4 @@
-# Human review and AI-label checks
+# Human review and model-label checks
 
 This workflow covers the original mini cohort: **80 timestamps, with six
 original camera images per timestamp**. Use the frozen
@@ -6,10 +6,10 @@ original camera images per timestamp**. Use the frozen
 `f19373f55ffc930f67c340ae5fffde061cd68dc0b3128f10ca7b14bf9cf0e71c`.
 
 A human review means a person inspected the images and made the decision.
-Agents can follow the same checklist, but their output remains an AI review.
-Agreement between AI passes does not establish human ground truth or label accuracy.
+Agreement between model annotation passes does not establish human ground
+truth or label accuracy.
 
-## Submitted labels and prior AI exposure: 2026-10-26
+## Submitted labels and prior model-label disclosure: 2026-10-26
 
 Yike's final CSV contains all 80 frozen sample tokens, with no missing,
 duplicate or extra rows. Its SHA256 is
@@ -18,12 +18,12 @@ Every row names `Yike` as reviewer. The CSV records 77 binary `reviewed`
 decisions: 12 `normal_core` and 65 `not_normal_core`. The other three rows
 have both label and status set to `uncertain`; none remain `pending`.
 All 80 `review_notes` fields are blank, including the three uncertain rows.
-No reasons were added or inferred by the project executor.
+No reasons were added or inferred.
 
 An earlier CSV, with only the first ten rows completed, is preserved with
 SHA256 `c56adb638a09276ff027fb039b049ec8be90d251aaa3b3477c3263760d4c49ec`.
-Yike saw the complete AI label table before submitting the final version.
-The final labels are therefore **single-reviewer judgments after AI-label
+Yike saw the complete model-generated label table before submitting the final version.
+The final labels are therefore **single-reviewer judgments after model-label
 disclosure**, not an independent blind reference. Four of the first ten rows
 changed: zero-based indices 0, 3 and 9 changed from `normal_core` to
 `not_normal_core`; index 8 changed from `normal_core` to `uncertain`.
@@ -48,8 +48,8 @@ All four CPU methods were fitted using these labels, the existing ResNet18
 features and unchanged training settings. An independent replay checked input
 and source hashes, train-only normalization, all four reloaded checkpoints,
 validation-selected thresholds, saved metrics and the comparison table. The
-metrics measure agreement with the disclosed-AI human references. Both SAE
-checkpoints are byte-identical to each other and to the original AI-pilot
+metrics measure agreement with the human references collected after model-label disclosure. Both SAE
+checkpoints are byte-identical to each other and to the original provisional-label pilot
 checkpoints; no reward gain was observed. Changed validation decisions moved
 the MLP's selected checkpoint from epoch four to epoch five, while its settings
 and ten-epoch training-loss history remained unchanged.
@@ -57,8 +57,8 @@ and ten-epoch training-loss history remained unchanged.
 The execution source snapshot is preserved. A later provenance-field guard
 repair is recorded separately. See the
 [human-review run](../results/human-ai-exposed-20261026/README.md), the original
-[AI pilot](ai-pilot.md) and the separate
-[AI recheck](../results/ai-label-recheck-20261024/README.md).
+[provisional-label pilot](ai-pilot.md) and the separate
+[model-label recheck](../results/ai-label-recheck-20261024/README.md).
 
 ## 1. Prepare for an independent review
 
@@ -72,7 +72,7 @@ repair is recorded separately. See the
    the HTML again does not clear them.
 3. Enter the actual reviewer's name. Read the full rubric, then inspect a few
    examples to learn the controls.
-4. During formal review, use the blank tool and avoid old AI labels, model
+4. During formal review, use the blank tool and avoid old model-generated labels, model
    scores, predictions and split assignments. Use the scored explorer later
    for error analysis.
 5. Record any rubric clarifications and freeze them before formal annotation.
@@ -130,14 +130,14 @@ improve a score or agree with another label set.
   `uncertain`.
 - Import one final decision per token. Keep overlapping reviewer CSVs as
   evidence rather than concatenating them into duplicate-token input.
-- An AI disagreement list can guide extra review after the first independent
-  human pass. Showing old AI decisions earlier can anchor judgments. A
+- A model disagreement list can guide extra review after the first independent
+  human pass. Showing old model-generated decisions earlier can anchor judgments. A
   disagreement-focused check is not a random-sample estimate of label quality.
 
 ## 4. Import labels and define a new experiment
 
-Return the original CSV and any second-reviewer or adjudication records. The
-executor checks token coverage, identity, status, allowed labels, completeness,
+Preserve the original CSV and any second-reviewer or adjudication records. The
+importer checks token coverage, identity, status, allowed labels, completeness,
 the frozen scene allocation and class support in each split. Pending and
 uncertain rows remain excluded from supervised fitting and evaluation.
 A name in a CSV is not proof that a person inspected the images.
@@ -146,31 +146,17 @@ Human labels define a **new experiment version**. Retain the frozen 6/2/2 scene
 allocation, recalculate supports, set review budget K before inspecting the new
 test results, retrain all four models and select checkpoints and operating
 points using validation only. Relabelling old predictions alone does not mean
-the old model was trained on human references. Preserve the AI pilot's labels,
+the old model was trained on human references. Preserve the provisional-label pilot's labels,
 predictions and tables. If class support is insufficient, record the limit and
 collect suitable data rather than changing scenes or judgments to obtain a score.
 
 Report the number of reviewers, their coverage, disagreements and the rubric.
 Human review does not remove the mini cohort's limited size and scene coverage.
 
-## 5. AI recheck with subagents
+## Historical model-label consistency check
 
-1. Freeze the rubric, sample list, assignments, output fields and comparison
-   procedure before image inspection.
-2. Give fresh agent sessions only the rubric, images and unlabelled identities.
-   Withhold old labels, scene descriptions, splits, model outputs and expected
-   class proportions. Input isolation does not remove shared model biases.
-3. Follow the six-view checklist above and enlarge originals as needed. Record
-   label, confidence, camera evidence, uncertainty reason, inspected images and
-   their hashes. Low-confidence decisions become `uncertain`.
-4. Require `label_origin=ai_visual_provisional`,
-   `human_review_status=pending` and a reviewer name beginning with `AI`.
-5. After all agents submit, compare with the old labels and check complete
-   coverage, unique tokens, rubric/image hashes and valid fields. Preserve
-   submissions. Do not rerun agents or use majority voting to erase disagreement.
-6. Report AI agreement, disagreement and a human-review queue. Do not change
-   human status, overwrite old labels or replace an experiment automatically.
-
-The 2026-10-24 plan assigned 80 frames to four fresh AI agents with a fixed seed,
-one decision per frame and assignments frozen before inspection. Its results
-are an [AI-to-AI consistency check](../results/ai-label-recheck-20261024/README.md).
+The [2026-10-24 consistency record](../results/ai-label-recheck-20261024/README.md)
+compares additional vision-model annotations with the original provisional
+labels under a fixed rubric and sample assignment. These are model-to-model
+comparisons. They do not replace human review, establish annotation accuracy
+or change the submitted human decisions.

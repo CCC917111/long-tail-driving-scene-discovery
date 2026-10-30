@@ -34,15 +34,16 @@ the original Cosmos/VLM capstone route.
 ## Completed evidence
 
 The latest fitted comparison uses 77 binary judgments from one reviewer who
-had seen the AI-label table; three uncertain decisions are excluded. Its test
-set contains 15 timestamps from two scenes. The models use one seed and have
-only three normal training frames from one scene.
+had already seen model-generated labels; three uncertain decisions are excluded.
+These are not independently blinded annotations. The test set contains 15
+timestamps from two scenes. The models use one seed and have only three normal
+training frames from one scene.
 
 | Evidence | What it shows |
 |---|---|
 | 80 timestamps, 480 images and ten scenes in the fitted cohort | Validated six-camera inputs and completed CPU feature extraction. |
 | Four trained methods and a separate reload audit | Saved scores, scalers, thresholds and result tables can be reconstructed. |
-| 77 final binary judgments and three uncertain decisions | A completed single-reviewer reference set after AI-label exposure. |
+| 77 final binary judgments and three uncertain decisions | A completed single-reviewer reference set after prior model-label disclosure. |
 | SAE AP 0.9353 and four positives in the top four | Ranking performance on the small test set under those references. |
 | Two identical SAE checkpoints | No observed reward benefit; the reward cap was already saturated. |
 | Offline explorer and blank review export | Scores, activations and reference disagreements can be inspected and reviewed. |
@@ -50,7 +51,7 @@ only three normal training frames from one scene.
 The SAE's validation-selected operating point selects two test timestamps,
 both positive under the recorded references, and recalls two of ten positives.
 Its top-four ranking is a separate policy; its fixed activation rule flags all
-test frames. The higher AP than the original AI-reference run reflects changed
+test frames. The higher AP than the earlier provisional-label run reflects changed
 references and retained IDs, not improved SAE weights.
 
 ## New-scene follow-up
@@ -59,16 +60,16 @@ Nine later timestamps add 54 images from two scenes. Across both batches, the
 repository records **89 timestamps, 12 scenes and 534 images**. The later nine
 were used for inference and review, not model fitting.
 
-The reviewer submitted five normal and four non-normal judgments after the
-AI reference table was disclosed in chat; per-row timing is unknown. Replaying
+The reviewer submitted five normal and four non-normal judgments after receiving
+model-generated reference labels; individual judgment times are unknown. Replaying
 the old validation-selected threshold of **6.074954873** selects five candidates:
 three positive references, two false positives and one missed positive
 (precision 60%, recall 75%). The fixed SAE rule selects all nine. No threshold
 was tuned on these new labels, and no review-time savings were measured.
 
 All five normal references come from one new scene and all four non-normal
-references from the other. That class/scene confound and the prior AI-label
-exposure limit what the batch can establish about generalization. The
+references from the other. That class/scene confound and the prior model-label
+disclosure limit what the batch can establish about generalization. The
 [review record and frozen-policy replay](../results/new-scene-human-review-20261028/README.md)
 preserve the submission and policy source. The
 [research expansion plan](research-expansion.md) describes broader training
@@ -88,5 +89,5 @@ questions about model selection, label provenance and the reward diagnostic.
 
 [Latest fitted results](../results/human-ai-exposed-20261026/README.md) ·
 [Supplemental review](../results/new-scene-human-review-20261028/README.md) ·
-[Original AI pilot](../results/cpu-mini-ai-pilot-20261023/README.md) ·
+[Earlier provisional-label pilot](../results/cpu-mini-ai-pilot-20261023/README.md) ·
 [Historical result record](../results/README.md)

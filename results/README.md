@@ -3,7 +3,7 @@
 The [new-scene run](new-scene-e2e-20261027/README.md) processed nine real timestamps
 from two new scenes before human labels were available. The [2026-10-28
 submission](new-scene-human-review-20261028/README.md) later supplied five normal and
-four non-normal judgments. The AI reference table had been shared in chat before
+four non-normal judgments. The model-generated reference table was disclosed before
 submission; individual judgment times are unknown. The original run and later review are
 recorded separately. No model was retrained on these nine rows.
 
@@ -23,11 +23,11 @@ from `b57eaffa` and have not been regenerated from original predictions, logs or
 checkpoints. Publish new controlled results separately, with one identifiable run per
 row.
 
-## Latest mini CPU run: post-AI-exposure human review
+## Latest mini CPU run: human review after model-label disclosure
 
 The [2026-10-26 record](human-ai-exposed-20261026/README.md) records Yike's completed
 80-row human CSV: 77 reviewed binary labels (12 normal / 65 tail), three uncertain and
-no pending rows. The final submission followed exposure to the full AI label table and
+no pending rows. The final submission followed exposure to the full model-label table and
 has one reviewer; it is not blind independent ground truth. The original first-ten
 pre-exposure checkpoint and its four subsequent label revisions are retained. All notes
 are empty, including uncertainty reasons; no reasons have been invented. The raw final
@@ -37,14 +37,14 @@ fits used the original ResNet18 feature cache and unchanged training settings. T
 linked record includes an independently reconstructed comparison. On 15 test timestamps
 from two scenes, both SAE variants have AP 0.9353, precision@4 1.0 and recall@4 0.4.
 Their validation-selected operating point has test precision 1.0 and recall 0.2. The SAE
-checkpoints are byte-identical to each other and to the earlier AI pilot: no reward
-benefit was observed. These results measure agreement with one reviewer after AI-label
+checkpoints are byte-identical to each other and to the earlier model-reference pilot: no reward
+benefit was observed. These results measure agreement with one reviewer after model-label
 exposure. Training used one seed and only three normal frames, all from one scene. The
 training source snapshot is preserved. A later evaluator check for contradictory label
 provenance is recorded separately from these runs.
 
-The earlier [CPU mini AI-label pilot](cpu-mini-ai-pilot-20261023/README.md) contains
-real-image CPU results against provisional AI references, with 73 binary decisions and
+The earlier [CPU mini model-label pilot](cpu-mini-ai-pilot-20261023/README.md) contains
+real-image CPU results against provisional model-generated references, with 73 binary decisions and
 seven uncertain exclusions. Its results retain that scope and are separate from this
 human-review submission and the historical VLM/Cosmos reports below.
 

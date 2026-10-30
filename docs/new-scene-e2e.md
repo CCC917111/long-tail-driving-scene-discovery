@@ -9,7 +9,7 @@ Desktop/mobile real-browser checks, CSV export and failed-image retry passed.
 Those checks used the same-origin bundle on a temporary local server; native
 publishing status separately verifies deployment. An authenticated production
 browser session was not recorded.
-Sign in with the owner's ChatGPT account. External GitHub readers do not
+Sign in with the owner's account. External GitHub readers do not
 automatically have access. The
 [repair evidence](../results/review-page-repair-20261028/README.md) records the
 same-origin image delivery, browser checks and deployment. A public source-linked
@@ -20,14 +20,14 @@ The original 2026-10-27 `new-scene-real-cpu-e2e-v1` run connected **54 original 
 It used a CPU and an existing trained checkpoint, with no new fitting or
 accuracy evaluation at that time. The nine image groups were then unlabelled.
 Yike's later [2026-10-28 submission](../results/new-scene-human-review-20261028/README.md)
-contains five normal and four non-normal judgments. The AI reference table was
-disclosed in chat before submission; per-row decision timing is unknown. None
+contains five normal and four non-normal judgments. The model-generated reference table was
+shown before submission; per-row decision timing is unknown. None
 of these nine rows has been used to retrain the existing models.
 
 ## Open the review page
 
 1. Open the [owner-private Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-   and sign in with the owner's ChatGPT account. No HTML download or ZIP upload
+   and sign in with the owner's account. No HTML download or ZIP upload
    is needed; images load from the Site itself.
 2. Wait until the current group's six views load. The three judgment buttons
    remain disabled while images are missing. The image-retry button retries loading while
@@ -43,7 +43,7 @@ them and records that subsequent judgments followed model-signal exposure.
 The source HTML contains the cached model values, so this convenience is not
 proof of an independent blind study. The CSV is a fresh review record, not a
 new benchmark table. The page itself displays no source scene descriptions,
-DriveLM answers or AI reference labels. The separate chat AI-label disclosure
+DriveLM answers or model-generated reference labels. The prior model-label disclosure
 is recorded with the later submission even when browser model signals stayed
 hidden. A fresh browser context starts with nine pending rows;
 automated UI tests use a disposable `CI_TEST_ONLY` reviewer, never real labels.
@@ -79,7 +79,7 @@ numeric outputs and author image URLs, not pixels or model weights.
 The checkpoint SHA256 is
 `250a475bf430ade3a9a4381430a1b4cee366a01a2448747602e2aff76baabbcb`.
 Its training labels came from the earlier single-reviewer submission after
-AI-label disclosure. That is the **model's training provenance**. At the
+model-label disclosure. That is the **model's training provenance**. At the
 2026-10-27 inference run these nine frames had no human reference labels; the
 later supplemental submission is retained separately with its own provenance.
 
@@ -105,7 +105,7 @@ policies on unchanged model scores, not a model improvement from retraining.
 
 All five normal references come from one scene; all four non-normal references
 come from the other. This class/scene confound, author selection and prior
-AI-reference disclosure prevent interpreting the numbers as an independent
+model-reference disclosure prevent interpreting the numbers as an independent
 generalization benchmark.
 
 The original run files and hashes are preserved. Its
