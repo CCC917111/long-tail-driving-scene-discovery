@@ -1,8 +1,8 @@
 # First real mini CPU extraction
 
 This is the extraction record from before annotation and training. The
-subsequent [AI-label pilot](ai-pilot.md) and
-[single-reviewer run after AI-label disclosure](../results/human-ai-exposed-20261026/README.md)
+subsequent [provisional-label pilot](ai-pilot.md) and
+[single-reviewer run after model-label disclosure](../results/human-ai-exposed-20261026/README.md)
 each fitted four models. Their labels and results are retained separately.
 
 On 2026-10-23, the local upload route successfully moved a real nuScenes mini
@@ -53,7 +53,8 @@ this sandbox.
 
 The steps below describe the next stage as it stood on 2026-10-23. The later
 [human submission](human-review.md) completed all 80 rows: 77 binary decisions
-and three uncertain rows. It was a single-person review after AI-label exposure.
+and three uncertain rows. The single reviewer had already seen model-generated
+labels.
 
 Inspect all six original views under the frozen normal-core rubric and choose
 `normal_core`, `not_normal_core` or `uncertain`. The classification concerns

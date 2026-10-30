@@ -385,7 +385,7 @@ function chip(p){return p?`<span class="chip ${p}">${p.replace('_','-')}</span>`
 function img(tok,cam,w){return `<img loading="lazy" src="img/${encodeURIComponent(tok)}/${cam}?w=${w||420}" onerror="this.outerHTML='<div class=ph>no image</div>'">`}
 async function boot(){S=await api('api/summary');
  if(S.label_scope&&S.label_scope.human_reviewed===false){
-  const warning=document.createElement('p');warning.textContent='AI visual-label pilot: labels are provisional and have not been verified by a human. Scores, errors and purity refer to AI labels; this is not benchmark accuracy.';
+  const warning=document.createElement('p');warning.textContent='Model-generated label pilot: labels are provisional and have not been verified by a human. Scores, errors and purity refer to model-generated labels; this is not benchmark accuracy.';
   warning.style.cssText='margin:0;padding:12px 20px;background:#fff1d6;color:#703d00';
   document.querySelector('header').after(warning);
  }

@@ -1,14 +1,14 @@
-# AI labels for all 80 frames
+# Model-generated labels for all 80 frames
 
 Frame numbers start at 1 and match the review page. Each frame represents one timestamp
 with six camera views.
 
-- **Original AI:** the references used for training and the published pilot metrics: 13
-  normal, 60 requiring extra caution and seven uncertain.
-- **AI recheck:** the later review divided among four fresh agent sessions: 12 normal,
-  63 requiring extra caution and five uncertain.
-- Both are provisional AI judgments. The original experiment did not switch to the
-  recheck labels. This table contains no user-submitted human labels.
+- **Original model labels:** the references used for training and the published pilot
+  metrics: 13 normal, 60 requiring extra caution and seven uncertain.
+- **Model-label recheck:** four separate model-review sessions produced 12 normal,
+  63 requiring extra caution and five uncertain decisions.
+- Both are provisional model-generated judgments. The original experiment did not
+  switch to the recheck labels. This table contains no user-submitted human labels.
 - “Requires extra caution” means `not_normal_core`; “Normal” means `normal_core`.
 - [Complete CSV](all-ai-labels.csv): sample tokens, confidence and both rounds' original
   reasoning. The unchanged UTF-8 BOM CSV preserves the original language and supports
@@ -18,7 +18,7 @@ Documentation translation, 2026-10-29: this table presents the same decisions in
 English. The Markdown hash in [export metadata](all-ai-labels-metadata.json) identifies
 the original export, not this translation. Source annotations and the CSV are unchanged.
 
-| Page frame | Original AI | AI recheck | Agreement |
+| Page frame | Original model labels | Model-label recheck | Agreement |
 |---:|---|---|---|
 | 1 | Requires extra caution | Requires extra caution | Agreement |
 | 2 | Requires extra caution | Requires extra caution | Agreement |
@@ -101,6 +101,6 @@ the original export, not this translation. Source annotations and the CSV are un
 | 79 | Requires extra caution | Requires extra caution | Agreement |
 | 80 | Uncertain | Requires extra caution | **Disagreement** |
 
-[AI recheck record](README.md) · [Original AI
+[Model-label recheck record](README.md) · [Original model labels
 record](../cpu-mini-ai-pilot-20261023/ai_visual_labels.json) · [Human-review
 procedure](../../docs/human-review.md)

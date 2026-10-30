@@ -315,11 +315,13 @@ def verify_reference_banner(page, payload, expect):
     expect(warning).to_be_visible()
     if kind == "human_ai_exposed":
         expect(warning).to_have_attribute("data-reference-kind", kind)
-        expect(warning).to_contain_text("Single-reviewer post-AI-exposure review")
+        expect(warning).to_contain_text(
+            "Single-reviewer references after prior model-label disclosure")
         expect(warning).to_contain_text("not independent human ground truth")
         expect(warning).to_contain_text("or an official benchmark")
         body = page.locator("body").inner_text()
         for stale in ("human review pending", "Provisional AI-label pilot;",
+                      "Provisional model-label pilot;",
                       "labels are provisional", "not been verified by a human"):
             require(stale not in body, "Human-reviewed UI contains stale AI warning: " + stale)
     elif payload["schema"] == "offline-trained-explorer-ai-pilot-v1":
@@ -327,7 +329,7 @@ def verify_reference_banner(page, payload, expect):
         expect(warning).to_contain_text("AI \u521d\u6807")
         expect(warning).to_contain_text("\u5c1a\u672a\u4eba\u5de5\u6838\u9a8c")
     else:
-        expect(warning).to_contain_text("Provisional AI-label pilot")
+        expect(warning).to_contain_text("Provisional model-label pilot")
         expect(warning).to_contain_text("human review pending")
 
 

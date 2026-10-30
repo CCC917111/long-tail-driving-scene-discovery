@@ -60,18 +60,19 @@ def reference_from_scope(scope):
                          "prior_ai_labels_exposed", "official_benchmark"))
                 and scope.get("reviewer_count", 0) == 0,
                 "AI label scope must be provisional with human review pending")
-        return {"kind": "ai_provisional", "label": "provisional AI labels",
-                "short_label": "AI reference",
+        return {"kind": "ai_provisional", "label": "provisional model-generated labels",
+                "short_label": "model reference",
                 "review_context": None,
-                "description": "AI provisional labels; human review pending. Errors and "
-                               "purity are relative to AI references."}
+                "description": "Model-generated provisional labels; human review pending. "
+                               "Errors and purity are relative to these model references."}
     canonical = post_ai_review_scope()
     require(all(key in scope and type(scope[key]) is type(value) and scope[key] == value
                 for key, value in canonical.items()),
             "Manual label scope requires canonical post-AI-exposure single-reviewer provenance")
-    return {"kind": "human_ai_exposed", "label": "single-reviewer post-AI-exposure review",
+    return {"kind": "human_ai_exposed",
+            "label": "single-reviewer references after model-label disclosure",
             "short_label": "human review reference", "review_context": canonical["review_context"],
-            "description": "Agreement with one human reviewer after AI-label exposure; "
+            "description": "Agreement with one human reviewer after model-label disclosure; "
                            "not independent human ground truth or an official benchmark."}
 
 
@@ -415,7 +416,7 @@ def render_html(payload, review_source):
     loader = match[1].split(marker, 1)[0] + "})();"
     source = PAGE
     title = ("Driving reviewed references — trained offline explorer" if reviewed
-             else "Driving AI pilot — trained offline explorer")
+             else "Driving provisional-label pilot — trained offline explorer")
     source = replace_once(source, "<title>Neuron Explorer</title>",
                           "<title>" + title + "</title>")
     csp = ("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; "
@@ -456,14 +457,16 @@ def render_html(payload, review_source):
                f"K={first['requested_k']} · seed={first['seed']}")
     included = payload["summary"]["frames"]
     excluded = len(payload["expected_frames"]) - included
-    warning = ("Single-reviewer post-AI-exposure review: one reviewer submitted final decisions "
-               "after seeing provisional AI labels. Scores, false positives/negatives and purity "
+    warning = ("Single-reviewer references after prior model-label disclosure: final decisions "
+               "were submitted after seeing provisional model-generated labels. Scores, false "
+               "positives/negatives and purity "
                "are relative to these human review references; they are not independent human "
                "ground truth or an official benchmark. The CPU ResNet18 route is separate from "
                "Cosmos." if reviewed else
-               "Provisional AI-label pilot; human review pending. Scores, false "
+               "Provisional model-label pilot; human review pending. Scores, false "
                "positives/negatives "
-               "and purity are relative to provisional AI labels, not measured real-world accuracy "
+               "and purity are relative to provisional model-generated labels, "
+               "not measured accuracy "
                "or an official benchmark. The CPU ResNet18 route is separate from Cosmos.")
     rule_notes = []
     for method, rule in payload["operating_rules"].items():
@@ -525,11 +528,13 @@ def render_html(payload, review_source):
              "</section>")
     source = replace_once(source, "<header><h1>Neuron Explorer</h1>",
                           setup + "<header><h1>Neuron Explorer · "
-                          + ("AI-exposed human review" if reviewed else "AI pilot") + "</h1>")
+                          + ("reviewed references" if reviewed else "provisional model labels")
+                          + "</h1>")
     inherited_warning = (" if(S.label_scope&&S.label_scope.human_reviewed===false){\n"
                          "  const warning=document.createElement('p');warning.textContent='"
-                         "AI visual-label pilot: labels are provisional and have not been verified "
-                         "by a human. Scores, errors and purity refer to AI labels; this is not "
+                         "Model-generated label pilot: labels are provisional and have not "
+                         "been verified by a human. Scores, errors and purity refer to "
+                         "model-generated labels; this is not "
                          "benchmark accuracy.';\n"
                          "  warning.style.cssText='margin:0;padding:12px 20px;background:#fff1d6;"
                          "color:#703d00';\n"

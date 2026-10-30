@@ -7,8 +7,8 @@ Updated 2026-10-29. The original audited version was
 [#5](https://github.com/CCC917111/long-tail-driving-scene-discovery/pull/5) merged.
 
 The CPU pipeline, saved-output audits and review interfaces are complete.
-Research conclusions remain limited by the small cohorts, AI-disclosed
-single-reviewer references and scene/class confounding. Stable model gains and
+Research conclusions remain limited by small cohorts, single-reviewer references
+collected after model-label disclosure, and scene/class confounding. Stable model gains and
 independent blind-label accuracy have not been established.
 
 ## Current round
@@ -17,8 +17,8 @@ independent blind-label accuracy have not been established.
 |---|---|---|
 | Data contracts | Strict labels and scene IDs, frozen manifests, provenance and exclusion records. | Historical assets, raw-VLM supports and the six-frame count gap remain unresolved. |
 | Real mini inputs | Four transferred parts validated; 80 timestamps, ten scenes and 480 images; pinned CPU ResNet18 cache and frozen 6/2/2-scene allocation. | The original archive checksum was not independently verified; current features do not reproduce Cosmos. |
-| Human-reference CPU fit | 77 binary judgments and three uncertain exclusions; Logistic, MLP and both SAE variants fitted and independently reconstructed. | One reviewer after AI-label exposure, blank notes, seed 42, two test scenes and three normal training samples from one scene. |
-| New-scene replay | Nine timestamps and 54 images from two additional scenes; existing models applied without fitting; all nine human judgments received. | AI-reference disclosure preceded submission; per-row timing is unknown; all five normals are in one scene and all four tails in the other. Original log IDs are unavailable. |
+| Human-reference CPU fit | 77 binary judgments and three uncertain exclusions; Logistic, MLP and both SAE variants fitted and independently reconstructed. | One reviewer after model-label exposure, blank notes, seed 42, two test scenes and three normal training samples from one scene. |
+| New-scene replay | Nine timestamps and 54 images from two additional scenes; existing models applied without fitting; all nine human judgments received. | Model-reference disclosure preceded submission; per-row timing is unknown; all five normals are in one scene and all four tails in the other. Original log IDs are unavailable. |
 | Frozen score policy | Old validation threshold `6.074954873` selected five of nine: precision 60%, recall 75%. | Descriptive agreement with submitted references; no tuning on these labels or independent generalization estimate. The original activation rule selected all nine. |
 | Reward comparison | Matched reward/no-reward configurations, common inputs and rebuilt result tables. | Both SAE checkpoints are identical; no reward benefit was observed. |
 | Review and demonstration | Offline explorer with 77 retained timestamps and 308 cached method values, saved MLP FP/FN bookmarks, blank review export and six-view image inspection. | Unit IDs have no validated semantic names; example context does not prove an error's cause. |
@@ -29,7 +29,7 @@ supplemental timestamps were scored with existing models; they did not enlarge
 the fitting cohort.
 
 The [private review Site](https://yike-driving-review-20261028.upbeatperch12.chatgpt.site)
-requires the owner's ChatGPT sign-in and serves all 54 supplemental images from
+requires the owner's sign-in and serves all 54 supplemental images from
 the same origin. The [downloadable fallback](../demo/driving_new_scenes.html)
 uses the author's `raw.githubusercontent.com` image URLs. External GitHub
 reviewers do not automatically have access to the private Site. The
@@ -54,8 +54,8 @@ from supervised fitting and evaluation. None remain pending.
 
 All notes are blank, including uncertainty reasons. The first ten judgments
 are preserved as a pre-exposure checkpoint, along with four subsequent
-revisions. The full submission followed display of the complete AI label table.
-It is single-reviewer evidence after AI-label exposure, not blind independent
+revisions. The full submission followed display of the complete model-generated label table.
+It is single-reviewer evidence after model-label exposure, not blind independent
 reference data.
 
 | Old split | Normal | Tail | Uncertain |
@@ -72,7 +72,7 @@ was `0.4`. Its validation-selected operating point had precision `1.0` and
 recall `0.2`. These measure agreement with the disclosed references.
 
 Both SAE checkpoints are byte-identical to each other and to the earlier
-AI-label pilot. Logistic is also unchanged. MLP checkpoint selection moved
+model-label pilot. Logistic is also unchanged. MLP checkpoint selection moved
 from epoch 4 to 5 under the same settings and training loss trajectory. The
 [completed result bundle](../results/human-ai-exposed-20261026/README.md) retains
 source snapshots; a later evaluator provenance guard does not rewrite them.
@@ -87,7 +87,7 @@ do not validate label quality.
 - The final local CPU selection passed **205 tests and 18 subtests**, plus lint.
   One HTTP test was deselected because the sandbox denied loopback binding.
   The optional real-asset integration ran with the actual feature bundle and
-  explicitly provisional AI labels; that private-asset check was skipped in CI.
+  explicitly provisional model-generated labels; that private-asset check was skipped in CI.
 - At `ba8efddd46b357f492965b941172a8fd1f6dd948`, Actions passed the
   [CPU/lint/HTTP workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920171)
   and [offline Chrome workflow](https://github.com/CCC917111/long-tail-driving-scene-discovery/actions/runs/40039920157).
@@ -95,7 +95,7 @@ do not validate label quality.
   records the 205 tests and 18 subtests.
 - Chrome 155 checked desktop/mobile navigation, six-view rendering, cached
   values and CSV download with watermarked synthetic ZIPs. Separate Node checks
-  verified all 480 local real-image bytes and 292 displayed AI-pilot values
+  verified all 480 local real-image bytes and 292 displayed provisional-label pilot values
   against saved outputs. Those checks covered different artifacts.
 - The synthetic E2E run fitted four models on 60 scenes/240 samples, reloaded
   checkpoints and training scalers, rebuilt the table and screened 40 separate
@@ -108,7 +108,7 @@ do not validate label quality.
 - Real CPU extraction on 2026-10-23 passed a one-sample smoke and resume into an
   `(80, 3072)` cache on the frozen 48/16/16 timestamp allocation. Logs and hashes
   remain under `output/real-cpu-mini-20261023/` in the execution workspace.
-- The later [AI-label pilot](ai-pilot.md) fitted four methods on 73 retained
+- The later [model-label pilot](ai-pilot.md) fitted four methods on 73 retained
   timestamps and screened seven uncertain ones. It used one seed and two test
   scenes; all validation precision targets were unreachable and both SAEs were
   identical. Its published bundle excludes original images, metadata and weights.

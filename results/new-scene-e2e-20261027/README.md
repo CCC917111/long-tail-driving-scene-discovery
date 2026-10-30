@@ -1,9 +1,9 @@
 # New-scene CPU E2E evidence
 
 **Later review, 2026-10-28:** all nine human decisions are now recorded
-[separately](../new-scene-human-review-20261028/README.md), with a record of the AI
-references shared in chat before submission. The original execution artifacts below
-remain unchanged.
+[separately](../new-scene-human-review-20261028/README.md), with a record of the
+model-generated references disclosed before submission. The original execution
+artifacts below remain unchanged.
 
 **Completed inference and review-interface check. No accuracy was measured in this
 run.** The official DriveLM author demo supplied 54 original JPEGs in nine six-camera
@@ -15,7 +15,7 @@ The existing no-reward SAE checkpoint and its train-only standardiser were reuse
 unchanged. All nine fixed-rule outputs are tail candidates; these are not verified
 positive labels. This run involved no fitting, split allocation, human labeling or
 accuracy evaluation. Training-label provenance remains the earlier single-reviewer
-submission after AI-label exposure.
+submission after model-label exposure.
 
 | Evidence | What it records |
 |---|---|

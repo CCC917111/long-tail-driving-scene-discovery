@@ -4,8 +4,8 @@ The completed [CPU image-feature route](cpu-route.md) uses pretrained ResNet18
 and needs no GPU. Across the fitted cohort and supplemental intake, it has
 processed 89 six-view timestamps from 12 scenes: 534 original images. The
 models were fitted on the older 80 timestamps, using 77 binary human references
-and excluding three uncertain decisions. That review followed AI-reference
-disclosure. The later nine-timestamp batch used the saved model and old
+and excluding three uncertain decisions. The reviewer had already seen
+model-generated labels. The later nine-timestamp batch used the saved model and old
 validation threshold, with no new fit or tuning. See [the fitted result](../results/human-ai-exposed-20261026/README.md)
 and [supplemental review](../results/new-scene-human-review-20261028/README.md)
 for the evaluation limits.
@@ -270,6 +270,6 @@ human-validated scene-disjoint VLM result remain to be produced.
 Early preparation/import checks used a watermarked 80-frame schema fixture.
 The later local upload, ResNet18 extraction and CPU fits used real camera
 images; their evidence is separate from those fixture checks. The first
-[CPU AI-reference pilot](ai-pilot.md) was followed by the explicitly
+[CPU provisional-label pilot](ai-pilot.md) was followed by the explicitly
 [post-disclosure human-reference fit](human-review.md). Neither is a Cosmos
 replication or independent blind-label evaluation.

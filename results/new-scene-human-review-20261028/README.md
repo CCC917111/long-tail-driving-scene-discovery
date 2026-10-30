@@ -5,14 +5,14 @@ uncertain or pending rows. All notes are blank. The original 1115-byte CSV is pr
 byte-for-byte, SHA256
 `b470eab6e17eaa0e6e2cc93a52ddeefd2d6b4ce1c9eff58fcc83da619a3653d2`.
 
-The AI reference table had been provided in this chat before submission. The page fields
+The model-generated reference table was disclosed before submission. The page fields
 `model_hidden_single_reviewer` and `model_signal_exposed=false` describe only whether
-the browser showed model signals. They do not account for AI labels shared in chat.
-Per-row judgment timing is unknown. `provenance.json` records this separately without
-modifying the user's file.
+the browser showed model signals. They do not establish blindness to the earlier
+reference labels. Per-row judgment timing is unknown. `provenance.json` records this
+separately without modifying the submitted file.
 
-All nine decisions agree with the provisional AI visual references. This is reference
-agreement, not an estimate of AI accuracy.
+All nine decisions agree with the provisional model-generated visual references. This is reference
+agreement, not an estimate of annotation-model accuracy.
 
 The previously frozen SAE rule, `abs(z_t) > 0.01` for at least one tail unit, flags all
 nine: TP=4, FP=5, TN=0, FN=0 relative to this submission. Precision is 44.44%, recall
@@ -26,7 +26,7 @@ are completely confounded in this author-selected batch. This batch cannot estab
 generalization performance.
 
 The directory preserves the original CSV, unchanged notes in
-`normalized_references.json`, separate AI visual references, the nine-row comparison,
+`normalized_references.json`, separate model-generated visual references, the nine-row comparison,
 audit and provenance records, and `import_and_compare.py` for rebuilding the comparison
 from the original inputs. No original images or model weights are committed in this
 evidence record.
