@@ -26,6 +26,10 @@ acquisition. No further local source assets are available. A larger study needs
 additional original images and matching metadata, with scene/log allocation
 frozen before reference labels or model outputs are inspected.
 
+The [additional-source inventory](new-data-inventory.md) confirms that the
+public author demo has no unused six-camera scenes. Larger publisher-provided
+archives remain candidates with unresolved access and coverage.
+
 ## What is actually available
 
 The real local dataset is `dataset/nuscenes-mini-user-20261023`. Its five

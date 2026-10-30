@@ -1,0 +1,174 @@
+{
+  "schema": "driving-new-scene-feasibility-v1",
+  "created_utc": "2026-10-30T05:03:45.057270+00:00",
+  "status": "no_new_compatible_scene_acquired",
+  "new_scenes_acquired": 0,
+  "new_timestamps_acquired": 0,
+  "new_original_camera_images_acquired": 0,
+  "new_asset_download_bytes": 0,
+  "new_annotation_performed": false,
+  "new_model_inference_performed": false,
+  "paid_resources_used": false,
+  "scope": "Bounded source/access inventory for additional original nuScenes six-camera scenes; no labels, training, predictions or evaluation.",
+  "existing_inputs": {
+    "mini": {
+      "scenes": 10,
+      "timestamps": 80,
+      "original_camera_images": 480,
+      "log_tokens": 8,
+      "scene_tokens": [
+        "2fc3753772e241f2ab2cd16a784cc680",
+        "325cef682f064c55a255f2625c533b75",
+        "6f83169d067343658251f72e1dd17dbc",
+        "bebf5f5b2a674631ab5c88fd1aa9e87a",
+        "c5224b9b454b4ded9b5d2d2634bbda8a",
+        "cc8c0bf57f984915a77078b10eb33198",
+        "d25718445d89453381c659b9c8734939",
+        "de7d80a1f5fb4c3e82ce8a4f213b450a",
+        "e233467e827140efa4b42d2b4c435855",
+        "fcbccedd61424f1b85dcbf8f897f9754"
+      ],
+      "scene_names": [
+        "scene-0061",
+        "scene-0103",
+        "scene-0553",
+        "scene-0655",
+        "scene-0757",
+        "scene-0796",
+        "scene-0916",
+        "scene-1077",
+        "scene-1094",
+        "scene-1100"
+      ],
+      "scene_metadata_path": "dataset/nuscenes-mini-user-20261023/v1.0-mini/scene.json",
+      "scene_metadata_sha256": "cc4dfeac83ac4f5d3e7fc899f90156891a21fa08bc0f8a1ac0e0a27cc1a0bfa6"
+    },
+    "drivelm_author_demo": {
+      "scenes": 2,
+      "timestamps": 9,
+      "original_camera_images": 54,
+      "image_bytes": 6114069,
+      "scene_tokens": [
+        "54cdaaae372d421fa4734d66f51a8c48",
+        "f0f120e4d4b0441da90ec53b16ee169d"
+      ],
+      "source_commit": "1de72a74b257e5373400fa68239e99bd5d20580a",
+      "acquisition_path": "dataset/drivelm-author-demo-20261027/acquisition.json",
+      "acquisition_sha256": "14a641f68cc2a02d4777e0b5749166ec1cde80fadc812ca3bcaba7cf668a0d5d",
+      "original_log_metadata_available": false,
+      "log_disjoint_verified": false
+    },
+    "combined": {
+      "scenes": 12,
+      "timestamps": 89,
+      "original_camera_images": 534
+    }
+  },
+  "sources": [
+    {
+      "id": "drivelm_author_github_demo",
+      "classification": "already_exhausted_existing_assets",
+      "repository": "https://github.com/OpenDriveLab/DriveLM",
+      "pinned_commit": "1de72a74b257e5373400fa68239e99bd5d20580a",
+      "current_main_observed": "1de72a74b257e5373400fa68239e99bd5d20580a",
+      "tree_url": "https://api.github.com/repos/OpenDriveLab/DriveLM/git/trees/1de72a74b257e5373400fa68239e99bd5d20580a?recursive=1",
+      "tree_truncated": false,
+      "tree_entries": 167,
+      "camera_prefix": "challenge/llama_adapter_v2_multimodal7b/data/nuscenes/samples/",
+      "original_camera_jpegs_in_tree": 54,
+      "timestamp_groups": 9,
+      "scene_count": 2,
+      "new_scene_count": 0,
+      "new_sample_count": 0,
+      "new_camera_image_count": 0,
+      "evidence": "Complete recursive author tree matches all 54 original camera paths already present in the acquisition manifest; other repository JPEGs are assets/figures rather than additional complete scene inputs."
+    },
+    {
+      "id": "drivelm_author_full_subset_huggingface",
+      "classification": "credible_author_source_access_gated",
+      "documentation_url": "https://github.com/OpenDriveLab/DriveLM/blob/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/README.md",
+      "dataset_url": "https://huggingface.co/datasets/OpenDriveLab/DriveLM/tree/main",
+      "access_observation": "The official file listing states that login, acceptance of conditions and sharing Hugging Face account information are required to access file contents. Files can be listed without access.",
+      "account_login_attempted": false,
+      "conditions_accepted": false,
+      "personal_information_shared": false,
+      "advertised_files": [
+        {
+          "name": "drivelm_nus_imgs_train.zip",
+          "advertised_size": "3.48 GB",
+          "content_verified": false
+        },
+        {
+          "name": "drivelm_nus_imgs_val.zip",
+          "advertised_size": "705 MB",
+          "content_verified": false
+        },
+        {
+          "name": "v1_1_train_nus.json",
+          "advertised_size": "193 MB",
+          "content_verified": false
+        },
+        {
+          "name": "v1_1_val_nus_q_only.json",
+          "advertised_size": "9.86 MB",
+          "content_verified": false
+        }
+      ],
+      "downloaded": false,
+      "archive_sha256": null,
+      "available_scene_count_verified": null,
+      "scene_id_inventory_obtained": false,
+      "new_scene_count_acquired": 0,
+      "size_caveat": "Human-readable sizes are advertised by the official listing, not locally measured byte lengths. Archive contents and exact scene counts were not downloaded or verified.",
+      "selection_caveat": "DriveLM is an author-selected keyframe subset. Broader scene coverage would not make it a representative or official nuScenes benchmark."
+    },
+    {
+      "id": "drivelm_author_google_drive_mirrors",
+      "classification": "author_documented_access_unverified",
+      "documentation_url": "https://github.com/OpenDriveLab/DriveLM/blob/1de72a74b257e5373400fa68239e99bd5d20580a/challenge/README.md",
+      "urls": {
+        "train_images": "https://drive.google.com/file/d/1DeosPGYeM2gXSChjMODGsQChZyYDmaUz/view?usp=sharing",
+        "val_images": "https://drive.google.com/file/d/18f8ygNxGZWat-crUjroYuQbd39Sk9xCo/view?usp=sharing",
+        "train_metadata": "https://drive.google.com/file/d/1CvTPwChKvfnvrZ1Wr0ZNVqtibkkNeGgt/view?usp=sharing",
+        "val_metadata": "https://drive.google.com/file/d/1fsVP7jOpvChcpoXVdypaZ4HREX1gA7As/view?usp=sharing"
+      },
+      "head_request_result": "Interrupted before any HTTP response or header evidence was returned.",
+      "http_status": null,
+      "actual_content_length": null,
+      "actual_filename": null,
+      "range_support": null,
+      "sign_in_requirement_verified": null,
+      "downloaded": false,
+      "new_scene_count_acquired": 0,
+      "caveat": "No proxy denial or public-download success was observed. Access remains unknown; the official link alone is not evidence that images are obtainable in this workspace."
+    },
+    {
+      "id": "official_nuscenes_trainval",
+      "classification": "official_source_requires_access_and_transfer_inventory",
+      "website": "https://www.nuscenes.org/download",
+      "setup_documentation": "https://github.com/nutonomy/nuscenes-devkit#nuscenes-setup",
+      "terms": "https://www.nuscenes.org/terms-of-use",
+      "registry_url": "https://github.com/awslabs/open-data-registry/blob/main/datasets/motional-nuscenes.yaml",
+      "registry_distribution_host": "https://d36yt3mvayqw5m.cloudfront.net",
+      "registry_bucket": "s3://motional-nuscenes",
+      "registry_region": "ap-northeast-1",
+      "current_archive_inventory_obtained": false,
+      "current_total_transfer_bytes_verified": null,
+      "new_scenes_acquired": 0,
+      "caveat": "Registration and dataset terms apply. Current trainval file access, camera-only transfer options and bytes were not verified in this bounded inventory; the ten-scene mini cannot supply 30\u201350 new scenes."
+    }
+  ],
+  "rights": {
+    "drivelm_code": "Apache-2.0; does not relicense nuScenes camera images",
+    "drivelm_language_data": "CC-BY-NC-SA-4.0 as stated by the authors",
+    "nuscenes_camera_images": "Retain nuScenes dataset terms and original attribution; academic noncommercial use is subject to those terms.",
+    "author_license_statement": "https://github.com/OpenDriveLab/DriveLM/blob/1de72a74b257e5373400fa68239e99bd5d20580a/README.md#licenseandcitation"
+  },
+  "next_required_evidence": [
+    "A permitted, working author/official data-access route; do not bypass account gates, data terms or an enforced destination-policy denial.",
+    "Obtain original scene/sample metadata and filenames first; count complete six-camera timestamp groups and scene/log overlap before claiming new coverage.",
+    "Verify a small batch of original image bytes and hashes, then estimate transfer size and CPU/annotation cost before the larger batch.",
+    "Choose future training/validation/test scenes before model scoring; collect new human judgments without exposing model reference labels or predictions.",
+    "Treat 30\u201350 new scenes as a conditional planning target, not an obtained dataset or promised result."
+  ]
+}
